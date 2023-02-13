@@ -15,11 +15,11 @@
     margin: 20px 0;
 
     .container-categories{
-        display: grid;
-        justify-content: center;
-        grid-template-columns: repeat(2,1fr);
-        grid-template-rows: repeat(2,1fr);
+        display:flex;
+        padding:0 0 15px 0;
         gap: 20px;
+        overflow-x: scroll;
+        
 
     }
     
