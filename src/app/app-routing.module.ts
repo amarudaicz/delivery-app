@@ -3,7 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainHomeComponent } from './home/components/main-home/main-home.component';
 
 const routes: Routes = [
-  {path:':local', component:MainHomeComponent}
+  {
+    path:'', component:MainHomeComponent
+  },
+  {
+    path:':local', component:MainHomeComponent
+
+  }
+
+
 ];
 
 @NgModule({

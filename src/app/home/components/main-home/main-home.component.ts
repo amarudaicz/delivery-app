@@ -1,8 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ThemesService } from 'src/app/services/themes/themes.service';
-import Swiper from 'swiper';
-
 
 @Component({
   selector: 'app-main-home',
@@ -18,22 +16,7 @@ export class MainHomeComponent implements OnInit {
       console.log(this.local);
     });
 
-     this.swiper = new Swiper('.swiper-container', {
-      slidesPerView: 1,
-      spaceBetween: 30,
-      loop: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
 
-
-  
     this.local = {
       name:'Punto Pizza',
       ubication:'Rio Ceballos, Alem 99',
@@ -48,7 +31,6 @@ export class MainHomeComponent implements OnInit {
   
   theme:any
 
-  swiper?:Swiper 
   categories:any[] = [
     {
       name:'Pizzas',
