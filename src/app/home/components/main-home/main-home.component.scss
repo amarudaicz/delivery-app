@@ -1,0 +1,37 @@
+.container{
+
+
+}
+
+.content{
+    width: 100vw;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 15px 60px 15px;
+}
+
+.categories{
+
+    margin: 20px 0;
+
+    .container-categories{
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,1fr);
+        gap: 20px;
+
+    }
+    
+    .container-show-more{
+        text-align: end;
+        padding: 5px 0 0 0;
+        span{
+            color: #525252;
+            text-decoration: underline;
+
+        }
+    }
+
+}
+

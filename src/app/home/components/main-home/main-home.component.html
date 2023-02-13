@@ -1,0 +1,44 @@
+<div [style.background]="theme.background_page" class="container">
+    
+    <app-header></app-header>
+
+    <div class="content">
+
+        
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Slide 1</div>
+              <div class="swiper-slide">Slide 2</div>
+              <div class="swiper-slide">Slide 3</div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+       
+
+        <section class="categories">
+        
+            <div class="container-categories">
+                <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
+            </div>
+
+
+            <div class="container-show-more">
+                <span>Ver mas</span>
+            </div>
+        
+        </section>  
+
+
+        <app-promotions-local>  
+            
+        </app-promotions-local>
+    
+    
+    
+    </div>
+
+</div>

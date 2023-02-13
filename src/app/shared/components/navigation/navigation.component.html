@@ -1,0 +1,20 @@
+<div class="buttom-nav" [style.background]="theme.background_page">
+
+    <div class="container-nav">
+        <nav class="navigation">
+            <ul class="list-nav">
+                <li (click)="location = 'user'" class="item-nav"><i [class.active]="location === 'user'  "class="fa-solid fa-circle-user icon-nav"></i></li>
+                <li (click)="location = 'home'" class="item-nav">
+                    <div class="grid-menu" [class.active]="location === 'home' " >
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </li>
+                <li (click)="location = 'cart'" class="item-nav"><i [class.active]="location === 'cart' " class="fa-solid fa-cart-shopping icon-nav"></i></li>
+            </ul>
+        </nav>
+    </div>
+
+</div>

@@ -1,0 +1,37 @@
+header{
+    background: #ff7b37;
+    border-radius: 0 0 25px 25px;
+
+
+}
+
+.container-header{
+    padding: 10px 15px;
+}
+
+.container-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.local-info{
+    
+    .local-name{
+        font-size: 20px;
+        color: #242424;
+    }
+
+    .local-ubication{
+        font-size: 14px;
+        color:#6c6c6c;
+    }
+}
+
+.local-image{
+    img{
+        border-radius: 50%;
+        object-fit: cover;
+
+    }
+}
