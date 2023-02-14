@@ -12,6 +12,7 @@ export class ThemesService {
     {
       id:1,
       background:'#ff7b37',
+      bgSec:'#404040',
       colorText:'#303030',
       colorPrimary:'#fff',
       background_page: '#edf2f4'

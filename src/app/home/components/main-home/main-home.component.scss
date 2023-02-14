@@ -6,20 +6,24 @@
 .content{
     width: 100vw;
     max-width: 500px;
+    height: calc(100vh - 100px);
     margin: 0 auto;
     padding: 0 15px 60px 15px;
 }
 
 .categories{
-
     margin: 20px 0;
+    
+    .title-categories{
+        margin: 10px 0;
+    }
 
     .container-categories{
+        scroll-snap-type: x mandatory;
         display:flex;
         padding:0 0 15px 0;
-        gap: 20px;
         overflow-x: scroll;
-        
+        column-gap: 20px;
 
     }
     

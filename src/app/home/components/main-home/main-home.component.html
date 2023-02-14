@@ -4,38 +4,19 @@
 
     <div class="content">
 
-        
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">Slide 1</div>
-              <div class="swiper-slide">Slide 2</div>
-              <div class="swiper-slide">Slide 3</div>
-            </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
-            <!-- Add Arrows -->
-            <div class="swiper-button-next"></div> 
-            <div class="swiper-button-prev"></div>
-          </div>
-       
-
         <section class="categories">
-        
+
+            <h2 [style.background]="theme.bgSec" [style.color]="theme.colorPrimary" class="chip-orange title-categories">Categorias</h2>
+    
             <div class="container-categories">
                 <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
             </div>
 
-
-            <div class="container-show-more">
-                <span>Ver mas</span>
-            </div> 
          
         </section>  
 
 
-        <app-promotions-local>  
-            
-        </app-promotions-local>
+        <app-promotions-local>  </app-promotions-local>
     
     
     

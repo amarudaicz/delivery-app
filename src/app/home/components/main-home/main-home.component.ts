@@ -60,5 +60,9 @@ export class MainHomeComponent implements OnInit {
  
 
   
+  f(x:number){
+    return x+1
+  }
+
 
 }

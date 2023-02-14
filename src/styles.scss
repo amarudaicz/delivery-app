@@ -1,11 +1,13 @@
 @use './reset.scss';
 
 .chip-orange{
-    padding: 3px 0;
+    width: fit-content;
+    padding: 3px 15px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
     border-radius: 15px; 
+
 }
 
 /* You can add global styles to this file, and also import other style files */
