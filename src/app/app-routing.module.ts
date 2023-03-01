@@ -5,7 +5,7 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 
 const routes: Routes = [
   {
-    path:'', 
+    path:'/:local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
   },
