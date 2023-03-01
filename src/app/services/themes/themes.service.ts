@@ -7,6 +7,7 @@ export class ThemesService {
 
   constructor() { }
 
+  currentTheme:any
 
   themes:any[]=[
     {
@@ -25,13 +26,17 @@ export class ThemesService {
     }
   ]
 
-  getTheme(id:number){
-    console.log(id);
-    
-    const theme = this.themes.filter((t:any) => t.id === id)
-    console.log(theme);
-    return theme[0]
 
-    
+  setTheme(idTheme:number){
+    const theme = this.themes.filter((t:any) => t.id === idTheme)
+    this.currentTheme=theme[0]
   }
+
+  getTheme(id:number){
+    const theme = this.themes.filter((t:any) => t.id === id)
+    return theme[0]
+  }
+
+
+
 }

@@ -1,12 +1,11 @@
 <div [style.background]="theme.background_page" class="container">
     
-    <app-header></app-header>
 
     <div class="content">
 
         <section class="categories">
 
-            <h2 [style.background]="theme.bgSec" [style.color]="theme.colorPrimary" class="chip-orange title-categories">Categorias</h2>
+            <h2 [style.background]="theme.bgSec" [style.color]="theme.colorPrimary" class="chip title-categories">Categorias</h2>
     
             <div class="container-categories">
                 <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
@@ -18,7 +17,9 @@
 
         <app-promotions-local>  </app-promotions-local>
     
-    
+        <app-products-set>
+            
+        </app-products-set>
 
 
 

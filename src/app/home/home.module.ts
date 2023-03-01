@@ -4,17 +4,21 @@ import { MainHomeComponent } from './components/main-home/main-home.component';
 import { CardCategoryComponent } from './components/card-category/card-category.component';
 import { SharedModule } from '../shared/shared.module';
 import { PromotionsLocalComponent } from './components/promotions-local/promotions-local.component';
+import { RouterModule } from '@angular/router';
+import { ProductsSetComponent } from './components/products-set/products-set.component';
 
 @NgModule({ 
   declarations: [
     MainHomeComponent,
     CardCategoryComponent,
     PromotionsLocalComponent,
+    ProductsSetComponent,
     
   ],
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule
     
   ] 
 })

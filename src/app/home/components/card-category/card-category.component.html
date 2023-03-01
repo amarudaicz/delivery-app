@@ -2,10 +2,17 @@
 
     <div class="card">
         <img class="card-image" src="{{category.image}}" alt="category {{category.image}}" >
-        
-        <h5 [style.color]="theme.colorPrimary"  [style.background]="theme.background" class="card-title">
-            {{category.name}}
-        </h5>
+        <a [routerLink]="['Pizzas']">
+
+            <h5 
+                [style.color]="theme.colorPrimary"  
+                [style.background]="theme.background" 
+                class="card-title">
+
+                {{category.name}}
+
+            </h5>
+        </a>
 
     </div>
 </div>

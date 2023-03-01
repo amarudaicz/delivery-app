@@ -1,6 +1,5 @@
 import { Component,Input, OnInit } from '@angular/core';
 import { ThemesService } from 'src/app/services/themes/themes.service';
-import { _default, theme_1} from '../../../themes' 
 
 @Component({
   selector: 'app-card-category',
@@ -21,11 +20,10 @@ export class CardCategoryComponent implements OnInit {
     this.theme = this.themeService.getTheme(1)
   }
 
-
+  
   theme?:any
     
   @Input() category?:any
-
 
 
 
