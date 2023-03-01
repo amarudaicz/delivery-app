@@ -5,8 +5,11 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 
 const routes: Routes = [
   {
-    
-    path:'', 
+    path:'', redirectTo:'/ased', pathMatch:'full' 
+  },
+  
+  {
+    path:':local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
   },
