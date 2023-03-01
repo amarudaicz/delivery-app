@@ -7,14 +7,14 @@ const routes: Routes = [
   {
     path:'', redirectTo:'/ased', pathMatch:'full' 
   },
-  
+
   {
     path:':local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
   },
   {
-    path:':category', 
+    path:'local/:category', 
     component:MainCategoryComponent,
     data: { animation: 'category' }
   },
