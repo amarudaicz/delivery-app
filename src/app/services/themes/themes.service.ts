@@ -37,6 +37,9 @@ export class ThemesService {
     return theme[0]
   }
 
+  get(property:string){
+    return this.currentTheme[property]
+  }
 
 
 }

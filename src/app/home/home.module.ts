@@ -21,7 +21,9 @@ import { NewselterBoxComponent } from './components/newselter-box/newselter-box.
     CommonModule,
     SharedModule,
     RouterModule
-    
-  ] 
+  ] ,
+  exports:[
+    NewselterBoxComponent
+  ]
 })
 export class HomeModule { }

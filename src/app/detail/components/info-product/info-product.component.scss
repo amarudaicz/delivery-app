@@ -1,0 +1,61 @@
+.container-info{
+    padding: 15px 0 0 0;
+
+}
+
+.container-image{
+    width: 100%;
+    min-height: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+
+    img{
+        width: 100%; min-height: 300px;
+        object-fit: cover;
+
+    }
+}
+
+.container-text{
+    position: absolute;
+    background: white;
+    top: 200%;
+    left: 0;
+    padding: 15px 15px 60px 15px;
+    overflow-y: scroll;
+    border-radius: 15px 15px 0 0;
+
+}
+
+
+.product-category{
+
+}
+
+.product-name{
+
+}
+
+.product-description{
+
+}
+
+.container-ingredients{
+    padding: 7px 0 10px 0;
+
+
+    .list-ingredients{
+        display: flex;
+        flex-wrap:wrap ;
+        gap: 5px;
+
+    }
+
+    .ingredient{
+        font-size: 14px;
+
+    }
+
+}

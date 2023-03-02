@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
   selector: 'app-main-category',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-category.component.scss']
 })
 export class MainCategoryComponent {
+  constructor(public theme:ThemesService){
+
+  }
 
 }

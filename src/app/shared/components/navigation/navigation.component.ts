@@ -8,22 +8,19 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private themeService:ThemesService){
+  constructor(public theme:ThemesService){
 
   }
 
   ngOnInit(){
 
-    this.theme = this.themeService.getTheme(1)
   }
 
 
-  location:string = ''
-  theme:any
-  setNavigation(){
+  location:string = 'home'
 
-
-
+  setNavigation(location:string){
+  
 
   }
 

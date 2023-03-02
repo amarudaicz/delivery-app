@@ -7,15 +7,14 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private themeService:ThemesService){
-
+  constructor(public theme:ThemesService){
+    
 
   }
 
   ngOnInit(): void {
-   this.theme = this.themeService.getTheme(1)
+    this.theme.setTheme(1)
   }
 
-  theme:any
 
 }

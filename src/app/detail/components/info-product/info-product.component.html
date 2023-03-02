@@ -1,0 +1,30 @@
+<div class="container-info">
+
+    <div class="container-image">
+        <img src="{{product.image}}" alt="">
+    </div>
+
+    <div class="container-text" [style.background]="theme.get('background_page')">
+        <span class="product-category">{{product.category}}</span>
+        <h2 class="product-name">{{product.name}}</h2>
+        <h3 class="product-price">{{product.price |currency}}</h3>
+        <p class="product-description">{{product.description}}</p>
+ 
+        <div class="container-ingredients">
+            <ul class="list-ingredients">
+                <li class="chip ingredient" [style.background]="theme.get('background')" [style.color]="theme.get('colorPrimary')" *ngFor="let ingredient of product.ingredients">
+                    {{ingredient}}
+                </li>
+            </ul>
+        </div>
+
+
+        <app-add-product-cart [options]="options">
+
+        </app-add-product-cart>
+ 
+    </div>
+
+
+
+</div>

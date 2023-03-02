@@ -31,9 +31,16 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 4px;
     padding: 10px;
-    background: #ff7b37;
     border-radius: 10px;
+    transition: all 0.1s;
+    &.active-home{
+        gap: 0px;
+        padding: 12px;
+        div{
+            border-radius: 0;
 
+        }
+    }
 
     div{
         width: 8px;
@@ -48,15 +55,4 @@
     color: #b6b6b6;
     padding: 10px;
 
-}
-
-.active{
-    // background: rgba(167, 167, 167, 0.521);
-    border-radius: 50%;
-    position: relative;
-    color: #5350ff;
-    div{
-        background: #5350ff;
-    }
- 
 }

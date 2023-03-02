@@ -4,8 +4,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CategoryModule } from './category/category.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
+import { DetailModule } from './detail/detail.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -13,11 +16,14 @@ import { SharedModule } from './shared/shared.module';
     
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     HomeModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CategoryModule,
+    DetailModule,
     
     
   ],

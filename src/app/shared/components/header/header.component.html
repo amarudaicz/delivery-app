@@ -1,12 +1,12 @@
-<header [style.background]="theme.background_page">
+<header [style.background]="theme.currentTheme.background_page">
 
-    <div class="container-header" [style.background]="theme.background" >
+    <div class="container-header" [style.background]="theme.currentTheme.background" >
         <div class="container-info">
             <div class="local-info">
-                <h1 class="local-name" [style.color]="theme.colorPrimary">
+                <h1 class="local-name" [style.color]="theme.currentTheme.colorPrimary">
                     Punto Pizza
                 </h1>
-                <span class="local-ubication">
+                <span class="local-ubication" [style.color]="theme.currentTheme.colorPrimary">
                     <i class="fa-solid fa-location-dot"></i>
                     Rio Ceballos, Alem 99
                 </span>

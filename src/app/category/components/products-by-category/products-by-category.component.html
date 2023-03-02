@@ -1,0 +1,20 @@
+<section class="products-category">
+
+    
+    <div class="container-products">
+        
+        <h2 class="chip title-category" [style.background]="theme.currentTheme.bgSec" [style.color]="theme.currentTheme.colorPrimary">
+            Pizzas
+        </h2>
+        
+        <div class="container-flex">
+
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+
+      
+         
+        </div>  
+
+    </div>
+
+</section>
