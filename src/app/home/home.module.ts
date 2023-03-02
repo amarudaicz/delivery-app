@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PromotionsLocalComponent } from './components/promotions-local/promotions-local.component';
 import { RouterModule } from '@angular/router';
 import { ProductsSetComponent } from './components/products-set/products-set.component';
+import { NewselterBoxComponent } from './components/newselter-box/newselter-box.component';
 
 @NgModule({ 
   declarations: [
@@ -13,6 +14,7 @@ import { ProductsSetComponent } from './components/products-set/products-set.com
     CardCategoryComponent,
     PromotionsLocalComponent,
     ProductsSetComponent,
+    NewselterBoxComponent,
     
   ],
   imports: [

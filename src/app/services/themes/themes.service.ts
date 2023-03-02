@@ -12,8 +12,8 @@ export class ThemesService {
   themes:any[]=[
     {
       id:1,
-      background:'#ff7b37',
-      bgSec:'#404040',
+      background:'#645bff',
+      bgSec:'#2c3e50',
       colorText:'#303030',
       colorPrimary:'#fff',
       background_page: '#edf2f4'
