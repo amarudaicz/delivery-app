@@ -4,17 +4,19 @@ import { MainCategoryComponent } from './category/components/main-category/main-
 import { MainHomeComponent } from './home/components/main-home/main-home.component';
 
 const routes: Routes = [
-  {
-    path:'', redirectTo:'/ased', pathMatch:'full' 
-  },
 
+  {
+    path:'',
+    component:MainHomeComponent
+
+  },
   {
     path:':local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
   },
   {
-    path:'local/:category', 
+    path:':local/:category', 
     component:MainCategoryComponent,
     data: { animation: 'category' }
   },
