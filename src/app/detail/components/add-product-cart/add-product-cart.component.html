@@ -1,51 +1,59 @@
-
 <div class="container-add">
-    <h4>Tu orden</h4>
+  <h4>Tu orden</h4>
 
-    <div class="container-form">
-        <form action="">
-            
-            <div class="container-options">
-                <div *ngFor="let option of options['porcion']">
-                    <div class="container container-input">
+  <div class="container-form">
+    <form [formGroup]="form" (submit)="saveOrder()">
+      <div class="container-options">
+        <div *ngFor="let option of dataOptions['porcion']">
+          <div class="container container-input">
+            <input
+              type="radio"
+              formControlName="options"
+              checked
+              id="{{ option }}"
+              value="{{ option }}"
+            />
+            <label for="{{ option }}">{{ option }}</label>
+            <div class="checkmark"></div>
+          </div>
+        </div>
+      </div>
 
-                        <input  type="radio" checked id="{{option}}" name="optionsProduct" value="{{option}}">
-                        <label for="{{option}}">{{option}}</label>
-                        <div class="checkmark"></div>
-                     
-                    </div>
-                </div>
-            </div>
+      <div class="especifications">
+        <div class="container-textarea">
+          <textarea
+            formControlName="especifications"
+            id="especifications"
+            placeholder="Si hay algun ingrediente que no quieras escribelo aqui"
+          ></textarea>
+        </div>
+      </div>
 
-            <div class="especifications">
-                <div class="container-textarea">
-                    <textarea name="" id="especifications" placeholder="Si hay algun ingrediente que no quieras escribelo aqui" ></textarea>                    
-                </div>
-            </div>
+      <div class="quantity">
+        <h4>Cantidad</h4>
+        <div class="container-buttons">
+          <div class="container-quantity">
+            <i
+              (click)="quantity = quantity - 1"
+              class="fa-solid fa-square-minus"
+            ></i>
 
-            <div class="quantity">
-                <h4>Cantidad</h4>
-                <div class="container-buttons">
-                    <div class="container-quantity">
-                        
-                        <i (click)="quantity =  quantity-1" class="fa-solid fa-square-minus"></i>
-                        <input min="1" type="number" [value]="quantity">
-                        <i (click)="quantity = quantity+1" class="fa-solid fa-plus"></i>
+            <input [style.border-color]="setError('quantity') ? '' : 'red' "  formControlName="quantity" min="1" type="number" [value]="quantity" />
 
-                     </div> 
+            <i (click)="quantity = quantity + 1" class="fa-solid fa-plus"></i>
+          </div>
 
+          <div class="container-button-add">
+            <button
 
-                    <div class="container-button-add">
-                        <button [style.background]="theme.get('background')" [style.color]="theme.get('colorPrimary')">Agregar al carrito</button>
-                    </div>
-
-                </div>
-            </div>
-
-
-        </form>
-    </div>
-
-
-
+              [style.background]="theme.get('background')"
+              [style.color]="theme.get('colorPrimary')"
+            >
+              Agregar al carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

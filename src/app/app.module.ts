@@ -9,6 +9,7 @@ import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { DetailModule } from './detail/detail.module';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     CategoryModule,
     DetailModule,
+    ReactiveFormsModule
     
     
   ],

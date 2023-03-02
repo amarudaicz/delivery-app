@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -8,16 +9,38 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class AddProductCartComponent implements OnInit {
 
-  constructor(public theme:ThemesService){
+  constructor(public theme:ThemesService, private FormBuilder:FormBuilder){
+
+    this.form = this.FormBuilder.group({
+      options:['', Validators.required],
+      especifications:['', Validators.required],
+      quantity:['', [Validators.required, Validators.min(1)]]
+    })
   }
 
+  
   ngOnInit(): void {
-    console.log(this.options);
+    this.form.controls['quantity'].setValue(this.quantity)
   }
 
-  @Input() options:any
+  form:FormGroup
+  
+  @Input() dataOptions:any
 
   quantity:number = 1
+
+  saveOrder(){
+    this.form.controls['quantity'].setValue(this.quantity)
+
+    console.log(this.form);
+    
+
+  }
+
+
+  setError(control:string){
+    return this.form.controls[control].valid
+  }
   
 
 }
