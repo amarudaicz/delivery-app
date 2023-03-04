@@ -34,13 +34,13 @@
         <div class="container-buttons">
           <div class="container-quantity">
             <i
-              (click)="quantity = quantity - 1"
+              (click)="setQuantity(-1)"
               class="fa-solid fa-square-minus"
             ></i>
 
-            <input [style.border-color]="setError('quantity') ? '' : 'red' "  formControlName="quantity" min="1" type="number" [value]="quantity" />
+            <input formControlName="quantity" type="number" min="1" [value]="quantity" />
 
-            <i (click)="quantity = quantity + 1" class="fa-solid fa-plus"></i>
+            <i (click)="setQuantity(1)" class="fa-solid fa-plus"></i>
           </div>
 
           <div class="container-button-add">

@@ -12,3 +12,11 @@
     position: relative;
 
 }
+
+.container-loader{
+    height: calc(100vh - 73px);
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+}

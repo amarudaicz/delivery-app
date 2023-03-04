@@ -1,4 +1,4 @@
-<header [style.background]="theme.currentTheme.background_page">
+<header *ngIf="routeData.page !== 'detail' " [style.background]="theme.currentTheme.background_page">
 
     <div class="container-header" [style.background]="theme.currentTheme.background" >
         <div class="container-info">

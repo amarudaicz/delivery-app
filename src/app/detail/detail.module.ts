@@ -4,6 +4,7 @@ import { MainDetailComponent } from './components/main-detail/main-detail.compon
 import { InfoProductComponent } from './components/info-product/info-product.component';
 import { AddProductCartComponent } from './components/add-product-cart/add-product-cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class DetailModule { }

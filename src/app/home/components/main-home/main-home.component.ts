@@ -13,7 +13,7 @@ export class MainHomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params:Params)=>{
       this.local = params['params'].local
-      console.log(this.local);
+      console.log(params);
     });
 
 

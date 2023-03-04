@@ -4,6 +4,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { HeaderComponent } from './components/header/header.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { RouterLink, RouterModule } from '@angular/router';
+import { LoaderFullComponent } from './components/loader-full/loader-full.component';
 
 
 
@@ -11,7 +12,8 @@ import { RouterLink, RouterModule } from '@angular/router';
   declarations: [
     NavigationComponent,
     HeaderComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    LoaderFullComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { RouterLink, RouterModule } from '@angular/router';
   exports:[
     NavigationComponent,
     HeaderComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    LoaderFullComponent
 
   ]
 })

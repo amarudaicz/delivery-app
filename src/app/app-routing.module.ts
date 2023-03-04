@@ -7,11 +7,6 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 const routes: Routes = [
 
   {
-    path:'',
-    component:MainHomeComponent,
-    data: { animation: 'home' }
-  },
-  {
     path:':local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
@@ -24,7 +19,7 @@ const routes: Routes = [
   {
     path:':local/:category/:product', 
     component:MainDetailComponent,
-    data: { animation: 'detail' }
+    data: { animation: 'detail', page:'detail' }
   },
 
 

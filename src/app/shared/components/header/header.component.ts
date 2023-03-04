@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -7,13 +9,22 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor(public theme:ThemesService){
+  constructor(public theme:ThemesService, public routeData:RouteDataService){
     
 
   }
 
   ngOnInit(): void {
     this.theme.setTheme(1)
+    
+    
+ 
+    
+    
+  }
+
+  public isRoute(route: string) {
+
   }
 
 
