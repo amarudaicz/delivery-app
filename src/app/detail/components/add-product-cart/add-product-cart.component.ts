@@ -39,7 +39,7 @@ export class AddProductCartComponent implements OnInit {
 
 
   setError(control:string){
-    return this.form.controls[control].valid
+    return this.form.controls[control].valid && this.form.controls[control].markAsTouched
   }
   
 

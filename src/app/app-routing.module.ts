@@ -7,9 +7,9 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 const routes: Routes = [
 
   {
-    path:'', 
-    redirectTo:'asd',
-    pathMatch:'full'
+    path:'',
+    component:MainHomeComponent,
+    data: { animation: 'home' }
   },
   {
     path:':local', 
