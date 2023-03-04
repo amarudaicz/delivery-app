@@ -12,7 +12,7 @@ const routes: Routes = [
     pathMatch:'full'
   },
   {
-    path:'resume:local', 
+    path:':local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
   },
