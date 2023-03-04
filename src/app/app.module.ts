@@ -10,6 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import { DetailModule } from './detail/detail.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     
     
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [  { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

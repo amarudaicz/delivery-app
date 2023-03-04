@@ -8,21 +8,21 @@ const routes: Routes = [
 
   {
     path:'', 
-    redirectTo:'local/asd',
+    redirectTo:'puntopizza',
     pathMatch:'full'
   },
   {
-    path:'local/:local', 
+    path:'resume:local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
   },
   {
-    path:'local/:local/:category',
+    path:':local/:category',
     component:MainCategoryComponent,
     data: { animation: 'category' }
   },
   {
-    path:'local/:local/:category/:product', 
+    path:':local/:category/:product', 
     component:MainDetailComponent,
     data: { animation: 'detail', page:'detail' }
   },
