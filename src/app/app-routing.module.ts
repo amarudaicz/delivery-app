@@ -12,21 +12,21 @@ const routes: Routes = [
     pathMatch:'full'
   },
   {
-    path:':local', 
+    path:'local/:local', 
     component:MainHomeComponent,
     data: { animation: 'home' }
   },
   {
-    path:':local/:category',
+    path:'local/:local/:category',
     component:MainCategoryComponent,
     data: { animation: 'category' }
   },
   {
-    path:':local/:category/:product', 
+    path:'local/:local/:category/:product', 
     component:MainDetailComponent,
     data: { animation: 'detail', page:'detail' }
   },
-
+  
 
 
 ];

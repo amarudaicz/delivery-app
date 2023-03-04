@@ -15,12 +15,12 @@ export class InfoProductComponent implements OnInit {
     console.log(this.route.snapshot.params);
     console.log(this.product);
     
-    this.options = this.product.options
+    this.productForChild = this.product
     
   }
   
   @Input() product:any
-  options:any
+  productForChild:any
   
 
 

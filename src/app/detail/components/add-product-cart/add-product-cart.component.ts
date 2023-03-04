@@ -8,7 +8,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./add-product-cart.component.scss'],
   changeDetection:ChangeDetectionStrategy.Default
 })
-export class AddProductCartComponent implements OnInit, OnChanges {
+export class AddProductCartComponent implements OnInit {
 
   constructor(public theme:ThemesService, private FormBuilder:FormBuilder){
 
@@ -19,29 +19,36 @@ export class AddProductCartComponent implements OnInit, OnChanges {
     })
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    
-  }
-
-  
   ngOnInit(): void {
 
   }
 
-  form:FormGroup
+  @Input() product:any
   
-  @Input() dataOptions:any
-
+  
+  form:FormGroup
   quantity:number = 1
+  shakeError:string = ''
 
   saveOrder(){
+    this.setError()
+
+    
+
+
     console.log(this.form);
+    console.log(this.product);
+    
   }
 
+  setError(){
+    if (this.form.controls['options'].invalid){
+      this.shakeError = 'shake'
+      setTimeout(() => {this.shakeError = ''}, 500);  
+    }
 
-  setError(control:string){
-    return this.form.controls[control].valid && this.form.controls[control].markAsTouched
+    this.form.markAsTouched()
+    
   }
   
   setQuantity(number:number){

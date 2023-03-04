@@ -4,7 +4,7 @@
   <div class="container-form">
     <form [formGroup]="form" (submit)="saveOrder()">
       <div class="container-options">
-        <div *ngFor="let option of dataOptions['porcion']">
+        <div *ngFor="let option of product.options['porcion']">
           <div class="container container-input">
             <input
               type="radio"
@@ -17,6 +17,9 @@
             <div class="checkmark"></div>
           </div>
         </div>
+
+        <span [class]="'form-error ' + shakeError" *ngIf="form.controls['options'].invalid" >Elije una opción</span>
+     
       </div>
 
       <div class="especifications">
@@ -45,7 +48,6 @@
 
           <div class="container-button-add">
             <button
-
               [style.background]="theme.get('background')"
               [style.color]="theme.get('colorPrimary')"
             >

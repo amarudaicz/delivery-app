@@ -16,7 +16,7 @@ export class ThemesService {
       bgSec:'#2c3e50',
       colorText:'#303030',
       colorPrimary:'#fff',
-      background_page: '#edf2f4'
+      background_page: '#edede9'
       
     },
     {

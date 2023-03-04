@@ -11,14 +11,13 @@
 
 .container-options {
   display: flex;
-  gap: 10px;
+  gap: 13px;
 }
 
 .container-input {
   display: flex;
   align-items: center;
   column-gap: 4px;
-  padding: 4px;
 }
 
 .especifications {
@@ -79,14 +78,29 @@
   }
 }
 
+.form-error {
+  color: rgb(227, 88, 88);
+}
 
+@keyframes shake {
+  0% {transform: translateX(0);}
+  25% {
+    transform: translateX(-5px) ;
+  }
+  50% {
+    transform: translateX(5px) ;
+  }
+  75% {
+    transform: translateX(-5px) ;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 
-
-
-
-
-
-
+.shake {
+  animation: shake 0.5s;
+}
 
 /* Hide the default checkbox */
 .container input {
@@ -113,6 +127,7 @@
   background-color: #ccc;
   transition: all 0.3s;
   border-radius: 5px;
+  z-index: 0;
 }
 
 /* When the checkbox is checked, add a blue background */

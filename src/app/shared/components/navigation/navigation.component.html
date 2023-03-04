@@ -19,7 +19,10 @@
         </li>
 
         <li (click)="location = 'cart'" class="item-nav">
-          <i [style.color]="location === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
+          <div class="cart-container">
+            <i [style.color]="location === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
+            <div [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorPrimary" class="cart-count">{{ 2 }}</div>
+          </div>
         </li>
       </ul>
 
