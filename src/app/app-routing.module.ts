@@ -12,9 +12,8 @@ const routes: Routes = [
     pathMatch:'full'
   },
   {
-    path:':local', 
-    component:MainHomeComponent,
-    data: { animation: 'home' }
+    path:'',
+    loadChildren:()=>import('./home/home.module').then(m => m.HomeModule),
   },
   {
     path:':local/:category',

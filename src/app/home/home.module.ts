@@ -7,6 +7,7 @@ import { PromotionsLocalComponent } from './components/promotions-local/promotio
 import { RouterModule } from '@angular/router';
 import { ProductsSetComponent } from './components/products-set/products-set.component';
 import { NewselterBoxComponent } from './components/newselter-box/newselter-box.component';
+import { RoutesHomeModule } from './routes-home.module';
 
 @NgModule({ 
   declarations: [
@@ -20,7 +21,8 @@ import { NewselterBoxComponent } from './components/newselter-box/newselter-box.
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RoutesHomeModule,
+    RouterModule,
   ] ,
   exports:[
     NewselterBoxComponent
