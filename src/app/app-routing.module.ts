@@ -7,9 +7,14 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 const routes: Routes = [
 
   {
-    path:'',
-    redirectTo:'punto',
+    path:'', 
+    redirectTo:'asd',
     pathMatch:'full'
+  },
+  {
+    path:':local', 
+    component:MainHomeComponent,
+    data: { animation: 'home' }
   },
   {
     path:':local/:category',
