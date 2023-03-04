@@ -8,7 +8,7 @@ const routes: Routes = [
 
   {
     path:'', 
-    redirectTo:'asd',
+    redirectTo:'local/asd',
     pathMatch:'full'
   },
   {
