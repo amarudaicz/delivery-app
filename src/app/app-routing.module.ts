@@ -6,6 +6,11 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 
 const routes: Routes = [
   {
+    path:'',
+    redirectTo:'local/punt',
+    pathMatch:'full'
+  },
+  {
     path: 'local',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
