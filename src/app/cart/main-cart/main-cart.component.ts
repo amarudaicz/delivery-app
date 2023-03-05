@@ -21,11 +21,10 @@ export class MainCartComponent implements OnInit {
   constructor(private cartService: CartService, public theme: ThemesService, public routeService:RouteDataService) {}
 
   ngOnInit(): void {
+    this.routeService.setCurrent('cart')
+    
     this.cartService.getCartItems().subscribe((items: any[]) => {
-      this.products = items;
-      console.log(this.routeService.getOrigin());
-      
-      
+      this.products = items;      
       if (items.length === 0){
         this.subtotal = 0
         return

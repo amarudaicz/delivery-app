@@ -6,23 +6,26 @@
           <i [style.color]="location === 'user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
         </li>
 
-        <li (click)="location = 'home'" class="item-nav">
-          <div
-            class="grid-menu"
-            [class.active-home]="location==='home'"
-            [style.background]="theme.get('background')"          >
-            <div></div>  
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+        <li class="item-nav">
+          <a [routerLink]="'/'+[routeService.getOrigin()]">
+            <div
+              class="grid-menu"
+              [class.active-home]="routeService.getCurrent() === 'home'"
+              [style.background]="theme.get('background')"          >
+              <div></div>  
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+
+          </a>
         </li>
 
-        <li (click)="location = 'cart'" class="item-nav">
+        <li class="item-nav">
           <a [routerLink]="['cart']">
             <div class="cart-container">
-              <i [style.color]="location === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
-              <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorPrimary" class="cart-counter">{{ itemsCart }}</div>
+              <i [style.color]="routeService.getCurrent() === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
+              <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ itemsCart }}</div>
             </div>
           </a>
         </li>

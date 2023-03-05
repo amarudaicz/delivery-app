@@ -12,6 +12,8 @@ export class MainHomeComponent implements OnInit {
   constructor(private route:ActivatedRoute, public theme:ThemesService, private routeService:RouteDataService){}
 
   ngOnInit(): void {
+    this.routeService.setCurrent('home')
+
     this.route.paramMap.subscribe((params:Params)=>{
       console.log(params['params'].local);
       

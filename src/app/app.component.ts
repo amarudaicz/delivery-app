@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ChildrenOutletContexts } from '@angular/router';
 import { routeAnimations } from './animations/transition-route';
+import { ThemesService } from './services/themes/themes.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { routeAnimations } from './animations/transition-route';
 export class AppComponent {
   title = 'app-delivery-ng';
 
-  constructor(private contexts: ChildrenOutletContexts) {}
+  constructor(private contexts: ChildrenOutletContexts, public theme:ThemesService) {}
 
   getRouteAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];

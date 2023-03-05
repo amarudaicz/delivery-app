@@ -7,7 +7,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./products-set.component.scss']
 })
 export class ProductsSetComponent implements OnInit {
-  constructor(public themeService:ThemesService){
+  constructor(public theme:ThemesService){
 
   }
 

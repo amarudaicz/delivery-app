@@ -51,12 +51,12 @@
               [@fadeIn]
               *ngIf="stateButton"
               [style.background]="theme.get('background')"
-              [style.color]="theme.get('colorPrimary')"
+              [style.color]="theme.get('colorTextSecondary')"
             >
             Agregar al carrito
             </button>
               
-            <div [@addItemCart] [style.color]="theme.currentTheme.colorPrimary" [style.background]="theme.currentTheme.background" class="anime-cart" *ngIf="stateButton">
+            <div [@addItemCart] [style.color]="theme.currentTheme.colorTextSecondary" [style.background]="theme.currentTheme.background" class="anime-cart" *ngIf="stateButton">
               1
           </div>
           </div>

@@ -8,14 +8,11 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class PromotionsLocalComponent implements OnInit {
 
-  constructor(private themeService:ThemesService){
+  constructor(public theme:ThemesService){
 
   }
   ngOnInit(): void {
-    this.theme = this.themeService.getTheme(1)
-    
   }
   
-  theme:any
 
 }

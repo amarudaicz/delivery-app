@@ -7,20 +7,34 @@ import { Observable } from 'rxjs';
 })
 
 export class RouteDataService {
-  constructor(private route:ActivatedRoute) {
+  constructor() {
     this.orign = localStorage.getItem('origin')
-
+    this.current = localStorage.getItem('current')
   }
 
   orign:string|null
+  current:string|null
 
   setOrigin(origin:string) {
     localStorage.setItem('origin', origin)
+    this.orign = origin
+
+  }
+
+  setCurrent(current:string){
+    localStorage.setItem('current', current )
+    this.current = current
   }
 
   getOrigin(){
     return this.orign
+  }
 
+  
+  getCurrent(){
+    console.log(this.current);
+    
+    return this.current
   }
 
 }

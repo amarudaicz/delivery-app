@@ -5,8 +5,8 @@
         <a [routerLink]="[category.name]">
 
             <h5 
-                [style.color]="theme.colorPrimary"  
-                [style.background]="theme.background" 
+                [style.color]="theme.get('colorTextSecondary')"  
+                [style.background]="theme.get('background')" 
                 class="card-title">
 
                 {{category.name}}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cartData/cart.service';
+import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(public theme:ThemesService, private cartService:CartService){
+  constructor(public theme:ThemesService, private cartService:CartService,public routeService:RouteDataService){
 
   }
 
