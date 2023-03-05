@@ -1,12 +1,12 @@
-<header *ngIf="routeData.page !== 'detail' " [style.background]="theme.currentTheme.background_page">
+<header [style.background]="theme.currentTheme.backgroundPage">
 
     <div class="container-header" [style.background]="theme.currentTheme.background" >
         <div class="container-info">
             <div class="local-info">
-                <h1 class="local-name" [style.color]="theme.currentTheme.colorPrimary">
+                <h1 class="local-name" [style.color]="theme.get('colorTextSecondary')">
                     Punto Pizza
                 </h1>
-                <span class="local-ubication" [style.color]="theme.currentTheme.colorPrimary">
+                <span class="local-ubication" [style.color]="theme.get('colorTextSecondary')">
                     <i class="fa-solid fa-location-dot"></i>
                     Rio Ceballos, Alem 99
                 </span>

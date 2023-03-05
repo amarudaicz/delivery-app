@@ -7,7 +7,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./newselter-box.component.scss']
 })
 export class NewselterBoxComponent {
-  constructor(public themeService:ThemesService){
+  constructor(public theme:ThemesService){
 
   }
 }

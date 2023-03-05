@@ -1,4 +1,4 @@
-<div class="buttom-nav" [style.background]="theme.currentTheme.background_page">
+<div class="buttom-nav" [style.background]="theme.currentTheme.backgroundPage">
   <div class="container-nav">
     <nav class="navigation">
       <ul class="list-nav">
@@ -19,10 +19,12 @@
         </li>
 
         <li (click)="location = 'cart'" class="item-nav">
-          <div class="cart-container">
-            <i [style.color]="location === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
-            <div [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorPrimary" class="cart-count">{{ 2 }}</div>
-          </div>
+          <a [routerLink]="['cart']">
+            <div class="cart-container">
+              <i [style.color]="location === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
+              <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorPrimary" class="cart-counter">{{ itemsCart }}</div>
+            </div>
+          </a>
         </li>
       </ul>
 

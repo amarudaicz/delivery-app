@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Theme } from 'src/app/interfaces/theme-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +10,30 @@ export class ThemesService {
 
   currentTheme:any
 
-  themes:any[]=[
+  themes:Theme[]=[
     {
       id:1,
       background:'#645bff',
-      bgSec:'#2c3e50',
+      backgroundSec:'#2c3e50',
+      backgroundPage: '#edede9',
       colorText:'#303030',
-      colorPrimary:'#fff',
-      background_page: '#edede9'
-      
+      colorTextSecondary: '#fff',
+      colorPrimary:'',
+      colorBorderPrimary: 'string',
+      colorBorderSecondary: 'string',
+      colorSecondary: 'string'
     },
     {
       id:2,
-      background:'blue',
-      colorText:'#784511'
+      background:'#645bff',
+      backgroundSec:'#2c3e50',
+      backgroundPage: '#edede9',
+      colorText:'#303030',
+      colorPrimary:'#fff',
+      colorTextSecondary: 'string',
+      colorBorderPrimary: 'string',
+      colorBorderSecondary: 'string',
+      colorSecondary: 'string'
     }
   ]
 

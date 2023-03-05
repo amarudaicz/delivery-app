@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -8,12 +9,14 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./main-home.component.scss']
 })
 export class MainHomeComponent implements OnInit {
-  constructor(private route:ActivatedRoute, private themeService:ThemesService){}
+  constructor(private route:ActivatedRoute, public theme:ThemesService, private routeService:RouteDataService){}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params:Params)=>{
+      console.log(params['params'].local);
+      
       this.local = params['params'].local
-      console.log(params);
+      this.routeService.setOrigin(params['params'].local)
     });
 
 
@@ -23,13 +26,11 @@ export class MainHomeComponent implements OnInit {
       theme:1
     }
     
-    this.theme = this.themeService.getTheme(this.local.theme)
     
   }
   
   local?:{name:string, ubication:string, theme:number}
   
-  theme:any
 
   categories:any[] = [
     {

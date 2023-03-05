@@ -27,7 +27,7 @@ export class ProductsByCategoryComponent {
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg',
-      id:1
+      id:2
       
       
     },
@@ -36,7 +36,7 @@ export class ProductsByCategoryComponent {
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:1
+      ,id:3
       
     },
     {
@@ -44,14 +44,14 @@ export class ProductsByCategoryComponent {
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:1
+      ,id:4
       
     },  {
       name:'Mozzarella',
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:1
+      ,id:5
       
     },
     {
@@ -59,14 +59,14 @@ export class ProductsByCategoryComponent {
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:1
+      ,id:6
       
     },  {
       name:'Mozzarella',
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:1
+      ,id:7
       
     },
     {
@@ -74,7 +74,7 @@ export class ProductsByCategoryComponent {
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:1
+      ,id:8
       
     }
   ]

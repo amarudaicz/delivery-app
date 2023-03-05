@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="content">
+    <div class="cart">
+
+      <div *ngIf="subtotal !== 0" class="container-title">
+        <h2 class="title-cart">Mi carrito</h2>
+      </div>
+
+      <ul class="product-list">
+        <div *ngFor="let product of products" class="cart-item">
+          <div class="container-image">
+            <img src="{{ product.image }}" alt="Product Image" />
+          </div>
+          <div class="cart-item-details">
+            <h3>{{ product.name }}</h3>
+            <p *ngIf="product.options"><b>Porcion:</b> {{ product.options }}</p>
+
+            <div class="quantity">
+              <i
+                (click)="setQuantity(product.id, -1, inputQuantity.value)"
+                class="fa-solid fa-minus"
+                [style.borderColor]="theme.get('background')"
+              ></i>
+              <input
+                disabled
+                [id]="product.id"
+                #inputQuantity
+                type="number"
+                [value]="product.quantity"
+              />
+              <i
+                (click)="setQuantity(product.id, 1, inputQuantity.value)"
+                class="fa-solid fa-plus"
+                [style.borderColor]="theme.get('background')"
+              ></i>
+            </div>
+            
+            <p><b>Precio:</b> {{ product.price | currency }}</p>
+          </div>
+
+          <button class="remove-item" (click)="removeProduct(product.id)">
+              <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </ul>
+
+      <div *ngIf="subtotal !== 0">
+
+          <div class="subtotal">
+            <span>Subtotal:</span>
+            <span class="subtotal-value">{{ subtotal | currency }}</span>
+          </div>
+    
+          <div class="buttons">
+            <button class="button-clear" (click)="clearCart()">
+              Vaciar carrito
+            </button>
+            <button
+              [style.background]="theme.get('background')"
+              [style.color]="theme.get('colorTextSecondary')"
+              class="button-checkout"
+              (click)="checkout()"
+            >
+              Checkout
+            </button>
+          </div>
+      </div>
+
+
+
+
+
+
+
+      <!-- CART EMPTYYYYYY-->
+      <div *ngIf="subtotal === 0" [@fadeIn] class="empty-cart">
+        <h2>Parece que no hay productos en tu carrito :(</h2>
+        <i class="fa-solid fa-cart-plus"></i>
+        <div>
+            <a  [routerLink]="'/'+[routeService.getOrigin()]" >
+            <button [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')">
+                Ir al inicio
+            </button>
+        
+        </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -38,7 +38,7 @@
           <div class="container-quantity">
             <i
               (click)="setQuantity(-1)"
-              class="fa-solid fa-square-minus"
+              class="fa-solid fa-minus"
             ></i>
 
             <input formControlName="quantity" type="number" min="1" [value]="quantity" />
@@ -48,11 +48,17 @@
 
           <div class="container-button-add">
             <button
+              [@fadeIn]
+              *ngIf="stateButton"
               [style.background]="theme.get('background')"
               [style.color]="theme.get('colorPrimary')"
             >
-              Agregar al carrito
+            Agregar al carrito
             </button>
+              
+            <div [@addItemCart] [style.color]="theme.currentTheme.colorPrimary" [style.background]="theme.currentTheme.background" class="anime-cart" *ngIf="stateButton">
+              1
+          </div>
           </div>
         </div>
       </div>

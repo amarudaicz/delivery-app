@@ -9,13 +9,15 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor(public theme:ThemesService, public routeData:RouteDataService){
+  constructor(public theme:ThemesService, public routeData:RouteDataService, private route:ActivatedRoute){
     
 
   }
 
   ngOnInit(): void {
     this.theme.setTheme(1)
+    console.log(this.route.snapshot);
+    
     
     
  

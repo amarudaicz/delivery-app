@@ -5,33 +5,19 @@ import { MainDetailComponent } from './detail/components/main-detail/main-detail
 import { MainHomeComponent } from './home/components/main-home/main-home.component';
 
 const routes: Routes = [
+  {
+    path: 'local',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+  },
 
   {
-    path:'', 
-    redirectTo:'puntopizza',
-    pathMatch:'full'
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
   },
-  {
-    path:'',
-    loadChildren:()=>import('./home/home.module').then(m => m.HomeModule),
-  },
-  {
-    path:':local/:category',
-    component:MainCategoryComponent,
-    data: { animation: 'category' }
-  },
-  {
-    path:':local/:category/:product', 
-    component:MainDetailComponent,
-    data: { animation: 'detail', page:'detail' }
-  },
-  
-
-
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash:true})],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

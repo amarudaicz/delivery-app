@@ -11,6 +11,7 @@ import { DetailModule } from './detail/detail.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CartModule } from './cart/cart.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     BrowserAnimationsModule,
     CategoryModule,
     DetailModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CartModule
     
     
   ],

@@ -21,7 +21,7 @@ export class MainDetailComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.product = {
-        id: 1,
+        id: this.route.snapshot.queryParams['id'],
         name: 'Mozzarella',
         category: 'Pizzas',
         image:
@@ -43,7 +43,10 @@ export class MainDetailComponent implements OnInit {
           porcion: ['Media', 'Completa'],
         },
       };
-    }, 5000);
+    }, 0);
+
+    console.log(this.route.snapshot.queryParams);
+    
 
     
   }
