@@ -1,7 +1,7 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+ 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryModule } from './category/category.module';
@@ -12,8 +12,9 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CartModule } from './cart/cart.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
-@NgModule({
+@NgModule({ 
   declarations: [
     AppComponent,
     
@@ -22,13 +23,19 @@ import { CartModule } from './cart/cart.module';
     RouterModule,
     BrowserModule,
     AppRoutingModule,
-    HomeModule,
+    HomeModule,  
     SharedModule,
     BrowserAnimationsModule,
     CategoryModule,
     DetailModule,
     ReactiveFormsModule,
     CartModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
 
     
     
