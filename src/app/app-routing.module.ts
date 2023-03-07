@@ -4,16 +4,29 @@ import { MainCategoryComponent } from './category/components/main-category/main-
 import { MainDetailComponent } from './detail/components/main-detail/main-detail.component';
 import { MainHomeComponent } from './home/components/main-home/main-home.component';
 
-const routes: Routes = [
+const routes: Routes = [ 
+  {
+    path:'',
+    redirectTo:'pun',
+    pathMatch:'full'
+  },
+  {
+    path:'cart',
+    redirectTo:'cart',
+    pathMatch:'full'
+  },
+
+  {
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
+  },
   
   {
     path: '',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
-  {
-    path: 'cart',
-    loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
-  },
+  
+
   {
   path: '**',
   component:MainDetailComponent
@@ -22,7 +35,7 @@ const routes: Routes = [
 ]; 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash:true})],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

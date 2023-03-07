@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -28,7 +28,8 @@ import { CartModule } from './cart/cart.module';
     CategoryModule,
     DetailModule,
     ReactiveFormsModule,
-    CartModule
+    CartModule,
+
     
     
   ],
