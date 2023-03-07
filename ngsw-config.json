@@ -14,7 +14,10 @@
           "/*.js"
         ],
         "urls": [
-        "https://kit.fontawesome.com/76d1a4479f.js"
+        "https://kit.fontawesome.com/76d1a4479f.js",
+        "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap",
+        "https://fonts.googleapis.com",
+        "https://fonts.gstatic.com"
         ]
       }
     },
