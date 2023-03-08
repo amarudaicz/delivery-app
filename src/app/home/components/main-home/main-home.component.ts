@@ -34,7 +34,7 @@ export class MainHomeComponent implements OnInit {
     })
 
 
-    if (window.matchMedia('(display-mode: standalone)')){
+    if (window.matchMedia('(display-mode: standalone)').matches){
       this.appInstalled = true
 
       
