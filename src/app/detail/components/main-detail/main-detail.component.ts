@@ -47,10 +47,10 @@ export class MainDetailComponent implements OnInit {
 
     console.log(this.route.snapshot.queryParams);
     
-    //  window.addEventListener('beforeinstallprompt', event => {
-    //    event.preventDefault();
-    //    this.deferredPrompt = event;
-    //  });
+    window.addEventListener('beforeinstallprompt', (event:any) => {
+      // Mostrar el prompt de instalación
+      event.prompt();
+    });
 
 
     
