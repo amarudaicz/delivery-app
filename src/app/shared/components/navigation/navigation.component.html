@@ -1,9 +1,9 @@
-<div class="buttom-nav" [style.background]="theme.currentTheme.backgroundPage">
+<div *ngIf="local" class="buttom-nav" [style.background]="theme.currentTheme.backgroundPage">
   <div class="container-nav">
     <nav class="navigation">
       <ul class="list-nav">
-        <li (click)="location = 'user'" class="item-nav">
-          <i [style.color]="location === 'user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
+        <li class="item-nav">
+          <i [style.color]="routeService.getCurrent()==='user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
         </li>
 
         <li class="item-nav">

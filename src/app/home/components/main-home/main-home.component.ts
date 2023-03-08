@@ -39,7 +39,7 @@ export class MainHomeComponent implements OnInit {
       navigator.serviceWorker.getRegistration().then((registration) => {
         console.log(registration);
         
-        this.worker = registration
+        this.worker = registration?.installing
     
       });
     }
