@@ -47,40 +47,13 @@ export class MainDetailComponent implements OnInit {
 
     console.log(this.route.snapshot.queryParams);
     
-     window.addEventListener('beforeinstallprompt', event => {
-       event.preventDefault();
-       this.deferredPrompt = event;
-     });
+    //  window.addEventListener('beforeinstallprompt', event => {
+    //    event.preventDefault();
+    //    this.deferredPrompt = event;
+    //  });
 
 
-    this.installApp()
     
-  }
-
-  deferredPrompt: any;
-
-  installApp() {
-
-    if (this.deferredPrompt) {
-
-      this.deferredPrompt.prompt();
-
-      this.deferredPrompt.userChoice.then((choiceResult: any) => {
-        if (choiceResult.outcome === 'accepted') {
-
-          console.log('El usuario ha aceptado la instalación de la aplicación');
-
-        } else {
-          console.log('El usuario ha rechazado la instalación de la aplicación');
-        }
-        this.deferredPrompt = null;
-      });
-
-    } else {
-      console.log('EROR');
-      
-      // window.open('enlace a la tienda de aplicaciones');
-    }
   }
 
   product: any;

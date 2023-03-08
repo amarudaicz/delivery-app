@@ -28,29 +28,22 @@ export class MainHomeComponent implements OnInit {
   ngOnInit(): void {
     this.routeService.setCurrent('home');
 
-    console.log('ads');
-    
+
     this.localData.local.subscribe((localData:object|boolean)=>{
       this.local = localData
-
     })
-    
-     if (window.matchMedia('(display: standalone)').matches) {
-      console.log(window);
-     
+
+
+    if (window.matchMedia('display-mode: standalone')){
+      this.appInstalled = true
+
       
-
-     }
-
-    if ('serviceWorker' in navigator) {
-      console.log(navigator);  
-      // navigator.serviceWorker.getRegistration().then((registration) => {
-      //   console.log(registration);
-        
-      //   this.appInstalled = registration?.installing
-    
-      // });
     }
+
+
+    console.log('asd');
+    
+
 
 
     // this.text = encodeURIComponent(this.text);
