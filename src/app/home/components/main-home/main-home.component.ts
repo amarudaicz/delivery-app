@@ -1,77 +1,88 @@
-import { Component,OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { fadeIn } from 'src/app/animations/main-detail-animations';
+import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
   selector: 'app-main-home',
   templateUrl: './main-home.component.html',
-  styleUrls: ['./main-home.component.scss']
+  styleUrls: ['./main-home.component.scss'],
+  animations:[
+    fadeIn
+  ]
 })
 export class MainHomeComponent implements OnInit {
-  constructor(private route:ActivatedRoute, public theme:ThemesService, private routeService:RouteDataService){}
+
+  local: any;
+  worker:any = true
+
+  constructor(
+    public theme: ThemesService,
+    private routeService: RouteDataService,
+    private localData: LocalDataService
+  ) {}
 
   ngOnInit(): void {
-    this.routeService.setCurrent('home')
+    this.routeService.setCurrent('home');
 
-    this.route.paramMap.subscribe((params:Params)=>{
-      console.log(params['params'].local);
+    this.localData.local.subscribe((localData:object|boolean)=>{
+      this.local = localData
+
+    })
+
+    if ('serviceWorker' in navigator) {
+      console.log(navigator);
       
-      this.local = params['params'].local
-      this.routeService.setOrigin(params['params'].local)
-    });
-
-
-    this.local = {
-      name:'Punto Pizza',
-      ubication:'Rio Ceballos, Alem 99',
-      theme:1
+      navigator.serviceWorker.getRegistration().then((registration) => {
+        console.log(registration);
+        
+        this.worker = registration
+    
+      });
     }
 
-    this.text = encodeURIComponent(this.text)
+    // this.text = encodeURIComponent(this.text);
     // location.assign('https://wa.me/543543578188?text='+this.text)
-
-    console.log(this.text);
-    console.log('asdsadsd');
-
-    
-    
-    
   }
+
   
-  local?:{name:string, ubication:string, theme:number}
-  
+  categories: any[] = [
+    {
+      name: 'Pizzas',
+      image:
+        'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
+    },
+    {
+      name: 'Hamburgesas',
+      image:
+        'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
+    },
+    {
+      name: 'Hamburgesas',
+      image:
+        'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
+    },
+    {
+      name: 'Pizzas',
+      image:
+        'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
+    },
+    {
+      name: 'Hamburgesas',
+      image:
+        'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
+    },
+    {
+      name: 'Pizzas',
+      image:
+        'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
+    },
+  ];
 
-  categories:any[] = [
-    {
-      name:'Pizzas',
-      image:'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
-    },
-    {
-      name:'Hamburgesas',
-      image:'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
-    },
-    {
-      name:'Hamburgesas',
-      image:'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
-    },
-    {
-      name:'Pizzas',
-      image:'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
-    },{
-      name:'Hamburgesas',
-      image:'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
-    },
-    {
-      name:'Pizzas',
-      image:'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
-    },
-    
-  ] 
-
-
-
-  text:any = `
+  text: any = `
   𝗛𝗼𝗹𝗮 𝘁𝗲 𝗽𝗮𝘀𝗼 𝗲𝗹 𝗿𝗲𝘀𝘂𝗺𝗲𝗻 𝗱𝗲 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼:
 
   𝗡𝗼𝗺𝗯𝗿𝗲: Amaru
@@ -89,9 +100,5 @@ export class MainHomeComponent implements OnInit {
   
   𝗘𝘀𝗽𝗲𝗿𝗼 𝘁𝘂 𝗿𝗲𝘀𝗽𝘂𝗲𝘀𝘁𝗮 𝗽𝗮𝗿𝗮 𝗰𝗼𝗻𝗳𝗶𝗿𝗺𝗮𝗿 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼
   
-  `
-
- 
-
-
+  `;
 }

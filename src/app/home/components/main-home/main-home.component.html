@@ -1,7 +1,7 @@
 
-<div [style.background]="theme.get('backgroundPage')" class="container">
+<div *ngIf="local else loader" [@fadeIn] [style.background]="theme.get('backgroundPage')" class="container">
     
-
+    {{local.name}}
     <div class="content">
 
         <section class="categories">
@@ -15,22 +15,20 @@
          
         </section>  
 
-
         <app-promotions-local>  </app-promotions-local>
     
         <app-products-set> </app-products-set>
 
-        <app-newselter-box></app-newselter-box>
-
-
+        <app-newselter-box *ngIf="worker"></app-newselter-box>
 
     </div>
 
 
 
-
-
-
-
-
 </div>
+
+<ng-template #loader>
+
+ <app-loader-full></app-loader-full>
+
+</ng-template>

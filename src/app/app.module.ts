@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CartModule } from './cart/cart.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({ 
   declarations: [
@@ -30,6 +31,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     DetailModule,
     ReactiveFormsModule,
     CartModule,
+    HttpClientModule,
+    
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
