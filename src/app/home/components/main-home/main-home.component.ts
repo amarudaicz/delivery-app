@@ -17,7 +17,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class MainHomeComponent implements OnInit {
 
   local: any;
-  worker:any = true
+  appInstalled:any = false
 
   constructor(
     public theme: ThemesService,
@@ -39,7 +39,7 @@ export class MainHomeComponent implements OnInit {
       navigator.serviceWorker.getRegistration().then((registration) => {
         console.log(registration);
         
-        this.worker = registration?.installing
+        this.appInstalled = registration?.installing
     
       });
     }
