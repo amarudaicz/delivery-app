@@ -28,25 +28,36 @@ export class MainHomeComponent implements OnInit {
   ngOnInit(): void {
     this.routeService.setCurrent('home');
 
+    console.log('ads');
+    
     this.localData.local.subscribe((localData:object|boolean)=>{
       this.local = localData
 
     })
+    
+    // if (window.matchMedia('(display: standalone)').matches) {
+    //   console.log(window);
+     
+      
+
+    // }
 
     if ('serviceWorker' in navigator) {
-      console.log(navigator);
-      
-      navigator.serviceWorker.getRegistration().then((registration) => {
-        console.log(registration);
+      console.log(navigator);  
+      // navigator.serviceWorker.getRegistration().then((registration) => {
+      //   console.log(registration);
         
-        this.appInstalled = registration?.installing
+      //   this.appInstalled = registration?.installing
     
-      });
+      // });
     }
-
     // this.text = encodeURIComponent(this.text);
     // location.assign('https://wa.me/543543578188?text='+this.text)
-  }
+
+    
+ 
+}
+
 
   
   categories: any[] = [
