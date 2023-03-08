@@ -35,12 +35,12 @@ export class MainHomeComponent implements OnInit {
 
     })
     
-    // if (window.matchMedia('(display: standalone)').matches) {
-    //   console.log(window);
+     if (window.matchMedia('(display: standalone)').matches) {
+      console.log(window);
      
       
 
-    // }
+     }
 
     if ('serviceWorker' in navigator) {
       console.log(navigator);  
@@ -51,15 +51,17 @@ export class MainHomeComponent implements OnInit {
     
       // });
     }
+
+
     // this.text = encodeURIComponent(this.text);
     // location.assign('https://wa.me/543543578188?text='+this.text)
 
     
  
 }
-
-
   
+
+
   categories: any[] = [
     {
       name: 'Pizzas',
