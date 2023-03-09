@@ -27,9 +27,10 @@ export class CheckoutComponent implements OnInit {
     private wpService: WpService,
     private matDialog: MatDialog
   ) {
+
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      direction: ['', Validators.required],
+      direction: ['', ],
       payMethod: ['', Validators.required],
       amountReceived: ['', ],
       reference: [''],
@@ -71,6 +72,10 @@ export class CheckoutComponent implements OnInit {
       direction: this.form.controls['direction'].value,
       reference: this.form.controls['reference'].value,
     };
+
+    if (this.form.controls['shippingMethod'].value === 'delivery') {
+      this.form.controls['direction'].setValidators(Validators.required)
+    }
 
     console.log(this.form.value);
 
