@@ -31,36 +31,35 @@ export class WpService {
         dataItems = e;
         this.products += `${index === 0 ? e.category.toUpperCase() : ''}
           X${e.quantity}
-          name:${e.name},
-          price:${e.price}
+          ${e.name},
+          precio: ${e.price}
         `;
       });
     });
 
-    const text: string = `
-    𝗛𝗼𝗹𝗮 𝘁𝗲 𝗽𝗮𝘀𝗼 𝗲𝗹 𝗿𝗲𝘀𝘂𝗺𝗲𝗻 𝗱𝗲 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼:
-    Pedido: ${this.genIdOrder()}
-    𝗡𝗼𝗺𝗯𝗿𝗲: ${userData.name}
-    𝗗𝗶𝗿𝗲𝗰𝗰𝗶𝗼𝗻: ${userData.direction}
-    
-    𝗙𝗼𝗿𝗺𝗮 𝗗𝗲 𝗣𝗮𝗴𝗼: ${userData.payMethod}
-    𝗧𝗼𝘁𝗮𝗹: $${subtotal}.00
+const text: string = `
+𝗛𝗼𝗹𝗮 𝘁𝗲 𝗽𝗮𝘀𝗼 𝗲𝗹 𝗿𝗲𝘀𝘂𝗺𝗲𝗻 𝗱𝗲 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼:
 
-    ${
+𝗣𝗲𝗱𝗶𝗱𝗼: ${this.genIdOrder()}
+𝗡𝗼𝗺𝗯𝗿𝗲: ${userData.name}
+𝗗𝗶𝗿𝗲𝗰𝗰𝗶𝗼𝗻: ${userData.direction}
+    
+𝗙𝗼𝗿𝗺𝗮 𝗗𝗲 𝗣𝗮𝗴𝗼: ${userData.payMethod}
+𝗧𝗼𝘁𝗮𝗹: $${subtotal}.00
+
+${
       userData.payMethod === 'efectivo'
         ? '𝗣𝗮𝗴𝗼 𝗖𝗼𝗻: $' + userData.amountReceived
         : ''
     }
     
-    𝗠𝗶 𝗽𝗲𝗱𝗶𝗱𝗼 𝗲𝘀:
+𝗠𝗶 𝗽𝗲𝗱𝗶𝗱𝗼 𝗲𝘀:
 
-    ${this.products}
+${this.products}
 
-    𝗧𝗢𝗧𝗔𝗟: $${subtotal}.00
+𝗧𝗢𝗧𝗔𝗟: $${subtotal}.00
     
-    𝗘𝘀𝗽𝗲𝗿𝗼 𝘁𝘂 𝗿𝗲𝘀𝗽𝘂𝗲𝘀𝘁𝗮 𝗽𝗮𝗿𝗮 𝗰𝗼𝗻𝗳𝗶𝗿𝗺𝗮𝗿 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼
-    
-    `;
+𝗘𝘀𝗽𝗲𝗿𝗼 𝘁𝘂 𝗿𝗲𝘀𝗽𝘂𝗲𝘀𝘁𝗮 𝗽𝗮𝗿𝗮 𝗰𝗼𝗻𝗳𝗶𝗿𝗺𝗮𝗿 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼`;
     console.log(text);
 
     const encodedText = encodeURIComponent(text);
