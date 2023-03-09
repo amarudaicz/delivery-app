@@ -26,7 +26,7 @@ export class MainDetailComponent implements OnInit {
       this.product = {
         id: this.route.snapshot.queryParams['id'],
         name: 'BEREN',
-        category:'Pizzas',
+        category:'Lomos',
         image:
           'https://img.freepik.com/fotos-premium/pizza-mozzarella-aceitunas-tabla-madera_311379-1163.jpg?w=2000',
         price: 700,
