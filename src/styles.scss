@@ -1,4 +1,5 @@
 @use './reset.scss';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .chip{
     width: fit-content;
@@ -9,5 +10,11 @@
     border-radius: 15px; 
 
 }
+
+
+.mdc-line-ripple::after{
+    border-bottom-color: rgb(152, 152, 152) !important ;
+}
+
 
 /* You can add global styles to this file, and also import other style files */

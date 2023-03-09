@@ -8,8 +8,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export class RouteDataService {
   constructor() {
-    this.orign = localStorage.getItem('origin')
-    this.current = localStorage.getItem('current')
+    this.orign = sessionStorage.getItem('origin')
+    this.current = sessionStorage.getItem('current')
   }
 
   orign:string|null
@@ -17,12 +17,12 @@ export class RouteDataService {
 
 
   setOrigin(origin:string) {
-    localStorage.setItem('origin', origin)
+    sessionStorage.setItem('origin', origin)
     this.orign = origin
   }
 
   setCurrent(current:string){
-    localStorage.setItem('current', current )
+    sessionStorage.setItem('current', current )
     this.current = current
   }
 

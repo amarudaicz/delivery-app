@@ -1,0 +1,42 @@
+.checkout {
+  padding: 15px 0;
+}
+
+.checkout-form {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0062cc;
+}
+
+.input-group{
+    width: 100%;
+}
+
+
+.alert-form{
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.input-select{
+
+}

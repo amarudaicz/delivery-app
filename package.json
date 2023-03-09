@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "start-pwa":"ng build --prod --base-href=/ && http-server -p 8080 -c-1 dist/app-ng-delivery"
+    "start-pwa": "ng build --prod --base-href=/ && http-server -p 8080 -c-1 dist/app-ng-delivery"
   },
   "private": true,
   "dependencies": {

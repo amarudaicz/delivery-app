@@ -17,8 +17,6 @@ export class HeaderComponent implements OnInit {
   localName: any;
   local:any
   constructor(public theme:ThemesService, public routeData:RouteDataService, private localData:LocalDataService){
-    
-
   }
 
   ngOnInit(): void {

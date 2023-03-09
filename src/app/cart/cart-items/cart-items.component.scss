@@ -1,0 +1,144 @@
+
+.cart-item {
+    position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 8px;
+      border: 1px solid #818181;
+      border-radius: 10px;
+    }
+    .container-title {
+      padding: 10px 0;
+      width: 100%;
+    }
+    .title-cart {
+      border-top: 1px solid #ccc;
+      padding: 5px 0;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    .cart {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-list {
+      width: 100%;
+    }
+    
+    .subtotal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+      margin-top: auto;
+    }
+    
+    .subtotal-value {
+      font-weight: bold;
+    }
+    
+    .remove-item{
+        border: none;
+        background: none;
+        position: absolute;
+        top: -3px;
+        right: 6px;
+        font-size: 17px;
+        padding: 3px;
+    }
+    
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 10px;
+    }
+    
+    .button-clear {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    
+    .button-checkout {
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    
+    
+    
+    .container-image {
+      width: 100px;
+      display: grid;
+      place-items: center;
+    
+      img {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
+    
+    .cart-item-details {
+      flex-grow: 1;
+      margin: 0 10px;
+    }
+    
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    
+    
+      i {
+        font-size: 16px;
+        border: 2px solid;
+        padding: 3px;
+        border-radius: 5px;
+        opacity: 0.9;
+      }
+    
+      input {
+          width: 30px;
+          height: 20px;
+          border: 2px solid #818181;
+        border-radius: 5px;
+        text-align: center;
+      }
+    }
+    
+    
+    
+    .empty-cart{
+        padding: 15px 0;
+        text-align: center;
+    
+        h2{
+    
+            margin-bottom: 15px;
+    
+        }
+    
+        i{
+            font-size: 80px;
+            opacity: 0.7;
+        }
+        
+        button{
+            margin-top: 15px;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+    
+    
+        }
+    }
+    

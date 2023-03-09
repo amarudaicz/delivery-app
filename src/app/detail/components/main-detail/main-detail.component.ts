@@ -16,9 +16,12 @@ export class MainDetailComponent implements OnInit {
   constructor(
     public theme: ThemesService,
     private routeData: RouteDataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private routeService:RouteDataService
   ) {}
   ngOnInit(): void {
+    this.routeService.setCurrent('detail');
+
     setTimeout(() => {
       this.product = {
         id: this.route.snapshot.queryParams['id'],
@@ -49,6 +52,8 @@ export class MainDetailComponent implements OnInit {
     
     window.addEventListener('beforeinstallprompt', (event:any) => {
       // Mostrar el prompt de instalación
+      console.log('PROMPT');
+      
       event.prompt();
     });
 
