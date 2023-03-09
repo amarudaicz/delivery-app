@@ -64,6 +64,7 @@ export class WpService {
     console.log(text);
 
     const encodedText = encodeURIComponent(text);
+    this.clearMessage()
     return encodedText
   }
 
@@ -86,5 +87,9 @@ export class WpService {
 
     location.assign(`https://api.whatsapp.com/send?phone=+${telephone}&text=${encodedText}`)
 
+  }
+
+  clearMessage(){
+    this.products = ''
   }
 }
