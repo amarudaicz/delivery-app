@@ -22,7 +22,8 @@ export class CartItemsComponent {
     this.routeService.setCurrent('cart')
     
     this.cartService.getCartItems().subscribe((items: any[]) => {
-      this.products = items;      
+      this.products = items;     
+       
       if (items.length === 0){
         this.subtotal = 0
         return
@@ -50,6 +51,8 @@ export class CartItemsComponent {
   }
 
   setQuantity(id: number, number: number, currentValue: any) {
+    console.log(id);
+    
     if (number === 1) {
       this.cartService.updateQuantity(id, number);
     } else {

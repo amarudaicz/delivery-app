@@ -6,6 +6,7 @@
     <mat-form-field class="input-group" color="primary">
       <mat-label>Nombre Completo</mat-label>
       <input type="text" matInput formControlName="name"/>
+      <mat-error>{{setErrorsMessage('name')}}</mat-error>
 
     </mat-form-field>
 
@@ -25,12 +26,16 @@
           El costo del envio puede variar dependiendo la zona, le indicaremos el monto atravez de Whatsapp
       </p>
 
+      <mat-error>{{setErrorsMessage('shippingMethod')}}</mat-error>
+
+
   </mat-form-field>
 
 
     <mat-form-field *ngIf="form.controls['shippingMethod'].value === 'Delivery' " class="input-group" color="primary">
-        <mat-label>Direccion</mat-label>
-        <input type="text" matInput formControlName="direction"/>
+      <mat-label>Direccion</mat-label>
+      <input type="text" matInput formControlName="direction"/>
+      <mat-error>{{setErrorsMessage('direction')}}</mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="form.controls['shippingMethod'].value === 'Delivery' "  class="input-group">
@@ -52,10 +57,12 @@
         <p class="alert-form" *ngIf="this.form.controls['payMethod'].value === 'Transferencia'" [style.color]="theme.get('background')">
             Le indicaremos el destino de la transferencia una vez realizado el pedido
         </p>
+        
+        <mat-error>{{setErrorsMessage('payMethod')}}</mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="this.form.controls['payMethod'].value === 'Efectivo' && this.form.controls['shippingMethod'].value === 'Delivery'" class="input-group" color="primary">
-        <mat-label>Con cuanto abona</mat-label>
+        <mat-label>Con cuanto abona (opcional)</mat-label>
         <input type="number"  matInput formControlName="amountReceived"/>
         <span matTextPrefix>$&nbsp;</span>
         <span matTextSuffix>.00</span>

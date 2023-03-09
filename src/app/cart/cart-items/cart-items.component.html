@@ -15,19 +15,19 @@
 
           <div class="quantity">
             <i
-              (click)="setQuantity(product.id, -1, inputQuantity.value)"
+              (click)="setQuantity(product.idCart, -1, inputQuantity.value)"
               class="fa-solid fa-minus"
               [style.borderColor]="theme.get('background')"
             ></i>
             <input
               disabled
-              [id]="product.id"
+              [id]="product.idCart"
               #inputQuantity
               type="number"
               [value]="product.quantity"
             />
             <i
-              (click)="setQuantity(product.id, 1, inputQuantity.value)"
+              (click)="setQuantity(product.idCart, 1, inputQuantity.value)"
               class="fa-solid fa-plus"
               [style.borderColor]="theme.get('background')"
             ></i>
@@ -36,7 +36,7 @@
           <p><b>Precio:</b> {{ product.price | currency }}</p>
         </div>
 
-        <button class="remove-item" (click)="removeProduct(product.id)">
+        <button class="remove-item" (click)="removeProduct(product.idCart)">
             <i class="fa-solid fa-xmark"></i>
         </button>
       </div>

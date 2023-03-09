@@ -31,8 +31,8 @@ export class WpService {
     categoryItems.forEach((e: Item, index: number) => {
 this.products += `${index === 0 ? e.category.toUpperCase()+`
 ---------
-`: ''}X${e.quantity} ${e.name} $${e.price}.00
-
+`: ''}X${e.quantity} ${e.name} $${e.price}.00 ${e.options}
+${e.especifications !== '' ? `Especificaciones: ${e.especifications}` : ''}
 `}); 
 
 });

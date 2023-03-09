@@ -60,7 +60,7 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  getErrorMessage(control: string) {
+  setErrorsMessage(control: string) {
     return this.form.controls[control].hasError('required')
       ? 'Este campo es requerido'
       : '';

@@ -46,6 +46,9 @@ export class AddProductCartComponent implements OnInit {
 
   saveOrder(){
     this.setError()
+
+    
+    
     const item = {...this.product, ...this.form.value}
     
     if (this.form.valid) {
@@ -55,6 +58,9 @@ export class AddProductCartComponent implements OnInit {
         this.stateButton=true
       } , 1000);
     }  
+    
+    
+    
 
     
   }
