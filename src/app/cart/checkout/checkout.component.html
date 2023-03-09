@@ -13,27 +13,27 @@
     <mat-form-field class="input-group" appearance="fill">
       <mat-label>Metodo de envio</mat-label>
       <mat-select formControlName="shippingMethod">
-        <mat-option value="delivery">
+        <mat-option value="Delivery">
           Delivery
         </mat-option>
-        <mat-option value="local">
+        <mat-option value="Local">
           Buscar en el local
         </mat-option>
       </mat-select>
 
-      <p class="alert-form" *ngIf="this.form.controls['shippingMethod'].value === 'delivery'" [style.color]="theme.get('background')">
+      <p class="alert-form" *ngIf="this.form.controls['shippingMethod'].value === 'Delivery'" [style.color]="theme.get('background')">
           El costo del envio puede variar dependiendo la zona, le indicaremos el monto atravez de Whatsapp
       </p>
 
   </mat-form-field>
 
 
-    <mat-form-field *ngIf="form.controls['shippingMethod'].value === 'delivery' " class="input-group" color="primary">
+    <mat-form-field *ngIf="form.controls['shippingMethod'].value === 'Delivery' " class="input-group" color="primary">
         <mat-label>Direccion</mat-label>
         <input type="text" matInput formControlName="direction"/>
     </mat-form-field>
 
-    <mat-form-field *ngIf="form.controls['shippingMethod'].value === 'delivery' "  class="input-group">
+    <mat-form-field *ngIf="form.controls['shippingMethod'].value === 'Delivery' "  class="input-group">
         <mat-label>Referencia de la casa (opcional)</mat-label>
         <textarea formControlName="reference" matInput placeholder="Ej. Casa color rojo, porton de madera"></textarea>
     </mat-form-field>
@@ -41,20 +41,20 @@
     <mat-form-field class="input-group" appearance="fill">
         <mat-label>Forma de pago</mat-label>
         <mat-select formControlName="payMethod">
-          <mat-option value="efectivo">
+          <mat-option value="Efectivo">
             Efectivo
           </mat-option>
-          <mat-option value="transferencia">
+          <mat-option value="Transferencia">
             Transferencia
           </mat-option>
         </mat-select>
 
-        <p class="alert-form" *ngIf="this.form.controls['payMethod'].value === 'transferencia'" [style.color]="theme.get('background')">
+        <p class="alert-form" *ngIf="this.form.controls['payMethod'].value === 'Transferencia'" [style.color]="theme.get('background')">
             Le indicaremos el destino de la transferencia una vez realizado el pedido
         </p>
     </mat-form-field>
 
-    <mat-form-field *ngIf="this.form.controls['payMethod'].value === 'efectivo' && this.form.controls['shippingMethod'].value === 'delivery'" class="input-group" color="primary">
+    <mat-form-field *ngIf="this.form.controls['payMethod'].value === 'Efectivo' && this.form.controls['shippingMethod'].value === 'Delivery'" class="input-group" color="primary">
         <mat-label>Con cuanto abona</mat-label>
         <input type="number"  matInput formControlName="amountReceived"/>
         <span matTextPrefix>$&nbsp;</span>

@@ -48,10 +48,10 @@ const text: string = `
 
 𝗙𝗼𝗿𝗺𝗮 𝗗𝗲 𝗣𝗮𝗴𝗼: ${userData.payMethod}
 𝗧𝗼𝘁𝗮𝗹: $${subtotal}.00
-${userData.shippingMethod === 'delivery'? '𝗣𝗮𝗴𝗼 𝗖𝗼𝗻: $'+userData.amountReceived+'.00' + `
+${userData.shippingMethod === 'Delivery'&&userData.amountReceived !== '' ? '𝗣𝗮𝗴𝗼 𝗖𝗼𝗻: $'+userData.amountReceived+'.00' + `
 `: ' '}
 𝗘𝗻𝘁𝗿𝗲𝗴𝗮: ${userData.shippingMethod}
-${userData.shippingMethod === 'delivery'? '𝗗𝗶𝗿𝗲𝗰𝗰𝗶𝗼𝗻: '+userData.direction+ `
+${userData.shippingMethod === 'Delivery'? '𝗗𝗶𝗿𝗲𝗰𝗰𝗶𝗼𝗻: '+userData.direction+ `
 `: ' '}
 𝗠𝗶 𝗽𝗲𝗱𝗶𝗱𝗼 𝗲𝘀:
 

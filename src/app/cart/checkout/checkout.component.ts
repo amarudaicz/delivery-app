@@ -73,7 +73,7 @@ export class CheckoutComponent implements OnInit {
       reference: this.form.controls['reference'].value,
     };
 
-    if (this.form.controls['shippingMethod'].value === 'delivery') {
+    if (this.form.controls['shippingMethod'].value === 'Delivery') {
       this.form.controls['direction'].setValidators(Validators.required)
     }
 
@@ -100,7 +100,7 @@ export class CheckoutComponent implements OnInit {
     console.log(encodedText);
     
     const dialogRef = this.matDialog.open(ModalInfoWpComponent, {
-      width: '250px',
+      width: '280px',
     });
     
     dialogRef.afterClosed().subscribe((response) => {
