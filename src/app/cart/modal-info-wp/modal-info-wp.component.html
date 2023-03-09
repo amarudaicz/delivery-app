@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Confirmar acción</h2>
+<mat-dialog-content>
+  <p> lo redireccionaremos a WhatsApp, para confirmar el pedido</p>
+  <p> Una vez que se redirija a WhatsApp, encontrará un mensaje generado que puede enviar inmediatamente</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="container-buttons">
+        <button class="button-cancel button-dialog" [mat-dialog-close]="false">Cancelar</button>
+
+        <button class="button-accept button-dialog" [mat-dialog-close]="true" [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('background')">Aceptar</button>
+    </div>
+</mat-dialog-actions>

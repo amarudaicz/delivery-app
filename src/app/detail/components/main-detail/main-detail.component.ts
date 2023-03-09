@@ -25,8 +25,8 @@ export class MainDetailComponent implements OnInit {
     setTimeout(() => {
       this.product = {
         id: this.route.snapshot.queryParams['id'],
-        name: 'Mozzarella',
-        category: 'Pizzas',
+        name: 'BEREN',
+        category:'Pizzas',
         image:
           'https://img.freepik.com/fotos-premium/pizza-mozzarella-aceitunas-tabla-madera_311379-1163.jpg?w=2000',
         price: 700,

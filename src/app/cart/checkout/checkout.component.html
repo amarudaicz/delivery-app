@@ -1,7 +1,7 @@
 <div class="checkout">
   <h2>Checkout</h2>
 
-  <form [formGroup]="form" (submit)="redirectWP()" class="checkout-form" >
+  <form [formGroup]="form" (submit)="preLeave()" class="checkout-form" >
 
     <mat-form-field class="input-group" color="primary">
       <mat-label>Nombre Completo</mat-label>
@@ -12,7 +12,7 @@
 
     <mat-form-field class="input-group" color="primary">
         <mat-label>Direccion</mat-label>
-        <input type="text" matInput formControlName="direcction"/>
+        <input type="text" matInput formControlName="direction"/>
     </mat-form-field>
 
     <mat-form-field class="input-group">
@@ -61,10 +61,13 @@
     </mat-form-field>
 
 
-    
+    <p>Subtotal: <b>{{subtotal|currency}}</b> </p>
+    <p>Envio: -</p>
 
     <button [style.background]="theme.get('background')" type="submit">
       Comprar
     </button>
   </form>
+
+
 </div>

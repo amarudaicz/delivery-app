@@ -15,7 +15,7 @@ export class ProductsByCategoryComponent {
   
   products:any[]=[ 
     {
-      name:'Mozzarella',
+      name:'lomito',
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg',
@@ -23,7 +23,7 @@ export class ProductsByCategoryComponent {
 
     },
     {
-      name:'Calabresse',
+      name:'hambur',
       category:'Pizzas',
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg',
@@ -37,44 +37,6 @@ export class ProductsByCategoryComponent {
       price:700,
       image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
       ,id:3
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:4
-      
-    },  {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:5
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:6
-      
-    },  {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:7
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:8
       
     }
   ]

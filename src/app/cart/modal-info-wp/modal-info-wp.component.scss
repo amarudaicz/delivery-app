@@ -1,0 +1,18 @@
+.container-buttons{
+    width: 100%;
+    text-align: center;
+
+}
+
+.button-dialog{
+    display: inline-block;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.button-cancel{
+    border: 1px solid #ccc;
+}

@@ -7,9 +7,11 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import  {MatDialogModule} from '@angular/material/dialog';
+import { ModalInfoWpComponent } from './modal-info-wp/modal-info-wp.component'
 
 @NgModule({
-  declarations: [MainCartComponent, CartItemsComponent, CheckoutComponent],
+  declarations: [MainCartComponent, CartItemsComponent, CheckoutComponent, ModalInfoWpComponent],
   imports: [
     CommonModule,
     RoutesCartRoutingModule,
@@ -17,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule
   ],
 })
 export class CartModule {}
