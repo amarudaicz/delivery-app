@@ -19,6 +19,7 @@ export class NewselterBoxComponent implements OnInit {
   ngOnInit(): void {
     window.addEventListener('beforeinstallprompt', (event: any) => {
       // Prevent Chrome 67 and earlier from automatically showing the prompt
+      event.preventDefault();
       // Stash the event so it can be triggered later.
       this.deferredPrompt = event;
       // Update UI to notify the user they can add to home screen
@@ -34,10 +35,10 @@ export class NewselterBoxComponent implements OnInit {
     this.deferredPrompt.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
         console.log('User accepted the install prompt');
+        this.deferredPrompt = null;
       } else {
         console.log('User dismissed the install prompt');
       }
-      this.deferredPrompt = null;
     });
   }
 
