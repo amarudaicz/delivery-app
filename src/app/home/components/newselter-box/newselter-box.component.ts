@@ -38,6 +38,7 @@ export class NewselterBoxComponent implements OnInit {
         this.deferredPrompt = null;
       } else {
         console.log('User dismissed the install prompt');
+        this.ngOnInit()
       }
     });
   }
