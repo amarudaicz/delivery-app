@@ -5,6 +5,7 @@ import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { Local } from 'src/app/interfaces/local-interface';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
+import { PwaInstallerService } from 'src/app/services/pwa-installer/pwa-installer.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
@@ -16,13 +17,14 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class MainHomeComponent implements OnInit {
   local?: Local;
-  appInstalled: boolean = false;
+  appInstalled: boolean = this.pwaInstaller.isPwaMode();
   categories: Category[] = []; //INTERFACE
 
   constructor(
     public theme: ThemesService,
     private routeService: RouteDataService,
-    private localService: LocalDataService
+    private localService: LocalDataService,
+    private pwaInstaller:PwaInstallerService
   ) {}
 
   ngOnInit(): void {
@@ -32,10 +34,11 @@ export class MainHomeComponent implements OnInit {
 
     console.log(this.local);
 
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      this.appInstalled = true;
-      console.log('stanDLONE');
-    }
+    setTimeout(() => {
+      if (this.pwaInstaller.canInstall()) {
+        this.pwaInstaller.promptInstall()
+      }
+    }, 5000);
 
     this.localService.getProducts().subscribe((data) => {
       this.categories = data.map((e) => {

@@ -24,8 +24,18 @@ export class PwaInstallerService {
       });
     }
   }
-  
+
   public canInstall(): boolean {
     return !!this.deferredPrompt;
+  }
+
+
+  public isPwaMode():boolean{
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      return true
+      console.log('stanDLONE');
+    }else{
+      return false
+    }
   }
 }
