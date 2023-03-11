@@ -1,7 +1,7 @@
 <div class="cart">
 
     <div *ngIf="subtotal !== 0" class="container-title">
-      <h2 class="title-cart">Mi carrito</h2>
+      <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip title-cart">Mi carrito</h2>
     </div>
 
     <ul class="product-list">

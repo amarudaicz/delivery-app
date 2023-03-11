@@ -41,5 +41,9 @@
     color: rgba(0, 0, 0, 0.507);
 }
 
+.mat-mdc-button-persistent-ripple, .mdc-button__ripple{
+    color: transparent;
+}
+
 
 /* You can add global styles to this file, and also import other style files */
