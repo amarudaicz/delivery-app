@@ -21,6 +21,7 @@ export class NewselterBoxComponent implements OnInit {
     
     window.addEventListener('beforeinstallprompt', (event: Event) => {
       // Prevent Chrome 67 and earlier from automatically showing the prompt
+      event.preventDefault();
       // Stash the event so it can be triggered later.
       this.deferredPrompt = event;
       // Update UI to notify the user they can add to home screen
