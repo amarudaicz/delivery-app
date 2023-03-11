@@ -19,13 +19,14 @@ export class NewselterBoxComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+    this.deferredPrompt = (window as any).deferredPrompt
     window.addEventListener('beforeinstallprompt', (event: Event) => {
       event.preventDefault()
       this.deferredPrompt = event;
     });
+    console.log('actual');
+    
       
-    console.log(this.deferredPrompt);
   }
 
   install(): void {
@@ -36,7 +37,7 @@ export class NewselterBoxComponent implements OnInit {
       if (choiceResult.outcome === 'accepted') {
         
         this.matSnackBar.open('Instalando', '', {
-          duration:'3000'
+          duration: 3000
         })
         
       } else {
