@@ -11,23 +11,21 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class NewselterBoxComponent implements OnInit {
   constructor(
     public theme:ThemesService,
-    private swUpdate: SwUpdate,
-    private swPush: SwPush,
-    private snackBar: MatSnackBar){
+  ){}
 
-  }
 
-  deferredPrompt: any;
+  deferredPrompt:any;
 
 
   ngOnInit(): void {
-    window.addEventListener('beforeinstallprompt', (event: any) => {
-      // Prevent Chrome 67 and earlier from automatically showing the prompt
-      event.preventDefault();
-      // Stash the event so it can be triggered later.
+    this.deferredPrompt = (window as any).deferredPrompt;
+    console.log(this.deferredPrompt);
+    
+    window.addEventListener('beforeinstallprompt', (event: Event) => {
       this.deferredPrompt = event;
-      // Update UI to notify the user they can add to home screen
     });
+      
+    console.log(this.deferredPrompt);
   }
 
   install(): void {
