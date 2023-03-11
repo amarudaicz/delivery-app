@@ -20,7 +20,7 @@ export class NewselterBoxComponent implements OnInit {
   ngOnInit(): void {
     this.deferredPrompt = (window as any).deferredPrompt;
     
-    window.addEventListener('beforeinstallprompt', (event: Event) => {
+    window.addEventListener('beforeinstallprompt', (event: any) => {
       // Prevent Chrome 67 and earlier from automatically showing the prompt
       event.preventDefault();
       // Stash the event so it can be triggered later.
