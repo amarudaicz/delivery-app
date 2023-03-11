@@ -10,6 +10,7 @@ import { MainHomeComponent } from './components/main-home/main-home.component';
 import { NewselterBoxComponent } from './components/newselter-box/newselter-box.component';
 import { PromotionsLocalComponent } from './components/promotions-local/promotions-local.component';
 import { ProductsSetComponent } from './components/products-set/products-set.component';
+import {MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({ 
   declarations: [
@@ -25,6 +26,7 @@ import { ProductsSetComponent } from './components/products-set/products-set.com
     SharedModule,
     RoutesHomeModule,
     RouterModule,
+    MatSnackBarModule
   ] ,
   exports:[
     NewselterBoxComponent

@@ -11,6 +11,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class NewselterBoxComponent implements OnInit {
   constructor(
     public theme:ThemesService,
+    private matSnackBar:MatSnackBar
   ){}
 
 
@@ -33,7 +34,11 @@ export class NewselterBoxComponent implements OnInit {
     // Wait for the user to respond to the prompt
     this.deferredPrompt.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
+        
+        this.matSnackBar.open('Instalando', '', {
+          duration:'3000'
+        })
+        
       } else {
         console.log('User dismissed the install prompt');
       }
