@@ -1,15 +1,20 @@
 
-<div class="container" [style.background]="theme.currentTheme.backgroundPage">
+<div  class="container" [style.background]="theme.currentTheme.backgroundPage">
 
     <div class="content">
 
-        <app-products-by-category>
-        
-        </app-products-by-category>
+        <app-loader-full *ngIf="!products"></app-loader-full>
 
-        <app-newselter-box>
+        <div [@fadeIn] *ngIf="products">
+            <app-products-by-category [products]="products">
             
-        </app-newselter-box>
+            </app-products-by-category>
+    
+            <app-newselter-box>
+                
+            </app-newselter-box>
+
+        </div>
         
     </div>
 </div>

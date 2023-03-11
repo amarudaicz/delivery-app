@@ -18,7 +18,7 @@ const routes: Routes = [
       {
         path: ':local/:category',
         component: MainCategoryComponent,
-        data: { animation: 'category' },
+        data: { animation: 'detail', page: 'detail' },
       },
       {
         path: ':local/:category/:product',

@@ -2,25 +2,45 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/app/environment';
+import { Local } from 'src/app/interfaces/local-interface';
+import { Product } from 'src/app/interfaces/product-interface';
+import { ThemesService } from '../themes/themes.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalDataService {
 
-  constructor( private http:HttpClient) {
+  constructor( private http:HttpClient, private theme:ThemesService) {
+
 
   }
 
-  public local = new BehaviorSubject<object|boolean>(false)
+  public local = new BehaviorSubject<Local|undefined>(undefined)
+  private products = new BehaviorSubject<Product[]>([])
+  
 
-  nextLocal(local:any){
-    this.local.next(local)
+  setLocal(name:string|null){
+    this.http.get<Local>(environment.host + 'locals/1').subscribe((data:any)=>{
+      this.theme.setTheme(data.themeId)//this.local.theme
+      this.local.next(data)
+    })
   }
 
-  getLocal(name:string){
-    return this.http.get(environment.host + 'locals/1')
+  setProducts(local:string|null){
+    this.http.get<Product[]>(environment.host + 'products').subscribe((data:Product[])=>{
+      this.products.next(data)
+    })
   }
+
+  getProducts(){
+    return this.products
+  }
+
+
+
+
+
 
 
 

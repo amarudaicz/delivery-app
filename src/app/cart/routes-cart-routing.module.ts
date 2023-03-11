@@ -16,10 +16,14 @@ const routes: Routes = [
           {
             path:'',
             component:CartItemsComponent,
+            data: { animation: 'detail', page: 'detail' },
+
           },
           {
             path:'checkout',
-            component:CheckoutComponent
+            component:CheckoutComponent,
+            data: { animation: 'detail', page: 'detail' },
+
           }
         ]
 

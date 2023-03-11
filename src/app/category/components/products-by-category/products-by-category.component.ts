@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit,Input } from '@angular/core';
+import { Product } from 'src/app/interfaces/product-interface';
+import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -6,40 +9,21 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   templateUrl: './products-by-category.component.html',
   styleUrls: ['./products-by-category.component.scss']
 })
-export class ProductsByCategoryComponent {
-  constructor(public theme:ThemesService){
+export class ProductsByCategoryComponent implements OnInit {
+  constructor(public theme:ThemesService, private localService:LocalDataService){
 
 
+  } 
+
+  ngOnInit(): void {
+   
+    
+    
   }
 
-  
-  products:any[]=[ 
-    {
-      name:'lomito',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg',
-      id:1
 
-    },
-    {
-      name:'hambur',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg',
-      id:2
-      
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-      ,id:3
-      
-    }
-  ]
+
+  @Input() products?:Product[]
 
 
 }

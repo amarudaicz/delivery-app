@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
+import { Category } from 'src/app/interfaces/category-interfaz';
+import { Local } from 'src/app/interfaces/local-interface';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -10,84 +12,56 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   selector: 'app-main-home',
   templateUrl: './main-home.component.html',
   styleUrls: ['./main-home.component.scss'],
-  animations:[
-    fadeIn
-  ]
+  animations: [fadeIn],
 })
 export class MainHomeComponent implements OnInit {
-
-  local: any;
-  appInstalled:any = false
+  local?: Local;
+  appInstalled: boolean = false;
+  categories: Category[] = []; //INTERFACE
 
   constructor(
     public theme: ThemesService,
     private routeService: RouteDataService,
-    private localData: LocalDataService
+    private localService: LocalDataService
   ) {}
 
   ngOnInit(): void {
     this.routeService.setCurrent('home');
 
+    this.localService.local.subscribe((data) => (this.local = data));
 
-    this.localData.local.subscribe((localData:object|boolean)=>{
-      this.local = localData
-    })
+    console.log(this.local);
 
-
-    if (window.matchMedia('(display-mode: standalone)').matches){
-      this.appInstalled = true
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      this.appInstalled = true;
       console.log('stanDLONE');
-      
-    } 
+    }
 
-    
+    this.localService.getProducts().subscribe((data) => {
+      this.categories = data.map((e) => {
+        return { name: e.category, image: e.categoryImage, id: e.categoryId };
+      });
 
-    console.log('asd');
-    
-
-
-
-    // this.text = encodeURIComponent(this.text);
-    // location.assign('https://wa.me/543543578188?text='+this.text)
-
-    
- 
-}
-  
+      this.categories = this.eliminarDuplicado(this.categories)
 
 
-  categories: any[] = [
-    {
-      name: 'Pizzas',
-      image:
-        'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
-    },
-    {
-      name: 'Hamburgesas',
-      image:
-        'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
-    },
-    {
-      name: 'Hamburgesas',
-      image:
-        'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
-    },
-    {
-      name: 'Pizzas',
-      image:
-        'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
-    },
-    {
-      name: 'Hamburgesas',
-      image:
-        'https://i.pinimg.com/564x/73/9e/c0/739ec0afdb95c73ac566f2311a454d13.jpg',
-    },
-    {
-      name: 'Pizzas',
-      image:
-        'https://i.pinimg.com/564x/0e/53/1b/0e531b8da1676679b9afede96537fa4f.jpg',
-    },
-  ];
+      console.log(this.categories);
+
+    });
+  }
 
 
+  eliminarDuplicado(array:any[]) {
+    for (let i = 0; i < array.length; i++) {
+      const objeto1 = JSON.stringify(array[i]);
+      for (let j = i + 1; j < array.length; j++) {
+        const objeto2 = JSON.stringify(array[j]);
+        if (objeto1 === objeto2) {
+          array.splice(j, 1);
+          j--; // para compensar la eliminación del elemento en la posición actual
+        }
+      }
+    }
+    return array;
+  }
 }

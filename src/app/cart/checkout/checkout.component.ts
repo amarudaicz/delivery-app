@@ -5,7 +5,6 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 import { UserService } from 'src/app/services/userData/user.service';
 import { WpService } from 'src/app/services/wpService/wp.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CartItemsComponent } from '../cart-items/cart-items.component';
 import { ModalInfoWpComponent } from '../modal-info-wp/modal-info-wp.component';
 
 @Component({
@@ -15,7 +14,7 @@ import { ModalInfoWpComponent } from '../modal-info-wp/modal-info-wp.component';
 })
 export class CheckoutComponent implements OnInit {
   form: FormGroup;
-  userdata: any = this.userService.getUser();
+  userData: any = this.userService.getUser();
   cartItems: any[] = [];
   subtotal: number = 0;
   confirmLeave:boolean = false
@@ -54,9 +53,9 @@ export class CheckoutComponent implements OnInit {
     console.log(this.subtotal);
 
     this.form.patchValue({
-      name: this.userdata.name,
-      direction: this.userdata.direction,
-      reference: this.userdata.reference,
+      name: this.userData.name,
+      direction: this.userData.direction,
+      reference: this.userData.reference,
     });
   }
 

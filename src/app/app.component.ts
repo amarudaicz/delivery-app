@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, Params } from '@angular/router';
 import { routeAnimations } from './animations/transition-route';
+import { LocalDataService } from './services/localData/local-data.service';
 import { RouteDataService } from './services/routeData/route-data-service.service';
 import { ThemesService } from './services/themes/themes.service';
 
@@ -17,8 +18,8 @@ export class AppComponent implements OnInit {
     private contexts: ChildrenOutletContexts,
     public theme: ThemesService,
     private routeService: RouteDataService,
-    private route:ActivatedRoute,
-  ){}
+    private localService:LocalDataService
+    ){}
 
   ngOnInit(): void {
     

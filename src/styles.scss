@@ -16,5 +16,30 @@
     border-bottom-color: rgb(152, 152, 152) !important ;
 }
 
+.container{
+
+    height: auto;
+    width: 100vw;
+
+}
+
+.content{
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 15px 60px 15px;
+}
+.alert{
+
+    font-family: var(--mdc-typography-body1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+}
+
+.mdc-button__label{
+    color:rgba(255, 255, 255, 0.87);
+}
+
+.mat-ripple, .mat-mdc-button-ripple{
+    color: rgba(0, 0, 0, 0.507);
+}
+
 
 /* You can add global styles to this file, and also import other style files */

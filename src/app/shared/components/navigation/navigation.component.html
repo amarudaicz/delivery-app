@@ -2,8 +2,11 @@
   <div class="container-nav">
     <nav class="navigation">
       <ul class="list-nav">
+
         <li class="item-nav">
-          <i [style.color]="routeService.getCurrent()==='user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
+          <a [routerLink]="['user']">
+            <i [style.color]="routeService.getCurrent() === 'user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
+          </a>
         </li>
 
         <li class="item-nav">

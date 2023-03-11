@@ -3,16 +3,12 @@
     
     <div class="container-products">
         
-        <h2 class="chip title-category" [style.background]="theme.currentTheme.backgroundSec" [style.color]="theme.currentTheme.colorTextSecondary">
-            Pizzas
+        <h2 *ngIf="products" class="chip title-category" [style.background]="theme.currentTheme.backgroundSec" [style.color]="theme.currentTheme.colorTextSecondary">
+            {{products[0].category}}
         </h2>
         
         <div class="container-flex">
-
             <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
-
-      
-         
         </div>  
 
     </div>

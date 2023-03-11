@@ -20,18 +20,25 @@ export class AddProductCartComponent implements OnInit {
   constructor(public theme:ThemesService, private FormBuilder:FormBuilder, private cartService:CartService){
 
     this.form = this.FormBuilder.group({
-      options:['', Validators.required],
+      options:[''],
       especifications:[''],
       quantity:[1, [Validators.required, Validators.min(1)]]
     })
 
-    this.cartService.getCartItems().subscribe((items:any)=>{
-      this.itemsCart = items
-    })
+  
 
   }
 
   ngOnInit(): void {
+
+    console.log(this.product.options.porcion);
+    if (this.product.options.porcion) {
+      this.form.controls['options'].setErrors(Validators.required)
+    }
+
+
+
+
 
   }
 
@@ -41,7 +48,6 @@ export class AddProductCartComponent implements OnInit {
   form:FormGroup
   quantity:number = 1
   shakeError:string = ''
-  itemsCart:any
   stateButton:boolean=true
 
   saveOrder(){

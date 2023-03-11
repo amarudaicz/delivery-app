@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/interfaces/product-interface';
+import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -7,81 +9,22 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./products-set.component.scss']
 })
 export class ProductsSetComponent implements OnInit {
-  constructor(public theme:ThemesService){
+  products?:Product[]
+  
+  constructor(public theme:ThemesService, private localService:LocalDataService){
 
   }
 
   ngOnInit(): void { 
+    this.localService.getProducts().subscribe(data =>{
+      this.products = data
+    })
     
+
+
   }
+
   
-
-
-  products:any[]=[ 
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-    },
-    {
-      name:'Calabresse',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-      
-    },  {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-      
-    },  {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-      
-    },
-    {
-      name:'Mozzarella',
-      category:'Pizzas',
-      price:700,
-      image:'https://i.pinimg.com/564x/d3/35/5a/d3355a3b61f9717f29e9fff670c2dfc7.jpg'
-
-      
-    }
-  ]
-
-
 
 
 

@@ -1,0 +1,61 @@
+<div
+  [@fadeIn]
+  [style.background]="theme.get('backgroundPage')"
+  class="container"
+>
+  <div class="content">
+    <div class="user">
+      <h2
+        class="chip title-user"
+        [style.background]="theme.get('backgroundSec')"
+        [style.color]="theme.get('colorTextSecondary')"
+      >
+        Datos de usuario
+      </h2>
+
+      <form [formGroup]="form" (ngSubmit)="saveData()" class="checkout-form">
+        <mat-form-field class="input-group" color="primary">
+          <mat-label>Nombre Completo</mat-label>
+          <input formControlName="name" type="text" matInput />
+          <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="input-group" color="primary">
+          <mat-label>Telefono</mat-label>
+          <input formControlName="phone" type="number" matInput />
+          <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="input-group" color="primary">
+          <mat-label>Direccion</mat-label>
+          <input formControlName="direction" type="text" matInput />
+          <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="input-group">
+          <mat-label>Referencia de la casa (opcional)</mat-label>
+          <textarea
+            formControlName="reference"
+            matInput
+            placeholder="Ej. Casa color rojo, porton de madera"
+          ></textarea>
+          <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+
+        <p class="alert-data alert" [style.color]="theme.get('background')">
+          Todos los datos que recolectamos están protegidos y son utilizados
+          únicamente para mejorar su experiencia en nuestra aplicacion.
+        </p>
+
+        <button
+          class="button-save"
+          [style.background]="theme.get('background')"
+          [style.color]="theme.get('colorTextSecondary')"
+          type="submit"
+        >
+          Guardar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
