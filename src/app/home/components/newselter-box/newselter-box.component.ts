@@ -11,7 +11,6 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class NewselterBoxComponent implements OnInit {
   constructor(
     public theme:ThemesService,
-    private matSnackBar:MatSnackBar
   ){}
 
 
@@ -19,14 +18,19 @@ export class NewselterBoxComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.deferredPrompt = (window as any).deferredPrompt
-    window.addEventListener('beforeinstallprompt', (event: Event) => {
-      event.preventDefault()
-      this.deferredPrompt = event;
-    });
-    console.log('actual');
+    this.deferredPrompt = (window as any).deferredPrompt;
+    console.log(this.deferredPrompt);
     
+    window.addEventListener('beforeinstallprompt', (event: Event) => {
+      // Prevent Chrome 67 and earlier from automatically showing the prompt
+      event.preventDefault();
+      // Stash the event so it can be triggered later.
+      this.deferredPrompt = event;
+      // Update UI to notify the user they can add to home screen
+    });
       
+    console.log(this.deferredPrompt);
+    console.log('acctt');
   }
 
   install(): void {
@@ -35,11 +39,7 @@ export class NewselterBoxComponent implements OnInit {
     // Wait for the user to respond to the prompt
     this.deferredPrompt.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
-        
-        this.matSnackBar.open('Instalando', '', {
-          duration: 3000
-        })
-        
+        console.log('User accepted the install prompt');
       } else {
         console.log('User dismissed the install prompt');
       }
