@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PwaInstallerService } from 'src/app/services/pwa-installer/pwa-installer.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -10,38 +11,24 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class NewselterBoxComponent implements OnInit {
   constructor(
     public theme:ThemesService,
+    private pwaInstaller:PwaInstallerService
   ){}
 
 
-  deferredPrompt:any;
-
 
   ngOnInit(): void {
-    window.addEventListener('beforeinstallprompt', (event: any) => this.setPromt(event));
+
       
-    console.log(this.deferredPrompt);
   }
 
   install(): void {
-    // Show the install prompt
-    this.deferredPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    this.deferredPrompt.userChoice.then((choiceResult: any) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-      } else {
-        console.log('User dismissed the install prompt');
-      }
-      this.deferredPrompt = null
-      window.removeEventListener('beforeinstallprompt', (event:any) => this.setPromt(event) )
-      this.ngOnInit()
-    });
+    if (this.pwaInstaller.canInstall()) {
+      this.pwaInstaller.promptInstall()
+    }
+ 
   }
 
   setPromt(event:Event){
-    event.preventDefault();
-    // Stash the event so it can be triggered later.
-    this.deferredPrompt = event;
 
   }
 
