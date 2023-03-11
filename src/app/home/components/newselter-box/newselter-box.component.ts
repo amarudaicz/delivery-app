@@ -31,8 +31,9 @@ export class NewselterBoxComponent implements OnInit {
         console.log('User accepted the install prompt');
       } else {
         console.log('User dismissed the install prompt');
-        window.removeEventListener('beforeinstallprompt', (event:any) => this.setPromt(event) )
       }
+      this.deferredPrompt = null
+      window.removeEventListener('beforeinstallprompt', (event:any) => this.setPromt(event) )
     });
   }
 
