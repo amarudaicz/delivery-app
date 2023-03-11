@@ -1,6 +1,5 @@
 import { Component,OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { fromEvent, map } from 'rxjs';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -18,16 +17,8 @@ export class NewselterBoxComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
-    fromEvent(window, 'beforeinstallprompt')
-    .pipe(
-      map((event: any) => {
-        event.preventDefault();
-        this.deferredPrompt = event;
-      })
-    )
-    .subscribe();
-    
+    window.addEventListener('beforeinstallprompt', (event: any) => this.setPromt(event));
+      
     console.log(this.deferredPrompt);
   }
 
@@ -38,13 +29,18 @@ export class NewselterBoxComponent implements OnInit {
     this.deferredPrompt.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
         console.log('User accepted the install prompt');
-        this.deferredPrompt = null;
       } else {
         console.log('User dismissed the install prompt');
-        this.ngOnInit()
+        window.removeEventListener('beforeinstallprompt', (event:any) => this.setPromt(event) )
       }
     });
   }
 
+  setPromt(event:Event){
+    event.preventDefault();
+    // Stash the event so it can be triggered later.
+    this.deferredPrompt = event;
+
+  }
 
 }
