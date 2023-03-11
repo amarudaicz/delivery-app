@@ -34,12 +34,6 @@ export class MainHomeComponent implements OnInit {
 
     console.log(this.local);
 
-    setTimeout(() => {
-      if (this.pwaInstaller.canInstall()) {
-        this.pwaInstaller.promptInstall()
-      }
-    }, 5000);
-
     this.localService.getProducts().subscribe((data) => {
       this.categories = data.map((e) => {
         return { name: e.category, image: e.categoryImage, id: e.categoryId };
@@ -54,6 +48,7 @@ export class MainHomeComponent implements OnInit {
   }
 
 
+  
   eliminarDuplicado(array:any[]) {
     for (let i = 0; i < array.length; i++) {
       const objeto1 = JSON.stringify(array[i]);

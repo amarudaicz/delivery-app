@@ -10,7 +10,6 @@ export class PwaInstallerService {
 
   constructor() {
     fromEvent(window, 'beforeinstallprompt').subscribe((event: Event) => {
-      event.preventDefault();
       this.deferredPrompt = event;
     });
   }
@@ -31,11 +30,11 @@ export class PwaInstallerService {
 
 
   public isPwaMode():boolean{
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      return true
-      console.log('stanDLONE');
-    }else{
-      return false
-    }
+    if (window.matchMedia('(display-mode: standalone)').matches)
+    return true
+
+    else
+    return false
+    
   }
 }
