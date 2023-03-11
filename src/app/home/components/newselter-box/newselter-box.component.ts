@@ -18,10 +18,9 @@ export class NewselterBoxComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.deferredPrompt = (window as any).deferredPrompt;
-    console.log(this.deferredPrompt);
     
     window.addEventListener('beforeinstallprompt', (event: Event) => {
+      event.preventDefault()
       this.deferredPrompt = event;
     });
       
