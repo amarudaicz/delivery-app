@@ -8,7 +8,7 @@ import { LocalDataService } from 'src/app/services/localData/local-data.service'
 import { PwaInstallerService } from 'src/app/services/pwa-installer/pwa-installer.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
-
+import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement'; 
 @Component({
   selector: 'app-main-home',
   templateUrl: './main-home.component.html',
@@ -39,27 +39,9 @@ export class MainHomeComponent implements OnInit {
         return { name: e.category, image: e.categoryImage, id: e.categoryId };
       });
 
-      this.categories = this.eliminarDuplicado(this.categories)
-
-
+      this.categories = deleteRepeatElement(this.categories)
       console.log(this.categories);
-
     });
   }
 
-
-  
-  eliminarDuplicado(array:any[]) {
-    for (let i = 0; i < array.length; i++) {
-      const objeto1 = JSON.stringify(array[i]);
-      for (let j = i + 1; j < array.length; j++) {
-        const objeto2 = JSON.stringify(array[j]);
-        if (objeto1 === objeto2) {
-          array.splice(j, 1);
-          j--; // para compensar la eliminación del elemento en la posición actual
-        }
-      }
-    }
-    return array;
-  }
 }

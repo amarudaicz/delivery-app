@@ -35,6 +35,19 @@ export class PwaInstallerService {
 
     else
     return false
-    
   }
+
+  redirectPwa(){
+    
+    if ((navigator as any).appInstalled) {
+      // La PWA está instalada
+      console.log('La PWA está instalada');
+      
+    } else {
+      // La PWA no está instalada
+    }
+
+  }
+
+
 }
