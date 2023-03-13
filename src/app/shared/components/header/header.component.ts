@@ -24,10 +24,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     
     this.localName = this.routeData.getOrigin()
-    this.localService.setProducts(this.localName)
     this.theme.setTheme(1)//this.local.theme
+    this.localService.setProducts(this.localName)
     this.localService.setLocal(this.localName)
 
+    
     this.localService.local.subscribe((data)=>{
       this.local = data
     })

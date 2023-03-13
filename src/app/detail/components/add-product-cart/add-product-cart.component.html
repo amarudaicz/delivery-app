@@ -4,8 +4,8 @@
   <div class="container-form">
     <form [formGroup]="form" (submit)="saveOrder()">
       <div class="container-options">
-        <div *ngFor="let option of product.options['porcion']">
-          <div class="container container-input">
+        <div *ngFor="let option of product.options">
+          <div class="container-radio container-input">
             <input
               type="radio"
               formControlName="options"

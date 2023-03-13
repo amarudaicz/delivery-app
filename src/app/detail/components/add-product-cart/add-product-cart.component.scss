@@ -120,15 +120,16 @@
 }
 
 /* Hide the default checkbox */
-.container input {
+.container-radio input {
+  z-index: 10;
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
-  width: 0;
+  right: 0;
+  width: 20px;
 }
 
-.container {
+.container-radio {
   position: relative;
   cursor: pointer;
   user-select: none;
@@ -148,7 +149,7 @@
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.container-radio input:checked ~ .checkmark {
   background-color: #47da99;
   animation: pop 0.5s;
   animation-direction: alternate;
@@ -162,12 +163,12 @@
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.container-radio input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+.container-radio .checkmark:after {
   left: 0.45em;
   top: 0.25em;
   width: 0.25em;

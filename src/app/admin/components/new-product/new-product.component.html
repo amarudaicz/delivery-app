@@ -1,0 +1,48 @@
+
+    <div class="card new-product">
+        <div class="container-form">
+            <h5>Nuevo producto</h5>
+            <form class="form-new-product">
+                <div class="container-inputs">
+
+                    <mat-form-field class="input-group" color="primary">
+                        <mat-label>Titulo</mat-label>
+                        <input type="text" matInput />
+                        <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Categoria</mat-label>
+                        <input type="text"
+                               placeholder="Pick one"
+                               aria-label="Number"
+                               matInput
+                               [formControl]="myControl"
+                               [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                          <mat-option *ngFor="let option of categories" [value]="option.id">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+        
+                    <mat-form-field class="input-group" color="primary">
+                        <mat-label>Precio</mat-label>
+                        <input type="number" matInput />
+                        <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+        
+                </div>
+               
+    
+                <button
+                pButton
+                class="button-save-product"
+                type="submit"
+                >
+                Guardar
+                </button>
+            </form>
+        </div>
+    
+    </div>

@@ -28,23 +28,25 @@ export class MainUserComponent implements OnInit {
     private snackBar:MatSnackBar
 
   ){
-
-      this.form = this.formBuilder.group({
-        name: ['', Validators.required],
-        phone: ['', Validators.required],
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      phone: ['', Validators.required],
       direction: ['', Validators.required ],
       reference: ['', Validators.required],
     });
   }
-
-
+  
+  
   ngOnInit(): void {
-    this.form.patchValue({
-      name: this.userData.name,
-      phone: this.userData.phone,
-      direction: this.userData.direction,
-      reference: this.userData.reference,
-    });
+    if (this.userData){
+    
+      this.form.patchValue({
+        name: this.userData.name,
+        phone: this.userData.phone,
+        direction: this.userData.direction,
+        reference: this.userData.reference,
+      });
+    }
 
 
     this.routeService.setCurrent('user')

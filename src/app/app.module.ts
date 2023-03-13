@@ -15,6 +15,8 @@ import { CartModule } from './cart/cart.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule } from '@angular/common/http';
 import { UserModule } from './user/user.module';
+import { AppLayoutModule } from './layout/app.layout.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({ 
   declarations: [
@@ -22,7 +24,9 @@ import { UserModule } from './user/user.module';
     
   ],
   imports: [
+    AdminModule,
     RouterModule,
+    
     BrowserModule,
     AppRoutingModule,
     HomeModule,  
@@ -34,6 +38,7 @@ import { UserModule } from './user/user.module';
     CartModule,
     HttpClientModule,
     UserModule,
+    AppLayoutModule,
     
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

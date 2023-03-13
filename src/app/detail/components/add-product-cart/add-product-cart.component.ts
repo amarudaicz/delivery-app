@@ -1,88 +1,79 @@
-import { Component, Input, OnInit, OnChanges,ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  ChangeDetectionStrategy,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { addItemCart, fadeIn } from 'src/app/animations/main-detail-animations';
 import { CartService } from 'src/app/services/cartData/cart.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
-
 
 @Component({
   selector: 'app-add-product-cart',
   templateUrl: './add-product-cart.component.html',
   styleUrls: ['./add-product-cart.component.scss'],
-  changeDetection:ChangeDetectionStrategy.Default,
-  animations:[
-    addItemCart,
-    fadeIn
-  ]
+  changeDetection: ChangeDetectionStrategy.Default,
+  animations: [addItemCart, fadeIn],
 })
 export class AddProductCartComponent implements OnInit {
+  @Input() product: any;
+  form: FormGroup;
+  quantity: number = 1;
+  shakeError: string = '';
+  stateButton: boolean = true;
 
-  constructor(public theme:ThemesService, private FormBuilder:FormBuilder, private cartService:CartService){
 
+  constructor(
+    public theme: ThemesService,
+    private FormBuilder: FormBuilder,
+    private cartService: CartService
+  ) {
     this.form = this.FormBuilder.group({
-      options:[''],
-      especifications:[''],
-      quantity:[1, [Validators.required, Validators.min(1)]]
-    })
-
-  
-
+      options: [''],
+      especifications: [''],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+    });
   }
 
   ngOnInit(): void {
+    console.log(this.product.options);
 
-    console.log(this.product.options.porcion);
-    if (this.product.options.porcion) {
-      this.form.controls['options'].setErrors(Validators.required)
+    if (this.product.options.length !== 0) {
+      this.form.controls['options'].setValidators(Validators.required);
     }
-
-
-
-
-
   }
 
-  @Input() product:any
-  
-  
-  form:FormGroup
-  quantity:number = 1
-  shakeError:string = ''
-  stateButton:boolean=true
 
-  saveOrder(){
-    this.setError()
+  saveOrder() {
+    this.setError();
+    const item = { ...this.product, ...this.form.value };
 
-    
-    
-    const item = {...this.product, ...this.form.value}
-    
     if (this.form.valid) {
-      this.stateButton=false
-      setTimeout(() =>{
+      this.stateButton = false;
+      setTimeout(() => {
         this.cartService.addToCart(item);
-        this.stateButton=true
-      } , 1000);
-    }  
-    
-    
-    
-
-    
-  }
-
-  setError(){
-    if (this.form.controls['options'].invalid){
-      this.shakeError = 'shake'
-      setTimeout(() => {this.shakeError = ''}, 500);  
+        this.stateButton = true;
+      }, 1000);
     }
-
-    this.form.markAsTouched()
-    
   }
-  
-  setQuantity(number:number){
 
+  setError() {
+    if (this.form.controls['options'].invalid) {
+      this.shakeError = 'shake';
+      setTimeout(() => (this.shakeError = ''), 500);
+    }
+    this.form.markAsTouched();
+  }
+
+  setQuantity(number: number) {
     if (number === 1) {
       this.quantity++;
     } else {
@@ -90,20 +81,6 @@ export class AddProductCartComponent implements OnInit {
         this.quantity--;
       }
     }
-    
-    this.form.controls['quantity'].setValue(this.quantity)
-
+    this.form.controls['quantity'].setValue(this.quantity);
   }
-
-
-
-
-
-
-      
-
-
-
-  
-
 }

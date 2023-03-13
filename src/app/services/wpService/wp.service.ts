@@ -13,8 +13,10 @@ interface Item {
 })
 export class WpService {
   constructor() {}
-  
   products: string = '';
+
+
+  
   encodeText(cart: any[], userData: any, subtotal: number) {
     const categories = cart.map((e) => e.category);
 
@@ -34,11 +36,7 @@ this.products += `${index === 0 ? e.category.toUpperCase()+`
 `: ''}X${e.quantity} ${e.name} $${e.price}.00 ${e.options}
 ${e.especifications !== '' ? `Especificaciones: ${e.especifications}` : ''}
 `}); 
-
 });
-
-
-
 
 const text: string = `
 𝗛𝗼𝗹𝗮 𝘁𝗲 𝗽𝗮𝘀𝗼 𝗲𝗹 𝗿𝗲𝘀𝘂𝗺𝗲𝗻 𝗱𝗲 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼:
@@ -59,11 +57,11 @@ ${this.products}
 𝗘𝘀𝗽𝗲𝗿𝗼 𝘁𝘂 𝗿𝗲𝘀𝗽𝘂𝗲𝘀𝘁𝗮 𝗽𝗮𝗿𝗮 𝗰𝗼𝗻𝗳𝗶𝗿𝗺𝗮𝗿 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼`;
 
 
-    console.log(text);
-    const encodedText = encodeURIComponent(text);
-    this.clearMessage()
-    return encodedText
-  }
+console.log(text);
+const encodedText = encodeURIComponent(text);
+this.clearMessage()
+return encodedText
+}
 
   
   genIdOrder(): string {

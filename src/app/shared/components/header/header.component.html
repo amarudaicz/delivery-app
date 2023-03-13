@@ -1,26 +1,28 @@
-<header *ngIf="local" [@fadeIn] [style.background]="theme.currentTheme.backgroundPage">
-
-    <div  class="container-header" [style.background]="theme.currentTheme.background" >
-        <div class="container-info">
-            <div class="local-info">
-                <h1 class="local-name" [style.color]="theme.get('colorTextSecondary')">
-                   {{local.name}}
-                </h1>
-                <span class="local-ubication" [style.color]="theme.get('colorTextSecondary')">
-                    <i class="fa-solid fa-location-dot"></i>
-                    {{local.ubication}}
-                </span>
+<div *ngIf="routeData.getCurrent() !== 'admin'">
+    <header *ngIf="local" [@fadeIn] [style.background]="theme.currentTheme.backgroundPage">
+    
+        <div  class="container-header" [style.background]="theme.currentTheme.background" >
+            <div class="container-info">
+                <div class="local-info">
+                    <h1 class="local-name" [style.color]="theme.get('colorTextSecondary')">
+                       {{local.name}}
+                    </h1>
+                    <span class="local-ubication" [style.color]="theme.get('colorTextSecondary')">
+                        <i class="fa-solid fa-location-dot"></i>
+                        {{local.ubication}}
+                    </span>
+                </div>
+        
+                <div class="local-image">
+                    <img src="{{local.image}}" width="50px" height="50px" alt="">
+                </div>
+    
             </div>
     
-            <div class="local-image">
-                <img src="{{local.image}}" width="50px" height="50px" alt="">
-            </div>
-
+    
+    
+    
+    
         </div>
-
-
-
-
-
-    </div>
-</header> 
+    </header> 
+</div>
