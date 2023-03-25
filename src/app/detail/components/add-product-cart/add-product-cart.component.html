@@ -3,23 +3,76 @@
 
   <div class="container-form">
     <form [formGroup]="form" (submit)="saveOrder()">
-      <div class="container-options">
-        <div *ngFor="let option of product.options">
-          <div class="container-radio container-input">
-            <input
-              type="radio"
-              formControlName="options"
-              checked
-              id="{{ option }}"
-              value="{{ option }}"
-            />
-            <label for="{{ option }}">{{ option }}</label>
-            <div class="checkmark"></div>
-          </div>
-        </div>
 
-        <span [class]="'form-error ' + shakeError" *ngIf="form.controls['options'].invalid" >Elije una opción</span>
-     
+     <div class="container-data-product">
+      <div class="container-options">
+        <div *ngFor="let optionGroup of product?.variations">
+          <div
+            *ngIf="!optionGroup.multiple; else checkBox"
+            class="container-radio container-input"
+          >
+            <div>
+              <h4>{{ optionGroup.nameVariation }}</h4>
+            </div>
+            <mat-radio-group [formControlName]="optionGroup.nameVariation"
+            class="radio-group">
+              <div
+                class="container-values-options"
+                *ngFor="let option of optionGroup.options; index as i"
+              >
+                <mat-radio-button
+                [checked]="i === 0"
+                (change)="saveOptions(option, optionGroup)"
+                  color="primary"
+                  [value]="option.nameOption"
+                  >{{ option.nameOption }}</mat-radio-button
+                >
+
+                <span *ngIf="option.price !== 0"
+                  ><b>{{ option.price | currency }}</b>
+                </span>
+
+              </div>
+
+            </mat-radio-group>
+          </div>
+
+          <hr color="#b9b9b9" />
+
+          <ng-template #checkBox>
+            <div class="container-checkbox container-input">
+              <div class="title-option">
+                <div>
+                  <h4>{{ optionGroup.nameVariation }}</h4>
+                  <h5>Selecciona las opciones que quieras.</h5>
+                </div>
+
+                <span
+                  [style.background]="theme.get('background')"
+                  [style.color]="theme.get('colorTextSecondary')"
+                  class="chip type-option"
+                  >Opcional</span
+                >
+              </div>
+
+              <div
+                *ngFor="let option of optionGroup.options; index as i"
+                class="container-values-options"
+              >
+                <mat-checkbox
+                  (change)="saveOptions(option, optionGroup)"
+                  color="primary"
+                >
+                  {{ option.nameOption }}
+                </mat-checkbox>
+
+                <span *ngIf="option.price !== 0">
+                  <b>{{ option.price | currency }}</b></span
+                >
+              </div>
+            </div>
+          </ng-template>
+        </div>
       </div>
 
       <div class="especifications">
@@ -31,37 +84,60 @@
           ></textarea>
         </div>
       </div>
+     </div>
 
-      <div class="quantity">
-        <h4>Cantidad</h4>
-        <div class="container-buttons">
-          <div class="container-quantity">
-            <i
-              (click)="setQuantity(-1)"
-              class="fa-solid fa-minus"
-            ></i>
+     
+  <!-- BOTONES AGREGAR///////////////////////////// -->
+  <div class="quantity">
+    <div class="container-buttons">
 
-            <input formControlName="quantity" type="number" min="1" [value]="quantity" />
+      <div class="container-quantity">
+        <i (click)="setQuantity(-1)" class="fa-solid fa-minus"></i>
 
-            <i (click)="setQuantity(1)" class="fa-solid fa-plus"></i>
-          </div>
+        <input
+          formControlName="quantity"
+          type="number"
+          min="1"
+          [value]="quantity"
+        />
 
-          <div class="container-button-add">
-            <button
-              [@fadeIn]
-              *ngIf="stateButton"
-              [style.background]="theme.get('background')"
-              [style.color]="theme.get('colorTextSecondary')"
-            >
-            Agregar al carrito
-            </button>
-              
-            <div [@addItemCart] [style.color]="theme.currentTheme.colorTextSecondary" [style.background]="theme.currentTheme.background" class="anime-cart" *ngIf="stateButton">
-              1
-          </div>
-          </div>
-        </div>
+        <i (click)="setQuantity(1)" class="fa-solid fa-plus"></i>
       </div>
+
+      <div class="container-button-add">
+
+        <button
+          [@fadeIn]
+          *ngIf="stateButton"
+          [style.background]="theme.get('background')"
+          [style.color]="theme.get('colorTextSecondary')"
+        >
+          Agregar {{subtotal|currency}}
+        </button>
+    
+        <div
+          [@addItemCart]
+          [style.color]="theme.currentTheme.colorTextSecondary"
+          [style.background]="theme.currentTheme.background"
+          class="anime-cart"
+          *ngIf="stateButton"
+        >
+          1
+        </div>
+        
+      </div>
+      
+    </div>
+
+  </div>
+
+
     </form>
   </div>
+
+
+  
+  
+
+
 </div>

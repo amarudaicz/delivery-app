@@ -21,7 +21,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormField } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { SharedModule } from '../shared/shared.module';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -34,6 +40,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     
   ],
   imports: [
+    SharedModule,
     CommonModule,
     TableModule,
     ButtonModule,
@@ -45,7 +52,14 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatTooltipModule,
+    MatSnackBarModule
+
     
   ]
 })

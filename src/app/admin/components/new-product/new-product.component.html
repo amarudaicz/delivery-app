@@ -1,48 +1,240 @@
+<div class="card new-product">
+  <div class="container-form">
+    <h3>Nuevo producto</h3>
 
-    <div class="card new-product">
-        <div class="container-form">
-            <h5>Nuevo producto</h5>
-            <form class="form-new-product">
-                <div class="container-inputs">
+    <form class="form-new-product" [formGroup]="form" (submit)="saveProduct()">
+      <div class="container-inputs">
+        <mat-form-field class="input-group" color="primary">
+          <mat-label>Titulo</mat-label>
+          <input type="text" matInput formControlName="nameProduct" />
+          <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
 
-                    <mat-form-field class="input-group" color="primary">
-                        <mat-label>Titulo</mat-label>
-                        <input type="text" matInput />
-                        <mat-error>Este campo es requerido</mat-error>
-                    </mat-form-field>
+        <mat-form-field class="input-group" appearance="fill">
+          <mat-label>Categoria</mat-label>
+          <input
+            type="text"
+            placeholder="Ej. Pizzas, Promocion"
+            aria-label="categoria"
+            matInput
+            formControlName="category"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filterCategories | async"
+              [value]="option.name"
+            >
+              {{ option.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="input-group" color="primary">
+          <mat-label>Precio</mat-label>
+          <input formControlName="price" type="number" matInput />
+          <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="input-group full-input" apearance="fill">
+          <mat-label>Ingredientes (Opcional)</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Enter Ingredientes">
+            <mat-chip-row
+              *ngFor="let i of ingredients"
+              id="ingredients"
+              (removed)="remove(i, $event)"
+              [editable]="true"
+              (edited)="edit(i, $event)"
+              [aria-description]="'press enter to edit ' + i"
+            >
+              {{ i }}
+              <button matChipRemove [attr.aria-label]="'remove ' + i">
+                <mat-icon>X</mat-icon>
+              </button>
+            </mat-chip-row>
+            <input
+              formControlName="ingredients"
+              placeholder="Nuevo Ingrediente"
+              id="ingredients"
+              [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-grid>
+        </mat-form-field>
+
+
+        <!-- DESCRIPCION///////////////////////////////// -->
+
+
+
+
+        <h5 (click)="variationState = !variationState" class="title-variation">Variaciones <span><i class="pi" [ngClass]="variationState? 'pi-angle-down' : 'pi-angle-right' " ></i></span> </h5>
+        <!-- VARIATIONSS ////////////////////////////////////// -->
         
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Categoria</mat-label>
-                        <input type="text"
-                               placeholder="Pick one"
-                               aria-label="Number"
-                               matInput
-                               [formControl]="myControl"
-                               [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete">
-                          <mat-option *ngFor="let option of categories" [value]="option.id">
-                            {{option.name}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
+        <div class="options-group" *ngIf="variationState">
+          <div class="container-inputs-options" >
+
+
+            <form class="form-variations" [formGroup]="formVariations">
+
+              <mat-form-field class="input-50" color="primary">
+                <mat-label>Tipo</mat-label>
+                
+                <input
+                  formControlName="typeOption"
+                  type="text"
+                  matInput
+                  placeholder="Ej. Porcion, Sabor"
+                />
+                <mat-error>Este campo es requerido</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="input-group option-input" apearance="fill">
+                <mat-label class="font16" [ngClass]="options.length === 0 && formVariations.get('options')?.touched ? 'alert-options' : '' ">Opciones*</mat-label>
+                <mat-chip-grid #chipOptions>
+                  <mat-chip-row
+                    *ngFor="let i of options"
+                    id="options"
+                    (removed)="remove(i, $event)"
+                    [editable]="true"
+                    (edited)="edit(i, $event)"
+                  >
+                    {{ i }}
+                    <button matChipRemove>
+                      <mat-icon>X</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+                <input
+                  placeholder="Nueva opcion"
+                  id="options"
+                  formControlName="options"
+                  [matChipInputFor]="chipOptions"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="add($event)"
+                />
+              </mat-form-field> 
+              <span class="alert-options alert-margin" *ngIf="options.length === 0 && formVariations.get('options')?.touched"> Este campo es requerido</span>
+
         
-                    <mat-form-field class="input-group" color="primary">
-                        <mat-label>Precio</mat-label>
-                        <input type="number" matInput />
-                        <mat-error>Este campo es requerido</mat-error>
-                    </mat-form-field>
-        
-                </div>
-               
-    
-                <button
-                pButton
-                class="button-save-product"
-                type="submit"
+
+              <mat-checkbox
+              formControlName="multiple"
+              color="primary"
+              class="check-multiple">
+
+                Multiple respuestas <pre style="font-size: 12px; display: inline;">(Opcional)</pre> 
+              </mat-checkbox>
+
+              
+              <mat-checkbox
+              formControlName="required"
+              color="primary"
+              class="check-multiple">
+
+                Requerido <pre style="font-size: 12px; display: inline;">(Opcional)</pre> 
+              </mat-checkbox>
+
+  
+              <div class="container-radio-options">
+                <mat-radio-group
+                  formControlName="typePrice"
+                  aria-label="Select an option"
                 >
-                Guardar
-                </button>
+                  <mat-radio-button
+                    matTooltip="Cambia el precio total del producto. 
+                    Ej: Media Pizza:300$, 
+                    Pizza Completa:600$"
+                    matTooltipPosition="above"
+                    [matTooltipClass]="'tooltip-custom'"
+                    color="primary"
+                    [value]="1"
+                    >Cambia el precio</mat-radio-button
+                  >
+                  <mat-radio-button
+                    matTooltip="Aumenta el valor del producto. Ej: Chedar:150$, Doble Hamburgesa:300$"
+                    matTooltipPosition="above"
+                    color="primary"
+                    [value]="2"
+                    >Suma al precio base</mat-radio-button
+                  >
+                  <mat-radio-button
+                    matTooltip="Adicionales extras que son incluidos con el producto. Ej: Aderezos, Toppings"
+                    matTooltipPosition="above"
+                    color="primary"
+                    [value]="3"
+                    >Gratis</mat-radio-button
+                  >
+
+                  <span style="margin-left: 19px;" class="alert-options" *ngIf="!formVariations.get('typePrice')?.valid">Este campo es requerido</span>
+                </mat-radio-group>
+                
+
+              </div>
+
+         
+  
+       
+              
+              
+                          
+  
+              <button
+                style="display: block"
+                (click)="saveOptions()"
+                pButton
+                type="button"
+                [class.invalid-button]="formVariations.invalid"
+              >
+                Agregar
+              </button>
+
+
             </form>
+           
+          </div>
+
+          <!-- DISPLAY OPTIONS /////////////////////////////////// -->
         </div>
-    
-    </div>
+        <div class="container-current-options">
+          <div *ngFor="let o of optionsGroup; index as indexGroup" class="option">
+            <h5 style="display:inline">{{o.nameVariation}} </h5> 
+            <h5 style="display:inline">
+              {{o.typePrice === 1 ? '| Cambia el precio' : null }}
+            </h5>
+
+            <h5 style="display:inline">
+              {{o.typePrice=== 2 ? '| Suma a la base' : null }}
+            </h5>
+
+            <h5 style="display:inline">
+              {{o.typePrice === 3 ? '| No cambia el precio' : null }}
+            </h5>
+
+            <h5 style="display:inline"> 
+              {{o.multiple ? '| Multiple' : null}}
+            </h5>
+
+            <ul class="list-options">
+              <li (click)="updatePriceOption(indexGroup, i)"  class="item-option" *ngFor="let s of o.options; index as i;">
+                {{ s.nameOption }} <b>{{ s.price | currency }}</b>
+                
+                <input placeholder="{{s.price|currency}}" (blur)="updatePriceOption(indexGroup, i, newPrice.value )" #newPrice class="input-update-price" type="number" id="option{{i}}{{indexGroup}}" style="visibility:hidden;">
+
+              </li>
+            </ul>
+
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <button pButton class="button-save-product" type="submit">Guardar</button>
+    </form>
+  </div>
+</div>

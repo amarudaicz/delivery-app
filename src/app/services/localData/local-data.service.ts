@@ -8,50 +8,42 @@ import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement';
 import { ThemesService } from '../themes/themes.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalDataService {
+  constructor(private http: HttpClient, private theme: ThemesService) {}
 
-  constructor( private http:HttpClient, private theme:ThemesService) {
+  public local = new BehaviorSubject<Local | undefined>(undefined);
+  private products = new BehaviorSubject<Product[]>([]);
+  private _products: Product[] = [];
 
-
+  setLocal(name: string | null) {
+    this.http
+      .get<Local>(environment.host + 'locals/1')
+      .subscribe((data: any) => {
+        this.theme.setTheme(data.themeId);
+        this.local.next(data);
+      });
   }
 
-  public local = new BehaviorSubject<Local|undefined>(undefined)
-  private products = new BehaviorSubject<Product[]>([])
-  private _products:Product[] = []
-
-  setLocal(name:string|null){
-    this.http.get<Local>(environment.host + 'locals/1').subscribe((data:any)=>{
-      this.theme.setTheme(data.themeId)
-      this.local.next(data)
-    })
+  setProducts(local: string | null) {
+    this.http
+      .get<Product[]>(environment.host + 'products')
+      .subscribe((data: Product[]) => {
+        this._products = data;
+        this.products.next(data);
+      });
   }
 
-  setProducts(local:string|null){
-    this.http.get<Product[]>(environment.host + 'products').subscribe((data:Product[])=>{
-      this._products = data
-      this.products.next(data)
-    })
+  getProducts() {
+    return this.products;
   }
 
-  getProducts(){
-    return this.products
+  getCategories() {
+    const categories = this._products.map((e) => {
+      return { name: e.category, image: e.categoryImage, id: e.categoryId };
+    });
+
+    return deleteRepeatElement(categories);
   }
-
-  getCategories(){
-    return deleteRepeatElement(this._products)
-  }
-
-
-
-
-
-
-
-
-
-
-
-  
 }

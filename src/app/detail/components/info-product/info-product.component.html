@@ -1,30 +1,43 @@
 <div class="container-info">
 
-    <div [style.background]="theme.currentTheme.backgroundPage" class="container-image">
-        <img src="{{product.image}}" alt="">
-    </div>
+    <div class="header-detail">
+        <a (click)="redirectBack()">
+            <i class="pi pi-chevron-left icon-back"></i>
+            
+            <h2 class="product-category">{{product.category}}</h2>
+        </a>
 
-    <div class="container-text" [style.background]="theme.get('backgroundPage')">
-        <span class="product-category">{{product.category}}</span>
-        <h2 class="product-name">{{product.name}}</h2>
-        <h3 class="product-price">{{product.price |currency}}</h3>
-        <p class="product-description">{{product.description}}</p>
- 
-        <div class="container-ingredients">
-            <ul class="list-ingredients">
-                <li class="chip ingredient" [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" *ngFor="let ingredient of product.ingredients">
-                    {{ingredient}}
-                </li>
-            </ul>
+        <i class="pi pi-heart"></i>
+        
+        
+    </div>
+    
+    <div class="data-product">        
+        <div [style.background]="theme.currentTheme.backgroundPage" class="container-image">
+            <img src="{{product.image}}" alt="">
+        </div>
+        
+        <div class="container-text" [style.background]="theme.get('backgroundPage')">
+                <h2 class="product-name">{{product.nameProduct}}</h2>
+                <h3 class="product-price">{{product.price |currency}}</h3>
+                <p class="product-description">{{product.description}} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis repellendus consequatur consectetur iste ullam corporis rem veniam officiis sint temporibus itaque nemo maxime.</p>
+         
+                <div class="container-ingredients">
+                    <ul class="list-ingredients">
+                        <li class="chip ingredient" [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" *ngFor="let ingredient of product.ingredients">
+                            {{ingredient}}
+                        </li>
+                    </ul>
+                </div>
+        
+                
+              <app-add-product-cart *ngIf="product" [product]="product">
+                    
+              </app-add-product-cart>
+         
         </div>
 
-
-        <app-add-product-cart [product]="productForChild">
-
-        </app-add-product-cart>
- 
     </div>
-
 
 
 </div>

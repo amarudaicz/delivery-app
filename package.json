@@ -24,6 +24,7 @@
     "@angular/service-worker": "^15.0.0",
     "angular": "^1.8.3",
     "ng2-charts": "^4.1.1",
+    "ngx-toastr": "^16.1.0",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primeng": "^15.2.0",

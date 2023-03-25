@@ -1,4 +1,4 @@
-<div *ngIf="routeData.getCurrent() !== 'admin'">
+<div *ngIf="routeData.getCurrent() !== 'detail' && routeData.getCurrent() !== 'admin' ">
     <header *ngIf="local" [@fadeIn] [style.background]="theme.currentTheme.backgroundPage">
     
         <div  class="container-header" [style.background]="theme.currentTheme.background" >

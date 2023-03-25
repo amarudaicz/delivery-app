@@ -1,19 +1,21 @@
 <div class="container" [style.background]="theme.currentTheme.backgroundPage">
+ 
   <div class="content">
 
-
-    <app-info-product [@fadeIn] *ngIf="product; else loader" [product]="product">
+    <app-info-product
+      [@fadeIn]
+      *ngIf="product; else loader"
+      [product]="product"
+    >
     </app-info-product>
 
-    <ng-template #loader>
-
-      <div class="container-loader">
-        <app-loader-full>
-
-        </app-loader-full>
-      </div>
-
-    </ng-template>
 
   </div>
+
+
+  <ng-template #loader>
+    <div class="container-loader">
+      <app-loader-full> </app-loader-full>
+    </div>
+  </ng-template>
 </div>

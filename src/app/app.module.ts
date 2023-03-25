@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserModule } from './user/user.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { AdminModule } from './admin/admin.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({ 
   declarations: [
@@ -45,6 +46,18 @@ import { AdminModule } from './admin/admin.module';
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
+    }),
+
+
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-center',
+      progressBar:true,
+      closeButton:true,
+      maxOpened:1,
+      preventDuplicates:true,
+      resetTimeoutOnDuplicate:true
+
     })
 
     

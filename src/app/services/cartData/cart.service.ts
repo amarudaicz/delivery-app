@@ -11,17 +11,23 @@ export class CartService {
 
   constructor() {
     const items = localStorage.getItem('cartItems');
-
+    console.log(items);
+    
     if (items) {
       this.cartItems = JSON.parse(items);
       this.cartSubject.next(this.cartItems);
     }
+
+    
   }
 
   addToCart(item: any): void {
+      
     let lastId;
-    let product = this.cartItems.find(p => p.id === item.id && p.options === item.options)
+    let product = this.cartItems.find(p => p.id === item.id )
 
+    console.log(product);
+    
     if (this.cartItems.length === 0) {
       lastId = 1;
     } else {
@@ -29,24 +35,18 @@ export class CartService {
     }
     item.idCart = lastId
 
+    const index = this.cartItems.findIndex((i) => i.id === item.id );
     
-    const index = this.cartItems.findIndex((i) => i.id === item.id && i.options === item.options );
-    
-    if (index === -1) {
+    if (!product) {
       this.cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
       this.cartSubject.next(this.cartItems);
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));    
       return
-    }
-    
-    console.log(index);
-    if(product){
+    }else{
       console.log('aumentando quanity');
       this.cartItems[index].quantity += item.quantity
       localStorage.setItem('cartItems', JSON.stringify(this.cartItems));    
-      return
-    }
+    }    
 
   }
 

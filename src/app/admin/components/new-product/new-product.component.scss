@@ -12,15 +12,183 @@
 
 
 .form-new-product{
+    
+}
 
+.form-variations{
+    width: 100%;
+
+}
+
+
+.options-group{
+    border: 1px solid rgb(77, 77, 77);
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    @media (max-width:700px) {
+        flex-direction: column;
+
+    }
+
+    span{
+        display: block;
+        padding: 5px 0 0 5px;
+        
+    }
+
+    .option-input{
+        width: 100%;
+
+    }
+
+
+}
+
+.container-inputs-options{
+    padding: 5px;
+
+    @media (max-width:700px) {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+}
+
+
+.container-current-options{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+
+    .option{
+        width: 48%;
+        @media (max-width:700px) {
+            width: 100%;
+        }
+        padding: 5px;
+        background: #b0b6efcf;
+        border-radius: 5px;
+        margin: 5px 0;
+
+                
+    }
+    
+    
+    .list-options{
+
+        
+    }
+    
+    
+    .item-option{
+        display: flex;
+        justify-content: space-between;
+        background: #FFF;
+        padding: 5px;
+        margin: 2px 0;
+        position: relative;
+        border-radius: 5px;
+        
+    }
+
+    .input-update-price{
+        position: absolute;
+        width: 70px;
+        top: 6px;
+        right: 4px;
+        border: none;
+        border-radius: 5px;
+        padding: 2px;
+        background: #6366f1;
+        color: #FFF;
+
+        &::placeholder{
+            color: #fff;
+        }
+
+    }
+
+}
+
+.input-50{
+    margin: 5px;
+    @media (max-width:700px) {
+        width: 100%;
+    }   
+
+}
+
+.full-input{
+    width: 100%;
 }
 
 .input-group{
     margin: 5px;
 
+    @media (max-width:700px) {
+        width: 100%;
+    }
 }
 
 .button-save-product{
-    margin-top: 10px;
+    margin-top: 20px;
     display: block;
-  }
+}
+
+
+.alert-options{
+    font-size: 12px;
+    color: #f44336;
+    letter-spacing: 0.5px;
+    padding: 0 !important;
+}
+
+.alert-margin{
+    margin-top: -26px;
+    margin-left: 19px;
+    letter-spacing: 0.4px;
+}
+
+
+.invalid-button{
+    background:rgb(184, 184, 184) !important;
+}
+
+
+.tooltip-custom{
+    width:500px !important
+}
+
+.check-multiple{
+    margin: 10px 0;
+
+}
+
+.container-radio-options{
+    border-top: 1px solid #cbcbcb;
+    border-bottom: 1px solid #cbcbcb;
+    padding: 6px 0;
+    margin-bottom: 10px;
+}
+
+
+.title-variation{
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px 0;
+    font-size:16px ;
+    column-gap: 5px;
+
+    span{
+        margin-bottom: -5px;
+    }
+
+}
+
+.font16{
+    font-size: 16px !important;
+}

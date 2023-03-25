@@ -1,5 +1,5 @@
 <div class="product-card">
-  <a [routerLink]=" [product.name]" [queryParams]="{id:product.id}">
+  <a [routerLink]=" [product.nameProduct]" [queryParams]="{id:product.id}">
     <div class="product-image">
       <img
         src="{{product.image}}"
@@ -9,7 +9,7 @@
   
     <div class="product-title">
       <span class="product-subtitle">{{ product.category }} </span>
-      <h4>{{product.name}}</h4>
+      <h4>{{product.nameProduct}}</h4>
       <span class="product-price">{{ product.price | currency }}</span>
     </div>
 

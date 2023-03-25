@@ -22,10 +22,12 @@ export class MainDetailComponent implements OnInit {
     private localService:LocalDataService
   ) {}
   ngOnInit(): void {
+    
     const idProduct = this.route.snapshot.queryParams['id']
     this.routeService.setCurrent('detail');
+    console.log(this.routeService.getCurrent());
+    
     console.log(this.route.snapshot.queryParams);
-
     this.localService.getProducts().subscribe(data =>{
       this.product = data.filter(e => e.id === idProduct)[0]
     })
@@ -34,5 +36,7 @@ export class MainDetailComponent implements OnInit {
     
   }
 
-  product:Product|undefined;
+  product?:Product
+
+  
 }

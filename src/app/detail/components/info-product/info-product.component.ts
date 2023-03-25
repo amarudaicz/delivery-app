@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params, Route } from '@angular/router';
 import { ThemesService } from 'src/app/services/themes/themes.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-info-product',
@@ -8,7 +9,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./info-product.component.scss']
 })
 export class InfoProductComponent implements OnInit {
-  constructor(public theme:ThemesService, private route:ActivatedRoute){
+  constructor(public theme:ThemesService, private route:ActivatedRoute, private location:Location){
 
   }
   ngOnInit(): void {
@@ -22,6 +23,11 @@ export class InfoProductComponent implements OnInit {
   @Input() product:any
   productForChild:any
   
+
+  
+  redirectBack(){
+    this.location.back()
+  }
 
 
 }

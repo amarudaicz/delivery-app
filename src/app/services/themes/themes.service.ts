@@ -13,7 +13,7 @@ export class ThemesService {
   themes:Theme[]=[
     {
       id:1,
-      background:'#645bff',
+      background:'#ff7a5b',
       backgroundSec:'#2c3e50',
       backgroundPage: '#edede9',
       colorText:'#303030',

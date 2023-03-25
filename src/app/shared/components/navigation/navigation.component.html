@@ -1,4 +1,4 @@
-<div *ngIf="local" class="buttom-nav" [style.background]="theme.currentTheme.backgroundPage">
+<div  *ngIf="routeService.getCurrent() !== 'detail' && routeService.getCurrent() !== 'admin' " class="buttom-nav" [style.background]="theme.currentTheme.backgroundPage">
   <div class="container-nav">
     <nav class="navigation">
       <ul class="list-nav">

@@ -26,7 +26,7 @@ export class MainHomeComponent implements OnInit {
     private localService: LocalDataService,
     private pwaInstaller:PwaInstallerService
   ) {}
-
+    
   ngOnInit(): void {
     this.routeService.setCurrent('home');
 

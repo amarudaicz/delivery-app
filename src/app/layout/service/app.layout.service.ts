@@ -27,19 +27,19 @@ export class LayoutService {
     config: AppConfig = {
         ripple: true,
         inputStyle: 'outlined',
-        menuMode: 'static',
+        menuMode: 'overlay',
         colorScheme: 'dark',
         theme: 'lara-light-indigo',
-        scale: 14,
+        scale: 12,
     };
 
     state: LayoutState = {
-        staticMenuDesktopInactive: false,
-        overlayMenuActive: false,
-        profileSidebarVisible: false,
+        staticMenuDesktopInactive: true,
+        overlayMenuActive: true,
+        profileSidebarVisible: true,
         configSidebarVisible: false,
-        staticMenuMobileActive: false,
-        menuHoverActive: false
+        staticMenuMobileActive: true,
+        menuHoverActive: true
     };
 
     private configUpdate = new Subject<AppConfig>();

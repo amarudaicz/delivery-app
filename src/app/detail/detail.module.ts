@@ -5,6 +5,10 @@ import { InfoProductComponent } from './components/info-product/info-product.com
 import { AddProductCartComponent } from './components/add-product-cart/add-product-cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { CartService } from '../services/cartData/cart.service';
 
 
 
@@ -18,7 +22,14 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatInputModule,
+
+  ],
+  providers:[
+    CartService
   ]
 })
 export class DetailModule { }
