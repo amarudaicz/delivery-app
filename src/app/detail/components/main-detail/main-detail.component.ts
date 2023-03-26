@@ -29,6 +29,8 @@ export class MainDetailComponent implements OnInit {
     
     console.log(this.route.snapshot.queryParams);
     this.localService.getProducts().subscribe(data =>{
+      console.log(data);
+      
       this.product = data.filter(e => e.id === idProduct)[0]
     })
       

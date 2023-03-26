@@ -21,7 +21,6 @@
                 *ngFor="let option of optionGroup.options; index as i"
               >
                 <mat-radio-button
-                [checked]="i === 0"
                 (change)="saveOptions(option, optionGroup)"
                   color="primary"
                   [value]="option.nameOption"
@@ -34,6 +33,9 @@
 
               </div>
 
+              <!-- ALERTT////// -->
+              <span class="alert-form" *ngIf="this.form.get(optionGroup.nameVariation)?.invalid">Elije una opcion <i class="pi pi-info-circle"></i></span>
+           
             </mat-radio-group>
           </div>
 
@@ -59,7 +61,8 @@
                 *ngFor="let option of optionGroup.options; index as i"
                 class="container-values-options"
               >
-                <mat-checkbox
+                <mat-checkbox 
+                  formControlName="checkboxs"
                   (change)="saveOptions(option, optionGroup)"
                   color="primary"
                 >
@@ -107,12 +110,10 @@
       <div class="container-button-add">
 
         <button
-          [@fadeIn]
-          *ngIf="stateButton"
           [style.background]="theme.get('background')"
           [style.color]="theme.get('colorTextSecondary')"
         >
-          Agregar {{subtotal|currency}}
+          Agregar {{subtotal ? (subtotal|currency) : ''}}
         </button>
     
         <div
@@ -128,6 +129,15 @@
       </div>
       
     </div>
+
+    <a [routerLink]="['/cart']">
+      <span class="cart-flotant" [@fadeIn] *ngIf="currentCart.length !== 0" [style.background]="theme.get('backgroundSec')"> 
+        <i class="pi pi-shopping-cart"></i> 
+        <div *ngIf="currentCart !== 0" [style.background]="theme.get('background')" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ currentCart.length }}</div>
+  
+      </span>
+
+    </a>
 
   </div>
 

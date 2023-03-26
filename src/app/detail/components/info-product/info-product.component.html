@@ -7,8 +7,8 @@
             <h2 class="product-category">{{product.category}}</h2>
         </a>
 
-        <i class="pi pi-heart"></i>
         
+
         
     </div>
     
@@ -18,6 +18,10 @@
         </div>
         
         <div class="container-text" [style.background]="theme.get('backgroundPage')">
+                <button  [class.clicked]="favClicked" class="fav-btn" (click)="toogleFav()">
+                    <i [ngClass]="favClicked?'pi-heart-fill':'pi-heart'" class="pi icon-fav"></i>
+                </button>
+
                 <h2 class="product-name">{{product.nameProduct}}</h2>
                 <h3 class="product-price">{{product.price |currency}}</h3>
                 <p class="product-description">{{product.description}} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis repellendus consequatur consectetur iste ullam corporis rem veniam officiis sint temporibus itaque nemo maxime.</p>

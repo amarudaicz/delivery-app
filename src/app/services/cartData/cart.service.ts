@@ -10,23 +10,28 @@ export class CartService {
 
 
   constructor() {
-    const items = localStorage.getItem('cartItems');
-    console.log(items);
+    this.reset()
     
+    
+  }
+
+  reset(){
+    const items = localStorage.getItem('cartItems');
     if (items) {
       this.cartItems = JSON.parse(items);
       this.cartSubject.next(this.cartItems);
     }
-
-    
   }
 
   addToCart(item: any): void {
-      
+    
     let lastId;
-    let product = this.cartItems.find(p => p.id === item.id )
+    console.log(item);
+    console.log(this.cartItems);
+    
 
-    console.log(product);
+    const index = this.cartItems.findIndex((i) => i.idProduct === item.idProduct && this.compareArrays(i.userOptions, item.userOptions));
+    console.log(index);
     
     if (this.cartItems.length === 0) {
       lastId = 1;
@@ -35,19 +40,17 @@ export class CartService {
     }
     item.idCart = lastId
 
-    const index = this.cartItems.findIndex((i) => i.id === item.id );
     
-    if (!product) {
-      this.cartItems.push(item);
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-      this.cartSubject.next(this.cartItems);
-      return
-    }else{
+    if (index !== -1) {
       console.log('aumentando quanity');
       this.cartItems[index].quantity += item.quantity
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));    
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));  
+    }else{
+      this.cartItems.push(item);
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     }    
-
+    
+    this.reset()    
   }
 
 
@@ -74,5 +77,40 @@ export class CartService {
       localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
       this.cartSubject.next(this.cartItems);
     }
+  }
+
+  clearCart(){
+    this.cartItems.length=0
+    this.cartSubject.next(this.cartItems);
+    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+
+  }
+
+
+
+  compareArrays(array1:any[], array2:any[]) {
+    console.log(array1);
+    console.log(array2);
+    
+    if (array1.length !== array2.length) {
+      return false;
+    }
+    
+    for (let i = 0; i < array1.length; i++) {
+      let found = false;
+      
+      for (let j = 0; j < array2.length; j++) {
+        if (JSON.stringify(array1[i]) === JSON.stringify(array2[j])) {
+          found = true;
+          break;
+        }
+      }
+      
+      if (!found) {
+        return false;
+      }
+    }
+    
+    return true;
   }
 }

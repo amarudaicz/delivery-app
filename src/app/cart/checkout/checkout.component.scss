@@ -11,11 +11,11 @@
 
 button[type="submit"] {
 
-  margin-top: 10px;
+  margin-top: 30px;
   display: block;
   width: 100%;
   padding: 10px;
-  font-size: 16px;
+  font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -37,4 +37,34 @@ button[type="submit"]:hover {
 
 .input-select{
 
+}
+
+.container-details{
+  position: relative;
+  padding: 2px 7px;
+
+  &::before{
+    position: absolute;
+    content: "";
+    width: 5px;
+    height: 100%;
+    background: rgb(51, 191, 51);
+    border-radius: 5px;
+    top: 0;
+    left: -7px;
+  }
+}
+
+.details-checkout {
+  width: 100%;
+  margin-bottom: 5px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+
+  i{
+    font-size: 20px;
+  }
 }

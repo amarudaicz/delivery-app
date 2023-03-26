@@ -22,11 +22,15 @@ export class InfoProductComponent implements OnInit {
   
   @Input() product:any
   productForChild:any
-  
+  favClicked:boolean = false
 
   
   redirectBack(){
     this.location.back()
+  }
+
+  toogleFav(){
+    this.favClicked = !this.favClicked
   }
 
 

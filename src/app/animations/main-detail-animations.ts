@@ -25,32 +25,31 @@ export const addItemCart = trigger('addItemCart', [
       '1s ease-out',
       keyframes([
         style({
-          transform: 'scale(0)',
+          width: '45px',
+          height: '43px',
           position: 'absolute',
           top: '-5px',
-          right: '20px',
+          right:'0',
           visibility:'visible',
-          opacity:1
         }),
         style({
-          transform: 'scale(0.8)',
+          width: '45px',
+          height: '43px',
           position: 'absolute',
-          top: '-5px',
-          right: '20px',
+          right:'0',
+          top:'-60px',
           visibility:'visible',
-          opacity:1
-
         }),
-        style({
-          transform: 'scale(0)',
+          style({
+            width: '45px',
+          height: '43px',
           position: 'absolute',
-          top: '150px',
-          right: '20px',
+          right:'0',
+          top:'-60px',
           visibility:'visible',
           opacity:0
-
-
         })
+        
       ])
     )
   ),

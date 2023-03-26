@@ -39,6 +39,15 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.valueChanges.subscribe(() => this.formChange());
+    this.form.get('shippingMethod')?.valueChanges.subscribe( () => {
+      if (this.form.controls['shippingMethod'].value === 'Delivery') {
+        this.form.controls['direction'].setValidators(Validators.required)      
+      }else{
+        this.form.controls['direction'].clearValidators()
+      }
+      this.form.controls['direction'].updateValueAndValidity()
+    })
+
 
     this.cartService.getCartItems().subscribe((items: any[]) => {
       console.log(items);
@@ -46,8 +55,9 @@ export class CheckoutComponent implements OnInit {
       this.cartItems = items;
 
       this.subtotal = items
-        .map((e) => e.price * e.quantity)
+        .map((e) => e.total * e.quantity)
         .reduce((p, c) => p + c);
+
     });
 
     console.log(this.subtotal);
@@ -72,21 +82,15 @@ export class CheckoutComponent implements OnInit {
       reference: this.form.controls['reference'].value,
     };
 
-    if (this.form.controls['shippingMethod'].value === 'Delivery') {
-      this.form.controls['direction'].setValidators(Validators.required)
-    }
-
-    console.log(this.form.value);
-
     this.userService.saveUserShipping(userData);
   }
   
   
   preLeave() {
+    console.log(this.form);
+    
     if (this.form.valid) {
       this.redirectWhatsapp()
-
-      
     }else{
 
     }

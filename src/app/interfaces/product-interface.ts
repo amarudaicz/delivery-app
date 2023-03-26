@@ -2,7 +2,7 @@ import { OptionProduct } from "./optionProduct-interface"
 
 export interface Product {
     id: number
-    name: string,
+    nameProduct: string,
     image: string,
     categoryId:number,
     category: string,

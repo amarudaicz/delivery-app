@@ -69,9 +69,15 @@
     </mat-form-field>
 
 
+    <div class="container-details">
+      <p class="details-checkout subtotal"><b>Subtotal:</b> <span>{{subtotal|currency}}</span> </p>
+      <p *ngIf="this.form.controls['shippingMethod'].value === 'Delivery'" class="details-checkout "><b>Envio:</b> 
+      
+      <i #tooltip="matTooltip" matTooltip="El costo del envio puede variar dependiendo la zona, le indicaremos el monto atravez de Whatsapp" matTooltipPosition="above" matTooltipTouchGestures="on" TooltipVisibility="initial" (click)="tooltip.show()" [style.color]="theme.get('background')" class="pi pi-info-circle"></i> </p>
+
+    </div>
 
 
-    <p>Subtotal: <b>{{subtotal|currency}}</b> </p>
 
     <button [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" type="submit">
       Enviar

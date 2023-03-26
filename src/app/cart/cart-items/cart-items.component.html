@@ -1,42 +1,68 @@
 <div class="cart">
 
-    <div *ngIf="subtotal !== 0" class="container-title">
+    <div class="container-title">
       <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip title-cart">Mi carrito</h2>
     </div>
 
-    <ul class="product-list">
-      <div *ngFor="let product of products" class="cart-item">
+    <ul class="p-list">
+      <div *ngFor="let i of itemsCart" class="cart-item">
         <div class="container-image">
-          <img src="{{ product.image }}" alt="Product Image" />
+          <img src="{{ i.productImage }}" alt="p Image" />
         </div>
         <div class="cart-item-details">
-          <h3>{{ product.name }}</h3>
-          <p *ngIf="product.options"><b>Porcion:</b> {{ product.options }}</p>
+          <h3 class="title-item">{{ i.nameProduct }}</h3>
+
+          <div *ngIf="i.userOptions" class="user-options">
+            <div class="container-options">
+              <div *ngFor="let o of i.userOptions" class="option">
+                
+                <div *ngIf="o.multiple else simple">
+                  <p class="detail-item">
+                    <b>-{{o.nameVariation}}: </b> 
+                    <span style="display: inline-block; margin-right: 3px;" *ngFor="let m of o.multipleOptions; index as i; ">
+                      {{i === o.multipleOptions!.length - 1 ? m.nameOption :  m.nameOption + ',' }}
+                    </span>
+                  </p>
+                </div>
+                <ng-template #simple>
+                  <p class="detail-item">
+                    <b>{{o.typePrice === 1 ? '' : '-'+o.nameVariation + ': '}}</b>
+                    <span>{{o.nameOption}}</span>
+                  </p>
+                 
+                </ng-template>
+
+              </div>
+            </div>
+
+          <p class="detail-item"><b>Precio:</b> {{ i.total | currency }}</p>
+
+
+          </div>
 
           <div class="quantity">
             <i
-              (click)="setQuantity(product.idCart, -1, inputQuantity.value)"
+              (click)="setQuantity(i.idCart, -1, inputQuantity.value)"
               class="fa-solid fa-minus"
               [style.borderColor]="theme.get('background')"
             ></i>
             <input
               disabled
-              [id]="product.idCart"
+              [id]="i.idCart"
               #inputQuantity
               type="number"
-              [value]="product.quantity"
+              [value]="i.quantity"
             />
             <i
-              (click)="setQuantity(product.idCart, 1, inputQuantity.value)"
+              (click)="setQuantity(i.idCart, 1, inputQuantity.value)"
               class="fa-solid fa-plus"
               [style.borderColor]="theme.get('background')"
             ></i>
           </div>
           
-          <p><b>Precio:</b> {{ product.price | currency }}</p>
         </div>
 
-        <button class="remove-item" (click)="removeProduct(product.idCart)">
+        <button class="remove-item" (click)="removeProduct(i.idCart)">
             <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -58,7 +84,6 @@
                 [style.background]="theme.get('background')"
                 [style.color]="theme.get('colorTextSecondary')"
                 class="button-checkout"
-                (click)="checkout()"
               >
                 Checkout
               </button>

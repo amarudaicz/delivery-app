@@ -4,6 +4,7 @@ export interface OptionProduct {
   typePrice: number;
   options: Array<DetailsOptions>;
   required:boolean
+  multipleOptions?:Array<any>
 }
 
 
