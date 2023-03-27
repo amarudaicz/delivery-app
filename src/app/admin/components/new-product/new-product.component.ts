@@ -64,7 +64,7 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categories = this.localService.getCategories();
+    // this.categories = this.localService.getCategories(); PARA RELLENAR EL INPUT
 
     this.filterCategories = this.form.controls['category'].valueChanges.pipe(
       startWith(''),

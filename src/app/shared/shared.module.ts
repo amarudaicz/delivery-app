@@ -11,8 +11,8 @@ import { FlotantCartComponent } from './components/flotant-cart/flotant-cart.com
 
 @NgModule({
   declarations: [
-    NavigationComponent,
     HeaderComponent,
+    NavigationComponent,
     ProductCardComponent,
     LoaderFullComponent,
     FlotantCartComponent

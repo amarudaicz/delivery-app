@@ -18,7 +18,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 
 
 export class MainCategoryComponent implements OnInit {
-  category?:string
+  category:string = ''
   products?: Product[];
 
   
@@ -29,9 +29,9 @@ export class MainCategoryComponent implements OnInit {
     private route: ActivatedRoute
   ) 
   {
-    this.category = this.route.snapshot.params['category'] 
-
+    this.category = this.route.snapshot.params['category']
   }
+
 
   ngOnInit(): void {
     this.routeService.setCurrent('categories');
@@ -39,7 +39,7 @@ export class MainCategoryComponent implements OnInit {
 
     this.localService.getProducts().subscribe((data)=>{
       console.log(data);
-      this.products = data.filter(e => e.category === this.category)
+      this.products = data.filter(e => e.category.toLowerCase() === this.category.toLowerCase())
     })
  
     

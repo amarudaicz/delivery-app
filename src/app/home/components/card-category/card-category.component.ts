@@ -1,4 +1,6 @@
 import { Component,EventEmitter,Input, OnInit, Output } from '@angular/core';
+import { Category } from 'src/app/interfaces/category-interfaz';
+import { PreviewCategoryService } from 'src/app/services/preview-category/preview-category.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -11,23 +13,26 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 
 export class CardCategoryComponent implements OnInit {
 
-  constructor(public theme:ThemesService){
+  constructor(public theme:ThemesService, public previewCategory:PreviewCategoryService){
 
 
   }
 
   ngOnInit(): void {
+
+
   }
 
   
-    
-  @Input() category?:any
-  @Output() categorySelect = new EventEmitter<any>()
+  @Input() category:any
 
   emitCategory(category:any){
-    this.categorySelect.emit(category)
+    this.previewCategory.setCategory(category.id)
   }
 
+  selectedCategory(id:number){
+    return this.previewCategory.categoryId === id
+  }
 
 
 }

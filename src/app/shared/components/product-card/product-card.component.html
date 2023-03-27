@@ -1,5 +1,5 @@
 <div class="product-card">
-  <a [routerLink]=" [product.nameProduct]" [queryParams]="{id:product.id}">
+  <a [routerLink]="[localName + '/' + product.category + '/' + product.nameProduct]" [queryParams]="{id:product.id}">
     <div class="product-image">
       <img
         src="{{product.image}}"

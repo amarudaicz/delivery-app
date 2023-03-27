@@ -5,6 +5,7 @@ import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { Local } from 'src/app/interfaces/local-interface';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
+import { PreviewCategoryService } from 'src/app/services/preview-category/preview-category.service';
 import { PwaInstallerService } from 'src/app/services/pwa-installer/pwa-installer.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -24,7 +25,8 @@ export class MainHomeComponent implements OnInit {
     public theme: ThemesService,
     private routeService: RouteDataService,
     private localService: LocalDataService,
-    private pwaInstaller:PwaInstallerService
+    private pwaInstaller:PwaInstallerService,
+    private previewCategory:PreviewCategoryService
   ) {}
     
   ngOnInit(): void {
@@ -32,19 +34,25 @@ export class MainHomeComponent implements OnInit {
 
     this.localService.local.subscribe((data) => (this.local = data));
 
+    this.localService.getCategories().subscribe(data=>{
+      console.log(data);
+      this.categories = data
+      this.previewCategory.setCategory(data[0].id)
+    })
 
-    this.localService.getProducts().subscribe((data) => {
-      this.categories = data.map((e) => {
-        return { name: e.category, image: e.categoryImage, id: e.categoryId };
-      });
-      this.categories = deleteRepeatElement(this.categories)
-    });
+  
+        
+
+  
+       
+
+
+
+
   }
 
-  categorySelect(category:any){
-    console.log(category);
-    
 
-  }
+
+
 
 }

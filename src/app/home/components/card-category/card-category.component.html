@@ -1,16 +1,23 @@
-<div class="container-card" >
-
-    <a >
-        <div (click)="emitCategory(category)" matRipple [matRippleColor]="'#00000012'" class="category-card">
-            <img class="card-image" src="{{category.image}}" alt="category {{category.image}}" >
-            
-            <h5 
-                [style.color]="theme.get('colorText')"  
-                class="card-title">
-                {{category.name}}
-
-            </h5>
-            
-        </div>
-    </a>
+<div class="container-card">
+  <a (click)="emitCategory(category)">
+    <div
+      [style.background]="selectedCategory(category.id) ? theme.get('backgroundSec') : '#d7d7d7'"
+      matRipple
+      [matRippleColor]="'#00000012'"
+      class="category-card"
+    >
+      <img
+        class="card-image"
+        src="{{ category.image }}"
+        alt="category {{ category.image }}"
+        />
+        
+        <h5 class="card-title"
+            [style.color]="selectedCategory(category.id) ? theme.get('colorTextSecondary') : '' "
+        >
+          
+        {{ category.name }}
+      </h5>
+    </div>
+  </a>
 </div>

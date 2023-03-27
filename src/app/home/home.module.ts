@@ -12,6 +12,7 @@ import { PromotionsLocalComponent } from './components/promotions-local/promotio
 import { ProductsSetComponent } from './components/products-set/products-set.component';
 import {MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatRippleModule} from '@angular/material/core';
+import { PreviewCategoryComponent } from './components/preview-category/preview-category.component';
 
 @NgModule({ 
   declarations: [
@@ -20,6 +21,7 @@ import {MatRippleModule} from '@angular/material/core';
     PromotionsLocalComponent,
     ProductsSetComponent,
     NewselterBoxComponent,
+    PreviewCategoryComponent
     
   ],
   imports: [

@@ -1,29 +1,16 @@
-<section class="products-set">
+<section class="products-set" *ngIf="products">
 
     <h2 class="chip" [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')">
-        Mas vendidos
+        {{title}}
     </h2>
 
     <div class="container-products">
         <div class="container-grid">
 
            <div *ngFor="let product of products" class="product-card">
-                <a [routerLink]="['product/'+ product.nameProduct]">
-                  <div class="product-image">
-                    <img
-                      src="{{product.image}}"
-                      alt=""
-                    />
-                  </div>
-                
-                  <div class="product-title">
-                    <span class="product-subtitle">{{ product.category }} </span>
-                    <h4>{{product.nameProduct}}</h4>
-                    <span class="product-price">{{ product.price | currency }}</span>
-                  </div>
-              
-                </a>
-              </div>
+             
+            <app-product-card [product]="product"></app-product-card>
+            </div>
               
          
         </div>  

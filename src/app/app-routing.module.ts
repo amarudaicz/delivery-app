@@ -10,11 +10,7 @@ import { MainPromotionsComponent } from './promotions/components/main-promotions
 import { MainUserComponent } from './user/components/main-user/main-user.component';
 
 const routes: Routes = [ 
-  {
-    path:'',
-    redirectTo:'pun',
-    pathMatch:'full'
-  },
+
 
   {
     path:'user',

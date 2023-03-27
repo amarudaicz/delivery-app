@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product-interface';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -9,19 +9,19 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./products-set.component.scss']
 })
 export class ProductsSetComponent implements OnInit {
-  products?:Product[]
+  
+  @Input() products?:Product[]
+
+  @Input() title:string = ''
   
   constructor(public theme:ThemesService, private localService:LocalDataService){
 
   }
 
   ngOnInit(): void { 
-    this.localService.getProducts().subscribe(data =>{
-      this.products = data
-    })
     
-
-
+    
+    
   }
 
   

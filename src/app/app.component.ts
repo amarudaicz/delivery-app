@@ -16,9 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private contexts: ChildrenOutletContexts,
-    public theme: ThemesService,
     private routeService: RouteDataService,
-    private localService:LocalDataService
     ){}
 
   ngOnInit(): void {
@@ -31,24 +29,9 @@ export class AppComponent implements OnInit {
   local:any
   localName:any
 
-  setLocalNavigation(){
-    
-    this.localName = this.routeService.getOrigin()
-
-    if (!this.localName) {
-      location.replace('/#/landing')
-    }
- 
-  }
-
-
-
-
-  
   getRouteData() {
-    this.setLocalNavigation()
     const route =  this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
-    
+
     if (route === 'home') {
       const local =  this.contexts.getContext('primary')?.route?.snapshot?.params['local'];
       this.routeService.setOrigin(local);

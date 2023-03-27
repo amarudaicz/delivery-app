@@ -89,7 +89,7 @@ export class AddProductCartComponent implements OnInit {
       setTimeout(() => {
         this.cartService.addToCart(item);
         this.stateButton = true;
-   
+        
         this.location.back()
 
       }, 1000);
