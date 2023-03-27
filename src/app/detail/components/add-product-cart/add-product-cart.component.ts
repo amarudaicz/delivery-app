@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import {
   Component,
   Input,
@@ -43,6 +44,7 @@ export class AddProductCartComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private toastr:ToastrService,
+    private location:Location
   ) {
     this.form = this.formBuilder.group({
       especifications: [''],
@@ -64,30 +66,33 @@ export class AddProductCartComponent implements OnInit {
     this.cartService.getCartItems().subscribe(data => this.currentCart = data)
 
 
-    this.options.push({...this.product.variations.filter(e => e.typePrice ===1)[0], ...this.product.variations.filter(e => e.typePrice ===1)[0].options[0]})
-
+    if(this.product.variations.length === 0){
+      this.subtotal = this.product.price
+    }
 
   }
 
   saveOrder() {
-    const {nameProduct, id:idProduct, image:productImage, category} = this.product
-
-    const item = { nameProduct, productImage, category, idProduct, ...this.form.value, userOptions:this.options, total:this.subtotal };
-    console.log(this.form);
-      
+    const {nameProduct, id:idProduct, image:productImage, category, price:productPrice} = this.product
+    console.log(this.options);
+    
+    if (this.options.length !== 0) {
+      const _type1Index = this.options.findIndex(e => e.typePrice === 1)
+      const _type1Object = this.options.splice(_type1Index, 1)[0]
+      this.options.unshift(_type1Object) 
+    }
+    
     if (this.form.valid) {
       this.stateButton = false;
+      const item = { nameProduct, productImage, productPrice, category, idProduct, ...this.form.value, userOptions:this.options, total: this.subtotal ? this.subtotal : this.product.price };
+      
       setTimeout(() => {
         this.cartService.addToCart(item);
         this.stateButton = true;
-        this.form.reset()
-        this.form.get('quantity')?.setValue(1)
-        this.options.length = 0
+   
+        this.location.back()
+
       }, 1000);
-
-
-
-
     }else{ 
       this.toastr.error('Completar todos los campos')
     }
@@ -102,8 +107,11 @@ export class AddProductCartComponent implements OnInit {
         this.quantity--;
       }
     }
+
     this.form.controls['quantity'].setValue(this.quantity);
-    this.subtotal = this.calcSubtotal(this.options)
+
+
+      
 
   }
 
@@ -144,7 +152,7 @@ export class AddProductCartComponent implements OnInit {
     if (this.options.find((e) => e.typePrice === 1)) {
       this.total = this.options.filter((e) => e.typePrice === 1)[0].price;
     }
-    
+
     this.subtotal = this.calcSubtotal(this.options)
   }
 
@@ -173,12 +181,12 @@ export class AddProductCartComponent implements OnInit {
       console.log(subtotal);
 
       if (subtotal.length !== 0 && multiples.length !== 0) {
-        const calc = (subtotal.reduce((act,prev)=> act+prev) + multiples.reduce((act,prev)=> act+prev))*this.form.get('quantity')?.value 
+        const calc = (subtotal.reduce((act,prev)=> act+prev) + multiples.reduce((act,prev)=> act+prev))
         console.log('1111');
         return calc
         
       }else if (subtotal.length !== 0) {
-        const calc = subtotal.reduce((act,prev)=> act+prev)*this.form.get('quantity')?.value 
+        const calc = subtotal.reduce((act,prev)=> act+prev)
         console.log('2222');
         
         return calc

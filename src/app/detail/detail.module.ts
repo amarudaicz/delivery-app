@@ -10,6 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { CartService } from '../services/cartData/cart.service';
 import { RouterModule } from '@angular/router';
+import {MatRippleModule} from '@angular/material/core';
 
 
 
@@ -27,6 +28,7 @@ import { RouterModule } from '@angular/router';
     MatRadioModule,
     MatCheckboxModule,
     MatInputModule,
+    MatRippleModule,
     RouterModule
 
   ],

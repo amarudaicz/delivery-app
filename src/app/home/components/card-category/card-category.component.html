@@ -1,18 +1,16 @@
 <div class="container-card" >
 
-    <div class="card">
-        <img class="card-image" src="{{category.image}}" alt="category {{category.image}}" >
-        <a [routerLink]="[category.name]">
-
+    <a >
+        <div (click)="emitCategory(category)" matRipple [matRippleColor]="'#00000012'" class="category-card">
+            <img class="card-image" src="{{category.image}}" alt="category {{category.image}}" >
+            
             <h5 
-                [style.color]="theme.get('colorTextSecondary')"  
-                [style.background]="theme.get('background')" 
+                [style.color]="theme.get('colorText')"  
                 class="card-title">
-
                 {{category.name}}
 
             </h5>
-        </a>
-
-    </div>
+            
+        </div>
+    </a>
 </div>

@@ -10,6 +10,7 @@ export interface ItemCart {
   especifications: string;
   productImage: string;
   category: string;
+  productPrice?:number
 }
 
 interface userOptions {

@@ -32,16 +32,19 @@ export class MainHomeComponent implements OnInit {
 
     this.localService.local.subscribe((data) => (this.local = data));
 
-    console.log(this.local);
 
     this.localService.getProducts().subscribe((data) => {
       this.categories = data.map((e) => {
         return { name: e.category, image: e.categoryImage, id: e.categoryId };
       });
-
       this.categories = deleteRepeatElement(this.categories)
-      console.log(this.categories);
     });
+  }
+
+  categorySelect(category:any){
+    console.log(category);
+    
+
   }
 
 }

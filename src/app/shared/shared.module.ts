@@ -5,6 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { LoaderFullComponent } from './components/loader-full/loader-full.component';
+import { FlotantCartComponent } from './components/flotant-cart/flotant-cart.component';
 
 
 
@@ -13,7 +14,8 @@ import { LoaderFullComponent } from './components/loader-full/loader-full.compon
     NavigationComponent,
     HeaderComponent,
     ProductCardComponent,
-    LoaderFullComponent
+    LoaderFullComponent,
+    FlotantCartComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { LoaderFullComponent } from './components/loader-full/loader-full.compon
     NavigationComponent,
     HeaderComponent,
     ProductCardComponent,
-    LoaderFullComponent
+    LoaderFullComponent,
+    FlotantCartComponent
 
   ]
 })

@@ -11,6 +11,7 @@ import { NewselterBoxComponent } from './components/newselter-box/newselter-box.
 import { PromotionsLocalComponent } from './components/promotions-local/promotions-local.component';
 import { ProductsSetComponent } from './components/products-set/products-set.component';
 import {MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatRippleModule} from '@angular/material/core';
 
 @NgModule({ 
   declarations: [
@@ -26,7 +27,8 @@ import {MatSnackBarModule } from '@angular/material/snack-bar';
     SharedModule,
     RoutesHomeModule,
     RouterModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRippleModule
   ] ,
   exports:[
     NewselterBoxComponent

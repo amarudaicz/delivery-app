@@ -8,7 +8,8 @@
             <h2 [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')" class="chip title-categories">Categorias</h2>
     
             <div class="container-categories">
-                <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
+                <app-card-category (emitCategory)="categorySelect($event)" *ngFor="let category of categories" [category]="category"> </app-card-category>
+        
             </div>
 
          

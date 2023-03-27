@@ -1,0 +1,6 @@
+<a [routerLink]="['/cart']">
+    <span class="cart-flotant" [@fadeIn] *ngIf="cartItems.length !== 0" [style.background]="theme.get('backgroundSec')"> 
+      <i class="pi pi-shopping-cart"></i> 
+      <div *ngIf="cartItems.length !== 0" [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" class="cart-counter">{{ cartItems.length }}</div>
+    </span>
+</a>

@@ -1,4 +1,4 @@
-import { Component,Input, OnInit } from '@angular/core';
+import { Component,EventEmitter,Input, OnInit, Output } from '@angular/core';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -22,6 +22,11 @@ export class CardCategoryComponent implements OnInit {
   
     
   @Input() category?:any
+  @Output() categorySelect = new EventEmitter<any>()
+
+  emitCategory(category:any){
+    this.categorySelect.emit(category)
+  }
 
 
 

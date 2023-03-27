@@ -12,8 +12,8 @@
         <div class="cart-item-details">
           <h3 class="title-item">{{ i.nameProduct }}</h3>
 
-          <div *ngIf="i.userOptions" class="user-options">
-            <div class="container-options">
+          <div class="user-options">
+            <div *ngIf="i.userOptions[0] !== null" class="container-options">
               <div *ngFor="let o of i.userOptions" class="option">
                 
                 <div *ngIf="o.multiple else simple">
@@ -26,19 +26,18 @@
                 </div>
                 <ng-template #simple>
                   <p class="detail-item">
-                    <b>{{o.typePrice === 1 ? '' : '-'+o.nameVariation + ': '}}</b>
+                    <b>{{o.typePrice === 1 ? '' : o.nameVariation + ': '}}</b>
                     <span>{{o.nameOption}}</span>
                   </p>
-                 
                 </ng-template>
 
               </div>
             </div>
-
-          <p class="detail-item"><b>Precio:</b> {{ i.total | currency }}</p>
-
-
+            <p class="detail-item"><b>Precio:</b> {{ i.total ? (i.total * i.quantity|currency) : (i.productPrice|currency) }}</p>
           </div>
+
+
+
 
           <div class="quantity">
             <i

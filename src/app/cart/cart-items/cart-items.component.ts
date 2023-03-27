@@ -18,8 +18,6 @@ import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement';
 export class CartItemsComponent {
   itemsCart: ItemCart[]=[]; // products will be stored as an array of objects
   subtotal = 0;
-  multipleOptions:any
-  finalGroup:any[] = []
 
   constructor(private cartService: CartService, public theme: ThemesService, public routeService:RouteDataService) {}
 
@@ -37,8 +35,6 @@ export class CartItemsComponent {
       
       this.subtotal = items.map(e => e.total*e.quantity).reduce((prev, act)=>prev + act)
 
-      this.multipleOptions = this.multipleOptionsGroup()
-      console.log(this.multipleOptions);
       
     });
   }
@@ -71,46 +67,4 @@ export class CartItemsComponent {
   }
 
 
-
-  multipleOptionsGroup(){
-    const group = this.itemsCart!.map(e => e.userOptions)
-    const groupFiltred = this.filtrarObjetos(group, ['nameVariation', 'multiple'])
-    console.log(groupFiltred);
-    
-    groupFiltred.forEach(e =>{
-      const index = this.finalGroup.findIndex((h:any) => h.nameVariation === e.nameVariation)
-      
-      if (index !== -1 ) {
-        this.finalGroup[index].options.push({nameOption:e.nameOption, price:e.price})
-      }else{
-        this.finalGroup.push({nameVariation:e.nameVariation, options:[{nameOption:e.nameOption, price:e.price}]})
-      }
-      
-    })
-    return deleteRepeatElement(this.finalGroup)
-  }
-
-  filtrarObjetos(arrObjetos: any[][], propiedadesComunes: string[]): any[] {
-    let objetosFiltrados = [];
-    
-    for(let i=0; i<arrObjetos.length; i++){
-      for(let j=0; j<arrObjetos[i].length; j++){
-        let objetoActual = arrObjetos[i][j];
-        let cumpleConPropiedades = true;
-  
-        for(let k=0; k<propiedadesComunes.length; k++){
-          if(!objetoActual[propiedadesComunes[k]]){
-            cumpleConPropiedades = false;
-            break;
-          }
-        }
-  
-        if(cumpleConPropiedades){
-          objetosFiltrados.push(objetoActual);
-        }
-      }
-    }
-  
-    return objetosFiltrados;
-  }
 }

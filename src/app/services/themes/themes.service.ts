@@ -16,12 +16,13 @@ export class ThemesService {
       background:'#ff7a5b',
       backgroundSec:'#2c3e50',
       backgroundPage: '#edede9',
+      colorPrimary:'',
+      colorSecondary: 'string',
+
       colorText:'#303030',
       colorTextSecondary: '#fff',
-      colorPrimary:'',
       colorBorderPrimary: 'string',
       colorBorderSecondary: 'string',
-      colorSecondary: 'string'
     },
     {
       id:2,
