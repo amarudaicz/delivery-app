@@ -17,6 +17,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class HeaderComponent implements OnInit {
   localName?: string|null;
   local?:Local
+  stateMenu:boolean = false
 
   constructor(public theme:ThemesService, public routeData:RouteDataService, private localService:LocalDataService){
   }
@@ -30,6 +31,12 @@ export class HeaderComponent implements OnInit {
     })
     
     
+  }
+
+
+  toogleMenu(){
+    this.stateMenu = !this.stateMenu
+
   }
 
 

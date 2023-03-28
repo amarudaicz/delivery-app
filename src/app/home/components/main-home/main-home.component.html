@@ -3,6 +3,8 @@
     
     <div class="content">
 
+        
+        
         <section class="categories" *ngIf="categories.length!==0">
 
             <h2 [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')" class="chip title-categories">Categorias</h2>
@@ -17,14 +19,14 @@
 
          
         </section>  
-
+        
         <app-preview-category></app-preview-category>
-
+        
         <app-promotions-local>  </app-promotions-local>
-    
-        <app-products-set> </app-products-set>
-
+        
         <app-newselter-box *ngIf="!appInstalled"></app-newselter-box>
+        
+        <app-products-set> </app-products-set>
 
     </div>
 

@@ -6,8 +6,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { RouterLink, RouterModule } from '@angular/router';
 import { LoaderFullComponent } from './components/loader-full/loader-full.component';
 import { FlotantCartComponent } from './components/flotant-cart/flotant-cart.component';
-
-
+import { HomeModule } from '../home/home.module';
+import { NewselterBoxComponent } from './components/newselter-box/newselter-box.component';
 
 @NgModule({
   declarations: [
@@ -15,11 +15,14 @@ import { FlotantCartComponent } from './components/flotant-cart/flotant-cart.com
     NavigationComponent,
     ProductCardComponent,
     LoaderFullComponent,
-    FlotantCartComponent
+    FlotantCartComponent,
+    NewselterBoxComponent
+    
   ],
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    
   ],
   exports:[
     NavigationComponent,

@@ -1,28 +1,98 @@
-<div *ngIf="routeData.getCurrent() === 'home' || routeData.getCurrent() === 'categories'">
-    <header [@fadeIn] [style.background]="theme.currentTheme.backgroundPage">
+<div 
+    *ngIf="routeData.getCurrent() === 'home' 
+    || routeData.getCurrent() === 'categories' 
+    || routeData.getCurrent() === 'cart' ">
     
-        <div  class="container-header" [style.background]="theme.currentTheme.background" >
-            <div class="container-info">
-                <div class="local-info">
-                    <h1 class="local-name" [style.color]="theme.get('colorTextSecondary')">
-                       {{local?.name}}
-                    </h1>
-                    <span class="local-ubication" [style.color]="theme.get('colorTextSecondary')">
-                        <i class="fa-solid fa-location-dot"></i>
-                        {{local?.ubication}}
-                    </span>
+    <header [@fadeIn]>
+    
+        <div  class="container-header" >
+
+            <div class="container-items">
+
+                <div class="menu-icon" (click)="toogleMenu()">
+
+                    <div class="container-bars" [class.menu-visible]="stateMenu">
+                        <div [style.background]="!stateMenu ? theme.get('background') : theme.get('backgroundSec')" class="bar-1 bar"></div>
+                        <div [style.background]="!stateMenu ? theme.get('background') : theme.get('backgroundSec')" class="bar-2 bar"></div>
+                        <div [style.background]="!stateMenu ? theme.get('background') : theme.get('backgroundSec')" class="bar-3 bar"></div>
+                    </div>
+                 
                 </div>
-        
+
+
+                <div class="search">
+                    <input type="text" class="search__input" placeholder="Buscar">
+                    <button class="search__button">
+                        <i class="pi pi-search search_icon"> </i>
+                    </button>
+                </div>
+                
+
                 <div class="local-image">
-                    <img src="{{local?.image}}" width="50px" height="50px" alt="">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" width="50px" height="50px" alt="">
                 </div>
     
             </div>
-    
-    
-    
-    
-    
         </div>
     </header> 
+
+
+    <div *ngIf="stateMenu" (click)="toogleMenu()" class="overlay-menu"></div>
+
+    <div class="container-menu" [class.menu-visible]="stateMenu">
+        <div class="header-menu">
+            <div class="local-info">
+                <h1 class="local-name" >
+                   Punto Pizza<!-- {{local?.name}} -->
+                </h1>
+
+                <p class="local-ubication">
+                    <i [style.color]="theme.get('backgroundSec')" class="fa-solid fa-location-dot"></i>
+                    Rio Ceballos, Alem 98      <!-- {{local?.ubication}} -->
+                </p>
+                <hr>
+
+                <div class="local-horarios">
+
+                    <h4 [style.color]="theme.get('backgroundSec')">
+                        <i class="pi pi-calendar"></i>
+                        Horarios
+                    </h4>
+                    
+                    <ul class="list-week">
+                        <li>
+                            <h5 class="title-day">Lunes</h5>
+                            12pm a 13pm, 19pm a 23pm
+                        </li>
+    
+                        <li>
+                            <h5 class="title-day">Miercoles</h5>
+                            12pm a 13pm, 19pm a 23pm
+                        </li>
+    
+                        <li>
+                            <h5 class="title-day">Martes</h5>
+                            12pm a 13pm, 19pm a 23pm
+                        </li>
+                    </ul> 
+
+                </div>
+                
+                <app-newselter-box></app-newselter-box>
+
+            </div>
+        </div>
+
+        <div class="content-menu">
+
+        </div>
+
+
+        <div class="footer-menu">
+
+        </div>
+    </div>
+
+
 </div>
+
