@@ -16,79 +16,109 @@ import {
   MatChipInputEvent,
 } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DetailsOptions, OptionProduct } from 'src/app/interfaces/optionProduct-interface';
+import {
+  DetailsOptions,
+  OptionProduct,
+} from 'src/app/interfaces/optionProduct-interface';
 import { ToastrService } from 'ngx-toastr';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
+import { Product } from 'src/app/interfaces/product-interface';
+import { ConfirmationService } from 'primeng/api';
+import { MainDetailComponent } from 'src/app/detail/components/main-detail/main-detail.component';
 
 @Component({
   selector: 'app-new-product',
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.scss'],
-  providers: [MatAutocomplete],
+  providers: [MatAutocomplete, ConfirmationService],
 })
 export class NewProductComponent implements OnInit {
   categories: Category[] = [];
   filterCategories?: Observable<any[]>;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  ingredients: string[] = [];
+  ingredientsList: string[] = [];
   options: string[] = [];
-  optionsGroup:OptionProduct[] = [];
+  optionsGroup: OptionProduct[] = [];
   form: FormGroup;
-  formVariations:FormGroup;
+  formVariations: FormGroup;
   categoryControl = new FormControl('');
-  variationState:boolean = false
+  variationState: boolean = true;
+  dataModal?: any;
+  editing: boolean = false;
+  previewModal: boolean = false;
 
   constructor(
     public theme: ThemesService,
     private localService: LocalDataService,
     private formBuilder: FormBuilder,
-    private toastr:ToastrService
-
+    private toastr: ToastrService,
+    private configDialog: DynamicDialogConfig,
+    private dialogRef: DynamicDialogRef,
+    private dialogService: DialogService,
+    private confirmService: ConfirmationService
   ) {
     this.form = this.formBuilder.group({
       nameProduct: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', Validators.required],
       ingredients: [''],
-      
     });
-    
+
     this.formVariations = this.formBuilder.group({
       options: ['', [Validators.required]],
       typeOption: ['', Validators.required],
       typePrice: ['', Validators.required],
       multiple: [false],
-      required:[false]
-    })
+      required: [false],
+    });
   }
 
   ngOnInit(): void {
-    // this.categories = this.localService.getCategories(); PARA RELLENAR EL INPUT
+    this.localService.getCategories().subscribe((data) => {
+      this.categories = data;
+      console.log(this.categories);
+    });
 
     this.filterCategories = this.form.controls['category'].valueChanges.pipe(
       startWith(''),
       map((value) => this.filter(value || ''))
     );
 
+    if (this.configDialog.data) {
+      this.dataModal = this.configDialog.data;
+      this.setEditProduct(this.configDialog.data);
+
+      this.form.valueChanges.subscribe((change) => {
+        this.editing = true;
+      });
+    }
   }
 
   saveProduct() {
-    
     console.log(this.optionsGroup);
     console.log(this.form);
-    if (this.form.invalid) {
 
-      this.toastr.error('Completar los campos requeridos')
-      return
+    if (this.form.invalid) {
+      this.toastr.error('Completar los campos requeridos');
+      return;
     }
-    
-    const product = {variations:this.optionsGroup, ...this.form.value }
+
+    this.form.get('ingredients')?.setValue(this.ingredientsList);
+    const product = { variations: this.optionsGroup, ...this.form.value };
+
+    if (this.editing) {
+      this.editing = false;
+      console.log('ACTUALIZANDO PRODUCTO');
+    } else {
+      console.log('AGREGANDO PRODUCTO');
+    }
     console.log(product);
     //HTTP METHOD////////////////////////////////////
-
-
-
   }
 
   saveOptions() {
@@ -96,19 +126,20 @@ export class NewProductComponent implements OnInit {
     const op = this.options.join(','); //FOR BUG
     const option = this.createOption(_typeOption.value, op.split(','));
 
-    if (this.optionsGroup.find(e => e.typePrice === 1) && this.formVariations.get('typePrice')?.value === 1) {
-      this.toastr.error('Solo puedes crear una variacion que altere el precio totalmente')
-      return
+    if (
+      this.optionsGroup.find((e) => e.typePrice === 1) &&
+      this.formVariations.get('typePrice')?.value === 1
+    ) {
+      this.toastr.error(
+        'Solo puedes crear una variacion que altere el precio totalmente'
+      );
+      return;
     }
 
-
-    if (
-      this.formVariations.invalid ||
-      this.options.length === 0
-    ) {      
-      this.formVariations.markAllAsTouched()
+    if (this.formVariations.invalid || this.options.length === 0) {
+      this.formVariations.markAllAsTouched();
       this.form.markAllAsTouched();
-      this.toastr.error('Completar los campos requeridos')
+      this.toastr.error('Completar los campos requeridos');
       return;
     }
 
@@ -118,28 +149,25 @@ export class NewProductComponent implements OnInit {
       )
     ) {
       this.optionsGroup.forEach((e: any, i: number) => {
-
         if (e.nameOption.toLowerCase() === _typeOption.value.toLowerCase()) {
           this.optionsGroup.splice(i, 1);
           this.optionsGroup.push(option);
         }
       });
-      
     } else {
       this.optionsGroup.push(option);
     }
 
     this.options.length = 0;
-    this.formVariations.reset()
+    this.formVariations.reset();
   }
 
-  private createOption(typeOption: string, options: string[]):OptionProduct{
+  private createOption(typeOption: string, options: string[]): OptionProduct {
     const optionsDetail: DetailsOptions[] = [];
     const _typePriceControl = this.formVariations.controls['typePrice'];
 
     options.forEach((e) => {
       const o = {
-
         nameOption: e,
         price:
           _typePriceControl.value === 3 || this.form.get('price')?.invalid
@@ -153,8 +181,11 @@ export class NewProductComponent implements OnInit {
       nameVariation: typeOption,
       options: optionsDetail,
       typePrice: _typePriceControl.value,
-      multiple: _typePriceControl.value === 1 ? false : this.formVariations.controls['multiple'].value,
-      required:this.formVariations.get('required')?.value
+      multiple:
+        _typePriceControl.value === 1
+          ? false
+          : this.formVariations.controls['multiple'].value,
+      required: this.formVariations.get('required')?.value,
     };
   }
 
@@ -168,12 +199,12 @@ export class NewProductComponent implements OnInit {
 
     if (value) {
       if (event.chipInput.id === 'options') {
-        if (!this.options.find(e=> e === value)) {
+        if (!this.options.find((e) => e === value)) {
           this.options.push(value);
         }
       } else {
-        if (!this.ingredients.find(e=> e === value)) {
-          this.ingredients.push(value);
+        if (!this.ingredientsList.find((e) => e === value)) {
+          this.ingredientsList.push(value);
         }
       }
     }
@@ -191,8 +222,8 @@ export class NewProductComponent implements OnInit {
         this.options.splice(index, 1);
       }
     } else {
-      const index = this.ingredients.indexOf(value);
-      this.ingredients.splice(index, 1);
+      const index = this.ingredientsList.indexOf(value);
+      this.ingredientsList.splice(index, 1);
     }
   }
 
@@ -204,10 +235,10 @@ export class NewProductComponent implements OnInit {
       return;
     }
 
-    if (event.chip.id === 'ingredients') {
-      const index = this.ingredients.indexOf(value);
+    if (event.chip.id === 'ingredientsList') {
+      const index = this.ingredientsList.indexOf(value);
       if (index >= 0) {
-        this.ingredients[index] = data;
+        this.ingredientsList[index] = data;
       }
     } else {
       const index = this.options.indexOf(value);
@@ -224,6 +255,12 @@ export class NewProductComponent implements OnInit {
     const filterValue = this.normalizeValue(value);
     console.log(filterValue);
 
+    console.log(
+      this.categories.filter((cat) =>
+        this.normalizeValue(cat.name).includes(filterValue)
+      )
+    );
+
     return this.categories.filter((cat) =>
       this.normalizeValue(cat.name).includes(filterValue)
     );
@@ -233,28 +270,77 @@ export class NewProductComponent implements OnInit {
     return value.toLowerCase().replace(/\s/g, '');
   }
 
-
-
-  public updatePriceOption(indexGroup:number, index:number, newPrice?:any ){
-    const htmlInput:HTMLElement|null = document.querySelector('#option' + index + indexGroup)
+  public updatePriceOption(indexGroup: number, index: number, newPrice?: any) {
+    const htmlInput: HTMLElement | null = document.querySelector(
+      '#option' + index + indexGroup
+    );
     console.log(htmlInput);
-    
+
     if (this.optionsGroup[indexGroup].typePrice === 3) {
-      return
+      return;
     }
 
-    htmlInput!.style.visibility = 'visible'
+    htmlInput!.style.visibility = 'visible';
 
-      
+    console.log(newPrice);
 
-    if (newPrice || newPrice === '') {
-      htmlInput!.style.visibility = 'hidden'
-      this.optionsGroup[indexGroup].options[index].price = newPrice
+    if (newPrice && newPrice !== '') {
+      htmlInput!.style.visibility = 'hidden';
+      this.optionsGroup[indexGroup].options[index].price = newPrice;
     }
-
   }
 
+  setEditProduct(product: Product) {
+    this.form.patchValue({
+      nameProduct: product.nameProduct,
+      category: product.categoryId,
+      price: product.price,
+    });
 
+    this.ingredientsList = product.ingredients;
+    this.optionsGroup = product.variations;
+  }
 
+  closeModalEdit() {
+    console.log('as');
 
+    if (this.editing) {
+      this.confirmService.confirm({
+        message: 'No guardaste tus cambios deseas salir igual?',
+        header: 'Alerta',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => this.dialogRef.close(),
+        reject: () => console.log('reject'),
+      });
+      return;
+    }
+
+    this.dialogRef.close();
+  }
+
+  showPreview() {
+    console.log(this.ingredientsList);
+    this.form.get('ingredients')?.setValue(this.ingredientsList);
+    const screenWidth = window.innerWidth;
+
+    if (this.dialogService.dialogComponentRefMap.has(this.dialogRef)) {
+      return;
+    }
+
+    this.dialogRef = this.dialogService.open(MainDetailComponent, {
+      data: {
+        variations: this.optionsGroup,
+        ...this.form.value,
+      },
+      header: 'Vista previa',
+      width: screenWidth > 500 ? '30%' : '100%',
+      height: screenWidth > 500 ? '80%' : '100%',
+      draggable: true,
+      resizable: true,
+      keepInViewport: true,
+      modal: false,
+      styleClass: 'modal-preview',
+      dismissableMask: true,
+    });
+  }
 }

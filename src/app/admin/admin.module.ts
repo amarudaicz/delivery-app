@@ -26,8 +26,11 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
 import {MatRadioModule} from '@angular/material/radio';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MatRippleModule } from '@angular/material/core';
+import { RippleModule } from 'primeng/ripple';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatRippleModule,
+    RippleModule,
     MatSelectModule,
     MatAutocompleteModule,
     MatChipsModule,
@@ -58,7 +63,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatCheckboxModule,
     MatRadioModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ConfirmDialogModule
 
     
   ]

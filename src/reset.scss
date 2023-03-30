@@ -28,4 +28,18 @@ button{
     font-family: inherit;
 }
 
+.p-dialog{
+    max-height: none !important;
+}
+.p-dialog-header{
+    background: rgb(175, 175, 175) !important;
+}
 
+.p-dialog-content{
+    padding: 2rem 1.5rem !important;
+}
+.modal-preview{
+    .p-dialog-content{
+        padding: 0 !important;
+    }
+}

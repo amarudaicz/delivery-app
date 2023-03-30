@@ -1,6 +1,20 @@
-<div class="card new-product">
+<div class="card new-product" [style.padding]=" dataModal ? '0 !important' : '' ">
+
   <div class="container-form">
-    <h3>Nuevo producto</h3>
+    <h3 *ngIf="!dataModal"> Nuevo producto</h3>
+    <h3 *ngIf="dataModal"> {{dataModal.nameProduct}}</h3>
+    <span (click)="closeModalEdit()" class="button-close-modal pi pi-times" *ngIf="dataModal"> </span>
+
+    <p-confirmDialog #cd [style]="{width: '70vw'}">
+      <ng-template pTemplate="header">
+          <h3>Alerta</h3>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+          <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+          <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+      </ng-template>
+  </p-confirmDialog>
 
     <form class="form-new-product" [formGroup]="form" (submit)="saveProduct()">
       <div class="container-inputs">
@@ -10,25 +24,15 @@
           <mat-error>Este campo es requerido</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="input-group" appearance="fill">
-          <mat-label>Categoria</mat-label>
-          <input
-            type="text"
-            placeholder="Ej. Pizzas, Promocion"
-            aria-label="categoria"
-            matInput
-            formControlName="category"
-            [matAutocomplete]="auto"
-          />
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option
-              *ngFor="let option of filterCategories | async"
-              [value]="option.name"
-            >
-              {{ option.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+
+       <mat-form-field appearance="fill">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let option of categories" [value]="option.id">
+            {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
         <mat-form-field class="input-group" color="primary">
           <mat-label>Precio</mat-label>
@@ -40,7 +44,7 @@
           <mat-label>Ingredientes (Opcional)</mat-label>
           <mat-chip-grid #chipGrid aria-label="Enter Ingredientes">
             <mat-chip-row
-              *ngFor="let i of ingredients"
+              *ngFor="let i of ingredientsList"
               id="ingredients"
               (removed)="remove(i, $event)"
               [editable]="true"
@@ -86,7 +90,7 @@
                   formControlName="typeOption"
                   type="text"
                   matInput
-                  placeholder="Ej. Porcion, Sabor"
+                  placeholder="Ej. Tamaño, Sabor"
                 />
                 <mat-error>Este campo es requerido</mat-error>
               </mat-form-field>
@@ -176,12 +180,6 @@
               </div>
 
          
-  
-       
-              
-              
-                          
-  
               <button
                 style="display: block"
                 (click)="saveOptions()"
@@ -192,6 +190,7 @@
                 Agregar
               </button>
 
+         
 
             </form>
            
@@ -219,11 +218,19 @@
             </h5>
 
             <ul class="list-options">
-              <li (click)="updatePriceOption(indexGroup, i)"  class="item-option" *ngFor="let s of o.options; index as i;">
-                {{ s.nameOption }} <b>{{ s.price | currency }}</b>
+              <li class="item-option" *ngFor="let s of o.options; index as i;">
                 
-                <input placeholder="{{s.price|currency}}" (blur)="updatePriceOption(indexGroup, i, newPrice.value )" #newPrice class="input-update-price" type="number" id="option{{i}}{{indexGroup}}" style="visibility:hidden;">
-
+                {{ s.nameOption }} 
+                <span  (click)="updatePriceOption(indexGroup, i)">
+                  <b>
+                  
+                    <i *ngIf="o.typePrice !== 3" class="fa-solid fa-pen edit-icon"></i>
+                    {{ s.price | currency }}
+                    
+                  </b>
+                </span>
+                
+                <input placeholder="{{s.price|currency}}" [value]="s.price" (blur)="updatePriceOption(indexGroup, i, newPrice.value )" #newPrice class="input-update-price" type="number" id="option{{i}}{{indexGroup}}" style="visibility:hidden;">
               </li>
             </ul>
 
@@ -234,7 +241,13 @@
 
       </div>
 
-      <button pButton class="button-save-product" type="submit">Guardar</button>
+      <div class="container-buttons-save">
+
+        <button pButton pRipple class="button-save-product" type="submit">Guardar</button>
+        <p-button (click)="showPreview()" type="button" styleClass="p-button-secondary"> Vista previa</p-button>
+      </div>
+      
+
     </form>
   </div>
 </div>

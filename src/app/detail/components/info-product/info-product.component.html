@@ -1,7 +1,7 @@
 <div class="container-info">
 
     <div class="header-detail">
-        <a (click)="redirectBack()">
+        <a (click)="modePreview ? null : redirectBack() ">
             <i class="pi pi-chevron-left icon-back"></i>
             
             <h2 class="product-category">{{product.category}}</h2>
@@ -35,7 +35,7 @@
                 </div>
         
                 
-              <app-add-product-cart *ngIf="product" [product]="product">
+              <app-add-product-cart *ngIf="product" [modePreview]="modePreview" [product]="product">
                     
               </app-add-product-cart>
          

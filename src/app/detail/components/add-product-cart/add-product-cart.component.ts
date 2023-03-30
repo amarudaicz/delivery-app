@@ -38,6 +38,7 @@ export class AddProductCartComponent implements OnInit {
   total: number = 0;
   options: any[] = [];
   currentCart?:any
+  @Input() modePreview:boolean=false
 
   constructor(
     public theme: ThemesService,

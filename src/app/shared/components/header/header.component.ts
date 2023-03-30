@@ -18,6 +18,24 @@ export class HeaderComponent implements OnInit {
   localName?: string|null;
   local?:Local
   stateMenu:boolean = false
+  dataMenu:any[]=[
+    {
+      name:'Inicio',
+      icon:'fa-solid fa-house'
+    },
+    {
+      name:'Informacion',
+      icon:'pi pi-info-circle'
+    },
+    {
+      name:'Ubicacion',
+      icon:'fa-solid fa-location-dot'
+    },
+    {
+      name:'Instagram',
+      icon:'pi pi-instagram'
+    }
+  ]
 
   constructor(public theme:ThemesService, public routeData:RouteDataService, private localService:LocalDataService){
   }
@@ -36,7 +54,11 @@ export class HeaderComponent implements OnInit {
 
   toogleMenu(){
     this.stateMenu = !this.stateMenu
-
+    if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = ''
+    }else{
+      document.body.style.overflow = 'hidden'
+    }
   }
 
 

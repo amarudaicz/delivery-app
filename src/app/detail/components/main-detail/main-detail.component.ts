@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+  DynamicDialogComponent,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Product } from 'src/app/interfaces/product-interface';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
@@ -10,35 +15,37 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   selector: 'app-main-detail',
   templateUrl: './main-detail.component.html',
   styleUrls: ['./main-detail.component.scss'],
-  animations: [
-    fadeIn
-  ]
+  animations: [fadeIn],
 })
 export class MainDetailComponent implements OnInit {
   constructor(
     public theme: ThemesService,
     private route: ActivatedRoute,
-    private routeService:RouteDataService,
-    private localService:LocalDataService
+    private routeService: RouteDataService,
+    private localService: LocalDataService,
+    private dialogRef: DynamicDialogRef,
+    private dialogConfig: DynamicDialogConfig
   ) {}
   ngOnInit(): void {
     
-    const idProduct = this.route.snapshot.queryParams['id']
+    if (this.dialogConfig.data) {
+      this.product = this.dialogConfig.data
+      this.modePreview = true
+      
+      return
+    }
+
+
+    
+    
     this.routeService.setCurrent('detail');
-    console.log(this.routeService.getCurrent());
-    
-    console.log(this.route.snapshot.queryParams);
-    this.localService.getProducts().subscribe(data =>{
-      console.log(data);
-      
-      this.product = data.filter(e => e.id === idProduct)[0]
-    })
-      
-  
-    
+    const idProduct = this.route.snapshot.queryParams['id'];
+    this.localService.getProducts().subscribe((data) => {
+      this.product = data.filter((e) => e.id === idProduct)[0];
+    });
+
   }
 
-  product?:Product
-
-  
+  product?: Product;
+  modePreview:boolean = false
 }

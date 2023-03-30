@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product-interface';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
-import {DialogService} from 'primeng/dynamicdialog';
-import { CartItemsComponent } from 'src/app/cart/cart-items/cart-items.component';
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
+import { NewProductComponent } from '../new-product/new-product.component';
 
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.scss'],
-  providers:[DialogService]
+  providers:[DialogService,DynamicDialogConfig]
 })
 export class ListProductsComponent implements OnInit {
-  products:any[]=[]
+  products:Product[]=[]
 
+  refDialog?:DynamicDialogRef
 
   constructor(private localService:LocalDataService, private primeDialog:DialogService){
+
+
+
 
   }
 
@@ -25,16 +29,20 @@ export class ListProductsComponent implements OnInit {
       
       this.products = data
     })
+
+
     
   }
 
 
   editProduct(product:any){
-    this.primeDialog.open(CartItemsComponent, {
-      header:'Editando Producto',
-      width:'70%',
+    this.refDialog = this.primeDialog.open(NewProductComponent, {
       data:product,
-      maximizable: true
+      header:'Editando Producto',
+      width:'90%',
+      height:'90%',
+      maximizable:true,
+      baseZIndex:999
     })
 
   }

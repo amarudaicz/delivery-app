@@ -19,6 +19,7 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { AdminModule } from './admin/admin.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppConfigComponent } from './config/app-config/app-config.component';
+import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @NgModule({ 
   declarations: [
@@ -66,6 +67,10 @@ import { AppConfigComponent } from './config/app-config/app-config.component';
     
   ],
   providers: [ 
+    DynamicDialogConfig,
+    DialogService,
+    DynamicDialogRef
+
   ],
   bootstrap: [AppComponent],
 

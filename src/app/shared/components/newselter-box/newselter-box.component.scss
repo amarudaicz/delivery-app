@@ -1,97 +1,97 @@
-.container-newselter{
-    width: 100%;
-    height: auto;
-    background: #bdc3c7;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #2c3e50, #303030);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #2c3e50, #303030); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.container-newselter {
+  margin: 10px 0;
+  width: 100%;
+  height: auto;
+  background: #bdc3c7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #2c3e50,
+    #303030
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #2c3e50,
+    #303030
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 0 10px -6px #4a4a4a;
-
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 0 10px -6px #4a4a4a;
 }
 
-.container-text{
+.container-text {
+  text-align: center;
+  color: white;
 
-    text-align: center;
-    color: white;
+  .title {
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
 
-    .title{
-        margin-bottom: 10px;
-    }
-
-    .subtitle{
-        
-    }
+  .subtitle {
+  }
 }
 
-.container-button{
-
-    text-align: center;
-
+.container-button {
+  text-align: center;
 }
-
-
-
-
-
 
 button {
-    font-family: inherit;
-    margin: 0 auto;
-    line-height: 1em;
-    --primary-color: #645bff;
-    --secondary-color: #fff;
-    --hover-color: #111;
-    --arrow-width: 10px;
-    --arrow-stroke: 2px;
-    box-sizing: border-box;
-    border: 0;
-    border-radius: 20px;
-    color: var(--secondary-color);
-    padding: 1em 1.8em;
-    display: flex;
-    transition: all 0.2s ;
-    align-items: center;
-    gap: 0.6em;
-    font-weight: bold;
-  }
-  
-  button .arrow-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  button .arrow {
-    margin-top: 3px;
-    width: var(--arrow-width);
-    height: var(--arrow-stroke);
-    position: relative;
-    transition: 0.2s;
-  }
-  
-  button .arrow::before {
-    content: "";
-    position: absolute;
-    border: solid var(--secondary-color);
-    border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
-    display: inline-block;
-    top: -3px;
-    right: 3px;
-    transition: 0.2s;
-    padding: 3px;
-    transform: rotate(-45deg);
-  }
-  
-  button:hover {
-    background-color: var(--hover-color);
-  }
-  
-  button:hover .arrow {
-    background: var(--secondary-color);
-  }
-  
-  button:hover .arrow:before {
-    right: 0;
-  }
+  font-family: inherit;
+  margin: 0 auto;
+  line-height: 1em;
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 10px;
+  --arrow-stroke: 2px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: 1em 1.8em;
+  display: flex;
+  transition: all 0.2s;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+}
+
+button .arrow-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button .arrow {
+  margin-top: 3px;
+  width: var(--arrow-width);
+  height: var(--arrow-stroke);
+  position: relative;
+  transition: 0.2s;
+}
+
+button .arrow::before {
+  content: "";
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+button:hover .arrow {
+  background: var(--secondary-color);
+}
+
+button:hover .arrow:before {
+  right: 0;
+}

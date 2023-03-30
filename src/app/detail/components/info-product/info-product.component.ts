@@ -21,6 +21,7 @@ export class InfoProductComponent implements OnInit {
   }
   
   @Input() product:any
+  @Input() modePreview:boolean = false
   productForChild:any
   favClicked:boolean = false
 

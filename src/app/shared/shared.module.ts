@@ -8,6 +8,7 @@ import { LoaderFullComponent } from './components/loader-full/loader-full.compon
 import { FlotantCartComponent } from './components/flotant-cart/flotant-cart.component';
 import { HomeModule } from '../home/home.module';
 import { NewselterBoxComponent } from './components/newselter-box/newselter-box.component';
+import { ButtonInstallComponent } from './components/button-install/button-install.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NewselterBoxComponent } from './components/newselter-box/newselter-box.
     ProductCardComponent,
     LoaderFullComponent,
     FlotantCartComponent,
-    NewselterBoxComponent
+    NewselterBoxComponent,
+    ButtonInstallComponent
     
   ],
   imports: [
@@ -29,7 +31,8 @@ import { NewselterBoxComponent } from './components/newselter-box/newselter-box.
     HeaderComponent,
     ProductCardComponent,
     LoaderFullComponent,
-    FlotantCartComponent
+    FlotantCartComponent,
+    ButtonInstallComponent
 
   ]
 })

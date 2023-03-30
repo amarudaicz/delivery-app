@@ -40,59 +40,95 @@
     <div *ngIf="stateMenu" (click)="toogleMenu()" class="overlay-menu"></div>
 
     <div class="container-menu" [class.menu-visible]="stateMenu">
-        <div class="header-menu">
-            <div class="local-info">
-                <h1 class="local-name" >
-                   Punto Pizza<!-- {{local?.name}} -->
-                </h1>
-
-                <p class="local-ubication">
-                    <i [style.color]="theme.get('backgroundSec')" class="fa-solid fa-location-dot"></i>
-                    Rio Ceballos, Alem 98      <!-- {{local?.ubication}} -->
-                </p>
-                <hr>
-
-                <div class="local-horarios">
-
-                    <h4 [style.color]="theme.get('backgroundSec')">
-                        <i class="pi pi-calendar"></i>
-                        Horarios
-                    </h4>
-                    
-                    <ul class="list-week">
-                        <li>
-                            <h5 class="title-day">Lunes</h5>
-                            12pm a 13pm, 19pm a 23pm
-                        </li>
-    
-                        <li>
-                            <h5 class="title-day">Miercoles</h5>
-                            12pm a 13pm, 19pm a 23pm
-                        </li>
-    
-                        <li>
-                            <h5 class="title-day">Martes</h5>
-                            12pm a 13pm, 19pm a 23pm
-                        </li>
-                    </ul> 
-
-                </div>
-                
-                <app-newselter-box></app-newselter-box>
-
-            </div>
-        </div>
-
+        
+        
         <div class="content-menu">
-
+            <ul>
+                <li class="menu-item" *ngFor="let item of dataMenu">
+                    <i [style.color]="theme.get('backgroundSec')" class="item-icon {{item.icon}}"></i>
+                    {{item.name}}
+                </li>
+            </ul>
         </div>
 
+        <div [style.background]="theme.get('background')"  class="container-spam">
+
+            <h3 [style.color]="theme.get('colorTextSecondary')" >Quiero una tienda Dely para mi comercio</h3>
+            <div class="container-button-contact" style="text-align: end;">
+                <button [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')"  class="contact-button">Contacto</button>
+            </div>
+
+
+        </div>
 
         <div class="footer-menu">
+            <div class="container-logo">    
+                <img class="logo-app" src="./assets/logos/logo.svg" alt="">
+            </div>
 
+            <app-button-install></app-button-install>
         </div>
     </div>
 
 
 </div>
+
+
+<!-- 
+<div class="header-menu">
+    <div class="local-info">
+        
+        <div class="local-site">
+            <h1 class="local-name" >
+               Punto Pizza {{local?.name}} 
+            </h1>
+
+            <p class="local-ubication">
+                Rio Ceballos, Alem 98       {{local?.ubication}}
+                <i [style.color]="theme.get('backgroundSec')" class="fa-solid fa-location-dot"></i>
+            </p>
+            <a class="open-map">
+                Buscar en Google Maps
+                <i class="pi pi-external-link"></i>
+            </a>
+
+        </div>
+        <hr>
+
+        <div class="local-horarios">
+
+            <h4 [style.color]="theme.get('backgroundSec')">
+                <i class="pi pi-calendar"></i>
+                Horarios
+            </h4>
+            
+            <ul class="list-week">
+                 LOCAL HORARIOS
+                <li>
+                    <h5 class="title-day">Lun, Mar, Mie, Jue, Vie</h5>
+                    <i class="pi pi-sun"></i>
+                    12pm - 13pm
+
+                    <i class="pi pi-moon"></i>
+                    19pm - 23pm
+                </li>
+
+                <li>
+                    <h5 class="title-day">Sab, Dom</h5>
+                    <i class="pi pi-sun"></i>
+                    12pm - 13pm
+
+                    <i class="pi pi-moon"></i>
+                    19pm - 01am
+                </li>
+            </ul> 
+
+        </div>
+        
+        <app-newselter-box></app-newselter-box>
+
+    </div>
+</div>  -->
+
+
 

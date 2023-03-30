@@ -58,23 +58,84 @@ header {
 
 
 .container-menu {
-  width: 60%;
+  width: 70%;
   height: 100vh;
-  padding: 74px 10px 0 10px;
+  padding: 74px 10px 0 13px;
   position: absolute;
   top: 0;
   z-index: 10;
   background: rgb(255, 255, 255);
-  // backdrop-filter: blur(2px);
-
-  display: none;
   transition: all 1s;
-  &.menu-visible {
-    display: initial;
 
+  
+  display: none;
+  &.menu-visible {
+    display: flex;
+  }
+  justify-content: space-between;
+  flex-direction: column;
+    
+}
+.container-logo{
+  width: 100%;
+
+
+  .logo-app{
+    width: 100px;
   }
 
 }
+.content-menu{
+
+
+
+}
+
+
+.menu-item{
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: thin solid rgb(208, 208, 208);
+  .item-icon{
+    margin-right: 10px;
+    font-size: 20px;
+
+
+  }
+}
+
+
+.container-spam{
+  background: linear-gradient(
+    to bottom,
+    #2c3e50,
+    #303030
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  h3{
+    font-size: 16px;
+  }
+  padding: 10px;
+  border-radius: 5px;
+
+  .contact-button{
+    padding: 10px 35px;
+    border: none;
+    border-radius: 25px ;    
+
+  }
+}
+
+
+.footer-menu{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
 
 
 
@@ -88,6 +149,24 @@ header {
   background: rgba(0, 0, 0, 0.414);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -107,17 +186,39 @@ header {
     padding: 5px 0;
   }
 
+  .open-map{
+    font-size: 14px;
+    color: #5151a4;
 
-  .list-week{
-    li{
+    i{
       font-size: 12px;
     }
+
+  }
+
+
+  .list-week{
+    padding: 5px 0;
+    li{
+      font-size: 13px;
+      margin-bottom:5px ;
+    }
+
     .title-day{
       font-size: 14px;
     }
 
     .title-day{
 
+    }
+
+    .pi-sun{
+
+    }
+
+    .pi-moon{
+      font-size: 14px;
+      margin:0 1px 0 5px;
     }
   }
 }
@@ -205,3 +306,26 @@ header {
   width: 1.3em;
   fill: #b4b4b4;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
