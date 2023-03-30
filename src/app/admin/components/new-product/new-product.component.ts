@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -29,12 +29,13 @@ import {
 import { Product } from 'src/app/interfaces/product-interface';
 import { ConfirmationService } from 'primeng/api';
 import { MainDetailComponent } from 'src/app/detail/components/main-detail/main-detail.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-product',
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.scss'],
-  providers: [MatAutocomplete, ConfirmationService],
+  providers: [MatAutocomplete, ConfirmationService, History],
 })
 export class NewProductComponent implements OnInit {
   categories: Category[] = [];
@@ -60,7 +61,8 @@ export class NewProductComponent implements OnInit {
     private configDialog: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
     private dialogService: DialogService,
-    private confirmService: ConfirmationService
+    private confirmService: ConfirmationService,
+    private location:Location
   ) {
     this.form = this.formBuilder.group({
       nameProduct: ['', Validators.required],
@@ -327,6 +329,8 @@ export class NewProductComponent implements OnInit {
       return;
     }
 
+     
+    
     this.dialogRef = this.dialogService.open(MainDetailComponent, {
       data: {
         variations: this.optionsGroup,
@@ -343,4 +347,19 @@ export class NewProductComponent implements OnInit {
       dismissableMask: true,
     });
   }
+
+  
+
+  // @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    console.log('Tecla de retroceso presionada');
+    // Realizar acción al presionar la tecla de retroceso sin retroceder en el historial
+   
+    if (this.dialogService.dialogComponentRefMap.has(this.dialogRef)) {
+      this.dialogRef.close()
+      window.history.pushState(null, '', window.location.href);
+    }
+    
+  }
+
 }

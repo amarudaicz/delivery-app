@@ -30,6 +30,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MatRippleModule } from '@angular/material/core';
 import { RippleModule } from 'primeng/ripple';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { RippleModule } from 'primeng/ripple';
     MatRadioModule,
     MatTooltipModule,
     MatSnackBarModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FileUploadModule
 
     
   ]

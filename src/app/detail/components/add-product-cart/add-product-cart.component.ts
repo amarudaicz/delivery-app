@@ -3,8 +3,6 @@ import {
   Component,
   Input,
   OnInit,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import {
   FormArray,
@@ -45,7 +43,7 @@ export class AddProductCartComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private toastr:ToastrService,
-    private location:Location
+    private location:Location,
   ) {
     this.form = this.formBuilder.group({
       especifications: [''],
@@ -199,7 +197,9 @@ export class AddProductCartComponent implements OnInit {
 
     return 0
   }
+  
 
+ 
 
 
 }
