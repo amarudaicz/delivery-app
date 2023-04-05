@@ -7,7 +7,7 @@
     
         <div  class="container-header" >
 
-            <div class="container-items">
+            <div class="container-items" *ngIf="local">
 
                 <div class="menu-icon" (click)="toogleMenu()">
 
@@ -39,7 +39,7 @@
 
     <div *ngIf="stateMenu" (click)="toogleMenu()" class="overlay-menu"></div>
 
-    <div class="container-menu" [class.menu-visible]="stateMenu">
+    <div *ngIf="local" class="container-menu" [class.menu-visible]="stateMenu">
         
         
         <div class="content-menu">

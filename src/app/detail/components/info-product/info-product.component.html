@@ -1,7 +1,7 @@
 <div class="container-info">
 
     <div class="header-detail">
-        <a (click)="modePreview ? null : redirectBack() ">
+        <a *ngIf="!modePreview" (click)="redirectBack() ">
             <i class="pi pi-chevron-left icon-back"></i>
             
             <h2 class="product-category">{{product.category}}</h2>
@@ -12,7 +12,8 @@
         
     </div>
     
-    <div class="data-product">        
+    <div class="data-product" [style.overflow]="modePreview ? 'unset' : 'scroll'">       
+
         <div [style.background]="theme.currentTheme.backgroundPage" class="container-image">
             <img src="{{product.image}}" alt="">
         </div>

@@ -1,0 +1,137 @@
+<div class="card data-local">
+  <h3 class="title">Datos del local</h3>
+
+  <span class="edit-btn" (click)="editing ? saveDataLocal() : editDataLocal()">
+    <i [ngClass]="editing ? 'pi pi-save' : 'fa-solid fa-pen-to-square'"></i>
+    {{ editing ? "Guardar" : "Editar" }}
+  </span>
+
+  <div class="container-form-local">
+    <form [formGroup]="form">
+      <div class="container-form-field">
+        <mat-form-field class="m-1">
+          <mat-label> Nombre </mat-label>
+
+          <input matInput formControlName="name" type="text" />
+        </mat-form-field>
+
+        <mat-form-field class="m-1">
+          <mat-label> Telefono </mat-label>
+
+          <input matInput formControlName="phone" type="number" />
+        </mat-form-field>
+
+        <mat-form-field class="m-1">
+          <mat-label> Direccion </mat-label>
+
+          <input matInput formControlName="ubication" type="text" />
+        </mat-form-field>
+      </div>
+
+      <div class="aditional-info">
+        <div class="container-horarios container-data-local" [class.disable-form]="form.disabled">
+          <h4>Horarios</h4>
+          <span class="alert-aditionals">Horas en formato pm - am</span>
+          <div class="list-week">
+            <span>
+              <h5 class="title-day">Lun, Mar, Mie, Jue, Vie</h5>
+              <span class="mt-2">
+                <i class="pi pi-sun mr-2"></i>
+                <input
+                  type="text"
+                  formControlName="semanaMañanaInicio"
+                  class="input-horarios"
+                  placeholder="9am"
+                />
+                -
+                <input
+                  type="text"
+                  formControlName="semanaMañanaFin"
+                  class="input-horarios"
+                  placeholder="13pm"
+                />
+
+                <i class="pi pi-moon mr-2"></i>
+                <input
+                  type="text"
+                  formControlName="semanaTardeInicio"
+                  class="input-horarios"
+                />
+                -
+                <input
+                  type="text"
+                  formControlName="semanaTardeFin"
+                  class="input-horarios"
+                />
+              </span>
+            </span>
+
+            <span>
+              <h5 class="title-day mt-2">Sab, Dom</h5>
+              <span class="mt-2">
+                <i class="pi pi-sun mr-2"></i>
+                <input
+                  type="text"
+                  formControlName="finDeSemanaMañanaInicio"
+                  class="input-horarios"
+                />
+                -
+                <input
+                  type="text"
+                  formControlName="finDeSemanaMañanaFin"
+                  class="input-horarios"
+                />
+
+                <i class="pi pi-moon mr-2"></i>
+                <input
+                  type="text"
+                  formControlName="finDeSemanaTardeInicio"
+                  class="input-horarios"
+                />
+                -
+                <input
+                  type="text"
+                  formControlName="finDeSemanaTardeFin"
+                  class="input-horarios"
+                />
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="container-redes container-data-local" [class.disable-form]="form.disabled">
+          <h4>Enlaces</h4>
+          <span class="alert-aditionals">Pegar direccion de enlace</span>
+
+          <ul class="list-redes">
+            <li>
+              <i class="pi pi-instagram mr-2"></i>
+              <h5 class="title-red">Instagram</h5>
+              <input formControlName="instagram" type="text" class="input-redes">
+              <a target="_blank" class="ml-2" [href]="form.get('instagram')?.value"><i class="pi pi-external-link"></i></a>
+
+
+            </li>
+
+            <li>
+              <i class="pi pi-globe mr-2"></i>
+              <h5 class="title-red">Sitio Web</h5>
+              <input formControlName="website" type="text" class="input-redes">
+              <a target="_blank" class="ml-2" [href]="form.get('website')?.value"><i class="pi pi-external-link"></i></a>
+
+            </li>
+
+            <li>
+                <i class="pi pi-map-marker mr-2"></i>
+                <h5 class="title-red">Google Maps</h5>
+                <input formControlName="maps" type="text" class="input-redes">
+                <a target="_blank" class="ml-2" [href]="form.get('maps')?.value"><i class="pi pi-external-link"></i></a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<p-toast></p-toast>

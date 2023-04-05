@@ -17,15 +17,15 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/admin'] }
                 ]
             },
             {
-                label: 'UI Components',
+                label: 'Secciones',
                 items: [
-                    { label: 'Products', icon: 'pi pi-fw pi-id-card', routerLink: ['products'] },
-                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
-                    { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
+                    { label: 'Productos', icon: 'fa-solid fa-table', routerLink: ['products'] },
+                    { label: 'Nuevo Producto', icon: 'pi pi-plus', routerLink: ['new-product'] },
+                    { label: 'Ajustes', icon: 'pi pi-fw pi-sliders-v', routerLink: ['config'] },
                     { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'] },
                     { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] }
                 ]

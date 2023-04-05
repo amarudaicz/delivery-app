@@ -30,6 +30,7 @@ import { Product } from 'src/app/interfaces/product-interface';
 import { ConfirmationService } from 'primeng/api';
 import { MainDetailComponent } from 'src/app/detail/components/main-detail/main-detail.component';
 import { Location } from '@angular/common';
+import { shepherd } from 'src/app/utils/shepherd-tour';
 
 @Component({
   selector: 'app-new-product',
@@ -48,10 +49,12 @@ export class NewProductComponent implements OnInit {
   form: FormGroup;
   formVariations: FormGroup;
   categoryControl = new FormControl('');
-  variationState: boolean = true;
+  variationState: boolean = false;
+
   dataModal?: any;
   editing: boolean = false;
   previewModal: boolean = false;
+  previewImageProduct:any
 
   constructor(
     public theme: ThemesService,
@@ -69,10 +72,12 @@ export class NewProductComponent implements OnInit {
       category: ['', Validators.required],
       price: ['', Validators.required],
       ingredients: [''],
+      description:[''],
+      previewImageProduct:['']
     });
 
     this.formVariations = this.formBuilder.group({
-      options: ['', [Validators.required]],
+      options: [''],
       typeOption: ['', Validators.required],
       typePrice: ['', Validators.required],
       multiple: [false],
@@ -99,6 +104,10 @@ export class NewProductComponent implements OnInit {
         this.editing = true;
       });
     }
+
+    this.continueTutorial()
+
+   
   }
 
   saveProduct() {
@@ -301,6 +310,7 @@ export class NewProductComponent implements OnInit {
 
     this.ingredientsList = product.ingredients;
     this.optionsGroup = product.variations;
+    this.previewImageProduct = product.image
   }
 
   closeModalEdit() {
@@ -321,7 +331,7 @@ export class NewProductComponent implements OnInit {
   }
 
   showPreview() {
-    console.log(this.ingredientsList);
+
     this.form.get('ingredients')?.setValue(this.ingredientsList);
     const screenWidth = window.innerWidth;
 
@@ -329,22 +339,21 @@ export class NewProductComponent implements OnInit {
       return;
     }
 
-     
-    
-    this.dialogRef = this.dialogService.open(MainDetailComponent, {
+    this.dialogService.open(MainDetailComponent, {
       data: {
         variations: this.optionsGroup,
         ...this.form.value,
+        image:this.previewImageProduct
       },
       header: 'Vista previa',
-      width: screenWidth > 500 ? '30%' : '100%',
+      width: screenWidth > 500 ? '300px' : '100%',
       height: screenWidth > 500 ? '80%' : '100%',
       draggable: true,
       resizable: true,
       keepInViewport: true,
       modal: false,
       styleClass: 'modal-preview',
-      dismissableMask: true,
+      
     });
   }
 
@@ -359,7 +368,159 @@ export class NewProductComponent implements OnInit {
       this.dialogRef.close()
       window.history.pushState(null, '', window.location.href);
     }
+
+  }
+
+
+  uploadImage(event:any) {
+    
+    if (event.files.length > 0) {
+      const file = event.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        console.log(e);
+        this.previewImageProduct = e.target?.result;
+        console.log(this.previewImageProduct);
+        
+      };
+      reader.readAsDataURL(file);
+    }
+
     
   }
 
+
+  
+  continueTutorial(){
+    const widthScreen = window.innerWidth
+
+    shepherd.addSteps(
+      [
+        {
+            id: 'step6',
+            classes: 'step-variations-form',
+            text: `Si su producto tiene opciones, puede crear variaciones para él. Las variaciones son conjuntos únicos de opciones (como tamaño, color, Kg, Ml, etc.) que existen para este producto concreto. Por ejemplo: 
+            <br>
+            Una camiseta que se ofrece en dos tallas (pequeña y mediana) y dos colores (amarillo y gris) tiene cuatro variaciones,
+            <br>
+            Una gaseosa que se ofrece tiene 3 Medidas (2.5l, 1L, 500ML) tiene 3 variaciones
+            <br>
+            <span style="font-size:11px; color:wheat;">Pase por el formulario para mas informacion</span><br>
+            <span style="font-size:11px; color:wheat;">Los datos ingresados son a modo de ejemplo</span>
+            `,
+
+            attachTo: {
+              element: '#variationsForm',
+              on: 'top' 
+            },
+            buttons:[
+                {
+                  text:'Siguiente',
+                  action:shepherd.next
+                }
+            ],
+            when:{
+                show:()=>{
+                  this.variationState = true;
+                  this.formVariations.patchValue({
+                    typeOption:'Tamaño',
+                    typePrice:1,
+                  })
+                  this.options = ['Grande', 'Mediano', 'Chico']
+                },
+                hide:()=>{
+                  this.formVariations.reset();
+                  this.options = []
+
+                }
+            }
+            
+          },
+        {
+        id:'step7',
+        classes: 'step-current-options',
+        text: `Una vez creada tus variaciones, aqui abajo podras editar el precio de cada una, si es que lo afecta  <br>
+              En este ejemplo el producto X tiene 3 variaciones que afectan totalmente su precio                   
+        `,
+
+        attachTo: {
+          element: '.container-current-options',
+          on: 'top' 
+        },
+        buttons:[
+            {
+              text:'Siguiente',
+              action:shepherd.next
+            }
+        ],
+        when:{
+            show:()=>{
+              this.optionsGroup = [
+                {
+                  nameVariation: 'Tamaño',
+                  multiple: false,
+                  typePrice: 1,
+                  options: [
+                    {
+                      nameOption:'Grande',
+                      price:700
+                    },
+                    {
+                      nameOption:'Mediano',
+                      price:400
+                    },
+                    {
+                      nameOption:'Chico',
+                      price:200
+                    }
+                  ],
+                  required:true
+
+                }
+              ]
+              console.log(this.optionsGroup);
+              
+
+            },
+            hide:()=>{
+              this.optionsGroup.length = 0
+              console.log(this.optionsGroup);  
+            }
+        }
+        
+      },
+      {
+        id:'step8',
+        classes: 'step-save-buttons-options',
+        text: `Finalizando con el producto puedes ver una vista previa y luego guardarlo, automaticamente este producto se mostrara en el inicio de tu aplicacion disponible para comprar`,
+
+        attachTo: {
+          element: '.button-save-product',
+          on: widthScreen > 500 ? 'left' : 'top' 
+        },
+        buttons:[
+            {
+              text:'Finalizar',
+              action:shepherd.complete
+            }
+        ],
+        when:{
+            show:()=>{
+              const element = (document.querySelector('.button-preview-product') as HTMLElement);
+              element.style.zIndex = '9999';
+              element.style.position = 'relative';
+            },
+            hide:()=>{
+              const element = (document.querySelector('.button-preview-product') as HTMLElement);
+              element.style.zIndex = '1';
+              element.style.position = 'initial';
+            }
+        }
+        
+      }
+    ])
+
+  }
 }
+
+

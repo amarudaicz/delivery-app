@@ -1,0 +1,106 @@
+.data-local {
+  position: relative;
+  margin: 0 !important;
+}
+.title {
+  margin-bottom: 10px;
+}
+
+.container-form-local {
+}
+
+.edit-btn {
+  color: #000000c9;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  font-weight: bolder;
+
+  i {
+    font-weight: bolder;
+  }
+}
+
+.aditional-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  @media (min-width: 550px) {
+  }
+
+  .alert-aditionals{
+    font-size: 11px;
+    color: #6366F1;
+  }
+}
+
+
+.container-data-local {
+  width: max-content;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+
+  &.disable-form{
+    color: grey;
+  }
+
+  h4 {
+    border-bottom: 1px solid;
+    padding-bottom: 2px;
+  }
+
+
+}
+
+.container-horarios {
+  .input-horarios {
+    width: 40px;
+  }
+
+}
+
+.list-week {
+  padding: 5px 0;
+
+  .title-day {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .pi-sun {
+  }
+
+  .pi-moon {
+    font-size: 14px;
+    margin: 0 1px 0 5px;
+  }
+}
+
+.container-redes {
+}
+
+.list-redes {
+    padding: 5px 0;
+
+    li{
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .title-red{
+        display: inline-block;
+        width: 75px;
+    }
+
+    .input-redes{
+        width: 100px;
+    }
+    
+
+
+
+}    
+

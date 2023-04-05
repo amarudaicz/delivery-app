@@ -1,15 +1,17 @@
-import { Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnDestroy, Renderer2,OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { LayoutService } from "./service/app.layout.service";
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppTopBarComponent } from './app.topbar.component';
+import { shepherd } from '../utils/shepherd-tour';
+import Shepherd from 'shepherd.js';
 
 @Component({
     selector: 'app-layout',
     templateUrl: './app.layout.component.html'
 })
-export class AppLayoutComponent implements OnDestroy {
+export class AppLayoutComponent implements OnInit, OnDestroy {
 
     overlayMenuOpenSubscription: Subscription;
 
@@ -55,6 +57,9 @@ export class AppLayoutComponent implements OnDestroy {
                 this.hideMenu();
                 this.hideProfileMenu();
             });
+    }
+    ngOnInit(): void {
+        this.initTutorial()
     }
 
     hideMenu() {
@@ -109,6 +114,71 @@ export class AppLayoutComponent implements OnDestroy {
         }
     }
 
+
+
+    private initTutorial(){
+        const widthScreen = window.innerWidth
+        const watched = localStorage.getItem('watched-tutorial')
+        console.log(watched);
+        
+        shepherd.addSteps([
+            {
+                id: 'step1',
+                classes:'step-header',
+                text: 'Este es el header de nuestro panel de administración. En la parte superior, puedes encontrar diferentes enlaces para acceder a las diferentes secciones del panel, como el dashboard, los usuarios y los pedidos. También puedes hacer una búsqueda rápida aquí mismo. En la esquina superior derecha, puedes encontrar los enlaces para cerrar sesión y para acceder a tu perfil de usuario.',
+                attachTo: {
+                  element: '#header-admin',
+                  on: 'bottom' 
+                },
+                buttons:[
+                    {
+                      text:'Siguiente',
+                      action:shepherd.next
+                    }
+                ]
+            },
+            {
+            
+                id: 'step2',
+                classes:'step-dashboard',
+                classPrefix:'header-step',
+                arrow:widthScreen < 480 ? false : true,
+                text: 'En este menu de inicio puedes ver un resumen de las diferentes secciones del panel, como las estadísticas, los usuarios y los pedidos. También puedes hacer clic en los enlaces para ver más información detallada.',
+                attachTo: {
+                  element: '#dashboard-admin',
+                  on:'left' 
+                },
+                buttons:[
+                    {
+                      text:'Siguiente',
+                      action:shepherd.next
+                    }
+                ],
+                when:{
+                    show:()=>{
+                        this.layoutService.state.staticMenuMobileActive=true
+                    },
+                    hide:()=>{
+                        this.layoutService.state.staticMenuMobileActive = false
+                    }
+                }
+               
+
+            },
+            
+        ]
+        )
+
+        
+        if (!watched) {
+            shepherd.start()
+        }
+
+    }
+
+
+
+
     ngOnDestroy() {
         if (this.overlayMenuOpenSubscription) {
             this.overlayMenuOpenSubscription.unsubscribe();
@@ -118,4 +188,6 @@ export class AppLayoutComponent implements OnDestroy {
             this.menuOutsideClickListener();
         }
     }
+
 }
+

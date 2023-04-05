@@ -17,9 +17,9 @@ import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement';
   animations: [fadeIn],
 })
 export class MainHomeComponent implements OnInit {
-  local?: Local;
   appInstalled: boolean = this.pwaInstaller.isPwaMode();
   categories: Category[] = []; //INTERFACE
+  themeLoad:boolean=false
 
   constructor(
     public theme: ThemesService,
@@ -32,13 +32,23 @@ export class MainHomeComponent implements OnInit {
   ngOnInit(): void {
     this.routeService.setCurrent('home');
 
-    this.localService.local.subscribe((data) => (this.local = data));
-
-    this.localService.getCategories().subscribe(data=>{
+    this.localService.getCategories().subscribe((data)=>{
       console.log(data);
-      this.categories = data
-      this.previewCategory.setCategory(data[0].id)
+      if (data.length !== 0) {
+        this.categories = data
+        this.previewCategory.setCategory(data[0].id) 
+      }
     })
+
+    this.localService.local.subscribe(data=>{
+      if (data) {
+        
+        this.themeLoad = true
+      }
+    })
+
+
+
 
   
         

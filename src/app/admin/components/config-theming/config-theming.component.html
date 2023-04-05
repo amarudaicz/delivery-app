@@ -1,0 +1,42 @@
+<div class="card theming-local" *ngIf="currentTheme else loader">
+  <h3 class="title">Colores de la aplicacion</h3>
+
+  <span
+    class="edit-btn"
+    (click)="editing ? saveThemeLocal() : editThemeLocal()"
+  >
+    <i [ngClass]="editing ? 'pi pi-save' : 'fa-solid fa-pen-to-square'"></i>
+    {{ editing ? "Guardar" : "Editar" }}
+  </span>
+
+  <div class="container-current-theme" *ngIf="currentTheme" >
+    <h4>Tema actual</h4>
+    <div class="container-theme">
+      <span>{{ currentTheme.name }}</span>
+      <mat-radio-button color="primary" checked></mat-radio-button>
+      <div 
+        class="color-theme"
+        *ngFor="let prop of currentProp"
+        [style.background]="currentTheme[prop]"
+      ></div>
+    </div>
+  </div>
+
+  <div class="container-all-themes">
+    <h4>Todos los temas</h4>
+    <div class="container-theme" *ngFor="let theme of allThemes">
+      <span>{{ theme.name }}</span>
+      <mat-radio-button color="primary"></mat-radio-button>
+      <div
+        class="color-theme"
+        *ngFor="let prop of currentProp"
+        [style.background]="theme[prop][0] === '#' ? theme[prop] : '#000' "
+      ></div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+
+  <app-loader-full ></app-loader-full>
+</ng-template>

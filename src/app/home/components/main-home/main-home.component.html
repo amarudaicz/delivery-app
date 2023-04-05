@@ -1,11 +1,11 @@
 
-<div *ngIf="categories.length!==0 else loader" [@fadeIn] [style.background]="theme.get('backgroundPage')" class="container">
+<div *ngIf="themeLoad else loader" [@fadeIn] [style.background]="theme.get('backgroundPage')" class="container">
     
     <div class="content">
 
         
         
-        <section class="categories" *ngIf="categories.length!==0">
+        <section class="categories">
 
             <h2 [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')" class="chip title-categories">Categorias</h2>
     

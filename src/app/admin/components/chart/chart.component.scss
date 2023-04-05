@@ -11,3 +11,30 @@
     // }
 
 }
+
+.container-chart{
+    position: relative;
+
+
+}
+
+.overlay-prox{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(2px);
+    
+    h4{
+        font-size: 16px;
+        background: #6366F1;
+        padding: 8px 15px;
+        border-radius: 25px;
+        color: white;
+        font-weight: normal;
+    }
+
+}

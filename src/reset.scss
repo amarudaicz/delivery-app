@@ -5,12 +5,16 @@
     scroll-behavior:smooth;
     
 }
-
+html {
+    scroll-behavior: smooth;
+}
 
 body{
     font-family: system-ui, -apple-system;
     font-size: 16px;
     overflow-x: hidden;
+    scroll-behavior: smooth;
+
 }
 
 ul{
@@ -21,7 +25,7 @@ a{
     text-decoration:none;
     color: inherit;
     
-}
+}a
 
 button{
     font-size: 14px;
@@ -30,7 +34,9 @@ button{
 
 .p-dialog{
     max-height: none !important;
+    color:#343a40 !important;
 }
+
 .p-dialog-header{
     background: #8c85ff !important;
 }
@@ -41,5 +47,33 @@ button{
 .modal-preview{
     .p-dialog-content{
         padding: 0 !important;
+        &::-webkit-scrollbar {
+            width: 0px; /* Para Safari y Chrome */
+        }
+        scrollbar-width: none; /* Para Firefox */
+        -ms-overflow-style: none; /* Para IE y Edge */
+    }
+}
+
+th{
+    font-size: 14px !important;
+}
+
+td{
+    font-size: 12px !important;
+    padding: 5px 15px !important;
+}
+
+
+.mat-mdc-floating-label{
+    font-size: 14px !important;
+}
+
+
+.input-group{
+    margin: 5px;
+
+    @media (max-width:700px) {
+        width: 100%;
     }
 }

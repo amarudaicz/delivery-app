@@ -1,39 +1,42 @@
-<div  *ngIf="routeService.getCurrent() !== 'detail' && routeService.getCurrent() !== 'admin' " class="buttom-nav" [style.background]="theme.currentTheme.backgroundPage">
-  <div class="container-nav">
-    <nav class="navigation">
-      <ul class="list-nav">
+<div  *ngIf="routeService.getCurrent() !== 'detail' && routeService.getCurrent() !== 'admin' ">
+  <div class="bottom-nav"  *ngIf="local" [style.background]="theme.get('backgroundPage')">
+    <div class="container-nav" >
+      <nav class="navigation">
+        <ul class="list-nav">
+  
+          <li class="item-nav">
+            <a [routerLink]="['user']">
+              <i [style.color]="routeService.getCurrent() === 'user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
+            </a>
+          </li>
+  
+          <li class="item-nav">
+            <a [routerLink]="[routeService.getOrigin()]">
+              <div
+                class="grid-menu"
+                [class.active-home]="routeService.getCurrent() === 'home'"
+                [style.background]="theme.get('background')">
+                <div></div>  
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+  
+            </a>
+          </li>
+  
+          <li class="item-nav">
+            <a [routerLink]="['cart']">
+              <div class="cart-container">
+                <i [style.color]="routeService.getCurrent() === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
+                <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ itemsCart }}</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+  
+      </nav>
+    </div>
 
-        <li class="item-nav">
-          <a [routerLink]="['user']">
-            <i [style.color]="routeService.getCurrent() === 'user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
-          </a>
-        </li>
-
-        <li class="item-nav">
-          <a [routerLink]="[routeService.getOrigin()]">
-            <div
-              class="grid-menu"
-              [class.active-home]="routeService.getCurrent() === 'home'"
-              [style.background]="theme.get('background')"          >
-              <div></div>  
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-
-          </a>
-        </li>
-
-        <li class="item-nav">
-          <a [routerLink]="['cart']">
-            <div class="cart-container">
-              <i [style.color]="routeService.getCurrent() === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
-              <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ itemsCart }}</div>
-            </div>
-          </a>
-        </li>
-      </ul>
-
-    </nav>
   </div>
 </div>

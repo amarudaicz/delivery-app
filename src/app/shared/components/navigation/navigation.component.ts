@@ -25,8 +25,8 @@ export class NavigationComponent implements OnInit {
       this.itemsCart = items.length
     })
     
-    this.localData.local.subscribe((localData)=>{
-      this.local = localData
+    this.localData.local.subscribe((local)=>{
+      this.local = local
 
     })
     console.log(this.itemsCart);

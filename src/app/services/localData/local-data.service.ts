@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/app/environment';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { Local } from 'src/app/interfaces/local-interface';
@@ -12,9 +12,12 @@ import { ThemesService } from '../themes/themes.service';
   providedIn: 'root',
 })
 export class LocalDataService {
-  constructor(private http: HttpClient, private theme: ThemesService) {}
+  constructor(private http: HttpClient, private theme: ThemesService) {
+    
+  }
 
-  public local = new BehaviorSubject<Local | undefined>(undefined);
+  
+  public local = new Subject<Local>();
   private products = new BehaviorSubject<Product[]>([]);
   private categories = new BehaviorSubject<Category[]>([])
 
@@ -22,16 +25,19 @@ export class LocalDataService {
   setLocal(name: string | null) {
     this.http
       .get<Local>(environment.host + 'locals/1')
-      .subscribe((data: any) => {
-        this.theme.setTheme(data.themeId);
+      .subscribe((data) => {
+        this.theme.setTheme(data.theme);
+        this.local.asObservable()
         this.local.next(data);
       });
   }
 
   setProducts(local: string | null) {
+    console.log(local);
+    
     this.http
-      .get<Product[]>(environment.host + 'products')
-      .subscribe((data: Product[]) => {        
+      .get<Product[]>(environment.host + local)
+      .subscribe((data) => { 
         this.products.next(data);
         this.categories.next(this.cleanCategories(data))
 

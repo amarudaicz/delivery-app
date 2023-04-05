@@ -31,7 +31,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MatRippleModule } from '@angular/material/core';
 import { RippleModule } from 'primeng/ripple';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { MainProductsComponent } from './components/main-products/main-products.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { MainNewProductComponent } from './components/main-new-product/main-new-product.component';
+import { MainConfigComponent } from './components/main-config/main-config.component';
+import { ConfigLocalComponent } from './components/config-local/config-local.component';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
+import { ConfigThemingComponent } from './components/config-theming/config-theming.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +48,11 @@ import { FileUploadModule } from 'primeng/fileupload';
     ChartComponent,
     ModalEditProductComponent,
     NewProductComponent,
+    MainProductsComponent,
+    MainNewProductComponent,
+    MainConfigComponent,
+    ConfigLocalComponent,
+    ConfigThemingComponent,
     
   ],
   imports: [
@@ -66,7 +78,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     MatTooltipModule,
     MatSnackBarModule,
     ConfirmDialogModule,
-    FileUploadModule
+    FileUploadModule,
+    InputTextModule,
+    ToastModule    
 
     
   ]

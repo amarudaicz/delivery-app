@@ -1,5 +1,6 @@
 export interface Theme {
     id:number,
+    name:string,
     background: string;
     backgroundSec: string;
     backgroundPage: string;
@@ -7,6 +8,4 @@ export interface Theme {
     colorSecondary: string;
     colorText: string;
     colorTextSecondary: string;
-    colorBorderPrimary: string;
-    colorBorderSecondary: string;
   }

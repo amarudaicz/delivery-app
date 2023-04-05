@@ -15,8 +15,8 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   ]
 })
 export class HeaderComponent implements OnInit {
-  localName?: string|null;
   local?:Local
+
   stateMenu:boolean = false
   dataMenu:any[]=[
     {
@@ -42,12 +42,15 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.localName = this.routeData.getOrigin()
     
     this.localService.local.subscribe((data)=>{
+      
       this.local = data
+      console.log(this.local);
     })
     
+    console.log(this.local);
+
     
   }
 

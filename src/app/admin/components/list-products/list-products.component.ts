@@ -12,7 +12,7 @@ import { NewProductComponent } from '../new-product/new-product.component';
 })
 export class ListProductsComponent implements OnInit {
   products:Product[]=[]
-
+  
   refDialog?:DynamicDialogRef
 
   constructor(private localService:LocalDataService, private primeDialog:DialogService){
@@ -45,6 +45,18 @@ export class ListProductsComponent implements OnInit {
       baseZIndex:999
     })
 
+  }
+
+
+  filterProduct(value:string){
+    
+    this.ngOnInit()
+    
+    const normalizeValue = value.toLowerCase()
+    console.log(normalizeValue);
+    this.products = this.products.filter(p => (p.nameProduct.toLowerCase()).includes(normalizeValue))
+    console.log(this.products);
+    
   }
 
 }

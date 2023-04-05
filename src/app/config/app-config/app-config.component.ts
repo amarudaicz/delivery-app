@@ -19,9 +19,9 @@ export class AppConfigComponent {
   ngOnInit(): void {
     
     this.localName = this.routeData.getOrigin()
-    this.theme.setTheme(1)//this.local.theme
     this.localService.setProducts(this.localName)
     this.localService.setLocal(this.localName)
+    
     
     
 
