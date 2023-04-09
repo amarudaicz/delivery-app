@@ -7,6 +7,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Product } from 'src/app/interfaces/product-interface';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -23,24 +24,22 @@ export class MainDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private routeService: RouteDataService,
     private localService: LocalDataService,
-    private dialogRef: DynamicDialogRef,
-    private dialogConfig: DynamicDialogConfig
+    private dialogConfig: DynamicDialogConfig,
+    private layoutState:LayoutStateService
   ) {}
   ngOnInit(): void {
+
+    this.layoutState.state.header = false
     
     if (this.dialogConfig.data) {
       this.product = this.dialogConfig.data
       this.modePreview = true
-      
       return
     }
 
-
-    
-    
     this.routeService.setCurrent('detail');
     const idProduct = this.route.snapshot.queryParams['id'];
-    this.localService.getProducts().subscribe((data) => {
+    this.localService.getProducts$().subscribe((data) => {
       this.product = data.filter((e) => e.id === idProduct)[0];
     });
 

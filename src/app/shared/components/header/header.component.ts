@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivationStart, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
+import { headerIn } from 'src/app/animations/haeder-animations';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Local } from 'src/app/interfaces/local-interface';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -11,13 +14,16 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   animations:[
-    fadeIn
+    fadeIn,
+    headerIn
   ]
 })
+
 export class HeaderComponent implements OnInit {
   local?:Local
 
   stateMenu:boolean = false
+  stateHeader:boolean = true
   dataMenu:any[]=[
     {
       name:'Inicio',
@@ -37,19 +43,31 @@ export class HeaderComponent implements OnInit {
     }
   ]
 
-  constructor(public theme:ThemesService, public routeData:RouteDataService, private localService:LocalDataService){
-  }
-
-  ngOnInit(): void {
-    
-    
-    this.localService.local.subscribe((data)=>{
+  constructor(
+    public theme:ThemesService, 
+    public routeData:RouteDataService, 
+    private localService:LocalDataService,
+    public layoutState:LayoutStateService,
+    private router:Router
+    ){
       
-      this.local = data
-      console.log(this.local);
-    })
+    }
     
-    console.log(this.local);
+    ngOnInit(): void {
+      
+    
+      this.router.events.subscribe((event) => {
+        if (event instanceof ActivationStart) {
+            const page = event.snapshot.data['page'] 
+            if (page === 'detail' || page ==='admin') {
+              this.stateHeader = false 
+            }else{
+              this.stateHeader = true
+            } 
+          // Realizar alguna acción cuando se navega a una nueva página
+        }
+      });
+      console.log(this.stateHeader);
 
     
   }

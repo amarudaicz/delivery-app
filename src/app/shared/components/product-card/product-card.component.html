@@ -1,5 +1,5 @@
-<div class="product-card">
-  <a [routerLink]="[localName + '/' + product.category + '/' + product.nameProduct]" [queryParams]="{id:product.id}">
+<div class="product-card" *ngIf="product.id else loader" [style.background]="product.id ? '#c6c6c69e' : ''">
+  <a [routerLink]="[product.category + '/' + product.nameProduct]" [queryParams]="{id:product.id}">
     <div class="product-image">
       <img
         src="{{product.image}}"
@@ -14,3 +14,11 @@
 
   </a>
 </div>
+
+<ng-template #loader>
+  <div class="post">
+    <div class="avatar"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+</ng-template>

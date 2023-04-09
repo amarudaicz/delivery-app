@@ -24,7 +24,7 @@ export class CardCategoryComponent implements OnInit {
   }
 
   
-  @Input() category:any
+  @Input() category?:any
 
   emitCategory(category:any){
     this.previewCategory.setCategory(category.id)

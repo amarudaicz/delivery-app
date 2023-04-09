@@ -11,13 +11,12 @@ import { NewProductComponent } from '../new-product/new-product.component';
   providers:[DialogService,DynamicDialogConfig]
 })
 export class ListProductsComponent implements OnInit {
-  products:Product[]=[]
+  products?:Product[]
+  filtredProducts?:Product[]
   
   refDialog?:DynamicDialogRef
 
   constructor(private localService:LocalDataService, private primeDialog:DialogService){
-
-
 
 
   }
@@ -25,10 +24,10 @@ export class ListProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.localService.getProducts().subscribe((data)=>{
-      console.log(data);
-      
       this.products = data
+      this.filtredProducts = data
     })
+      
 
 
     
@@ -49,14 +48,16 @@ export class ListProductsComponent implements OnInit {
 
 
   filterProduct(value:string){
+    console.log(value);
     
-    this.ngOnInit()
+    if (value === '') {
+      this.ngOnInit()
+    }
+
     
+
     const normalizeValue = value.toLowerCase()
-    console.log(normalizeValue);
-    this.products = this.products.filter(p => (p.nameProduct.toLowerCase()).includes(normalizeValue))
-    console.log(this.products);
-    
+    this.filtredProducts = this.products?.filter(p => (p.nameProduct.toLowerCase()).includes(normalizeValue))
   }
 
 }

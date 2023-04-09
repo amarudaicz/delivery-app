@@ -15,10 +15,7 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.localService.local.subscribe(local=>{
-
-      this.localName = local?.name
-    })
+    
   }
 
   @Input() product:Product|any

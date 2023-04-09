@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import { Theme } from 'src/app/interfaces/theme-interface';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -6,9 +7,17 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   templateUrl: './loader-full.component.html',
   styleUrls: ['./loader-full.component.scss']
 })
-export class LoaderFullComponent {
-  constructor(public theme:ThemesService){
+export class LoaderFullComponent implements OnInit {
+  theme?:Theme
+  
+  constructor(public themeService:ThemesService){
 
   }
+
+  ngOnInit(): void {
+    this.theme = this.themeService.getTheme(1)
+  }
+    
+    
 
 }

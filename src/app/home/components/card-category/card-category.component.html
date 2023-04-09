@@ -1,4 +1,4 @@
-<div class="container-card">
+<div class="container-card" *ngIf="category.id else loader">
   <a (click)="emitCategory(category)">
     <div
       [style.background]="selectedCategory(category.id) ? theme.get('background') : '#d7d7d7'"
@@ -21,3 +21,10 @@
     </div>
   </a>
 </div>
+
+<ng-template #loader>
+  <div class="post">
+    <div class="avatar"></div>
+  </div>
+</ng-template>
+

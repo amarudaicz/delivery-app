@@ -2,10 +2,15 @@
 <app-app-config></app-app-config>
 
 
-<app-header></app-header>
+<app-header [@fadeIn] *ngIf="themeLoad"></app-header>
 
-<div [@routeAnimations]="getRouteData()">
+<div *ngIf="themeLoad else loader" [@fadeIn] [@routeAnimations]="getRouteData()">
     <router-outlet></router-outlet>
 </div>
 
-<app-navigation></app-navigation>
+<app-navigation *ngIf="themeLoad" [@fadeIn] ></app-navigation>
+
+<ng-template #loader>
+    <app-loader-full> </app-loader-full>
+
+</ng-template>

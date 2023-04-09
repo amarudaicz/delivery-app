@@ -22,6 +22,7 @@ interface LayoutState {
 @Injectable({
     providedIn: 'root',
 })
+
 export class LayoutService {
 
     config: AppConfig = {
@@ -36,7 +37,7 @@ export class LayoutService {
     state: LayoutState = {
         staticMenuDesktopInactive: false,
         overlayMenuActive: true,
-        profileSidebarVisible: true,
+        profileSidebarVisible: false,
         configSidebarVisible: false,
         staticMenuMobileActive: false,
         menuHoverActive: true

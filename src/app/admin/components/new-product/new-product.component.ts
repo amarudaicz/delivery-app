@@ -314,7 +314,6 @@ export class NewProductComponent implements OnInit {
   }
 
   closeModalEdit() {
-    console.log('as');
 
     if (this.editing) {
       this.confirmService.confirm({
@@ -335,9 +334,9 @@ export class NewProductComponent implements OnInit {
     this.form.get('ingredients')?.setValue(this.ingredientsList);
     const screenWidth = window.innerWidth;
 
-    if (this.dialogService.dialogComponentRefMap.has(this.dialogRef)) {
-      return;
-    }
+    // if (this.dialogService.dialogComponentRefMap.has(this.dialogRef)) {
+    //   return;
+    // }
 
     this.dialogService.open(MainDetailComponent, {
       data: {

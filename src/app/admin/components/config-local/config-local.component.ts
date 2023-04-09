@@ -73,6 +73,7 @@ export class ConfigLocalComponent implements OnInit {
 
 
   setDataLocal(){
+    
     this.localData.local.subscribe(data=>{
       console.log(data);
       

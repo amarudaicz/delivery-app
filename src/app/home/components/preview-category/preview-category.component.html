@@ -1,1 +1,1 @@
-<app-products-set [title]="products[0].category" [products]="products"> </app-products-set>
+<app-products-set *ngIf="products" [title]="products[0].category ? products[0].category : 'Productos' " [products]="products"> </app-products-set>

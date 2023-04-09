@@ -1,7 +1,7 @@
 <div class="container-info">
 
-    <div class="header-detail">
-        <a *ngIf="!modePreview" (click)="redirectBack() ">
+    <div *ngIf="!modePreview" class="header-detail">
+        <a  (click)="redirectBack() ">
             <i class="pi pi-chevron-left icon-back"></i>
             
             <h2 class="product-category">{{product.category}}</h2>

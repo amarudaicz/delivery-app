@@ -37,7 +37,7 @@ export class MainCategoryComponent implements OnInit {
     this.routeService.setCurrent('categories');
     console.log(); 
 
-    this.localService.getProducts().subscribe((data)=>{
+    this.localService.getProducts$().subscribe((data)=>{
       console.log(data);
       this.products = data.filter(e => e.category.toLowerCase() === this.category.toLowerCase())
     })

@@ -24,6 +24,9 @@
         overflow-x: scroll;
         column-gap: 20px;
 
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
     
     .container-show-more{
@@ -37,4 +40,6 @@
     }
 
 }
+
+
 

@@ -12,7 +12,7 @@ export class ThemesService {
   }
 
   public currentTheme:any
-  private current = new BehaviorSubject<Theme|boolean>(false)
+  private stateTheme = new BehaviorSubject<boolean>(false)
 
   themes:Theme[]=[
     {
@@ -53,8 +53,10 @@ export class ThemesService {
 
   setTheme(id:number){
     const theme = this.themes.filter((t:any) => t.id === id)
+    console.log(id);
     this.currentTheme = theme[0]
-    this.current.next(this.currentTheme)
+    
+    this.stateTheme.next(true)
   }
 
   getTheme(id:number){
@@ -62,20 +64,32 @@ export class ThemesService {
     return theme[0]
   }
 
-  getCurrent(){
-    return this.current
+  getCurrentTheme(){
+    return this.currentTheme
+  }
+
+  getThemeState(){
+    return this.stateTheme
   }
 
   getAllThemes(){
     if (this.currentTheme) {
-      return this.themes.filter(t => t.id !== this.currentTheme.id)
+      return this.themes.filter(t => t.id !== this.currentTheme?.id)
     }else{
       return []
     }
   }
 
   get(property:string){
-    return this.currentTheme[property]
+    if (this.currentTheme) {
+      return this.currentTheme[property]
+      
+    }
+  }
+
+  changeThemeAdmin(){
+    //HTTP PARA EL UPDATE
+    
   }
 
 

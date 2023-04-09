@@ -1,13 +1,10 @@
-<div 
-    *ngIf="routeData.getCurrent() === 'home' 
-    || routeData.getCurrent() === 'categories' 
-    || routeData.getCurrent() === 'cart' ">
+<div *ngIf="stateHeader">
     
     <header [@fadeIn]>
     
         <div  class="container-header" >
 
-            <div class="container-items" *ngIf="local">
+            <div class="container-items">
 
                 <div class="menu-icon" (click)="toogleMenu()">
 
@@ -39,7 +36,7 @@
 
     <div *ngIf="stateMenu" (click)="toogleMenu()" class="overlay-menu"></div>
 
-    <div *ngIf="local" class="container-menu" [class.menu-visible]="stateMenu">
+    <div class="container-menu" [class.menu-visible]="stateMenu">
         
         
         <div class="content-menu">

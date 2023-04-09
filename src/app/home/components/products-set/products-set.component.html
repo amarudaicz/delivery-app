@@ -1,4 +1,4 @@
-<section class="products-set" *ngIf="products">
+<section class="products-set">
 
     <h2 class="chip" [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')">
         {{title}}
@@ -9,7 +9,7 @@
 
            <div *ngFor="let product of products" class="product-card">
              
-            <app-product-card [product]="product"></app-product-card>
+             <app-product-card [product]="product"></app-product-card>
             </div>
               
          

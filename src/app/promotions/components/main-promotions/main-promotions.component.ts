@@ -21,7 +21,7 @@ export class MainPromotionsComponent implements OnInit {
 
   ngOnInit(){
 
-    this.localService.getProducts().subscribe(data => {
+    this.localService.getProducts$().subscribe(data => {
       this.promotions = data.filter(e => e.category === 'promotion')
       console.log(this.promotions);
       
