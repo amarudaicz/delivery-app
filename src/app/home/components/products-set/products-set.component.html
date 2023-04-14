@@ -1,20 +1,26 @@
 <section class="products-set">
+    <div class="container-chip">
+        <h2 class="chip" [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')">
+            {{title}}
+        </h2>
 
-    <h2 class="chip" [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')">
-        {{title}}
-    </h2>
+        <a class="link-category" [routerLink]="title.toLowerCase()">
+            <span>
+                Ver mas
+            </span>
+            
+        </a>
+
+    </div>
 
     <div class="container-products">
         <div class="container-grid">
-
-           <div *ngFor="let product of products" class="product-card">
-             
-             <app-product-card [product]="product"></app-product-card>
-            </div>
+ 
+            <app-product-card [style.width]="'100%'" *ngFor="let product of products" [product]="product"></app-product-card>           
               
          
         </div>  
-
     </div>
+        
 
 </section>

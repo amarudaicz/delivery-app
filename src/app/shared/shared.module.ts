@@ -9,14 +9,17 @@ import { FlotantCartComponent } from './components/flotant-cart/flotant-cart.com
 import { HomeModule } from '../home/home.module';
 import { NewselterBoxComponent } from './components/newselter-box/newselter-box.component';
 import { ButtonInstallComponent } from './components/button-install/button-install.component';
-
+import { SkeletonModule } from 'primeng/skeleton';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRippleModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     HeaderComponent,
     NavigationComponent,
     ProductCardComponent,
     LoaderFullComponent,
-    FlotantCartComponent,
+    FlotantCartComponent, 
     NewselterBoxComponent,
     ButtonInstallComponent
     
@@ -24,7 +27,11 @@ import { ButtonInstallComponent } from './components/button-install/button-insta
   imports: [
     CommonModule,
     RouterLink,
-    
+    SkeletonModule,
+    RatingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatRippleModule
   ],
   exports:[
     NavigationComponent,

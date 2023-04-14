@@ -24,7 +24,7 @@
                   [value]="option.nameOption"
                   >{{ option.nameOption }}</mat-radio-button
                 >
-
+              
                 <span *ngIf="option.price !== 0"
                   ><b>{{ option.price | currency }}</b>
                 </span>
@@ -60,7 +60,6 @@
                 class="container-values-options"
               >
                 <mat-checkbox 
-                  formControlName="checkboxs"
                   (change)="saveOptions(option, optionGroup)"
                   color="primary"
                 >

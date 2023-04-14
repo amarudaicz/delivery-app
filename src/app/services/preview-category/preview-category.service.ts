@@ -11,17 +11,14 @@ export class PreviewCategoryService {
 
 
   categoryId?:number
-  productsByCategory = new BehaviorSubject<Product[]>([])
-  allCategories = new BehaviorSubject<Category[]>([])
+  productsByCategory = new BehaviorSubject<Product[]|boolean>( false )
 
   constructor(
     private localData:LocalDataService
     )
   {
-
     this.localData.getCategories().subscribe(data=>{
-      if (data.length!==0) {
-        
+      if (!this.categoryId && data) {
         this.setCategory(data[0].id)
       }
     })

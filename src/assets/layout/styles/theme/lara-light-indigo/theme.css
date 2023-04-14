@@ -1574,11 +1574,17 @@ p-radiobutton.ng-dirty.ng-invalid > .p-radiobutton > .p-radiobutton-box {
   margin-left: 0.5rem;
 }
 
+
+.p-rating{
+  display: inline-block;
+  margin-right: 5px;
+}
+
 .p-rating .p-rating-icon {
   color: #495057;
-  margin-left: 0.5rem;
+  margin-left: 0.3rem;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
-  font-size: 1.143rem;
+  font-size: 1rem;
 }
 .p-rating .p-rating-icon.p-rating-cancel {
   color: #ea5455;
@@ -1588,15 +1594,19 @@ p-radiobutton.ng-dirty.ng-invalid > .p-radiobutton > .p-radiobutton-box {
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #C7D2FE;
 }
+
 .p-rating .p-rating-icon:first-child {
   margin-left: 0;
 }
+
 .p-rating .p-rating-icon.pi-star-fill {
-  color: #6366F1;
+  color: inherit;
 }
+
 .p-rating:not(.p-disabled):not(.p-readonly) .p-rating-icon:hover {
-  color: #6366F1;
+  color: inherit;
 }
+
 .p-rating:not(.p-disabled):not(.p-readonly) .p-rating-icon.p-rating-cancel:hover {
   color: #e73d3e;
 }

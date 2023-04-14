@@ -1,21 +1,34 @@
-@use '../../../shared/components/product-card/product-card.component.scss';
+@use "../../../shared/components/product-card/product-card.component.scss";
 
-.products-set{
-    padding: 15px 0;
+.products-set {
+  padding: 15px 0;
+  position: relative;
 }
 
-.container-products{
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    padding: 15px 0;
+.container-chip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.container-grid{
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-template-rows: repeat(2, auto);
-    gap: 10px 20px;
-    grid-auto-flow: column;
-    place-items: center;
-    
+.link-category{
+    font-size: 15px;
+    text-decoration: underline;
+    color: #2b2b2b;
+    font-weight: bold;
+}
+
+.container-products {
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  padding: 15px 0;
+}
+
+.container-grid {
+  display: grid;
+  grid-auto-columns: 90%;
+  grid-template-rows: repeat(2, max-content);
+  gap: 10px ;
+  grid-auto-flow: column;
+  place-items: center;
 }

@@ -39,7 +39,7 @@ import { shepherd } from 'src/app/utils/shepherd-tour';
   providers: [MatAutocomplete, ConfirmationService, History],
 })
 export class NewProductComponent implements OnInit {
-  categories: Category[] = [];
+  categories: Category[]|null = null;
   filterCategories?: Observable<any[]>;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -267,12 +267,12 @@ export class NewProductComponent implements OnInit {
     console.log(filterValue);
 
     console.log(
-      this.categories.filter((cat) =>
+      this.categories?.filter((cat) =>
         this.normalizeValue(cat.name).includes(filterValue)
       )
     );
 
-    return this.categories.filter((cat) =>
+    return this.categories!.filter((cat) =>
       this.normalizeValue(cat.name).includes(filterValue)
     );
   }

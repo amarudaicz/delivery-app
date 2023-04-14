@@ -4,13 +4,9 @@
 
 <app-header [@fadeIn] *ngIf="themeLoad"></app-header>
 
-<div *ngIf="themeLoad else loader" [@fadeIn] [@routeAnimations]="getRouteData()">
+<div [@fadeIn] [@routeAnimations]="getRouteData()">
     <router-outlet></router-outlet>
 </div>
 
 <app-navigation *ngIf="themeLoad" [@fadeIn] ></app-navigation>
 
-<ng-template #loader>
-    <app-loader-full> </app-loader-full>
-
-</ng-template>

@@ -55,20 +55,7 @@ export class HeaderComponent implements OnInit {
     
     ngOnInit(): void {
       
-    
-      this.router.events.subscribe((event) => {
-        if (event instanceof ActivationStart) {
-            const page = event.snapshot.data['page'] 
-            if (page === 'detail' || page ==='admin') {
-              this.stateHeader = false 
-            }else{
-              this.stateHeader = true
-            } 
-          // Realizar alguna acción cuando se navega a una nueva página
-        }
-      });
-      console.log(this.stateHeader);
-
+      
     
   }
 

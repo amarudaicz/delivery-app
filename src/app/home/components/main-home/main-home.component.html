@@ -1,5 +1,5 @@
 
-<div [style.background]="theme.get('backgroundPage')" class="container">
+<div *ngIf="themeLoaded else loader" [style.background]="theme.get('backgroundPage')" class="container">
     
     <div class="content">
 

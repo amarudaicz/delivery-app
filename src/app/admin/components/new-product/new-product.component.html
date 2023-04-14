@@ -295,6 +295,7 @@
                 </span>
 
                 <input
+                  [autofocus]="true"
                   placeholder="{{ s.price | currency }}"
                   [value]="s.price"
                   (blur)="updatePriceOption(indexGroup, i, newPrice.value)"

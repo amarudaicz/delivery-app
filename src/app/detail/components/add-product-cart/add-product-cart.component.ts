@@ -48,7 +48,6 @@ export class AddProductCartComponent implements OnInit {
     this.form = this.formBuilder.group({
       especifications: [''],
       quantity: [1, [Validators.required, Validators.min(1)]],
-      checkboxs:['']
     });
 
 
@@ -59,7 +58,14 @@ export class AddProductCartComponent implements OnInit {
 
 
     this.product.variations.forEach(e => {
-      this.form.addControl(e.nameVariation, this.formBuilder.control('' , e.required ? Validators.required : null));
+      console.log(e);
+      this.form.addControl(e.nameVariation, this.formBuilder.control(null , e.required ? Validators.required : null));
+      if (e.required){
+        this.saveOptions(e.options[0], e)
+        this.form.get(e.nameVariation)?.setValue(e.options[0].nameOption)
+        console.log(this.form);
+      }
+
     });
 
     this.cartService.getCartItems().subscribe(data => this.currentCart = data)
@@ -115,6 +121,8 @@ export class AddProductCartComponent implements OnInit {
   }
 
   saveOptions(option: DetailsOptions, optionGroup: OptionProduct) {
+    console.log(this.form);
+    
     const index = this.options?.findIndex(
       (o) => o.nameVariation === optionGroup.nameVariation
     );

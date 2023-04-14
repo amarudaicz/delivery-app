@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
+    
     this.themeService.getThemeState().subscribe((state)=>{
       this.themeLoad = state
     })
@@ -33,12 +34,12 @@ export class AppComponent implements OnInit {
   }
 
   getRouteData() {
-    const route =  this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
+    const route =  this.contexts.getContext('primary')?.route?.snapshot?.data?.['page'];
 
-    if (route === 'home') {
-      const local =  this.contexts.getContext('primary')?.route?.snapshot?.params['local'];
-      this.routeService.setOrigin(local);
-    }
+    // if (route === 'home') {
+    //   const local =  this.contexts.getContext('primary')?.route?.snapshot?.params['local'];
+    //   this.routeService.setOrigin(local);
+    // }
 
   }
     

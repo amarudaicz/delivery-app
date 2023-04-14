@@ -13,17 +13,22 @@ const routes: Routes = [
         component: MainHomeComponent,
         data: {
           animation:'home',
+          page:'home'
         },
       },
       {
         path: ':local/:category',
         component: MainCategoryComponent,
-        data: { animation: 'detail', page: 'detail' },
+        data: { page: '' },
       },
       {
         path: ':local/:category/:product',
         component: MainDetailComponent,
         data: { animation: 'detail', page: 'detail' },
+      },
+      {
+        path: '**',
+        component:MainDetailComponent
       },
     ],
   },

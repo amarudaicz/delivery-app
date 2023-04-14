@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   DynamicDialogComponent,
@@ -18,7 +18,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./main-detail.component.scss'],
   animations: [fadeIn],
 })
-export class MainDetailComponent implements OnInit {
+export class MainDetailComponent implements OnInit, OnDestroy {
   constructor(
     public theme: ThemesService,
     private route: ActivatedRoute,
@@ -28,15 +28,14 @@ export class MainDetailComponent implements OnInit {
     private layoutState:LayoutStateService
   ) {}
   ngOnInit(): void {
+    this.localService.initDataLocal(localStorage.getItem('origin'))
 
-    this.layoutState.state.header = false
-    
     if (this.dialogConfig.data) {
       this.product = this.dialogConfig.data
       this.modePreview = true
       return
     }
-
+    
     this.routeService.setCurrent('detail');
     const idProduct = this.route.snapshot.queryParams['id'];
     this.localService.getProducts$().subscribe((data) => {
@@ -47,4 +46,10 @@ export class MainDetailComponent implements OnInit {
 
   product?: Product;
   modePreview:boolean = false
+
+
+
+  ngOnDestroy(){
+    this.layoutState.state.header=true
+  }
 }

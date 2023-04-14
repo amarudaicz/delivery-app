@@ -39,6 +39,7 @@ import { ConfigLocalComponent } from './components/config-local/config-local.com
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { ConfigThemingComponent } from './components/config-theming/config-theming.component';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ConfigThemingComponent } from './components/config-theming/config-themi
     ConfirmDialogModule,
     FileUploadModule,
     InputTextModule,
-    ToastModule    
+    ToastModule,
+    AutoFocusModule    
 
     
   ]

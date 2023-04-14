@@ -55,7 +55,6 @@ export class ThemesService {
     const theme = this.themes.filter((t:any) => t.id === id)
     console.log(id);
     this.currentTheme = theme[0]
-    
     this.stateTheme.next(true)
   }
 
@@ -69,6 +68,7 @@ export class ThemesService {
   }
 
   getThemeState(){
+    console.log(this.stateTheme);
     return this.stateTheme
   }
 

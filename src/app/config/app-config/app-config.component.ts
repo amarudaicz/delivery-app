@@ -19,11 +19,7 @@ export class AppConfigComponent {
 
   ngOnInit(): void {
     
-    this.localName = this.routeData.getOrigin()
-    this.localService.setLocal(this.localName)
-
     setTimeout(() => {
-      this.localService.setProducts('products')
       
     }, 3000);
     

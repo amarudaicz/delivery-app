@@ -39,7 +39,7 @@ export class MainCategoryComponent implements OnInit {
 
     this.localService.getProducts$().subscribe((data)=>{
       console.log(data);
-      this.products = data.filter(e => e.category.toLowerCase() === this.category.toLowerCase())
+      this.products = data.filter(e => e.category.toLowerCase() === this.category)
     })
  
     

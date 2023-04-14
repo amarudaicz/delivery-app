@@ -16,13 +16,20 @@ export class LocalDataService {
     
   }
 
-  
+  private load:boolean=true
   public local = new BehaviorSubject<any>(undefined);
   private products = new BehaviorSubject<Product[]>([]);
-  private categories = new BehaviorSubject<Category[]>([])
+  private categories = new BehaviorSubject<Category[]|null>(null)
 
+  initDataLocal(local:string|null){
+
+    this.setLocal(local)
+    this.setProducts(local)
+
+  }
 
   setLocal(name: string | null) {
+    if(this.load)
     this.http
       .get<Local>(environment.host + 'locals/1')//puntopizza
       .subscribe((data) => {
@@ -32,12 +39,13 @@ export class LocalDataService {
   }
 
   setProducts(local: string | null) {
-    console.log(local);
+    if(this.load)
     this.http
       .get<Product[]>(environment.host + local)
       .subscribe((data) => { 
         this.products.next(data);
         this.categories.next(this.cleanCategories(data))
+        this.load=false
       });
   }
 

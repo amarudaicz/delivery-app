@@ -16,13 +16,11 @@ export class InfoProductComponent implements OnInit {
     console.log(this.route.snapshot.params);
     console.log(this.product);
     
-    this.productForChild = this.product
     
   }
   
   @Input() product:any
   @Input() modePreview:boolean = false
-  productForChild:any
   favClicked:boolean = false
 
   
