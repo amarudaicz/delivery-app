@@ -42,6 +42,7 @@ export class HeaderComponent implements OnInit {
       icon:'pi pi-instagram'
     }
   ]
+  state:any
 
   constructor(
     public theme:ThemesService, 
@@ -53,8 +54,11 @@ export class HeaderComponent implements OnInit {
       
     }
     
-    ngOnInit(): void {
-      
+  ngOnInit(): void {
+    this.layoutState.stateSubject.subscribe((state)=>{
+      console.log(state);
+      this.state = state
+    })
       
     
   }

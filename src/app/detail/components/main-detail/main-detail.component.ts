@@ -26,7 +26,11 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     private localService: LocalDataService,
     private dialogConfig: DynamicDialogConfig,
     private layoutState:LayoutStateService
-  ) {}
+  ) {
+    this.layoutState.state.header = false
+    this.layoutState.updateState()
+  }
+  
   ngOnInit(): void {
     this.localService.initDataLocal(localStorage.getItem('origin'))
 

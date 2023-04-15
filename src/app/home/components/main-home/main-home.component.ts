@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterContentChecked } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Category } from 'src/app/interfaces/category-interfaz';
@@ -15,7 +15,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   animations: [fadeIn],
   providers: [],
 })
-export class MainHomeComponent implements OnInit, OnDestroy {
+export class MainHomeComponent implements OnInit{
   appInstalled: boolean = this.pwaInstaller.isPwaMode();
   categories: any[] = []; //INTERFACE
   local: string | null = null;
@@ -29,13 +29,15 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private previewCategory: PreviewCategoryService,
     private route: ActivatedRoute,
     private layoutStateService:LayoutStateService
-  ) {}
+  ) {
+
+    this.layoutStateService.state.header = true
+    this.layoutStateService.updateState()
+  }
 
   ngOnInit(): void {
     //SETING RUTA
     this.routeService.setCurrent('home');
-    this.layoutStateService.state.header = true
-
 
     //SETING PETICIONES DEL LOCAL
     this.local = this.route.snapshot.params['local'];
@@ -64,8 +66,5 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(){
-    this.layoutStateService.state.header = false
 
-  }
 }

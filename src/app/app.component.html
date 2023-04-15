@@ -2,7 +2,7 @@
 <app-app-config></app-app-config>
 
 
-<app-header [@fadeIn] *ngIf="themeLoad"></app-header>
+<app-header *ngIf="themeLoad"></app-header>
 
 <div [@fadeIn] [@routeAnimations]="getRouteData()">
     <router-outlet></router-outlet>
