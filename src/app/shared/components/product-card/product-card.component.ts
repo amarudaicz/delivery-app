@@ -37,7 +37,6 @@ export class ProductCardComponent implements OnInit {
   saveRating() {
     console.log(this.product);
 
-    this.ratingService.setLSRating(this.ratingForm.get('rating'))
     
     this.ratingForm.reset();
   }

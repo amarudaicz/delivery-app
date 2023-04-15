@@ -1,31 +1,27 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RatingService {
 
-  constructor() { }
 
+  constructor(private http: HttpClient) { }
 
+  getVotes(productId: number, local:string): Observable<any> {
 
-  updateRating(rating:number){
-    //HTTP PARA UPDATE ROW RATING EN MYSQL Y UPDATE ENTRY + 1
-    this.setLSRating(rating)
-    
+    return this.http.get(`localhost:3001/vote/${local}/${productId}`);
 
   }
 
-
-
-  setLSRating(item:any){
-
-    const currentList:any[] = JSON.parse(localStorage.getItem('rating-list') as string)
-
-    if (currentList) {
-      currentList.push(item)
-      localStorage.setItem('rating-list', JSON.stringify(item))
-    }
-
+  addVote(userId: number, productId: number, stars: number, local:string): Observable<any> {
+    const data = { user_id: userId, product_id: productId, stars, local };
+    return this.http.post('localhost:3001/vote', data);
   }
+
+  
+
+
 }

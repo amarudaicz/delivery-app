@@ -33,6 +33,8 @@ export class LocalDataService {
     this.http
       .get<Local>(environment.host + 'locals/1')//puntopizza
       .subscribe((data) => {
+        console.log(data);
+        
         this.theme.setTheme(data.theme);
         this.local.next(data);
       });
