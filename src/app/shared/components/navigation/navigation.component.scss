@@ -1,12 +1,16 @@
 .bottom-nav{
-    width: 100%;
+    width: 90%;
     height: max-content;
-    display: flex;
-    align-items: center;
     position: fixed;
-    bottom: 0;
-    border-radius: 25px 25px 0 0;
-    padding: 8px 0;
+    transform: translateX(5%);
+    bottom: 10px;
+    border-radius: 20px;
+    padding: 10px 0;
+    transition: all .5s;
+
+    &.hide-nav{
+        bottom: -62px;
+    }
 }
 
 .container-nav{
@@ -33,11 +37,10 @@
     padding: 10px;
     border-radius: 10px;
     transition: all 0.1s;
+
     &.active-home{
-        gap: 0px;
-        padding: 12px;
+
         div{
-            border-radius: 0;
 
         }
     }

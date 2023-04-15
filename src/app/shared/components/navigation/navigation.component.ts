@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Local } from 'src/app/interfaces/local-interface';
 import { CartService } from 'src/app/services/cartData/cart.service';
@@ -31,6 +31,23 @@ export class NavigationComponent implements OnInit {
     })
     console.log(this.itemsCart);
 
+  }
+
+  private prevPos = 0;
+  scrollDown:boolean = false
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    const currentPos = window.pageYOffset || window.scrollY;
+    if (currentPos > this.prevPos) {
+      console.log('Scroll hacia abajo detectado');
+      // Haga cualquier otra acción deseada aquí
+      this.scrollDown=true
+    }else{
+      this.scrollDown=false
+    }
+    
+    this.prevPos = currentPos;
   }
 
 

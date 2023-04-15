@@ -35,7 +35,7 @@ export class FavoritesService {
       console.log(data);
       
       console.log(this.favorites);
-      const index = this.favorites.findIndex(data);
+      const index = this.favorites.findIndex(e => e.id === data.id && e.local === data.local );
       console.log(index);
       
       this.favorites.splice(index, 1);
@@ -48,10 +48,7 @@ export class FavoritesService {
   }
 
   compareFavorite(product:any){
-    
     return this.favorites.some(p => p.id === product.id && p.local === product.local);
-
-
   }
 
 
