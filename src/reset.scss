@@ -17,6 +17,24 @@ body{
 
 }
 
+h1,h2,h3,h4,h5,h6{
+    color: #1d2334;
+    font-family: muli;
+
+}
+
+h2{
+    font-size: 17px;
+    font-weight: 900;
+}
+
+h3{
+
+    font-size: 16px;
+    font-weight: bold;
+    
+}
+
 ul{
     list-style: none;
     
@@ -27,10 +45,6 @@ a{
     
 }a
 
-button{
-    font-size: 14px;
-    font-family: inherit;
-}
 
 .p-dialog{
     max-height: none !important;

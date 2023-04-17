@@ -1,27 +1,25 @@
 
-<div class="container-newselter">
+<div class="container-newselter" (click)="install()">
     <div class="container-text">
 
-        <p class="title">
-                Descarga nuestra aplicación para no perderte nuestras ofertas y promociones exclusivas
-        </p>
+
+        <img class="logo-newselter" src="./assets/logos/logo-de.png"  width="50px" alt="">
+        <h4 class="title-newselter">
+            Descarga nuestra aplicación <br>
+            <span style="font-size: 12px;">Ofertas exclusivas y mas</span>
+        </h4>
 
         <!-- <p class="subtitle">
             Con la aplicación, tendrás acceso a descuentos especiales y recibirás alertas en tiempo real sobrenuevas promociones. Además, podrás disfrutar de una experiencia de compra más rápida y cómoda desde tu teléfono móvil.
         </p> -->
+        <div  class="arrow-wrapper">
+            <button class="btn-arrow" >
+                <i matRipple class="pi-download pi arrow"></i>
+            </button>
+        </div>
 
     </div>
-
-    <div class="container-button">
-
-        <button (click)="install()" [style.background]="theme.currentTheme.background">
-            Descargar
-            <div class="arrow-wrapper">
-                <div class="arrow"></div>
         
-            </div>
-        </button>
-        
+    <div *ngFor="let circle of [1,2,3,4]; let i" [style.background]="theme.get('background')" class="circle btn-arrow circle-{{i}}"></div>
 
-    </div>
 </div>

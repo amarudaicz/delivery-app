@@ -1,13 +1,14 @@
 
-<div *ngIf="themeLoaded else loader" [style.background]="theme.get('backgroundPage')" class="container">
+<div *ngIf="themeLoaded else loader" class="container">
     
     <div class="content">
 
         
+        <app-newselter-box *ngIf="!appInstalled"></app-newselter-box>
         
         <section class="categories">
 
-            <h2 [style.background]="theme.get('backgroundSec')" [style.color]="theme.get('colorTextSecondary')" class="chip title-categories">Categorias</h2>
+            <h2 class="title-categories">Categorias</h2>
     
             <div class="container-categories" *ngIf="categories">
                 <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
@@ -27,7 +28,6 @@
         
         <app-promotions-local>  </app-promotions-local>
         
-        <app-newselter-box *ngIf="!appInstalled"></app-newselter-box>
         
         <app-products-set> </app-products-set>
 

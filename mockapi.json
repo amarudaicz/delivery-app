@@ -1,0 +1,407 @@
+[
+    {
+     "nameProduct": "Chuck Taylor",
+     "image": "https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2020/08/hamburguesa-2028707.jpg?tf=3840x",
+     "category": "Hamburgesas",
+     "categoryImage": "https://img.icons8.com/fluency/96/null/hamburger.png",
+     "variations": [
+      {
+       "multiple": false,
+       "nameVariation": "Presentaciones",
+       "typePrice": 1,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Doble",
+         "price": 350
+        },
+        {
+         "nameOption": "Triple",
+         "price": 700
+        }
+       ]
+      },
+      {
+       "multiple": false,
+       "nameVariation": "Pan",
+       "typePrice": 2,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Negro",
+         "price": 20
+        },
+        {
+         "nameOption": "Blanco",
+         "price": 10
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Aderezos",
+       "typePrice": 3,
+       "options": [
+        {
+         "nameOption": "Sabora",
+         "price": 0
+        },
+        {
+         "nameOption": "Mayonesa",
+         "price": 0
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Salsas",
+       "typePrice": 2,
+       "options": [
+        {
+         "nameOption": "Criolla",
+         "price": 25
+        },
+        {
+         "nameOption": "Chimi",
+         "price": 25
+        }
+       ]
+      }
+     ],
+     "price": 700,
+     "ingredients": [
+      "Pan",
+      "Carne",
+      "Tomate",
+      "Lechuga",
+      "Carne",
+      "Tomate",
+      "Lechuga",
+      "Carne",
+      "Tomate",
+      "Lechuga"
+     ],
+     "categoryId": 92,
+     "id": "1"
+    },
+    {
+     "nameProduct": "Mangifica",
+     "image": "https://resizer.glanacion.com/resizer/YEay8LjIQJzbZsxBLOqhhb-ogn4=/768x0/filters:format(webp):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/RGDDRKNE2ZHJNB2M2DK5JKL5EI.jpg",
+     "category": "Hamburgesas",
+     "categoryImage": "https://img.icons8.com/fluency/96/null/hamburger.png",
+     "variations": [
+      {
+       "multiple": false,
+       "nameVariation": "Presentaciones",
+       "typePrice": 1,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Doble",
+         "price": 350
+        },
+        {
+         "nameOption": "Triple",
+         "price": 700
+        }
+       ]
+      },
+      {
+       "multiple": false,
+       "nameVariation": "Pan",
+       "typePrice": 2,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Negro",
+         "price": 20
+        },
+        {
+         "nameOption": "Blanco",
+         "price": 10
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Aderezos",
+       "typePrice": 3,
+       "options": [
+        {
+         "nameOption": "Sabora",
+         "price": 0
+        },
+        {
+         "nameOption": "Mayonesa",
+         "price": 0
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Salsas",
+       "typePrice": 2,
+       "options": [
+        {
+         "nameOption": "Criolla",
+         "price": 25
+        },
+        {
+         "nameOption": "Chimi",
+         "price": 25
+        }
+       ]
+      }
+     ],
+     "price": 700,
+     "ingredients": [
+      "Pan",
+      "Carne",
+      "Tomate",
+      "Lechuga"
+     ],
+     "categoryId": 92,
+     "id": "2"
+    },
+    {
+     "nameProduct": "Big Mac",
+     "image": "https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2020/08/hamburguesa-2028707.jpg?tf=3840x",
+     "category": "Hamburgesas",
+     "categoryImage": "https://img.icons8.com/fluency/96/null/hamburger.png",
+     "variations": [
+      {
+       "multiple": false,
+       "nameVariation": "Presentaciones",
+       "typePrice": 1,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Doble",
+         "price": 350
+        },
+        {
+         "nameOption": "Triple",
+         "price": 700
+        }
+       ]
+      },
+      {
+       "multiple": false,
+       "nameVariation": "Pan",
+       "typePrice": 2,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Negro",
+         "price": 20
+        },
+        {
+         "nameOption": "Blanco",
+         "price": 10
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Aderezos",
+       "typePrice": 3,
+       "options": [
+        {
+         "nameOption": "Sabora",
+         "price": 0
+        },
+        {
+         "nameOption": "Mayonesa",
+         "price": 0
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Salsas",
+       "typePrice": 2,
+       "options": [
+        {
+         "nameOption": "Criolla",
+         "price": 25
+        },
+        {
+         "nameOption": "Chimi",
+         "price": 25
+        }
+       ]
+      }
+     ],
+     "price": 700,
+     "ingredients": [
+      "Pan",
+      "Carne",
+      "Tomate",
+      "Lechuga",
+      "Carne",
+      "Tomate",
+      "Lechuga",
+      "Carne",
+      "Tomate",
+      "Lechuga"
+     ],
+     "categoryId": 92,
+     "id": "3"
+    },
+    {
+     "nameProduct": "Bajon",
+     "image": "https://resizer.glanacion.com/resizer/YEay8LjIQJzbZsxBLOqhhb-ogn4=/768x0/filters:format(webp):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/RGDDRKNE2ZHJNB2M2DK5JKL5EI.jpg",
+     "category": "Hamburgesas",
+     "categoryImage": "https://img.icons8.com/fluency/96/null/hamburger.png",
+     "variations": [
+      {
+       "multiple": false,
+       "nameVariation": "Presentaciones",
+       "typePrice": 1,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Doble",
+         "price": 350
+        },
+        {
+         "nameOption": "Triple",
+         "price": 700
+        }
+       ]
+      },
+      {
+       "multiple": false,
+       "nameVariation": "Pan",
+       "typePrice": 2,
+       "required": true,
+       "options": [
+        {
+         "nameOption": "Negro",
+         "price": 20
+        },
+        {
+         "nameOption": "Blanco",
+         "price": 10
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Aderezos",
+       "typePrice": 3,
+       "options": [
+        {
+         "nameOption": "Sabora",
+         "price": 0
+        },
+        {
+         "nameOption": "Mayonesa",
+         "price": 0
+        }
+       ]
+      },
+      {
+       "multiple": true,
+       "nameVariation": "Salsas",
+       "typePrice": 2,
+       "options": [
+        {
+         "nameOption": "Criolla",
+         "price": 25
+        },
+        {
+         "nameOption": "Chimi",
+         "price": 25
+        }
+       ]
+      }
+     ],
+     "price": 700,
+     "ingredients": [
+      "Pan",
+      "Carne",
+      "Tomate",
+      "Lechuga"
+     ],
+     "categoryId": 92,
+     "id": "4"
+    },
+    {
+     "nameProduct": "Mozzarella",
+     "image": "https://www.dondeir.com/wp-content/uploads/2019/08/pizza-hut-cadenas-de-pizza-cdmx.jpg",
+     "category": "Pizzas",
+     "variations": [],
+     "price": 5000,
+     "ingredients": [],
+     "categoryImage": "https://img.icons8.com/fluency/96/null/pizza.png",
+     "categoryId": 2,
+     "id": "11"
+    },
+    {
+     "nameProduct": "nameProduct 4",
+     "image": "image 4",
+     "category": "category 4",
+     "variations": [],
+     "price": 29,
+     "ingredients": [],
+     "categoryImage": "categoryImage 4",
+     "categoryId": 33,
+     "id": "5"
+    },
+    {
+     "nameProduct": "nameProduct 5",
+     "image": "image 5",
+     "category": "category 5",
+     "variations": [],
+     "price": 4,
+     "ingredients": [],
+     "categoryImage": "categoryImage 5",
+     "categoryId": 78,
+     "id": "6"
+    },
+    {
+     "nameProduct": "nameProduct 6",
+     "image": "image 6",
+     "category": "category 6",
+     "variations": [],
+     "price": 45,
+     "ingredients": [],
+     "categoryImage": "categoryImage 6",
+     "categoryId": 79,
+     "id": "7"
+    },
+    {
+     "nameProduct": "nameProduct 7",
+     "image": "image 7",
+     "category": "category 7",
+     "variations": [],
+     "price": 39,
+     "ingredients": [],
+     "categoryImage": "categoryImage 7",
+     "categoryId": 90,
+     "id": "8"
+    },
+    {
+     "nameProduct": "nameProduct 8",
+     "image": "image 8",
+     "category": "category 8",
+     "variations": [],
+     "price": 21,
+     "ingredients": [],
+     "categoryImage": "categoryImage 8",
+     "categoryId": 61,
+     "id": "9"
+    },
+    {
+     "nameProduct": "nameProduct 9",
+     "image": "image 9",
+     "category": "category 9",
+     "variations": [],
+     "price": 82,
+     "ingredients": [],
+     "categoryImage": "categoryImage 9",
+     "categoryId": 29,
+     "id": "10"
+    }
+   ]

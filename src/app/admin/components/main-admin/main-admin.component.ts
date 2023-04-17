@@ -1,5 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import Step from 'shepherd.js/src/types/step';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
+import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { shepherd } from 'src/app/utils/shepherd-tour';
 
 @Component({
@@ -12,6 +14,18 @@ export class MainAdminComponent  implements OnInit{
   ngOnInit(): void {
     this.initChart()
     this.continueTutorial()
+    this.layoutState.state.header=false
+    this.layoutState.updateState()
+    
+    
+    this.localData.setLocal(localStorage.getItem('admin-local'))
+}
+
+  constructor(
+    private layoutState:LayoutStateService,
+    private localData:LocalDataService
+  ){
+
   }
 
   chartData:any

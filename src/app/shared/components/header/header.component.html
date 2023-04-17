@@ -2,17 +2,16 @@
     
     <header>
     
-        <div  class="container-header" >
+        <div  class="container-header" [class.fixed]="fixed" >
 
-            <h2>oooooo</h2>
             <div class="container-items">
 
                 <div class="menu-icon" (click)="toogleMenu()">
 
                     <div class="container-bars" [class.menu-visible]="stateMenu">
-                        <div [style.background]="!stateMenu ? theme.get('background') : theme.get('backgroundSec')" class="bar-1 bar"></div>
-                        <div [style.background]="!stateMenu ? theme.get('background') : theme.get('backgroundSec')" class="bar-2 bar"></div>
-                        <div [style.background]="!stateMenu ? theme.get('background') : theme.get('backgroundSec')" class="bar-3 bar"></div>
+                        <div class="bar-1 bar"></div>
+                        <div class="bar-2 bar"></div>
+                        <div class="bar-3 bar"></div>
                     </div>
                  
                 </div>
@@ -24,50 +23,56 @@
                         <i class="pi pi-search search_icon"> </i>
                     </button>
                 </div>
+
+    
                 
 
                 <div class="local-image">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" width="50px" height="50px" alt="">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" width="30px" height="30px" alt="">
                 </div>
     
             </div>
+
+
+
+            <div *ngIf="stateMenu" (click)="toogleMenu()" class="overlay-menu"></div>
+
+            <div class="container-menu" [class.menu-visible]="stateMenu">
+                
+                
+                <div class="content-menu">
+                    <ul>
+                        <li class="menu-item" *ngFor="let item of dataMenu">
+                            <i [style.color]="theme.get('backgroundSec')" class="item-icon {{item.icon}}"></i>
+                            {{item.name}}
+                        </li>
+                    </ul>
+                </div>
+        
+                <div [style.background]="theme.get('background')"  class="container-spam">
+        
+                    <h3 [style.color]="theme.get('colorTextSecondary')" >Quiero una tienda Dely para mi comercio</h3>
+                    <div class="container-button-contact" style="text-align: end;">
+                        <button [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')"  class="contact-button">Contacto</button>
+                    </div>
+        
+        
+                </div>
+        
+                <div class="footer-menu">
+                    <div class="container-logo">    
+                        <img class="logo-app" src="./assets/logos/logo.svg" alt="">
+                    </div>
+        
+                    <app-button-install></app-button-install>
+                </div>
+            </div>
+        
         </div>
     </header> 
 
 
-    <div *ngIf="stateMenu" (click)="toogleMenu()" class="overlay-menu"></div>
-
-    <div class="container-menu" [class.menu-visible]="stateMenu">
-        
-        
-        <div class="content-menu">
-            <ul>
-                <li class="menu-item" *ngFor="let item of dataMenu">
-                    <i [style.color]="theme.get('backgroundSec')" class="item-icon {{item.icon}}"></i>
-                    {{item.name}}
-                </li>
-            </ul>
-        </div>
-
-        <div [style.background]="theme.get('background')"  class="container-spam">
-
-            <h3 [style.color]="theme.get('colorTextSecondary')" >Quiero una tienda Dely para mi comercio</h3>
-            <div class="container-button-contact" style="text-align: end;">
-                <button [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')"  class="contact-button">Contacto</button>
-            </div>
-
-
-        </div>
-
-        <div class="footer-menu">
-            <div class="container-logo">    
-                <img class="logo-app" src="./assets/logos/logo.svg" alt="">
-            </div>
-
-            <app-button-install></app-button-install>
-        </div>
-    </div>
-
+   
 
 </div>
 

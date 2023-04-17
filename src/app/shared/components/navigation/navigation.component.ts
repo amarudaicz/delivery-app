@@ -34,17 +34,18 @@ export class NavigationComponent implements OnInit {
   }
 
   private prevPos = 0;
-  scrollDown:boolean = false
+  stateMenu:boolean = false
 
   @HostListener('window:scroll', [])
   onScroll(): void {
     const currentPos = window.pageYOffset || window.scrollY;
-    if (currentPos > this.prevPos) {
+    console.log(currentPos)
+    if (currentPos === 0) {
       console.log('Scroll hacia abajo detectado');
       // Haga cualquier otra acción deseada aquí
-      this.scrollDown=true
+      this.stateMenu=false
     }else{
-      this.scrollDown=false
+      this.stateMenu=true
     }
     
     this.prevPos = currentPos;

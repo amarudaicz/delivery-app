@@ -1,5 +1,5 @@
 <div  *ngIf="routeService.getCurrent() !== 'detail' && routeService.getCurrent() !== 'admin' ">
-  <div class="bottom-nav" [class.hide-nav]="scrollDown" [style.background]="theme.get('backgroundSec')">
+  <div class="bottom-nav" [class.hide-nav]="stateMenu" [style.background]="theme.get('backgroundSec')">
 
     <div class="container-nav" >
       <nav class="navigation">
@@ -22,7 +22,7 @@
 
           <li class="item-nav">
             <a [routerLink]="['user']">
-              <i [style.color]="routeService.getCurrent() === 'user' ? theme.get('background') : '' " class="fa-solid fa-circle-user icon-nav"></i>
+              <i [class.item-active]="routeService.getCurrent() === 'user'" [style.color]="routeService.getCurrent() === 'user' ? theme.get('background') : '' " class="pi-user pi icon-nav"></i>
             </a>
           </li>
   
@@ -30,7 +30,7 @@
           <li class="item-nav">
             <a [routerLink]="['cart']">
               <div class="cart-container">
-                <i [style.color]="routeService.getCurrent() === 'cart' ? theme.get('background') : '' " class="fa-solid fa-cart-shopping icon-nav"></i>
+                <i [class.item-active]="routeService.getCurrent() === 'cart'" [style.color]="routeService.getCurrent() === 'cart' ? theme.get('background') : '' " class="pi pi-shopping-cart icon-nav"></i>
                 <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ itemsCart }}</div>
               </div>
             </a>
@@ -39,7 +39,7 @@
           <li class="item-nav">
             <a [routerLink]="['cart']">
               <div class="cart-container">
-                <i [style.color]="routeService.getCurrent() === 'favorites' ? theme.get('background') : '' " class="fa-regular fa-heart icon-nav"></i>
+                <i [class.item-active]="routeService.getCurrent() === 'cart'" [style.color]="routeService.getCurrent() === 'favorites' ? theme.get('background') : '' " class="fa-regular fa-heart icon-nav"></i>
                 <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ itemsCart }}</div>
               </div>
             </a>

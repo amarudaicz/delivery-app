@@ -17,7 +17,7 @@ export class ListProductsComponent implements OnInit {
   refDialog?:DynamicDialogRef
 
   constructor(private localService:LocalDataService, private primeDialog:DialogService){
-
+    
 
   }
 

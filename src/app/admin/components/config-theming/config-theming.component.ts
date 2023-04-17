@@ -15,6 +15,7 @@ export class ConfigThemingComponent implements OnInit {
   constructor(private theme: ThemesService) {}
 
   ngOnInit(): void {
+    this.theme.setTheme(1)
     this.currentTheme = this.theme.getCurrentTheme();
 
     this.currentProp = Object.keys(this.currentTheme).splice(2, 10);
