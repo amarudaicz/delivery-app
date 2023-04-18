@@ -31,19 +31,21 @@ export class LocalDataService {
   setLocal(name: string | null) {
     if(this.load)
     this.http
-      .get<Local>(environment.host + 'locals/1')//puntopizza
+      .get<Local[]>(environment.host + 'locals')//puntopizza
       .subscribe((data) => {
         console.log(data);
-        
-        this.theme.setTheme(data.theme);
-        this.local.next(data);
+        const local = data.filter(l => l.name_url === name)[0]
+        console.log(local);
+
+        this.theme.setTheme(local.theme);
+        this.local.next(local);
       });
   }
 
   setProducts(local: string | null) {
     if(this.load)
     this.http
-      .get<Product[]>(environment.host + local)
+      .get<Product[]>(environment.host + 'products')
       .subscribe((data) => { 
         this.products.next(data);
         this.categories.next(this.cleanCategories(data))

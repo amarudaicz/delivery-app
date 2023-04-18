@@ -6,5 +6,5 @@ export interface Local{
     horaries:string,
     image:string,
     theme:number,
-
+    name_url:string
 }
