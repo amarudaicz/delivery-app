@@ -31,7 +31,7 @@ export class CardCategoryComponent implements OnInit {
   }
 
   selectedCategory(id:number){
-    return this.previewCategory.categoryId === id
+    return this.previewCategory.category_id === id
   }
 
 

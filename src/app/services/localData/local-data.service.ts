@@ -19,7 +19,7 @@ export class LocalDataService {
   private load:boolean=true
   public local = new BehaviorSubject<any>(undefined);
   private products = new BehaviorSubject<Product[]>([]);
-  private categories = new BehaviorSubject<Category[]|null>(null)
+  private categories = new BehaviorSubject<Category[]>([])
 
   initDataLocal(local:string|null){
 
@@ -28,33 +28,33 @@ export class LocalDataService {
 
   }
 
-  setLocal(name: string | null) {
+  setLocal(name_url: string | null) {
     if(this.load)
     this.http
-      .get<Local[]>(environment.host + 'locals')//puntopizza
+      .get<Local[]>(environment.host + `locals/${name_url}`) //puntopizza
       .subscribe((data) => {
         console.log(data);
-        const local = data.filter(l => l.name_url === name)[0]
-        console.log(local);
-
+        const local = data[0]
+        
         this.theme.setTheme(local.theme);
         this.local.next(local);
       });
   }
 
-  setProducts(local: string | null) {
+  setProducts(table: string | null) {
     if(this.load)
     this.http
-      .get<Product[]>(environment.host + 'products')
+      .get<Product[]>(environment.host + `products/${table}`)
       .subscribe((data) => { 
+        console.log(data);
         this.products.next(data);
         this.categories.next(this.cleanCategories(data))
         this.load=false
       });
   }
 
-  getProducts() {    
-    return this.http.get<Product[]>(environment.host + localStorage.getItem('admin-local'), {})
+  getProductsAdmin() {    
+    return this.http.get<Product[]>(environment.host +'products/' + localStorage.getItem('admin-local'), {})
   }
 
   getProducts$() {
@@ -68,7 +68,7 @@ export class LocalDataService {
   private cleanCategories(products:Product[]) {
     
     const categories = products.map((e) => {
-      return { name: e.category, image: e.categoryImage, id: e.categoryId };
+      return { name: e.category_name, image: e.category_image, id: e.category_id };
     });
     
     return deleteRepeatElement(categories);

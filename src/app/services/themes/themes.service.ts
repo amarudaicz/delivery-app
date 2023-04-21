@@ -7,9 +7,9 @@ import { Theme } from 'src/app/interfaces/theme-interface';
 })
 export class ThemesService {
 
-  constructor() { 
+  constructor(){}
 
-  }
+  
 
   public currentTheme:any
   private stateTheme = new BehaviorSubject<boolean>(false)
@@ -49,8 +49,7 @@ export class ThemesService {
       backgroundPage: '#8D99AE',
     }
   ]
-
-
+  
   setTheme(id:number){
     const theme = this.themes.filter((t:any) => t.id === id)
     console.log(id);

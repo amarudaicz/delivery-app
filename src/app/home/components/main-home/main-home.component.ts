@@ -53,12 +53,12 @@ export class MainHomeComponent implements OnInit{
     this.routeService.setOrigin(this.local!);
 
     //SETEANDO EL PRELOADER DE LAS CATEGORIAS SI NO EXISTE ID SETEADO
-    if (!this.previewCategory.categoryId)
+    if (!this.previewCategory.category_id)
       for (let i = 0; i < 10; i++) this.categories.push(i);
 
     //OBTENIENDO LAS CATEGORIAS
     this.localService.getCategories().subscribe((data) => {
-      if (data) this.categories = data;
+      if (data.length!==0) this.categories = data;
     });
     
     //CHECK QUE EL TEMA ESTE CARGADO CUANDO SETLOCAL()

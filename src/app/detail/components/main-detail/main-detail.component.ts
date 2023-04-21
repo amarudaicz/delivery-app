@@ -41,9 +41,16 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     }
     
     this.routeService.setCurrent('detail');
+
     const idProduct = this.route.snapshot.queryParams['id'];
+    console.log(idProduct);
+    
     this.localService.getProducts$().subscribe((data) => {
-      this.product = data.filter((e) => e.id === idProduct)[0];
+      console.log(data);
+      
+      this.product = data.filter((e) => e.id === Number(idProduct))[0];
+      console.log(this.product);
+      
     });
 
   }

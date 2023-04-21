@@ -10,7 +10,7 @@ import { LocalDataService } from '../localData/local-data.service';
 export class PreviewCategoryService {
 
 
-  categoryId?:number
+  category_id?:number
   productsByCategory = new BehaviorSubject<Product[]|boolean>( false )
 
   constructor(
@@ -18,8 +18,11 @@ export class PreviewCategoryService {
     )
   {
     this.localData.getCategories().subscribe(data=>{
-      if (!this.categoryId && data) {
-        this.setCategory(data[0].id)
+      console.log(data);
+      console.log(this.category_id);
+      if (!this.category_id && data?.length !== 0) {
+        
+        this.setCategory(data![0].id)
       }
     })
 
@@ -29,9 +32,11 @@ export class PreviewCategoryService {
 
 
   setCategory(id:number){
-    this.categoryId = id
+    this.category_id = id
     this.localData.getProducts$().subscribe(products=>{
-      const data = products.filter(p=> p.categoryId === id)
+      const data = products.filter(p=> p.category_id === id)
+      console.log(data);
+      
       this.productsByCategory.next(data)
     })
       

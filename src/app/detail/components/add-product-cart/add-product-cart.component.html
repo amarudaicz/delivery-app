@@ -3,7 +3,7 @@
     <form [formGroup]="form" (submit)="modePreview ? null : saveOrder()">
 
      <div class="container-data-product">
-      <div class="container-options">
+      <div *ngIf="product.variations" class="container-options">
         <div *ngFor="let optionGroup of product?.variations">
           <div
             *ngIf="!optionGroup.multiple; else checkBox"

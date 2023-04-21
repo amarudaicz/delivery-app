@@ -24,9 +24,9 @@
                     {{product.id}}
                 </td>
                 <td style="width: 15%; min-width: 5rem;">
-                    <img [src]="product.image" class="shadow-6 border-round-sm" alt="{{product.nameProduct}}" width="50">
+                    <img [src]="product.image" class="shadow-6 border-round-sm" alt="{{product.name}}" width="50">
                 </td>
-                <td style="width: 35%; min-width: 7rem;">{{product.nameProduct}}</td>
+                <td style="width: 35%; min-width: 7rem;">{{product.name}}</td>
                 <td style="width: 35%; min-width: 8rem;">{{product.price | currency:'USD'}}</td>
                 <td style="width: 15%;">
                     <button pButton pRipple type="button" (click)="editProduct(product)" id="product{{product.id}}" icon="pi pi-search" class="p-button p-component p-button-text p-button-icon-only">

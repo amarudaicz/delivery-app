@@ -13,6 +13,7 @@ import { NewselterBoxComponent } from './components/newselter-box/newselter-box.
 import { PromotionsLocalComponent } from './components/promotions-local/promotions-local.component';
 import { ProductsSetComponent } from './components/products-set/products-set.component';
 import { PreviewCategoryComponent } from './components/preview-category/preview-category.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({ 
   declarations: [
@@ -31,6 +32,7 @@ import { PreviewCategoryComponent } from './components/preview-category/preview-
     RouterModule,
     MatSnackBarModule,
     MatRippleModule,
+    SkeletonModule
   ] ,
   exports:[
     NewselterBoxComponent

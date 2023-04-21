@@ -9,7 +9,7 @@ import { PreviewCategoryService } from 'src/app/services/preview-category/previe
 })
 export class PreviewCategoryComponent implements OnInit {
 
-  products:Product[]|any = []
+  products:Product[]|any = [1,2,3,4]
   
   constructor(private previewCategory:PreviewCategoryService){
     
@@ -17,8 +17,9 @@ export class PreviewCategoryComponent implements OnInit {
   
   ngOnInit(): void {
     
+    console.log(this.previewCategory.category_id);
     
-    if (!this.previewCategory.categoryId) for (let i = 0; i < 10; i++) this.products.push(i)
+    if (!this.previewCategory.category_id) for (let i = 0; i < 10; i++) this.products.push(i)
     
     this.previewCategory.getProductsByCategory().subscribe((data) =>{
       if (data) this.products = data

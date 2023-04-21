@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Product } from 'src/app/interfaces/product-interface';
@@ -39,7 +39,7 @@ export class MainCategoryComponent implements OnInit {
 
     this.localService.getProducts$().subscribe((data)=>{
       console.log(data);
-      this.products = data.filter(e => e.category.toLowerCase() === this.category)
+      this.products = data.filter(e => e.category_name.toLowerCase() === this.category)
     })
  
     

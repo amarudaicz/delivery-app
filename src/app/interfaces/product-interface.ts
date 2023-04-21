@@ -2,14 +2,14 @@ import { OptionProduct } from "./optionProduct-interface"
 
 export interface Product {
     id: number
-    nameProduct: string,
+    name: string,
     image: string,
-    categoryId:number,
-    category: string,
+    category_id:number,
+    category_name: string,
     price: number,
     ingredients: Array<string>,
     description:string,
-    categoryImage:string,
+    category_image:string,
     variations:Array<OptionProduct>
   }
   

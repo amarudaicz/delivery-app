@@ -57,13 +57,13 @@ export class AddProductCartComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.product.variations.forEach(e => {
+    this.product.variations?.forEach(e => {
       console.log(e);
       this.form.addControl(e.nameVariation, this.formBuilder.control(null , e.required ? Validators.required : null));
-      if (e.required){
+      if (e.required && e.typePrice !== 1){
         this.saveOptions(e.options[0], e)
         this.form.get(e.nameVariation)?.setValue(e.options[0].nameOption)
-        console.log(this.form);
+        console.log(this.options); 
       }
 
     });
@@ -71,14 +71,14 @@ export class AddProductCartComponent implements OnInit {
     this.cartService.getCartItems().subscribe(data => this.currentCart = data)
 
 
-    if(this.product.variations.length === 0){
+    if(this.product.variations){
       this.subtotal = this.product.price
     }
 
   }
 
   saveOrder() {
-    const {nameProduct, id:idProduct, image:productImage, category, price:productPrice} = this.product
+    const {name, id:idProduct, image:productImage, category_name, price:productPrice} = this.product
     console.log(this.options);
     
     if (this.options.length !== 0) {
@@ -89,15 +89,14 @@ export class AddProductCartComponent implements OnInit {
     
     if (this.form.valid) {
       this.stateButton = false;
-      const item = { nameProduct, productImage, productPrice, category, idProduct, ...this.form.value, userOptions:this.options, total: this.subtotal ? this.subtotal : this.product.price };
+      const item = { name, productImage, productPrice, category_name, idProduct, ...this.form.value, userOptions:this.options, total: this.subtotal ? this.subtotal : this.product.price };
       
       setTimeout(() => {
         this.cartService.addToCart(item);
         this.stateButton = true;
-        
         this.location.back()
 
-      }, 1000);
+      }, 2000);
     }else{ 
       this.toastr.error('Completar todos los campos')
     }
@@ -122,6 +121,7 @@ export class AddProductCartComponent implements OnInit {
 
   saveOptions(option: DetailsOptions, optionGroup: OptionProduct) {
     console.log(this.form);
+    console.log(this.options);
     
     const index = this.options?.findIndex(
       (o) => o.nameVariation === optionGroup.nameVariation
@@ -132,8 +132,9 @@ export class AddProductCartComponent implements OnInit {
 
     if (optionGroup.multiple) {
       if (indexMultiple !== -1) {
+
         const subIndex = this.options[indexMultiple].multipleOptions.findIndex((l:any) => l.nameOption === option.nameOption)
-        console.log(subIndex);
+        
         if (subIndex !== -1) {
           this.options[indexMultiple].multipleOptions.splice(subIndex, 1)
           if (this.options[indexMultiple].multipleOptions.length === 0) {
@@ -142,6 +143,7 @@ export class AddProductCartComponent implements OnInit {
         }else{
           this.options[indexMultiple].multipleOptions.push({...option})
         }
+
       }else{
         this.options.push({nameVariation:optionGroup.nameVariation, multipleOptions:[{...option}], multiple:true })
       }
@@ -189,13 +191,10 @@ export class AddProductCartComponent implements OnInit {
 
       if (subtotal.length !== 0 && multiples.length !== 0) {
         const calc = (subtotal.reduce((act,prev)=> act+prev) + multiples.reduce((act,prev)=> act+prev))
-        console.log('1111');
         return calc
         
       }else if (subtotal.length !== 0) {
         const calc = subtotal.reduce((act,prev)=> act+prev)
-        console.log('2222');
-        
         return calc
       }
       

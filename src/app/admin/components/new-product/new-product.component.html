@@ -1,6 +1,6 @@
 <div class="card new-product" [style.padding]="dataModal ? '0 !important' : ''">
   <div class="container-form">
-    <h3 *ngIf="dataModal">{{ dataModal.nameProduct }}</h3>
+    <h3 *ngIf="dataModal">{{ dataModal.name }}</h3>
     <span
     (click)="closeModalEdit()"
     class="button-close-modal pi pi-times"
@@ -38,17 +38,25 @@
         <div id="initialForm">
           <mat-form-field class="input-group" color="primary">
             <mat-label>Titulo</mat-label>
-            <input type="text" matInput formControlName="nameProduct" />
+            <input type="text" matInput formControlName="name" />
             <mat-error>Este campo es requerido</mat-error>
           </mat-form-field>
   
           <mat-form-field appearance="fill">
             <mat-label>Categoria</mat-label>
-            <mat-select formControlName="category">
+            <!-- <input matInput type="text" placeholder="País" [matAutocomplete]="auto" formControlName="category_id" >
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option  *ngFor="let option of filterCategories|async" value="{{option.id + option.name}}">
+                {{ option.name }}
+              </mat-option>
+            </mat-autocomplete> -->
+              
+            <mat-select formControlName="category_id">
               <mat-option *ngFor="let option of categories" [value]="option.id">
                 {{ option.name }}
               </mat-option>
             </mat-select>
+
           </mat-form-field>
   
           <mat-form-field class="input-group" color="primary">
@@ -97,7 +105,7 @@
     
             <div class="container-input-image">
                 <label for="previewImageProduct" class="load-image-text" *ngIf="!previewImageProduct">Carga la imagen de tu producto</label>
-                <p-fileUpload *ngIf="!previewImageProduct" chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" name="previewImageProduct" chooseLabel="Imagen" mode="basic" accept="image/*" [maxFileSize]="1000000">
+                <p-fileUpload *ngIf="!previewImageProduct" chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" chooseLabel="Imagen" mode="basic" accept="image/*" [maxFileSize]="1000000">
                 </p-fileUpload>
                 
                 <ul *ngIf="previewImageProduct">

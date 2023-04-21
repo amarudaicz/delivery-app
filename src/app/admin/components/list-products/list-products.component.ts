@@ -23,7 +23,7 @@ export class ListProductsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.localService.getProducts().subscribe((data)=>{
+    this.localService.getProductsAdmin().subscribe((data)=>{
       this.products = data
       this.filtredProducts = data
     })
@@ -57,7 +57,7 @@ export class ListProductsComponent implements OnInit {
     
 
     const normalizeValue = value.toLowerCase()
-    this.filtredProducts = this.products?.filter(p => (p.nameProduct.toLowerCase()).includes(normalizeValue))
+    this.filtredProducts = this.products?.filter(p => (p.name.toLowerCase()).includes(normalizeValue))
   }
 
 }

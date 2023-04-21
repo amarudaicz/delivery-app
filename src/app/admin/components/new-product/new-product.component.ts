@@ -31,6 +31,9 @@ import { ConfirmationService } from 'primeng/api';
 import { MainDetailComponent } from 'src/app/detail/components/main-detail/main-detail.component';
 import { Location } from '@angular/common';
 import { shepherd } from 'src/app/utils/shepherd-tour';
+import { CloudinaryService } from 'src/app/services/cloudinary/cloudinary.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/app/environment';
 
 @Component({
   selector: 'app-new-product',
@@ -39,7 +42,7 @@ import { shepherd } from 'src/app/utils/shepherd-tour';
   providers: [MatAutocomplete, ConfirmationService, History],
 })
 export class NewProductComponent implements OnInit {
-  categories: Category[]|null = null;
+  categories?: Category[] = [];
   filterCategories?: Observable<any[]>;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -65,15 +68,16 @@ export class NewProductComponent implements OnInit {
     private dialogRef: DynamicDialogRef,
     private dialogService: DialogService,
     private confirmService: ConfirmationService,
-    private location:Location
+    private cloudinary:CloudinaryService,
+    private http:HttpClient,
   ) {
     this.form = this.formBuilder.group({
-      nameProduct: ['', Validators.required],
-      category: ['', Validators.required],
+      name: ['', Validators.required],
+      category_id: ['', Validators.required],
       price: ['', Validators.required],
-      ingredients: [''],
-      description:[''],
-      previewImageProduct:['']
+      ingredients: [null],
+      description:[null],
+      image:[null]
     });
 
     this.formVariations = this.formBuilder.group({
@@ -86,12 +90,13 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.localService.setProducts(localStorage.getItem('admin-local'))
     this.localService.getCategories().subscribe((data) => {
       this.categories = data;
       console.log(this.categories);
     });
 
-    this.filterCategories = this.form.controls['category'].valueChanges.pipe(
+    this.filterCategories = this.form.controls['category_id'].valueChanges.pipe(
       startWith(''),
       map((value) => this.filter(value || ''))
     );
@@ -110,26 +115,49 @@ export class NewProductComponent implements OnInit {
    
   }
 
-  saveProduct() {
+  async saveProduct() {
+    
     console.log(this.optionsGroup);
-    console.log(this.form);
-
+    
     if (this.form.invalid) {
+      
       this.toastr.error('Completar los campos requeridos');
       return;
     }
 
-    this.form.get('ingredients')?.setValue(this.ingredientsList);
-    const product = { variations: this.optionsGroup, ...this.form.value };
+    const image = new Promise((resolve, reject)=>{
+
+      this.cloudinary.upload(this.form.get('image')?.value).subscribe((res: any) => {
+        this.form.get('image')?.setValue(res.url);
+        console.log(this.form);
+  
+        if (res.url) {
+          resolve(res)          
+        }else{
+          reject('error')
+        }
+      })
+      
+    })
+
+    await image 
+
+    console.log('paso')
+    
+    const product = { local_id:localStorage.getItem('local-id'), variations: this.optionsGroup, ...this.form.value };
 
     if (this.editing) {
       this.editing = false;
       console.log('ACTUALIZANDO PRODUCTO');
-    } else {
-      console.log('AGREGANDO PRODUCTO');
+    }else {
+     
+      this.http.post(environment.host + `products/post-one/${localStorage.getItem('admin-local')}`, product).subscribe( res => {
+        console.log(res);
+        //HTTP METHOD////////////////////////////////////
+
+        
+      })
     }
-    console.log(product);
-    //HTTP METHOD////////////////////////////////////
   }
 
   saveOptions() {
@@ -216,6 +244,7 @@ export class NewProductComponent implements OnInit {
       } else {
         if (!this.ingredientsList.find((e) => e === value)) {
           this.ingredientsList.push(value);
+          this.form.get('ingredients')?.setValue(this.ingredientsList)
         }
       }
     }
@@ -303,8 +332,8 @@ export class NewProductComponent implements OnInit {
 
   setEditProduct(product: Product) {
     this.form.patchValue({
-      nameProduct: product.nameProduct,
-      category: product.categoryId,
+      name: product.name,
+      category: product.category_id,
       price: product.price,
     });
 
@@ -375,6 +404,7 @@ export class NewProductComponent implements OnInit {
     
     if (event.files.length > 0) {
       const file = event.files[0];
+      this.form.get('image')?.setValue(file)
       const reader = new FileReader();
       reader.onload = (e: any) => {
         console.log(e);

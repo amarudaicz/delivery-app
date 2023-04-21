@@ -1,6 +1,6 @@
 <div class="product-card" *ngIf="product.id; else loader">
   <a
-    [routerLink]="[product.category + '/' + product.nameProduct]"
+    [routerLink]="[product.category_name.toLowerCase() + '/' + product.name]"
     [queryParams]="{ id: product.id }"
   >
     <div class="product-image">
@@ -8,8 +8,8 @@
     </div>
 
     <div class="product-title">
-      <h3 class="product-name">{{ product.nameProduct }}</h3>
-      <p class="product-ingredients">{{ product.ingredients.join(", ") }}</p>
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p *ngIf="product.ingredients" class="product-ingredients">{{ product.ingredients.join(", ") }}</p>
     </div>
   </a>
 

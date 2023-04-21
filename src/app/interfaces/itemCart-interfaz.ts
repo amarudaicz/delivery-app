@@ -3,7 +3,7 @@ import { DetailsOptions, OptionProduct } from "./optionProduct-interface";
 export interface ItemCart {
   idCart: number;
   idProduct: number | string;
-  nameProduct: string;
+  name: string;
   quantity: number;
   total: number;
   userOptions: Array<userOptions>;
