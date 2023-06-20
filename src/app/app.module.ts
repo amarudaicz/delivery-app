@@ -13,13 +13,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CartModule } from './cart/cart.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserModule } from './user/user.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { AdminModule } from './admin/admin.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppConfigComponent } from './config/app-config/app-config.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { HttpInterceptorService } from './services/iterceptor-jwt/interceptorJwt';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({ 
   declarations: [
@@ -43,6 +45,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogR
     HttpClientModule,
     UserModule,
     AppLayoutModule,
+    MatSnackBarModule,
     
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
@@ -51,25 +54,19 @@ import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogR
       registrationStrategy: 'registerWhenStable:30000'
     }),
 
-
-    ToastrModule.forRoot({
-      timeOut: 5000,
-      positionClass: 'toast-bottom-center',
-      progressBar:true,
-      closeButton:true,
-      maxOpened:1,
-      preventDuplicates:true,
-      resetTimeoutOnDuplicate:true
-
-    })
-
+   
     
     
   ],
   providers: [ 
     DynamicDialogConfig,
     DialogService,
-    DynamicDialogRef
+    DynamicDialogRef,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
 
   ],
   bootstrap: [AppComponent],

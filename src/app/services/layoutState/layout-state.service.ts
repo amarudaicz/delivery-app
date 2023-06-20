@@ -13,13 +13,25 @@ export class LayoutStateService {
   
   state = {
     header:true,
-    menuMobile:false
+    menuMobile:false,
+    navigation:true,
   }
   
   stateSubject = new BehaviorSubject<any>(this.state)
   
   updateState(){
     this.stateSubject.next(this.state)
+  }
+
+  blockBody(){
+    document.body.style.overflow = 'hidden'
+
+  }
+
+  unblockBody(){
+    document.body.style.overflow = ''
+
+
   }
 
 

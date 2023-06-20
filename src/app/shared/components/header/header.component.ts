@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivationStart, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { headerIn } from 'src/app/animations/haeder-animations';
@@ -19,7 +19,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   ]
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   local?:Local
 
   stateMenu:boolean = false
@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit {
   dataMenu:any[]=[
     {
       name:'Inicio',
-      icon:'fa-solid fa-house'
+      icon:'fa-solid fa-house',
+      link:'/'
     },
     {
       name:'Informacion',
@@ -58,38 +59,32 @@ export class HeaderComponent implements OnInit {
     
   ngOnInit(): void {
     this.layoutState.stateSubject.subscribe((state)=>{
-      console.log(state);
       this.state = state
     })
       
     
   }
 
-
   toogleMenu(){
     this.stateMenu = !this.stateMenu
+    this.layoutState.state.menuMobile = !this.layoutState.state.menuMobile
+    this.layoutState.updateState()
+
     if (document.body.style.overflow === 'hidden') {
-      document.body.style.overflow = ''
-    }else{
-      document.body.style.overflow = 'hidden'
-    }
+        document.body.style.overflow = ''
+      }else{
+        document.body.style.overflow = 'hidden'
+      }
+   
   }
 
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    const currentPos = window.pageYOffset || window.scrollY;
-    console.log(currentPos)
-    if (currentPos === 0) {
-      this.fixed=false
-      document.body.style.padding = '0'
-    }else{
-      this.fixed=true
-      document.body.style.padding = '64px 0 0 0'
 
-    }
-    
-    this.scrollPos = currentPos;
+
+  
+  ngOnDestroy(): void {
+    this.stateMenu = false
+    document.body.style.overflow = ''
   }
-
+  
 
 }

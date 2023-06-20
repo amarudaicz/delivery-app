@@ -1,0 +1,248 @@
+@use '../../../../mixin.scss' as m;
+
+
+.header-group-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 15px;
+
+
+  .title-group-options {
+    max-width: 80%;
+  }
+
+
+  .button-create-group {}
+
+}
+
+
+
+.container-state {
+  padding: 10px;
+  background: #eeeeee;
+  border-bottom: 3px solid #6366F1;
+  box-shadow: 0px 5px 10px -8px #000000
+}
+
+.container-dinamic {
+  height: calc(100vh - 289px);
+  margin-top: 10px;
+  border: 1px solid #a4a4a4;
+}
+
+.state-options {
+  display: flex;
+  padding: 0 25px;
+  justify-content: space-between;
+
+}
+
+.container-list-options {
+  height: calc(100% - 44px);
+  overflow-y: scroll;
+
+}
+
+
+
+.name-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+
+  .type-price {
+
+    @include m.tablet {
+      min-width: 200px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+}
+
+.overlay-add-group {
+  position: fixed;
+  z-index: 997;
+  top: 0;
+  left: 0;
+  width: 50vw;
+  height: 100vh;
+  background: #0000006e;
+}
+
+
+.container-add-group {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  /* Para Firefox */
+  box-shadow: -1px 0px 14px -5px black;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    -ms-overflow-style: none;
+    /* Para IE y Edge */
+  }
+
+}
+
+
+.button-toogle-acordeon {
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: #00000018;
+    ;
+  }
+
+
+
+}
+
+.container-form-add-group {
+  z-index: 998;
+  background: #eeeeee;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  min-height: 100%;
+  transition: all 1s;
+  right: 0;
+
+
+  @include m.tablet {
+    width: 60%;
+  }
+
+}
+
+.drag-handle {
+  cursor: move;
+}
+
+
+.group-options-list {
+  max-width: 100%;
+  border: solid 1px #ccc;
+  min-height: 60px;
+  display: block;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all .2s;
+}
+
+.option-box {
+  padding: 15px 10px;
+
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: white;
+  font-size: 14px;
+
+
+  @include m.tablet {
+    justify-content: start;
+
+  }
+}
+
+
+
+
+.container-acordeon {
+  height: 0;
+  width: 100%;
+  visibility: hidden;
+  border-bottom: 3px solid black;
+
+
+
+
+  &.expanded {
+    visibility: visible;
+    height: auto;
+    padding: 15px;
+    background: rgb(255, 255, 255);
+  }
+
+  .input-options-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+
+    .input-price-option {
+      // padding: 3px 10px;
+      // border: 1.5px solid #0000008a;
+      // border-radius: 2px;
+      // outline: none;
+      // max-width: 80px;
+
+      // &:focus{
+      //   border: 1.5px solid #6366F1;
+      // }      
+
+
+    }
+  }
+
+  .check-option-group {
+
+
+    &.with-price {
+
+      margin-top: -22px;
+    }
+
+    @include m.tablet {
+      min-width: 150px;
+
+    }
+  }
+}
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

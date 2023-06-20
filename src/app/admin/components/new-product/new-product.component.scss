@@ -1,3 +1,4 @@
+@use '../../../../mixin.scss' as m;
 .new-product{
     margin: 0 0 0.5rem 0;
 }
@@ -15,6 +16,9 @@
 
 .form-variations{
     width: 100%;
+    .button-create-variations{
+        background: #4e7090;
+    }
 
 }
 
@@ -95,6 +99,7 @@
 
     .option{
         width: 48%;
+        height: fit-content;
         @media (max-width:700px) {
             width: 100%;
         }
@@ -102,6 +107,7 @@
         background: #b0b6efcf;
         border-radius: 5px;
         margin: 5px 0;
+        position: relative;
 
                 
     }
@@ -133,26 +139,42 @@
         
     }
 
+    .container-input-variations{
+        position: relative;
+    }
+
     .input-update-price{
         position: absolute;
-        width: 100px;
-        top: 5px;
-        right: 4px;
-        border: none;
+        width: 100%;
+        top: -4px;
+        right: 0px;
+        font-weight: bold;
+        border: 1px solid #495057;
         border-radius: 5px;
-        padding: 5px 7px;
-        background: #6366f1;
+        padding: 5px;
+        background: #fff;
         font-size: 16px;
-        color: #FFF;
-
-        &::placeholder{
-            color: #fff;
-        }
+        color: #495057;
 
     }
 
-}
 
+    .delete-option-group{
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        display: flex;
+        color: red;
+        padding: 4px;
+        border-radius: 50%;
+        background: white;
+
+
+        i{
+            font-size: 12px;
+        }
+    }
+}
 .input-50{
     margin: 5px;
     @media (max-width:700px) {
@@ -178,24 +200,37 @@
 }
 
 
+.alert-price{
+    font-size: 18px;
+    color: #4f46e5;
+}
+
+.tooltip-price{
+    width:850px !important
+}
+
 
 .container-buttons-save{
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 20px 0 0 0;
     
     .button-save-product{
    
     }
 }
 
+.f-14{
+    font-size: 14px !important;
+}
 
 .alert-options{
     font-size: 12px;
     color: #f44336;
     letter-spacing: 0.5px;
     padding: 0 !important;
+    font-weight: 400;
+    font-family: roboto;
 }
 
 .alert-margin{
@@ -215,15 +250,16 @@
 }
 
 .check-multiple{
-    margin: 10px 0;
+    margin: 0 0 10px 0;
 
 }
 
 .container-radio-options{
-    border-top: 1px solid #cbcbcb;
-    border-bottom: 1px solid #cbcbcb;
-    padding: 6px 0;
-    margin-bottom: 10px;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    padding: 5px 0;
+    margin-bottom: 22px;
+    // margin-top: 5px;
 }
 
 
@@ -246,3 +282,20 @@
 }
 
 
+.alert-type-price{
+    padding: 10px;
+    margin-bottom: 5px;
+    background: rgba(255, 255, 121, 0.44);
+    border-radius: 5px;
+    border-left: 5px solid #fffa3c;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+
+.container-select-category{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

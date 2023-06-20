@@ -1,4 +1,5 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnDestroy,OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import Step from 'shepherd.js/src/types/step';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
@@ -7,19 +8,17 @@ import { shepherd } from 'src/app/utils/shepherd-tour';
 @Component({
   selector: 'app-main-admin',
   templateUrl: './main-admin.component.html',
-  styleUrls: ['./main-admin.component.scss']
+  styleUrls: ['./main-admin.component.scss'],
+  providers:[]
 })
-export class MainAdminComponent  implements OnInit{
+export class MainAdminComponent  implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.initChart()
     this.continueTutorial()
-    this.layoutState.state.header=false
-    this.layoutState.updateState()
-    
-    
-    this.localData.setLocal(localStorage.getItem('admin-local'))
-}
+
+    }
+
 
   constructor(
     private layoutState:LayoutStateService,
@@ -30,6 +29,14 @@ export class MainAdminComponent  implements OnInit{
 
   chartData:any
   chartOptions:any
+
+
+  
+
+  checkAdmin():void{
+    
+
+  }
   
     initChart() {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -178,6 +185,10 @@ export class MainAdminComponent  implements OnInit{
         )
     }
 
+
+    ngOnDestroy(): void {
+        // this.layoutState.state.navigation = true
+    }
 
 
 

@@ -11,7 +11,9 @@ export class PromotionsLocalComponent implements OnInit {
   constructor(public theme:ThemesService){
 
   }
+
   ngOnInit(): void {
+    
   }
   
 

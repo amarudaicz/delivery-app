@@ -1,0 +1,175 @@
+<div class="container-add-group"  >
+
+  <div [@enterRight] class="container-form-add-group">
+
+    <div class="header-add-options">
+
+      <div class="back-title">
+
+        <i (click)="closeAddGroup()" class="pi pi-arrow-left"></i>
+        <h2 class="d-inline">Crear grupo de opciones</h2>
+      </div>
+
+      <p-button styleClass="p-button-danger" (click)="saveOptions()">Guardar</p-button>
+
+
+    </div>
+
+
+
+    <div #optionsGroup class="options-group">
+      <div class="container-inputs-options">
+        <form class="form-variations" [formGroup]="formVariations">
+
+          <div class="seccion-form mb-3 p-4">
+            <h2 class="mb-2">Detalles del grupo</h2>
+            <mat-form-field class="input-50" color="primary">
+              <mat-label>Nombre</mat-label>
+
+              <input formControlName="nameVariation" type="text" matInput placeholder="Ej: Tamaño, Color" />
+              <mat-hint>
+                Ejemplo: Tamaño, Color
+              </mat-hint>
+              <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+            <div class="mb-3">
+              <mat-checkbox
+                matTooltip="Marcar este campo indica que el usuario podra marcar solo una de las opciones disponibles"
+                matTooltipPosition="above" formControlName="simple" color="primary" class="check-multiple">
+                Respuesta Unica
+              </mat-checkbox>
+            </div>
+
+            <div class="container-max-min" *ngIf="!formVariations.get('simple')?.value">
+              <div class="mr-2" style="display: inline-block;">
+                <mat-form-field>
+                  <mat-label>
+                    Minimo de respuestas
+                  </mat-label>
+                  <input matInput type="number" min="0" formControlName="min">
+                  <mat-error>Este campo es requerido</mat-error>
+
+                </mat-form-field>
+              </div>
+
+              <mat-form-field>
+                <mat-label>
+                  Maximo de respuestas
+                </mat-label>
+                <input matInput type="number" formControlName="max">
+                <mat-error>Este campo es requerido</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="!formVariations.get('simple')?.value">
+
+              <span class="alert-form-add-group" style="margin: -5px 0 0 0;">Para ingresar una cantidad fija (Por ej 2),
+                ingresa el mismo numero como minimo y maximo</span>
+              <span class="alert-form-add-group" style="margin: 0 0 10px 0;">Para <u>NO</u> definir un limite de
+                respuestas ingrese 0 como minimo y maximo</span>
+            </div>
+
+
+            <div class="container-radio-options">
+
+              <span>Configuracion de Precio</span>
+              <mat-radio-group formControlName="typePrice" aria-label="Select an option">
+                <mat-radio-button
+                  matTooltip="Adicionales extras que son incluidos con el producto. Ej: Aderezos, Toppings"
+                  matTooltipPosition="above" color="primary" [value]="3">Sin costo</mat-radio-button>
+                <mat-radio-button matTooltip="Establece el precio final del producto. 
+              Ej: Media Pizza:300$, 
+              Pizza Completa:600$" matTooltipPosition="above" [matTooltipClass]="'tooltip-custom'" color="primary"
+                  [value]="1">Determina el precio final</mat-radio-button>
+                <mat-radio-button
+                  matTooltip="Aumenta el valor del precio final del producto. Ej: Chedar:+150$, Doble Hamburgesa:+ 300$"
+                  matTooltipPosition="above" color="primary" [value]="2">Incrementa el precio final</mat-radio-button>
+              </mat-radio-group>
+              <span class="alert-options" *ngIf="formVariations.get('typePrice')?.invalid">
+                Este campo es requerido</span>
+
+              <div class="alert-form-add-group"
+                *ngIf="formVariations.controls['nameVariation'].value && formVariations.controls['typePrice'].valid"
+                [ngSwitch]="formVariations.controls['typePrice'].value">
+
+                <p>
+                  <font *ngSwitchCase="1">El valor de las opciones de
+                    <u>{{formVariations.controls['nameVariation'].value}}</u> determinan el precio final del producto
+                  </font>
+
+                  <font *ngSwitchCase="2">El valor de las opciones de
+                    <u>{{formVariations.controls['nameVariation'].value}}</u> se suman al precio final</font>
+
+                  <font *ngSwitchCase="3">Las opciones de <u>{{formVariations.controls['nameVariation'].value}}</u> no
+                    afectan el precio del producto.</font>
+                </p>
+
+
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="container-options seccion-form">
+            <div class="title-options">
+              <div class="p-4">
+                <h2 class="mb-2">Opciones</h2>
+                <p class="mb-2" style="font-size: 14px;">Agrega las opciones del grupo, Indica su precio si es que determina o incrementa el valor final del producto.
+                </p>
+
+                <div class="button-add-option">
+                  <p-button (click)="addOption()">
+                    Nueva opcion
+                  </p-button>
+                </div>
+
+              </div>
+
+            </div>
+
+            <form [formGroup]="formOptions">
+              <div formArrayName="options">
+                <div class="option" *ngFor="let optionGroup of optionsList.controls; let i = index">
+                  <div class="p-4" [formGroupName]="i">
+                    <h4 class="mb-1">Opcion #{{i + 1}}</h4>
+                    <div class="d-inline mr-3">
+                      <mat-form-field>
+                        <mat-label>Nombre de la Opcion</mat-label>
+                        <input formControlName="nameOption" matInput type="text">
+                        <mat-error>Este campo es requerido</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <mat-form-field *ngIf="formVariations.get('typePrice')?.value !== 3">
+                      <mat-label>Precio</mat-label>
+                      <span matTextPrefix>$&nbsp;</span>
+                      <input required matInput formControlName="price" type="number">
+                      <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+                  </div>
+
+
+                  <i class="remove-option pi pi-trash" (click)="removeOption(i)"> </i>
+                </div>
+              </div>
+            </form>
+          </div>
+
+
+
+
+
+
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <div [@fadeIn] class="overlay-add-group" (click)="closeAddGroup()">
+  </div>
+
+</div>
+  

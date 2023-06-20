@@ -1,0 +1,39 @@
+@use '../../../../mixin.scss' as m ;
+.container-dinamic-list{
+
+    justify-content: space-between;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    
+    @include m.laptop{
+        flex-direction: row;
+    
+
+    }
+}
+
+
+.dashboard-list{
+    width: 100%;
+    
+    
+    @include m.laptop{
+        width: 25%;
+    }
+
+    @include m.desktop{
+        width: 20%;
+    }
+
+
+
+
+}
+
+
+.current-list{
+    flex: 1;
+    flex-basis: 0;
+    
+}

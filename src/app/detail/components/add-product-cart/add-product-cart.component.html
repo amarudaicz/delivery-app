@@ -5,6 +5,7 @@
      <div class="container-data-product">
       <div *ngIf="product.variations" class="container-options">
         <div *ngFor="let optionGroup of product?.variations">
+
           <div
             *ngIf="!optionGroup.multiple; else checkBox"
             class="container-radio container-input"
@@ -39,19 +40,26 @@
 
           <hr color="#b9b9b9" />
 
+
           <ng-template #checkBox>
-            <div class="container-checkbox container-input">
+            
+            <div class="container-checkbox container-input" [formArrayName]="optionGroup.nameVariation">
               <div class="title-option">
                 <div>
                   <h4>{{ optionGroup.nameVariation }}</h4>
-                  <h5>Selecciona las opciones que quieras.</h5>
+                  <h5 *ngIf="optionGroup.max && !optionGroup.min">Selecciona hasta {{optionGroup.max}} opciones.</h5>
+                  <h5 *ngIf="optionGroup.min && !optionGroup.max">Selecciona {{optionGroup.min}} como minimo.</h5>
+                  <h5 *ngIf="optionGroup.min && optionGroup.max">Selecciona al menos {{optionGroup.min}} y hasta {{optionGroup.max}} opciones.</h5>
+                  
+                  <h5 *ngIf="!optionGroup.min && !optionGroup.max">Selecciona las opciones que quieras.</h5>
                 </div>
 
                 <span
                   [style.background]="theme.get('background')"
                   [style.color]="theme.get('colorTextSecondary')"
                   class="chip type-option"
-                  >Opcional</span
+
+                  >{{optionGroup.min ? 'Requerido' : 'Opcional'}}</span
                 >
               </div>
 
@@ -61,16 +69,22 @@
               >
                 <mat-checkbox 
                   (change)="saveOptions(option, optionGroup)"
+                  (change)="handleCheckboxChange(optionGroup)"
                   color="primary"
+                  [formControlName]="i"
                 >
                   {{ option.nameOption }}
                 </mat-checkbox>
 
-                <span *ngIf="option.price !== 0">
+                <span *ngIf="option.price">
                   <b>{{ option.price | currency }}</b></span
                 >
               </div>
+
+              <span class="alert-form" *ngIf="this.form.get(optionGroup.nameVariation)?.touched && !countOptions[optionGroup.nameVariation] && optionGroup.min">Debes elejir de {{optionGroup.min}} a {{optionGroup.max}} opciones <i class="pi pi-info-circle"></i></span>
+
             </div>
+
           </ng-template>
         </div>
       </div>
@@ -137,9 +151,7 @@
       <span class="cart-flotant" [@fadeIn] *ngIf="currentCart.length !== 0" [style.background]="theme.get('backgroundSec')"> 
         <i class="pi pi-shopping-cart"></i> 
         <div *ngIf="currentCart !== 0" [style.background]="theme.get('background')" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ currentCart.length }}</div>
-  
       </span>
-
     </a>
 
   </div>

@@ -1,9 +1,13 @@
+.container-topbar{
+    padding: 8px 0 1rem 0;
+}
 .layout-topbar {
-    position: fixed;
+    // position: fixed;
     height: 5rem;
     z-index: 997;
     left: 0;
     top: 0;
+    border-radius: 12px;
     width: 100%;
     padding: 0 2rem;
     background-color: var(--surface-card);

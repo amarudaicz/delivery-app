@@ -1,0 +1,69 @@
+<div class="container-list p-3">
+    <h1 class="title">Actualizar Precios del Grupo</h1>
+    <p>
+        Selecciona los productos en los que deseas aplicar los cambios en el precio del grupo de opciones. <br>
+        Recuerda que puedes modificar el precio individualmente editando el producto en la seccion Categorias
+    </p>
+
+    <mat-checkbox (click)="selectAll()" color="primary">Seleccionar todos</mat-checkbox>
+
+
+
+    <ul class="pt-2 pb-3 list-products-select">
+        <li *ngFor="let product of data.products">
+            <div class="d-flex gap-3 mb-2 border-y-1 border-x-2 ">
+                <mat-checkbox color="primary" [(ngModel)]="product.selected">
+                </mat-checkbox>
+
+                <details style="margin-top: -1px;">
+                    <summary class="cursor-pointer">
+                        <h2 class="d-inline">
+                            {{product.name}}
+                        </h2>
+                    </summary>
+
+                    <div class="grid relative align-items-start gap-4 md:gap-6 pt-3">
+
+                        <ul>
+                            <h3><u>Precio Actual</u></h3>
+                            <li class="py-1 " *ngFor="let option of product.variations[0].options">
+                                <span
+                                    [style]="{'text-decoration': option.active ? '' : 'line-through', color: option.active  ? 'green' : 'red' }">{{option.nameOption}}:
+                                    {{option.price | currency}}</span>
+                            </li>
+                        </ul>
+
+                        <i class="pi pi-arrow-right icon-compare "></i>
+
+                        <ul>
+                            <h3><u>Nuevo Precio </u> </h3>
+                            <li class="py-1 " *ngFor="let option of data.group.options">
+                                <span [style]="{
+                                    'text-decoration': option.active ? '' : 'line-through', 
+                                    color: option.active  ? 'green' : 'red'}">
+
+                                    {{option.nameOption}}: {{option.price | currency}}
+                                </span>
+                            </li>
+                        </ul>
+
+
+                    </div>
+
+
+                </details>
+
+                <div class="a">
+
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+    <div class="d-flex gap-3">
+        <p-button (click)="saveSelectedProducts()">Aplicar</p-button>
+
+        <p-button (click)="closeModal()" styleClass="p-button-outlined p-button-danger">Cancelar</p-button>
+    </div>
+</div>

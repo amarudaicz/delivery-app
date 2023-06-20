@@ -1,0 +1,25 @@
+@use '../new-product/new-product.component.scss';
+
+.container-edit-product{
+    width: 100%;
+    padding: 25px;
+    
+}
+
+.container-buttons-edit{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    top: calc(71px / 6);
+    right: 10px;
+    position: fixed;
+    z-index: 999;
+}
+
+.form-edit-product{
+    width: 100%;
+    // .button-create-variations{
+    //     background: #4e7090;
+    // }
+
+}

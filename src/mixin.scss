@@ -1,0 +1,29 @@
+// Mixin para dispositivos con ancho menor a 576px (teléfonos)
+@mixin phone {
+    @media (max-width: 575.98px) {
+      @content;
+    }
+  }
+  
+  // Mixin para dispositivos con ancho entre 577px y 992px (tablets pequeñas)
+  @mixin tablet {
+    @media (min-width: 576px) {
+      @content;
+    }
+  }
+  
+  
+  // Mixin para dispositivos con ancho entre 993px y 1200px (laptops y monitores pequeños)
+  @mixin laptop {
+    @media (min-width: 992px) {
+      @content;
+    }
+  }
+  
+  // Mixin para dispositivos con ancho mayor o igual a 1200px (monitores grandes)
+  @mixin desktop {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+  

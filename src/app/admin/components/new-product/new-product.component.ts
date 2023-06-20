@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { map, Observable, startWith } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map, Observable, startWith } from 'rxjs';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -27,224 +27,202 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Product } from 'src/app/interfaces/product-interface';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MainDetailComponent } from 'src/app/detail/components/main-detail/main-detail.component';
 import { Location } from '@angular/common';
 import { shepherd } from 'src/app/utils/shepherd-tour';
 import { CloudinaryService } from 'src/app/services/cloudinary/cloudinary.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/app/environment';
+import { AdminService } from 'src/app/services/admin/admin.service';
+import { noScriptValidator } from 'src/app/utils/validators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SetOptionsProductComponent } from '../set-options-product/set-options-product.component';
 
 @Component({
   selector: 'app-new-product',
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.scss'],
-  providers: [MatAutocomplete, ConfirmationService, History],
+  providers: [MatAutocomplete, ConfirmationService, History, MessageService],
 })
 export class NewProductComponent implements OnInit {
-  categories?: Category[] = [];
-  filterCategories?: Observable<any[]>;
-  addOnBlur = true;
+
+  @ViewChild(SetOptionsProductComponent) setOptions!: SetOptionsProductComponent;
+
+  categories?: any[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   ingredientsList: string[] = [];
   options: string[] = [];
   optionsGroup: OptionProduct[] = [];
   form: FormGroup;
-  formVariations: FormGroup;
-  categoryControl = new FormControl('');
-  variationState: boolean = false;
 
-  dataModal?: any;
-  editing: boolean = false;
+  previewImageProduct: any
+  processLoad: boolean = false
   previewModal: boolean = false;
-  previewImageProduct:any
+  refPreviewModal?: DynamicDialogRef
+  creatingGroup:boolean = false
+
 
   constructor(
     public theme: ThemesService,
     private localService: LocalDataService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService,
     private configDialog: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
     private dialogService: DialogService,
     private confirmService: ConfirmationService,
-    private cloudinary:CloudinaryService,
-    private http:HttpClient,
+    private cloudinary: CloudinaryService,
+    private http: HttpClient,
+    private adminService: AdminService,
+    private toast: MatSnackBar
   ) {
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      category_id: ['', Validators.required],
-      price: ['', Validators.required],
+      name: ['', Validators.required, noScriptValidator()],
+      category_id: ['', Validators.required, noScriptValidator()],
+      price: ['', Validators.required, noScriptValidator()],
       ingredients: [null],
-      description:[null],
-      image:[null]
+      description: [null],
+      image: [null]
     });
 
-    this.formVariations = this.formBuilder.group({
-      options: [''],
-      typeOption: ['', Validators.required],
-      typePrice: ['', Validators.required],
-      multiple: [false],
-      required: [false],
-    });
   }
 
+
+
+  image: any
+
   ngOnInit(): void {
-    this.localService.setProducts(localStorage.getItem('admin-local'))
-    this.localService.getCategories().subscribe((data) => {
-      this.categories = data;
-      console.log(this.categories);
-    });
 
-    this.filterCategories = this.form.controls['category_id'].valueChanges.pipe(
-      startWith(''),
-      map((value) => this.filter(value || ''))
-    );
-
-    if (this.configDialog.data) {
-      this.dataModal = this.configDialog.data;
-      this.setEditProduct(this.configDialog.data);
-
-      this.form.valueChanges.subscribe((change) => {
-        this.editing = true;
-      });
-    }
+    this.adminService.getCategories().subscribe((data) => { this.categories = data; console.log(data); })
 
     this.continueTutorial()
-
-   
   }
 
   async saveProduct() {
-    
-    console.log(this.optionsGroup);
-    
+    console.log(this.form);
+
+
     if (this.form.invalid) {
-      
-      this.toastr.error('Completar los campos requeridos');
-      return;
+      this.toast.open('Completar los campos requeridos.', 'Ok', {duration:3000})
+      return
     }
 
-    const image = new Promise((resolve, reject)=>{
+    this.processLoad = true
 
-      this.cloudinary.upload(this.form.get('image')?.value).subscribe((res: any) => {
-        this.form.get('image')?.setValue(res.url);
-        console.log(this.form);
-  
-        if (res.url) {
-          resolve(res)          
-        }else{
-          reject('error')
-        }
-      })
-      
+    this.form.removeControl('ingredients')
+    this.form.get('name')?.setValue(this.capitalize(this.form.get('name')?.value))
+    this.form.get('description')?.setValue(this.capitalize(this.form.get('description')?.value))
+
+    const product = { variations: JSON.stringify(this.optionsGroup), ingredients: JSON.stringify(this.ingredientsList), ...this.form.value };
+
+    this.adminService.postProduct(product).subscribe(res => {
+      this.resetForm()
+      this.toast.open('Producto creado con exito', '',  {duration:3000})
+      this.adminService.products = undefined
+
     })
 
-    await image 
-
-    console.log('paso')
-    
-    const product = { local_id:localStorage.getItem('local-id'), variations: this.optionsGroup, ...this.form.value };
-
-    if (this.editing) {
-      this.editing = false;
-      console.log('ACTUALIZANDO PRODUCTO');
-    }else {
-     
-      this.http.post(environment.host + `products/post-one/${localStorage.getItem('admin-local')}`, product).subscribe( res => {
-        console.log(res);
-        //HTTP METHOD////////////////////////////////////
-
-        
-      })
-    }
   }
 
-  saveOptions() {
-    const _typeOption = this.formVariations.controls['typeOption'];
-    const op = this.options.join(','); //FOR BUG
-    const option = this.createOption(_typeOption.value, op.split(','));
+  getOptionsSelected(options: OptionProduct[]) {
+    const variations: OptionProduct[] = JSON.parse(JSON.stringify(options))
 
-    if (
-      this.optionsGroup.find((e) => e.typePrice === 1) &&
-      this.formVariations.get('typePrice')?.value === 1
-    ) {
-      this.toastr.error(
-        'Solo puedes crear una variacion que altere el precio totalmente'
-      );
-      return;
-    }
+    console.log(variations);
 
-    if (this.formVariations.invalid || this.options.length === 0) {
-      this.formVariations.markAllAsTouched();
-      this.form.markAllAsTouched();
-      this.toastr.error('Completar los campos requeridos');
-      return;
-    }
 
-    if (
-      this.optionsGroup.find(
-        (e) => e.nameVariation.toLowerCase() === _typeOption.value.toLowerCase()
-      )
-    ) {
-      this.optionsGroup.forEach((e: any, i: number) => {
-        if (e.nameOption.toLowerCase() === _typeOption.value.toLowerCase()) {
-          this.optionsGroup.splice(i, 1);
-          this.optionsGroup.push(option);
-        }
-      });
-    } else {
-      this.optionsGroup.push(option);
-    }
-
-    this.options.length = 0;
-    this.formVariations.reset();
+    this.optionsGroup = variations
   }
 
-  private createOption(typeOption: string, options: string[]): OptionProduct {
-    const optionsDetail: DetailsOptions[] = [];
-    const _typePriceControl = this.formVariations.controls['typePrice'];
+  removePreviewImage() {
+    this.previewImageProduct = undefined
+    this.form.get('image')?.setValue(null)
+  }
 
-    options.forEach((e) => {
-      const o = {
-        nameOption: e,
-        price:
-          _typePriceControl.value === 3 || this.form.get('price')?.invalid
-            ? 0
-            : this.form.controls['price'].value,
-      };
-      optionsDetail.push(o);
+  showPreview() {
+
+    if (this.form.invalid) {
+      this.toast.open('Completar los campos requeridos.', 'Ok', {duration:3000})
+      return
+    }
+
+    const screenWidth = window.innerWidth;
+    if (this.previewModal) return
+    this.previewModal = true
+    this.refPreviewModal = this.dialogService.open(MainDetailComponent, {
+      data: {
+        variations: this.optionsGroup,
+        ...this.form.value,
+        image: this.previewImageProduct,
+        ingredients: this.ingredientsList
+      },
+      header: 'Vista previa',
+      width: screenWidth > 500 ? '400px' : '100%',
+      height: screenWidth > 500 ? '90%' : '100%',
+      draggable: true,
+      resizable: true,
+      keepInViewport: true,
+      dismissableMask: true,
+      styleClass: 'modal-preview',
     });
 
-    return {
-      nameVariation: typeOption,
-      options: optionsDetail,
-      typePrice: _typePriceControl.value,
-      multiple:
-        _typePriceControl.value === 1
-          ? false
-          : this.formVariations.controls['multiple'].value,
-      required: this.formVariations.get('required')?.value,
-    };
+
+    this.refPreviewModal.onClose.subscribe((data) => {
+      this.previewModal = false
+    });
   }
 
-  removeOption(name: string) {
-    this.optionsGroup.filter((o) => o.nameVariation !== name);
+
+  uploadImage(event: any) {
+
+    if (event.files.length > 0) {
+      const file = event.files[0];
+      console.log(file);
+
+      this.form.get('image')?.setValue(file)
+      this.image = file
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewImageProduct = e.target?.result;
+
+      };
+      reader.readAsDataURL(file);
+    }
+
+
   }
+
+  resetForm() {
+    this.setOptions.resetOptions()
+    this.form.reset()
+    this.form.markAsUntouched()
+    this.ingredientsList = []
+    this.form.reset();
+    Object.keys(this.form.controls).forEach((key) => {
+      this.form.get(key)?.markAsUntouched();
+    });
+
+    this.previewImageProduct = undefined
+    this.processLoad = false
+
+  }
+
+
+
 
   add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+    const value = ((event.value || '').trim());
+    console.log(value);
     console.log(event.chipInput.id);
 
     if (value) {
+      const normalizeValue = value[0].toUpperCase() + value.slice(1);
       if (event.chipInput.id === 'options') {
-        if (!this.options.find((e) => e === value)) {
-          this.options.push(value);
+        if (!this.options.find((e) => e.toLowerCase() === value.toLowerCase())) {
+          this.options.push(normalizeValue);
         }
       } else {
-        if (!this.ingredientsList.find((e) => e === value)) {
-          this.ingredientsList.push(value);
-          this.form.get('ingredients')?.setValue(this.ingredientsList)
+        if (!this.ingredientsList.find((e) => e.toLowerCase() === value.toLowerCase())) {
+          this.ingredientsList.push(normalizeValue);
         }
       }
     }
@@ -289,146 +267,28 @@ export class NewProductComponent implements OnInit {
     // Edit existing fruit
   }
 
-  private filter(value: string): any[] {
-    console.log(value);
 
-    const filterValue = this.normalizeValue(value);
-    console.log(filterValue);
-
-    console.log(
-      this.categories?.filter((cat) =>
-        this.normalizeValue(cat.name).includes(filterValue)
-      )
-    );
-
-    return this.categories!.filter((cat) =>
-      this.normalizeValue(cat.name).includes(filterValue)
-    );
+  capitalize(value: string) {
+    if (value)
+      return value[0]?.toUpperCase() + value.slice(1)
+    else return null
   }
+
 
   private normalizeValue(value: any): string {
     return value.toLowerCase().replace(/\s/g, '');
   }
 
-  public updatePriceOption(indexGroup: number, index: number, newPrice?: any) {
-    const htmlInput: HTMLElement | null = document.querySelector(
-      '#option' + index + indexGroup
-    );
-    console.log(htmlInput);
 
-    if (this.optionsGroup[indexGroup].typePrice === 3) {
-      return;
-    }
-
-    htmlInput!.style.visibility = 'visible';
-
-    console.log(newPrice);
-
-    if (newPrice && newPrice !== '') {
-      htmlInput!.style.visibility = 'hidden';
-      this.optionsGroup[indexGroup].options[index].price = newPrice;
-    }
-  }
-
-  setEditProduct(product: Product) {
-    this.form.patchValue({
-      name: product.name,
-      category: product.category_id,
-      price: product.price,
-    });
-
-    this.ingredientsList = product.ingredients;
-    this.optionsGroup = product.variations;
-    this.previewImageProduct = product.image
-  }
-
-  closeModalEdit() {
-
-    if (this.editing) {
-      this.confirmService.confirm({
-        message: 'No guardaste tus cambios deseas salir igual?',
-        header: 'Alerta',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => this.dialogRef.close(),
-        reject: () => console.log('reject'),
-      });
-      return;
-    }
-
-    this.dialogRef.close();
-  }
-
-  showPreview() {
-
-    this.form.get('ingredients')?.setValue(this.ingredientsList);
-    const screenWidth = window.innerWidth;
-
-    // if (this.dialogService.dialogComponentRefMap.has(this.dialogRef)) {
-    //   return;
-    // }
-
-    this.dialogService.open(MainDetailComponent, {
-      data: {
-        variations: this.optionsGroup,
-        ...this.form.value,
-        image:this.previewImageProduct
-      },
-      header: 'Vista previa',
-      width: screenWidth > 500 ? '300px' : '100%',
-      height: screenWidth > 500 ? '80%' : '100%',
-      draggable: true,
-      resizable: true,
-      keepInViewport: true,
-      modal: false,
-      styleClass: 'modal-preview',
-      
-    });
-  }
-
-  
-
-  // @HostListener('window:popstate', ['$event'])
-  onPopState(event: any) {
-    console.log('Tecla de retroceso presionada');
-    // Realizar acción al presionar la tecla de retroceso sin retroceder en el historial
-   
-    if (this.dialogService.dialogComponentRefMap.has(this.dialogRef)) {
-      this.dialogRef.close()
-      window.history.pushState(null, '', window.location.href);
-    }
-
-  }
-
-
-  uploadImage(event:any) {
-    
-    if (event.files.length > 0) {
-      const file = event.files[0];
-      this.form.get('image')?.setValue(file)
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        console.log(e);
-        this.previewImageProduct = e.target?.result;
-        console.log(this.previewImageProduct);
-        
-      };
-      reader.readAsDataURL(file);
-    }
-
-    
-  }
-
-
-  
-  continueTutorial(){
+  continueTutorial() {
     const widthScreen = window.innerWidth
 
     shepherd.addSteps(
       [
         {
-            id: 'step6',
-            classes: 'step-variations-form',
-            text: `Si su producto tiene opciones, puede crear variaciones para él. Las variaciones son conjuntos únicos de opciones (como tamaño, color, Kg, Ml, etc.) que existen para este producto concreto. Por ejemplo: 
+          id: 'step6',
+          classes: 'step-variations-form',
+          text: `Si su producto tiene opciones, puede crear variaciones para él. Las variaciones son conjuntos únicos de opciones (como tamaño, color, Kg, Ml, etc.) que existen para este producto concreto. Por ejemplo: 
             <br>
             Una camiseta que se ofrece en dos tallas (pequeña y mediana) y dos colores (amarillo y gris) tiene cuatro variaciones,
             <br>
@@ -438,52 +298,45 @@ export class NewProductComponent implements OnInit {
             <span style="font-size:11px; color:wheat;">Los datos ingresados son a modo de ejemplo</span>
             `,
 
-            attachTo: {
-              element: '#variationsForm',
-              on: 'top' 
-            },
-            buttons:[
-                {
-                  text:'Siguiente',
-                  action:shepherd.next
-                }
-            ],
-            when:{
-                show:()=>{
-                  this.variationState = true;
-                  this.formVariations.patchValue({
-                    typeOption:'Tamaño',
-                    typePrice:1,
-                  })
-                  this.options = ['Grande', 'Mediano', 'Chico']
-                },
-                hide:()=>{
-                  this.formVariations.reset();
-                  this.options = []
-
-                }
-            }
-            
+          attachTo: {
+            element: '#variationsForm',
+            on: 'top'
           },
+          buttons: [
+            {
+              text: 'Siguiente',
+              action: shepherd.next
+            }
+          ],
+          when: {
+            show: () => {
+             
+            },
+            hide: () => {
+
+            }
+          }
+
+        },
         {
-        id:'step7',
-        classes: 'step-current-options',
-        text: `Una vez creada tus variaciones, aqui abajo podras editar el precio de cada una, si es que lo afecta  <br>
+          id: 'step7',
+          classes: 'step-current-options',
+          text: `Una vez creada tus variaciones, aqui abajo podras editar el precio de cada una, si es que lo afecta  <br>
               En este ejemplo el producto X tiene 3 variaciones que afectan totalmente su precio                   
         `,
 
-        attachTo: {
-          element: '.container-current-options',
-          on: 'top' 
-        },
-        buttons:[
+          attachTo: {
+            element: '.container-current-options',
+            on: 'top'
+          },
+          buttons: [
             {
-              text:'Siguiente',
-              action:shepherd.next
+              text: 'Siguiente',
+              action: shepherd.next
             }
-        ],
-        when:{
-            show:()=>{
+          ],
+          when: {
+            show: () => {
               this.optionsGroup = [
                 {
                   nameVariation: 'Tamaño',
@@ -491,65 +344,68 @@ export class NewProductComponent implements OnInit {
                   typePrice: 1,
                   options: [
                     {
-                      nameOption:'Grande',
-                      price:700
+                      nameOption: 'Grande',
+                      price: 700
                     },
                     {
-                      nameOption:'Mediano',
-                      price:400
+                      nameOption: 'Mediano',
+                      price: 400
                     },
                     {
-                      nameOption:'Chico',
-                      price:200
+                      nameOption: 'Chico',
+                      price: 200
                     }
                   ],
-                  required:true
+                  required: true,
+                  min: 0,
+                  max: 0
 
                 }
               ]
               console.log(this.optionsGroup);
-              
+
 
             },
-            hide:()=>{
+            hide: () => {
               this.optionsGroup.length = 0
-              console.log(this.optionsGroup);  
+              console.log(this.optionsGroup);
             }
-        }
-        
-      },
-      {
-        id:'step8',
-        classes: 'step-save-buttons-options',
-        text: `Finalizando con el producto puedes ver una vista previa y luego guardarlo, automaticamente este producto se mostrara en el inicio de tu aplicacion disponible para comprar`,
+          }
 
-        attachTo: {
-          element: '.button-save-product',
-          on: widthScreen > 500 ? 'left' : 'top' 
         },
-        buttons:[
+        {
+          id: 'step8',
+          classes: 'step-save-buttons-options',
+          text: `Finalizando con el producto puedes ver una vista previa y luego guardarlo, automaticamente este producto se mostrara en el inicio de tu aplicacion disponible para comprar`,
+
+          attachTo: {
+            element: '.button-save-product',
+            on: widthScreen > 500 ? 'left' : 'top'
+          },
+          buttons: [
             {
-              text:'Finalizar',
-              action:shepherd.complete
+              text: 'Finalizar',
+              action: shepherd.complete
             }
-        ],
-        when:{
-            show:()=>{
+          ],
+          when: {
+            show: () => {
               const element = (document.querySelector('.button-preview-product') as HTMLElement);
               element.style.zIndex = '9999';
               element.style.position = 'relative';
             },
-            hide:()=>{
+            hide: () => {
               const element = (document.querySelector('.button-preview-product') as HTMLElement);
               element.style.zIndex = '1';
               element.style.position = 'initial';
             }
+          }
+
         }
-        
-      }
-    ])
+      ])
 
   }
+
 }
 
 

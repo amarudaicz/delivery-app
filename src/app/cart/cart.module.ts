@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import  {MatDialogModule} from '@angular/material/dialog';
 import { ModalInfoWpComponent } from './modal-info-wp/modal-info-wp.component'
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [MainCartComponent, CartItemsComponent, CheckoutComponent, ModalInfoWpComponent],
@@ -21,7 +22,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSnackBarModule
+
   ],
 })
 export class CartModule {}

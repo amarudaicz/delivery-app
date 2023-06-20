@@ -1,0 +1,133 @@
+@use '../../../../mixin.scss' as m;
+
+$primaryColor:#FF6262;
+$alertColor:#f24e1e;
+$secondaryColor:#000;
+$blue:#5551ff;
+
+
+.login-container{
+
+    .form-group{
+        margin-bottom: 20px;
+    }
+
+    .input-login-group{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 2px solid $secondaryColor;
+        padding: 10px;
+        border-radius: 5px;
+        position: relative;
+        
+        &:focus-within{
+            border-color: $blue;
+        }
+        
+        &.invalid{
+            border-color: $alertColor;
+
+            .icon-login{
+                color: $alertColor;
+            }
+        }
+
+        .input-login{
+            width: 100%;
+            padding: 5px;
+            border: none;
+            outline: none;
+            font-size: 0.9rem;
+            position: absolute;
+            background: none;
+            top: 0;
+            left: 0;
+            height: 100%;
+            border-radius: 5px;
+            padding-left: 34px;
+            
+        }
+        
+        .icon-login{
+            color: $secondaryColor;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 10;
+        }
+    }
+
+}
+
+
+.container-form{
+    
+    margin-bottom: 30px;
+
+    .link-login {
+        font-size: 0.8rem;
+        color: $blue;
+        text-decoration: underline;
+        cursor: pointer;
+
+    }
+    
+    
+    .lost-pass{
+        text-align: end;
+    }
+    
+    
+    .error-form{
+        font-size: 12px;
+        color: $primaryColor;
+    }
+    
+
+    
+    .icon-show-pass{
+    
+    }
+    
+}
+
+.container-errors{
+    font-size: 12px;
+    color: $secondaryColor;
+    padding: 7px;
+    background: #ededed;
+    border-left: 5px solid $alertColor;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+
+.submit-btn{
+    width: 100%;
+    text-align: center;
+    padding:10px 0;
+    background: $blue;
+    color: #fff;
+    border-radius: 5px;
+    z-index: 10;
+    font-weight: bold;
+    transition: all .3s;
+    cursor: pointer;
+    
+    &:disabled{
+        background: #505050;
+    }
+
+    @include m.desktop{
+        &:hover{
+            transform: translateY(-5px);
+        }
+
+        &:active{
+            transform: translateY(0);
+
+        }
+    }
+
+}

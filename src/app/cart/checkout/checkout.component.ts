@@ -6,6 +6,8 @@ import { UserService } from 'src/app/services/userData/user.service';
 import { WpService } from 'src/app/services/wpService/wp.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalInfoWpComponent } from '../modal-info-wp/modal-info-wp.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LocalDataService } from 'src/app/services/localData/local-data.service';
 
 @Component({
   selector: 'app-checkout',
@@ -24,7 +26,10 @@ export class CheckoutComponent implements OnInit {
     private userService: UserService,
     private cartService: CartService,
     private wpService: WpService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private snackBar:MatSnackBar,
+    private localService:LocalDataService
+
   ) {
 
     this.form = this.formBuilder.group({
@@ -92,7 +97,7 @@ export class CheckoutComponent implements OnInit {
     if (this.form.valid) {
       this.redirectWhatsapp()
     }else{
-
+      this.snackBar.open('Completar todos los campos', 'Ok', {duration: 3000})
     }
 
   }
@@ -110,12 +115,9 @@ export class CheckoutComponent implements OnInit {
       console.log(response);
       if (response) {
         console.log('REDIRECCION');
-        this.wpService.redirectWp(encodedText, 543543578188)
+        this.wpService.redirectWp(encodedText, this.localService.getSessionLocal().phone)
       }
   
     });
-
   }
-  
-
 }

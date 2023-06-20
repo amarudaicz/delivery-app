@@ -1,6 +1,6 @@
-<div  *ngIf="routeService.getCurrent() !== 'detail' && routeService.getCurrent() !== 'admin' ">
+<div  *ngIf="layoutState.state.navigation">
   <div class="bottom-nav" [class.hide-nav]="stateMenu" [style.background]="theme.get('backgroundSec')">
-
+    
     <div class="container-nav" >
       <nav class="navigation">
         <ul class="list-nav">

@@ -34,7 +34,6 @@
     overflow-y: scroll;
     overflow-x: hidden;
     height: 100%;
-    padding-bottom: 65px;
     .icon-fav{
         padding: 5px;
         font-size: 18px;
@@ -60,10 +59,13 @@
 
 .container-text{
     margin-top: -15px;
+    background: #fff;   
     width: 100%;
     border-radius: 15px 15px 0 0;
     position: relative;
     padding: 0 15px;
+    padding-bottom: 65px;
+
 
   
 
@@ -112,7 +114,7 @@
   }
   
   .fav-btn .icon-fav{
-    color: #ccc;
+    color: #ffffff;
     transition: color 0.3s ease-in-out;
   }
   

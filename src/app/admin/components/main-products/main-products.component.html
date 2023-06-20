@@ -1,1 +1,26 @@
-<app-list-products></app-list-products>
+<!-- <app-list-products></app-list-products> -->
+
+
+<div class="container-dinamic-list">
+
+    <div class="dashboard-list">
+        
+        <app-dashboard-list></app-dashboard-list>
+        
+        
+    </div>
+
+
+    <div class="current-list" *ngIf="data">
+
+        <section [ngSwitch]="data.section">
+            <app-list-products *ngSwitchCase="'products'" ></app-list-products>
+            <app-main-options *ngSwitchCase="'groups'"></app-main-options>
+        </section>
+
+
+    </div>
+
+
+
+</div>

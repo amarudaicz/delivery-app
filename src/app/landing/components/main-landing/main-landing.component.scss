@@ -1,0 +1,38 @@
+.content{
+    padding: 0;
+    position: relative;
+}
+
+.landing{
+    padding: 0 12px;
+}
+
+.logo-landing{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 60px;
+}
+
+.dots{
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    .dot{
+
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: #373737;
+
+
+        &.dot-active{
+            background: #5551ff;
+        }
+    }
+}

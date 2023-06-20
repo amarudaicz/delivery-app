@@ -1,21 +1,22 @@
+<div class="container">
 
-<div  class="container" [style.background]="theme.currentTheme.backgroundPage">
+    <div class="content ">
 
-    <div class="content">
+        <div class="pad-header">
 
-        <app-loader-full *ngIf="!products"></app-loader-full>
+            <app-loader-full *ngIf="!products"></app-loader-full>
 
-        <div [@fadeIn] *ngIf="products">
-            <app-products-by-category [products]="products">
-            
-            </app-products-by-category>
-    
-            <app-newselter-box>
-                
-            </app-newselter-box>
+            <div [@fadeIn] *ngIf="products">
+                <app-products-by-category [products]="products">
+
+                </app-products-by-category>
+
+
+
+            </div>
+
 
         </div>
-        
     </div>
 
 </div>

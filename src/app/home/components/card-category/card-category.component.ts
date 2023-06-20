@@ -1,4 +1,4 @@
-import { Component,EventEmitter,Input, OnInit, Output } from '@angular/core';
+import { Component,EventEmitter,Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { PreviewCategoryService } from 'src/app/services/preview-category/preview-category.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -11,7 +11,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 
 
 
-export class CardCategoryComponent implements OnInit {
+export class CardCategoryComponent implements OnInit, OnDestroy  {
 
   constructor(public theme:ThemesService, public previewCategory:PreviewCategoryService){
 
@@ -32,6 +32,12 @@ export class CardCategoryComponent implements OnInit {
 
   selectedCategory(id:number){
     return this.previewCategory.category_id === id
+  }
+
+
+  ngOnDestroy(): void {
+    
+    
   }
 
 

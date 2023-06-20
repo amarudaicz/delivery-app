@@ -3,33 +3,31 @@
     
     <div class="content">
 
-        
-        <app-newselter-box *ngIf="!appInstalled"></app-newselter-box>
-        
-        <section class="categories">
+        <div class="pad-header">
 
-            <h2 class="title-categories">Categorias</h2>
+            <app-newselter-box *ngIf="!appInstalled"></app-newselter-box>
+            <app-promotions-local>  </app-promotions-local>
+
+            
+            <section class="categories">
     
-            <div class="container-categories" *ngIf="categories">
-                <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
-
-                <ng-template #cardCategoryLoader>
-
-                </ng-template>
-            </div>
+                <h2 class="title-categories">Categorias</h2>
+        
+                <div class="container-categories" *ngIf="categories">
+                    <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
+    
+                    <ng-template #cardCategoryLoader>
+    
+                    </ng-template>
+                </div>
             
-        
+            </section>  
             
+            <app-preview-category></app-preview-category>
+            
+        </div>
 
-         
-        </section>  
         
-        <app-preview-category></app-preview-category>
-        
-        <app-promotions-local>  </app-promotions-local>
-        
-        
-        <app-products-set> </app-products-set>
 
     </div>
 

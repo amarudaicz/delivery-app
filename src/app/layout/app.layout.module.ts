@@ -18,6 +18,8 @@ import { AppConfigModule } from './config/config.module';
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppLayoutComponent } from "./app.layout.component";
 import { SharedModule } from '../shared/shared.module';
+import { RoutesAdmingModule } from './admin-routing.module';
+import { AdminModule } from '../admin/admin.module';
 
 @NgModule({
     declarations: [
@@ -42,6 +44,8 @@ import { SharedModule } from '../shared/shared.module';
         RippleModule,
         RouterModule,
         AppConfigModule,
+        RoutesAdmingModule,
+        AdminModule
     ],
     exports: [AppLayoutComponent]
 })

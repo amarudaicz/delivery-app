@@ -54,7 +54,7 @@ export class MainUserComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 300000,
+      duration: 3000,
     });
   }
   

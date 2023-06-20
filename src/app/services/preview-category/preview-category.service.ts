@@ -11,7 +11,7 @@ export class PreviewCategoryService {
 
 
   category_id?:number
-  productsByCategory = new BehaviorSubject<Product[]|boolean>( false )
+  productsByCategory = new BehaviorSubject<Product[]>([])
 
   constructor(
     private localData:LocalDataService
@@ -19,11 +19,11 @@ export class PreviewCategoryService {
   {
     this.localData.getCategories().subscribe(data=>{
       console.log(data);
-      console.log(this.category_id);
-      if (!this.category_id && data?.length !== 0) {
-        
+    
+      if (!this.category_id && data.length) {
         this.setCategory(data![0].id)
       }
+
     })
 
 
@@ -35,16 +35,11 @@ export class PreviewCategoryService {
     this.category_id = id
     this.localData.getProducts$().subscribe(products=>{
       const data = products.filter(p=> p.category_id === id)
-      console.log(data);
-      
       this.productsByCategory.next(data)
     })
       
   }
 
-  getProductsByCategory(){
-    return this.productsByCategory
-  }
 
   
 

@@ -1,0 +1,39 @@
+.container-alert{
+    text-align: center;
+    padding: 10px 0;
+
+    h2{
+        padding-top: 10px;
+    }
+}
+
+.container-buttons{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 25px;
+    padding-top: 20px;
+
+
+}
+
+.button-dialog{
+    display: inline-block;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+
+    &.button-accept{
+        background: #fa0050;
+        color: white;
+    }
+
+    
+}
+
+.button-cancel{
+    background:  #ccc;
+}

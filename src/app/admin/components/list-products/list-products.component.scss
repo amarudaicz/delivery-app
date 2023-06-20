@@ -1,8 +1,125 @@
-.container-table-products{
+@use '../../../../mixin.scss' as m;
+
+.container-table-products {
     position: relative;
     width: 100%;
-    min-height: 400px;
+    height: calc(100vh - 143px);
     padding-bottom: 36px !important;
     margin-bottom: .5rem;
-    
+    display: flex;
+    flex-direction: column;
+
+    ::-webkit-scrollbar {
+        width: 0;
+
+    }
+
+    .title-list-dinamic {
+        font-size: 26px;
+
+    }
+
+}
+
+.p-input-icon-left {
+    margin-bottom: 15px;
+}
+
+.header-table {
+    border-bottom: 3px solid #6366f1;
+}
+
+
+.action-list {
+
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+
+
+    .buttons-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        .new {}
+
+        .refresh {}
+
+        .delete {}
+
+    }
+
+
+    .visible-column {
+        display: none;
+
+        @include m.tablet {
+            display: initial;
+
+        }
+    }
+
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    /* Ajusta el color de fondo según tus preferencias */
+}
+
+
+.table-products {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+
+    .container-item-table {
+        &:hover {
+            .toogle-product {
+                display: flex;
+            }
+
+            .state-product{
+                display: none;
+            }
+        }
+    }
+
+    .toogle-product {
+        font-size: 16px;
+        display: none;
+
+
+        .btn-edit{
+            cursor: pointer;
+            font-size: 21px;
+            padding: 10px;
+            transition: all .2s;
+            transform: translateY(2px);
+
+            &:hover{
+                background: #ebebeb;
+                border-radius: 25px;
+            }
+
+        }
+    }
+
+
+
+    .item {
+        padding: 10px 40px 10px 20px;
+        border: thin solid #b2b2b21c;
+        border-width: 1px 0 1px 0;
+
+    }
+
+
 }

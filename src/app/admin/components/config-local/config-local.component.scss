@@ -1,3 +1,5 @@
+@use '../../../../mixin.scss' as m;
+
 .data-local {
   position: relative;
   margin: 0 !important;
@@ -7,6 +9,19 @@
 }
 
 .container-form-local {
+}
+
+.container-form-field{
+
+  
+  @include m.phone{
+    .input-field{
+        width: 100%;
+    }
+    
+    padding-top:35px ;
+  }
+
 }
 
 .edit-btn {
@@ -29,11 +44,9 @@
   @media (min-width: 550px) {
   }
 
-  .alert-aditionals{
-    font-size: 11px;
-    color: #6366F1;
-  }
+
 }
+
 
 
 .container-data-local {
@@ -56,7 +69,12 @@
 
 .container-horarios {
   .input-horarios {
-    width: 40px;
+    width: 46px;
+    padding: 3px;
+  }
+
+  .icon-horarios{
+    font-weight: 800;
   }
 
 }
@@ -64,8 +82,9 @@
 .list-week {
   padding: 5px 0;
 
-  .title-day {
+  .title-day {    
     font-size: 14px;
+    margin-top: -14px;
     margin-bottom: 3px;
   }
 
@@ -78,7 +97,29 @@
   }
 }
 
+.alert-local{
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  
+    i{
+      margin-right: 3px;
+      font-size: 13px;
+    }
+
+}
+
+.alert-form{
+  color: #f44336;
+}
+
+.alert-aditionals{
+  padding: 2.5px 0;
+  color: #6366F1;
+}
+
 .container-redes {
+  width: 300px;
 }
 
 .list-redes {
@@ -87,6 +128,7 @@
     li{
         display: flex;
         align-items: center;
+        justify-content: space-between;
         margin-bottom: 10px;
     }
 
@@ -96,11 +138,29 @@
     }
 
     .input-redes{
-        width: 100px;
+        width: 60%;
     }
     
 
 
 
 }    
+
+.container-delivery-local{
+  max-width:250px ;
+  min-width:250px ;
+}
+
+
+.container-image-local{
+  position: relative;
+  min-width: 200px;
+
+  .button-remove-image-local{
+    position: absolute;
+    top: 41px;
+    right: 10px;
+
+  }
+}
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/app/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,11 @@ export class CloudinaryService {
     const data=new FormData
     data.append('file', fileImage);
     data.append('upload_preset', 'angular_cloudinary');
-    data.append('cloud_name', 'diyorb8ka');
+    data.append('cloud_name', environment.cloudinary_cloud);
+    data.append('folder', environment.cloudinary_cloud);
 
     return this.http.post(
-      'https://api.cloudinary.com/v1_1/diyorb8ka/upload', 
+      `https://api.cloudinary.com/v1_1/${environment.cloudinary_cloud}/upload`, 
       data
     )
     

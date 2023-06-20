@@ -1,9 +1,12 @@
+@use './mixin.scss' as m;
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     scroll-behavior:smooth;
-    
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+     
 }
 html {
     scroll-behavior: smooth;
@@ -11,9 +14,16 @@ html {
 
 body{
     font-family: system-ui, -apple-system;
-    font-size: 16px;
+    font-size: 14px;
+
+    @include m.tablet{
+        font-size: 16px;
+    }
+
     overflow-x: hidden;
     scroll-behavior: smooth;
+    background: #eff3f8;
+    color: #0c183a;
 
 }
 
@@ -23,9 +33,15 @@ h1,h2,h3,h4,h5,h6{
 
 }
 
+h1{
+    font-size: 22px;
+    font-weight: 700;
+
+}
+
 h2{
     font-size: 17px;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 h3{
@@ -44,6 +60,10 @@ a{
     color: inherit;
     
 }a
+
+
+
+
 
 
 .p-dialog{
@@ -70,11 +90,11 @@ a{
 }
 
 th{
-    font-size: 14px !important;
+    font-size: 17px !important;
 }
 
 td{
-    font-size: 12px !important;
+    font-size: 16px !important;
     padding: 5px 15px !important;
 }
 
@@ -92,3 +112,15 @@ td{
     }
 }
  
+
+.pad-header{
+    padding-top: 79px !important;
+}
+
+
+.alert-detail{
+    .mdc-snackbar__surface{
+        padding: 11px 0 !important;
+        background: rgb(255, 73, 73) !important;
+    }
+}

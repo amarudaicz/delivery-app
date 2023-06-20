@@ -1,3 +1,4 @@
+@use '../../../../mixin.scss' as m;
 @use "../../../shared/components/product-card/product-card.component.scss";
 
 .products-set {
@@ -31,4 +32,18 @@
   gap: 10px ;
   grid-auto-flow: column;
   place-items: center;
+
+  @include m.tablet{
+    grid-auto-columns: 55%;
+    grid-template-rows: repeat(2, max-content);
+  }
+
+  @include m.laptop{
+    grid-auto-columns: none;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, 49.5%);
+
+
+  }
+
 }

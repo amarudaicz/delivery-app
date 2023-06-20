@@ -11,6 +11,9 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { MainPromotionsComponent } from './promotions/components/main-promotions/main-promotions.component';
 import { MainUserComponent } from './user/components/main-user/main-user.component';
+import { AuthGuard } from './utils/auth-guard.guard';
+import { MainLoginComponent } from './login/components/main-login/main-login.component';
+import { MainOptionsComponent } from './admin/components/main-options/main-options.component';
 
 const routes: Routes = [ 
 
@@ -32,15 +35,21 @@ const routes: Routes = [
     redirectTo:'admin',
     pathMatch:'full'
   },
+  {
+    path:'login',
+    redirectTo:'login',
+    pathMatch:'full'
+  },
 
   {
     path:'admin',
     component:AppLayoutComponent,
     data:{page:'admin'},
+    canActivate:[AuthGuard],
     children:[
       {
         path:'',
-        component:MainAdminComponent
+        component:MainAdminComponent,
       },
       {
         path:'products',
@@ -53,6 +62,10 @@ const routes: Routes = [
       {
         path:'config',
         component:MainConfigComponent
+      },
+      {
+        path:'options-group',
+        component:MainOptionsComponent
       }
     ]
   },
@@ -66,7 +79,12 @@ const routes: Routes = [
     path:'user',
     component:MainUserComponent
   },
-  
+
+  {
+    path:'login',
+    loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
+  },
+
   {
     path: '',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),

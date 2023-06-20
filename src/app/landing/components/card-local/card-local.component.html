@@ -1,0 +1,31 @@
+<div class="container-card-local shadow-3">
+
+    <div (click)="preRedirect()">
+    
+        <div class="card-local ">
+    
+            <div class="container-image-local">
+                <img [src]="local.image" alt="" >
+            </div>
+    
+            <div class="container-info">
+                <p class="local-name">{{local.name}}</p>
+                <p class="local-transfer" *ngIf="local.aliascbu"> <i class="pi pi-credit-card "></i> Acepta transferencia</p>
+                <!-- <button class="button-horarios">Ver horarios</button> -->
+                <p class="local-envio">{{local.delivery_time}} min · Envío {{local.delivery_cost | currency}}
+
+                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="#4c4a5c" viewBox="0 0 16 16" class="sc-1w30n3a-2 fRyoXh">
+                        <path d="M10.788 4.5a.384.384 0 0 0-.386.381c0 .21.173.381.386.381h1.919L8.335 9.685 5.944 7.476a.39.39 0 0 0-.54.014l-3.294 3.364a.378.378 0 0 0 .009.539.39.39 0 0 0 .545-.01l3.03-3.094 2.391 2.207a.39.39 0 0 0 .54-.012l4.604-4.658v1.92c0 .211.173.382.386.382.213 0 .386-.17.386-.381V4.88a.384.384 0 0 0-.386-.381h-2.826Z"></path>
+                    </svg>
+
+                </p>
+            </div>
+    
+        </div>
+        
+    </div>
+    
+    <span class="open-local" [ngClass]="islocalOpen(local) ? 'open ' : 'closed'"><i class="pi pi-circle-fill"></i> {{islocalOpen(local) ? 'Abierto' : 'Cerrado'}}</span>
+
+
+</div>

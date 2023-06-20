@@ -1,5 +1,6 @@
 @use './reset.scss';
 @use './assets/sass/index';
+@use './mixin.scss' as m;
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'assets/layout/styles/layout/layout.scss';
 @import '../node_modules/primeicons/primeicons.css';
@@ -14,86 +15,168 @@
     src: url('./assets/fonts/Muli-Regular.ttf');
     font-weight: normal;
 
-}  
+}
 
 @font-face {
     font-family: 'muli';
     src: url('./assets/fonts/Muli-SemiBold.ttf');
     font-weight: 500;
 
-}  
+}
+
 @font-face {
     font-family: 'muli';
     src: url('./assets/fonts/Muli-Bold.ttf');
     font-weight: bold;
-}  
+}
+
 @font-face {
     font-family: 'muli';
     src: url('./assets/fonts/Muli-Black.ttf');
     font-weight: 900;
-}  
+}
 
 html {
     scroll-behavior: smooth;
 }
 
 $gutter: 1rem; //for primeflex grid system
- 
-.chip{ 
+
+.chip {
     background: #2d2d2d;
     width: fit-content;
     padding: 3px 15px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
-    border-radius: 15px; 
+    border-radius: 15px;
+}
+
+.link {
+    text-decoration: underline;
+    color: #3d5188;
+    cursor: pointer;
+}
+
+.d-block {
+    display: block !important;
+}
+
+.d-inline {
+    display: inline !important;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.between {
+    justify-content: space-between !important;
+
+}
+
+.wrap {
+    flex-wrap: wrap;
 }
 
 
-.mdc-line-ripple::after{
-    border-bottom-color: rgb(152, 152, 152) !important ;
+.mdc-line-ripple::after {
+    border-bottom-color: rgb(118, 118, 118) !important;
 }
 
-.container{
+.container {
 
     height: auto;
     width: 100vw;
 
 }
 
-.content{ 
-    max-width: 500px;
+.title {
+    font-size: 20px !important;
+}
+
+.content {
     margin: 0 auto;
     padding: 0 15px 80px 15px;
+
+    @include m.laptop {
+        // max-width: 50%;
+    }
 }
-.alert{
+
+.alert {
 
     font-family: var(--mdc-typography-body1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
 }
 
-.mdc-button__label{
-    color:rgba(255, 255, 255, 0.87);
+.mdc-button__label {
+    color: rgba(255, 255, 255, 0.87);
 }
 
-.mat-ripple, .mat-mdc-button-ripple{
+.mat-ripple,
+.mat-mdc-button-ripple {
     color: rgba(0, 0, 0, 0.507);
 }
 
-.mat-mdc-button-persistent-ripple, .mdc-button__ripple{
+.mat-mdc-button-persistent-ripple,
+.mdc-button__ripple {
     color: transparent;
 }
 
-.p-dialog-mask{
+.p-dialog-mask {
     z-index: 999 !important;
 }
 
-button{
+button {
     font-size: 14px;
     background: none;
     border: none;
-    
+
+}
+
+.mdc-list-item__primary-text {
+    width: 100%;
+}
+
+
+.cdk-overlay-dark-backdrop {
+
+    background: #3b3c6c6b !important;
+}
+
+
+.p-datatable {
+    flex: 1;
+}
+
+.p-scroller {
+
+    height: 100% !important;
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+
+.p-accordion-content {
+    padding: 0 !important;
+    border: 0 !important;
+
 }
 
 
 
-/* You can add global styles to this file, and also import other style files */
+.button-icon {
+    cursor: pointer;
+    padding: 10px;
+    transition: all .2s;
+    transform: translateY(2px);
+
+    &:hover {
+        background: #ebebeb;
+        border-radius: 25px;
+    }
+
+
+
+}

@@ -18,6 +18,8 @@ export const fadeIn = trigger('fadeIn', [
   ]),
 ]);
 
+
+
 export const addItemCart = trigger('addItemCart', [
   transition(
     ':leave',

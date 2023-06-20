@@ -1,4 +1,4 @@
-<div *ngIf="state.header">
+<div *ngIf="state.header ">
     
     <header>
     
@@ -35,16 +35,18 @@
 
 
 
-            <div *ngIf="stateMenu" (click)="toogleMenu()" class="overlay-menu"></div>
+            <div *ngIf="state.menuMobile" (click)="toogleMenu()" class="overlay-menu"></div>
 
-            <div class="container-menu" [class.menu-visible]="stateMenu">
+            <div class="container-menu" [class.menu-visible]="state.menuMobile">
                 
                 
                 <div class="content-menu">
                     <ul>
                         <li class="menu-item" *ngFor="let item of dataMenu">
-                            <i [style.color]="theme.get('backgroundSec')" class="item-icon {{item.icon}}"></i>
-                            {{item.name}}
+                            <a [routerLink]="item.link">
+                                <i [style.color]="theme.get('backgroundSec')" class="item-icon {{item.icon}}"></i>
+                                {{item.name}}
+                            </a>
                         </li>
                     </ul>
                 </div>

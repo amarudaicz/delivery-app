@@ -1,0 +1,27 @@
+<div (click)="product.editing = false" *ngIf="product.editing" [@fadeIn] class="overlay-edit-product">
+
+</div>
+<div class="edit-product" *ngIf="product.editing" [@enterRight]>
+
+    <div class="container-modal-edit">
+        <div class="header-edit-product">
+
+            <div class="back-title">
+
+                <div (click)="closeEditProduct()">
+                    <i  class="pi pi-arrow-left"></i>
+                    <h2 class="d-inline">Volver</h2>
+                </div>
+            </div>
+
+    
+
+        </div>
+
+        
+        <app-modal-edit-product [product]="product">
+            
+        </app-modal-edit-product>
+    </div>
+    
+</div>

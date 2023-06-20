@@ -6,6 +6,7 @@ import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppTopBarComponent } from './app.topbar.component';
 import { shepherd } from '../utils/shepherd-tour';
 import Shepherd from 'shepherd.js';
+import { LayoutStateService } from '../services/layoutState/layout-state.service';
 
 @Component({
     selector: 'app-layout',
@@ -23,7 +24,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
     @ViewChild(AppTopBarComponent) appTopbar!: AppTopBarComponent;
 
-    constructor(public layoutService: LayoutService, public renderer: Renderer2, public router: Router) {
+    constructor(public layoutService: LayoutService, public renderer: Renderer2, public router: Router, private layoutState:LayoutStateService) {
         this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
             if (!this.menuOutsideClickListener) {
                 this.menuOutsideClickListener = this.renderer.listen('document', 'click', event => {
@@ -57,6 +58,10 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
                 this.hideMenu();
                 this.hideProfileMenu();
             });
+
+            this.layoutState.state.header=false
+            this.layoutState.state.navigation=false
+            this.layoutState.updateState()
     }
     ngOnInit(): void {
         this.initTutorial()

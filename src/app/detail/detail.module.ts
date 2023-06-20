@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CartService } from '../services/cartData/cart.service';
 import { RouterModule } from '@angular/router';
 import {MatRippleModule} from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -29,6 +30,7 @@ import {MatRippleModule} from '@angular/material/core';
     MatCheckboxModule,
     MatInputModule,
     MatRippleModule,
+    MatSnackBarModule,
     RouterModule
 
   ],

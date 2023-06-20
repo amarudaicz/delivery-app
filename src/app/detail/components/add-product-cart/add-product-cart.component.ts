@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormArray,
@@ -11,7 +12,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { addItemCart, fadeIn } from 'src/app/animations/main-detail-animations';
 import {DetailsOptions,OptionProduct,} from 'src/app/interfaces/optionProduct-interface';
 import { Product } from 'src/app/interfaces/product-interface';
@@ -28,6 +29,8 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 
 export class AddProductCartComponent implements OnInit {
   @Input() product!: Product;
+  @Input() modePreview:boolean=false
+
   form: FormGroup;
   quantity: number = 1;
   shakeError: string = '';
@@ -36,42 +39,65 @@ export class AddProductCartComponent implements OnInit {
   total: number = 0;
   options: any[] = [];
   currentCart?:any
-  @Input() modePreview:boolean=false
+  countOptions:any = {}
+  
 
   constructor(
     public theme: ThemesService,
     private formBuilder: FormBuilder,
     private cartService: CartService,
-    private toastr:ToastrService,
+    private toast:MatSnackBar,
     private location:Location,
   ) {
     this.form = this.formBuilder.group({
       especifications: [''],
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
-
-
-
   }
 
   ngOnInit(): void {
 
+    console.log(this.product);
+
+    this.form.valueChanges.subscribe((change)=>{
+      console.log(change);
+
+    })
+
 
     this.product.variations?.forEach(e => {
-      console.log(e);
-      this.form.addControl(e.nameVariation, this.formBuilder.control(null , e.required ? Validators.required : null));
-      if (e.required && e.typePrice !== 1){
-        this.saveOptions(e.options[0], e)
-        this.form.get(e.nameVariation)?.setValue(e.options[0].nameOption)
-        console.log(this.options); 
-      }
+      if (e.multiple) {
+        e.options = e.options.filter(e=> e.active)
 
+        this.form.addControl(e.nameVariation, this.formBuilder.array([]))
+        this.countOptions[e.nameVariation] = e.min || e.max ? false : true
+        this.addGroupCheckboxes(e, e.options)
+        
+        return
+      }else if(e.required || e.typePrice === 1){
+        e.options = e.options.filter(e=> e.active)
+        this.saveOptions(e.options[0], e)
+        this.form.addControl(e.nameVariation, this.formBuilder.control(null , [Validators.required, ]));
+        this.form.get(e.nameVariation)?.setValue(e.options[0].nameOption)
+        return
+      }else{
+        this.form.addControl(e.nameVariation, this.formBuilder.control(null));
+      }
+        
+        
+      
+      
+      
+    
+    
     });
 
     this.cartService.getCartItems().subscribe(data => this.currentCart = data)
 
 
-    if(this.product.variations){
+    if(!this.product.variations || !this.product.variations.length || !this.product.variations.find(e=> e.typePrice === 1)){
+      console.log(this.product.price);
+      
       this.subtotal = this.product.price
     }
 
@@ -87,7 +113,7 @@ export class AddProductCartComponent implements OnInit {
       this.options.unshift(_type1Object) 
     }
     
-    if (this.form.valid) {
+    if (this.form.valid && Object.values(this.countOptions).every((value) => value === true)){
       this.stateButton = false;
       const item = { name, productImage, productPrice, category_name, idProduct, ...this.form.value, userOptions:this.options, total: this.subtotal ? this.subtotal : this.product.price };
       
@@ -98,8 +124,21 @@ export class AddProductCartComponent implements OnInit {
 
       }, 2000);
     }else{ 
-      this.toastr.error('Completar todos los campos')
+      this.form.markAllAsTouched()
+      this.toast.open('Completar todos los campos', 'Ok',{panelClass:'alert-detail', duration:3000})
     }
+  }
+
+  addGroupCheckboxes(groupOption: OptionProduct, checkboxes: any[]) {
+    const formArray = this.form.get(groupOption.nameVariation) as FormArray;
+
+    checkboxes.forEach((checkbox) => {
+      const formControl = this.formBuilder.control(false);
+      formArray.push(formControl);
+    });
+    this.handleCheckboxChange(groupOption)
+
+
   }
 
   
@@ -114,80 +153,100 @@ export class AddProductCartComponent implements OnInit {
 
     this.form.controls['quantity'].setValue(this.quantity);
 
-
-      
-
   }
 
-  saveOptions(option: DetailsOptions, optionGroup: OptionProduct) {
-    console.log(this.form);
-    console.log(this.options);
+  handleCheckboxChange(groupOption: OptionProduct) {
+    const formArray = this.form.get(groupOption.nameVariation) as FormArray;
+    const selectedCount = formArray.controls.filter((control) => control.value === true).length;
+  
+    if (!groupOption.max && !groupOption.min) return 
     
-    const index = this.options?.findIndex(
-      (o) => o.nameVariation === optionGroup.nameVariation
-    );
-    const indexMultiple = this.options?.findIndex(
-      (o) => o.nameVariation === optionGroup.nameVariation );
-    console.log(indexMultiple);
+    if(selectedCount < groupOption.min){
+      this.countOptions[groupOption.nameVariation] = false
+      formArray.controls.forEach((control: any) => {
+        control.enable();
+      });
+    }
+    else if(selectedCount >= groupOption.min || selectedCount <= groupOption.max){
+      this.countOptions[groupOption.nameVariation] = true
+      formArray.controls.forEach((control: any) => {
+        control.enable();
+      });
+    }
+    else{
+      this.countOptions[groupOption.nameVariation] = false
+      formArray.controls.forEach(control => control.enable());
+    }
 
+    if (groupOption.max && selectedCount === groupOption.max) {
+      formArray.controls.forEach((control: any, index: number) => {
+        if (!control.value) control.disable();
+      });
+    }
+  }
+  
+  saveOptions(option: DetailsOptions, optionGroup: OptionProduct) {
+    const index = this.options.findIndex((o) => o.nameVariation === optionGroup.nameVariation);
+    const indexMultiple = this.options.findIndex((o) => o.nameVariation === optionGroup.nameVariation);
+  
     if (optionGroup.multiple) {
       if (indexMultiple !== -1) {
-
-        const subIndex = this.options[indexMultiple].multipleOptions.findIndex((l:any) => l.nameOption === option.nameOption)
-        
+        const subIndex = this.options[indexMultiple].multipleOptions.findIndex((l: any) => l.nameOption === option.nameOption);
+  
         if (subIndex !== -1) {
-          this.options[indexMultiple].multipleOptions.splice(subIndex, 1)
+          this.options[indexMultiple].multipleOptions.splice(subIndex, 1);
+  
           if (this.options[indexMultiple].multipleOptions.length === 0) {
-            this.options.splice(indexMultiple, 1)
+            this.options.splice(indexMultiple, 1);
           }
-        }else{
-          this.options[indexMultiple].multipleOptions.push({...option})
+        } else {
+          this.options[indexMultiple].multipleOptions.push({ ...option });
         }
-
-      }else{
-        this.options.push({nameVariation:optionGroup.nameVariation, multipleOptions:[{...option}], multiple:true })
+      } else {
+        this.options.push({ nameVariation: optionGroup.nameVariation, multipleOptions: [{ ...option }], multiple: true });
       }
-
-      this.subtotal = this.calcSubtotal(this.options)
+  
+      if (optionGroup.typePrice !== 3) {
+        this.subtotal = this.calcSubtotal(this.options);
+      }
       return;
     }
-
+  
     if (index !== -1) {
-      this.options?.splice(index, 1);
+      this.options.splice(index, 1);
     }
-
-    this.options?.push({ ...option, ...optionGroup });
-
-    if (this.options.find((e) => e.typePrice === 1)) {
-      this.total = this.options.filter((e) => e.typePrice === 1)[0].price;
+  
+    this.options.push({ ...option, ...optionGroup });
+  
+    const typePrice1Option = this.options.find((e) => e.typePrice === 1);
+  
+    if (typePrice1Option) {
+      this.total = typePrice1Option.price;
     }
-
-    this.subtotal = this.calcSubtotal(this.options)
+  
+    if (optionGroup.typePrice !== 3) {
+      this.subtotal = this.calcSubtotal(this.options);
+    }
   }
 
-
   calcSubtotal(array:any[]){
-    console.log(array);
     const subtotal:number[] = []
     const multiples:number[] = []
 
-    if (array.length !== 0){
+    if (array.length){
 
       array.forEach(e=>{
-        if (!e.multiple) {
-          subtotal.push(e.price)
-        }
         
         if (e.multipleOptions) {
           e.multipleOptions.forEach((j:any) =>{
               multiples.push(j.price)
           })  
+          return
+        }else{
+          subtotal.push(e.price)
         }
+        
       })
-
-
-      console.log(multiples);
-      console.log(subtotal);
 
       if (subtotal.length !== 0 && multiples.length !== 0) {
         const calc = (subtotal.reduce((act,prev)=> act+prev) + multiples.reduce((act,prev)=> act+prev))
@@ -197,8 +256,6 @@ export class AddProductCartComponent implements OnInit {
         const calc = subtotal.reduce((act,prev)=> act+prev)
         return calc
       }
-      
-
       
     }
 

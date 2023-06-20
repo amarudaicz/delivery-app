@@ -1,0 +1,27 @@
+.form-category{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: self-start;
+
+
+
+
+
+}
+
+.container-input-image{
+    margin-top: 9px;
+}
+
+
+.button-add-category{
+    margin-top: 5px;
+
+}
+
+.container-remove-image{
+    display: flex;
+    align-items: center;
+    gap: 15px ;
+}

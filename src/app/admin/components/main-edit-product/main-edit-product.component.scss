@@ -1,0 +1,116 @@
+@use '../../../../mixin.scss' as m;
+
+
+
+.edit-product {
+    z-index: 998;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    min-height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    box-shadow: -1px 0px 14px -5px black;
+    background: #ffffff;
+
+       
+    @include m.tablet {
+        width: 65%;
+    }
+    
+    @include m.laptop {
+        width: 45%;
+    }
+
+    &::-webkit-scrollbar{
+        width: 0;
+    }
+
+    &.active {
+        right: 0;
+    }
+
+}
+
+
+.container-modal-edit {
+    width: 100%;
+    position: absolute;
+    right: 0;
+   
+}
+
+.header-edit-product {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    padding: 20px 15px;
+    position: sticky;
+    background: #3b3c54;
+    z-index: 999;;
+
+    h2 {
+        color: white;
+    }
+
+}
+
+
+
+.overlay-edit-product {
+    position: fixed;
+    z-index: 997;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: #0000006e;
+    width: 100%;
+
+    @include m.tablet {
+
+    }
+  
+
+
+
+}
+
+
+
+
+.alert-form-add-group {
+    font-size: 12px;
+    font-family: roboto, sans-serif;
+    padding: 0 16px;
+}
+
+.back-title {
+    h2 {
+        color: #fff;
+    }
+
+    i {
+        color: #fff;
+        font-size: 17px;
+        margin-right: 10px;
+        padding: 7px;
+        cursor: pointer;
+        border-radius: 25px;
+        transition: all .2s;
+
+        &:hover {
+            background: #ebebeb;
+            color: #3b3c54;
+        }
+    }
+
+
+}
+
+
+.overlay-edit-product{
+
+}

@@ -4,7 +4,7 @@
         <a  (click)="redirectBack() ">
             <i class="pi pi-chevron-left icon-back"></i>
             
-            <h2 class="product-category">{{product.category}}</h2>
+            <h2 class="product-category">{{product.category_name}}</h2>
         </a>
 
         
@@ -14,11 +14,11 @@
     
     <div class="data-product" [style.overflow]="modePreview ? 'unset' : 'scroll'">       
 
-        <div [style.background]="theme.currentTheme.backgroundPage" class="container-image">
+        <div class="container-image">
             <img src="{{product.image}}" alt="">
         </div>
         
-        <div class="container-text" [style.background]="theme.get('backgroundPage')">
+        <div class="container-text">
                 <button  [class.clicked]="favClicked" class="fav-btn" (click)="toogleFav()">
                     <i [ngClass]="favClicked?'pi-heart-fill':'pi-heart'" class="pi icon-fav"></i>
                 </button>
@@ -27,7 +27,7 @@
                 <h3 class="product-price">{{product.price |currency}}</h3>
                 <p class="product-description">{{product.description}} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis repellendus consequatur consectetur iste ullam corporis rem veniam officiis sint temporibus itaque nemo maxime.</p>
          
-                <div class="container-ingredients">
+                <div class="container-ingredients" *ngIf="product.ingredients">
                     <ul class="list-ingredients">
                         <li class="chip ingredient" [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" *ngFor="let ingredient of product.ingredients">
                             {{ingredient}}

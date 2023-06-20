@@ -1,0 +1,27 @@
+<div class="container-banner" [style.background]="banner?.background">
+
+
+
+    <div class="banner">
+
+        <div class="container-image-banner" [ngClass]="'banner-' + banner.id">
+            <img class="image-banner" src="./{{banner.image}}" alt="">
+        </div>
+
+        <p class="text-banner">{{banner?.text}}</p>
+
+        <div class="container-buttons">
+            <button *ngIf="banner.callToAction" (click)="actionLanding()" class="button-banner button-action">{{banner?.callToAction}}</button>
+            <button *ngIf="banner.callToNext"(click)="nextBanner()" class="button-banner button-next">{{banner?.callToNext}}</button>
+
+            
+        </div>
+
+
+    </div>
+
+
+
+
+
+</div>

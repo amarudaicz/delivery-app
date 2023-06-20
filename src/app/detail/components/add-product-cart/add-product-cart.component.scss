@@ -1,3 +1,5 @@
+@use '../../../../mixin.scss' as m;
+
 .container-add {
   border-top: 1px solid #939393;
   padding: 10px 0;
@@ -80,12 +82,20 @@
 
 .quantity {
   position: fixed;
-  box-shadow:  0 0 10px 0 black;
-  width: -webkit-fill-available;
+  box-shadow: 0 0 10px 0 black;
+  width: 95%;
   bottom: 10px;
+  left: 50%;
   padding: 10px;
-  margin: 0 12px 0 0;
+  transform: translateX(-50%);
   border-radius: 10px;
+  background: #6366f1;
+  color: white;
+  
+  @include m.tablet{
+    // width: 50%;
+  }
+
 
   .container-buttons {
     display: flex;
@@ -128,6 +138,8 @@
       font-weight: bold;
       border-radius: 5px;
       width: max-content;
+      background: #212251;
+      color: white;
     }
   
     .anime-cart {

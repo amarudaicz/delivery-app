@@ -1,0 +1,31 @@
+<div class="card new-category">
+  <h2 class="mb-2">Nueva categoria</h2>
+  
+  <div class="container-form-category">
+  <form appearance="outline" [formGroup]="categoryForm" (ngSubmit)="submitForm()">
+    <div class="form-category">
+      <mat-form-field >
+        <mat-label>Nombre de la categoría</mat-label>
+        <input matInput formControlName="name" placeholder="Nombre de la categoría">
+        <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">Este campo es requerido</mat-error>
+      </mat-form-field>
+  
+      <div class="container-input-image">
+        <p-fileUpload [cancelIcon]="'true'" *ngIf="!previewImageCategory" chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" chooseLabel="Imagen" mode="basic" accept="image/*" [maxFileSize]="1000000">
+        </p-fileUpload>
+        
+        <ul class="container-remove-image" *ngIf="previewImageCategory">
+          <span>{{previewImageCategory}}</span>
+          <p-button icon="pi pi-times" class="button-remove-image" (click)="dataForm?.delete('image')" (click)="previewImageCategory = false" ></p-button>
+        </ul>
+
+      </div>
+
+    </div>   
+    
+    <div class="button-add-category">
+      <button pButton color="primary" type="submit">Agregar categoría</button>
+    </div>
+  </form>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="container-dashboard-list">
+    <div class="list">
+ 
+        <p-accordion [activeIndex]="activeIndex" >
+    
+            <p-accordionTab [iconPos]="'end'" >
+    
+                <ng-template pTemplate="header">
+                    
+                    <div class="d-flex container-title-seccion" [class.active]="currentSection === 'products' ">
+                        <i class="fa-solid fa-layer-group mr-2"></i>
+                        <h4 class="title-seccion">Categorias</h4>
+                    </div>
+    
+                </ng-template>
+    
+    
+                <ng-template pTemplate="content" (click)="currentSection = 'products'">
+    
+                    <ul>
+                        <li [class.active]="isCatSelected(category)" (click)="emitSelected(category)" class="item-list d-flex" *ngFor="let category of categories">
+                          <i class="pi  mr-2 icon-list" [class.active]="isCatSelected(category)" [ngClass]="isCatSelected(category) ? 'pi-circle-fill': 'pi-circle' "></i>
+                            {{category.category_name}} <span>| {{getProductsByCat(category)}} Productos</span>
+                        </li>
+                    </ul>
+    
+                </ng-template>
+    
+            </p-accordionTab>
+    
+        </p-accordion>
+    
+    
+        <p-accordion [expandIcon]="''" [collapseIcon]="''">
+            <p-accordionTab (click)="emitSelected({section:'groups'})">
+    
+                <ng-template pTemplate="header">
+                    
+                    <div  class="container-title-seccion d-flex" [class.active]="currentSection === 'groups' ">
+                        <i class="fa-solid fa-list mr-2"></i>
+                        <h4 class="title-seccion" >Grupo de opciones</h4>
+                    </div>
+                    
+                </ng-template>  
+    
+            </p-accordionTab>
+        </p-accordion>
+
+
+    </div>
+
+
+</div>

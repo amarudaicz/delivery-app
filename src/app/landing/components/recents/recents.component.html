@@ -1,0 +1,46 @@
+
+<!-- <p>Ingresa el nombre deli de tu local favorito</p>
+<input placeholder="Enter text here" class="input-style" type="text"> -->
+
+<div class="container-box-landing">
+    <div class="box-landing">
+
+        <img class="logo-box-landing" src="./assets/logos/logo-de.png" alt="">
+    
+        <div class="container-text-landing mobile">
+            <h4 class="text-landing mobile">
+                <span class="first-text">Ordena en segundos!</span> <br>
+                Explora tus locales y haz tu pedido.
+            </h4>
+
+            <h4 class="text-landing desktop ">
+                <span class="first-text">Ordena en segundos con Deli!</span> <br>
+                Explora tus locales favoritos y haz tu pedido de forma rápida y sencilla <br>
+                Descarga nuestra aplicación móvil o de escritorio para obtener todas nuestras funcionalidades.
+            </h4>
+        </div>
+
+        <div matRipple class="icon-like">
+            <i class="pi pi-thumbs-up"></i>
+        </div>
+    </div>
+    
+        <div  *ngFor="let circle of [1,2]; let i" class="circle circle-{{i}}"></div>
+</div>
+
+<h2>Recents</h2>
+
+<div class="container-recents">
+
+
+    <app-card-local *ngFor="let local of locals" [local]="local"></app-card-local>
+
+    <div *ngIf="!locals">
+        <div class="skeleton" *ngFor="let pre of [1,2,3,4]">
+            <p-skeleton width="10rem" height="4rem"></p-skeleton>
+            <p-skeleton width="8rem" height="1rem"></p-skeleton>
+        </div>
+
+    </div>
+
+</div>

@@ -12,7 +12,7 @@ export class ThemesService {
   
 
   public currentTheme:any
-  private stateTheme = new BehaviorSubject<boolean>(false)
+  public stateTheme = new BehaviorSubject<boolean>(false)
 
   themes:Theme[]=[
     {
@@ -33,7 +33,7 @@ export class ThemesService {
       backgroundSec:'#023047',
       backgroundPage: '#edede9',
       colorText:'#303030',
-      colorTextSecondary: 'string',
+      colorTextSecondary: '#fff',
       colorPrimary:'#fff',
       colorSecondary: 'string',
     },
@@ -43,9 +43,9 @@ export class ThemesService {
       background:'#EF233C',
       backgroundSec:'#2B2D42',
       colorPrimary:'#EDF2F4',
-      colorSecondary: 'string',
+      colorSecondary: 'fff',
       colorText:'#D90429',
-      colorTextSecondary: 'string',
+      colorTextSecondary: '#fff',
       backgroundPage: '#8D99AE',
     }
   ]

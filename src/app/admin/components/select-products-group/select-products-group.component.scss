@@ -1,0 +1,21 @@
+
+@use '../../../../mixin.scss' as m;
+
+
+.icon-compare{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    @include m.phone{
+        display: none;
+
+    }
+    
+}
+
+.list-products-select{
+    max-height: 70vh;
+    overflow-y: scroll;
+}

@@ -1,24 +1,26 @@
-<div class="container-card" *ngIf="category.id else loader">
+<div class="container-card" *ngIf="category.id else loader" 
+>
   <a (click)="emitCategory(category)">
     <div
-      [style.background]="selectedCategory(category.id) ? theme.get('background') : '#d7d7d7'"
+      [style.border]="selectedCategory(category.id) ? '2px solid' + theme.get('background') : ''"
       matRipple
       [matRippleColor]="'#00000012'"
       class="category-card"
     >
-      <img
+      <!-- <img
         class="card-image"
         src="{{ category.image }}"
         alt="category {{ category.image }}"
-        />
-        
+        /> -->
+
         <h5 class="card-title"
-            [style.color]="selectedCategory(category.id) ? theme.get('colorTextSecondary') : '' "
-        >
-          
+          [style.background]="selectedCategory(category.id) ? theme.get('background') : '#00000050'"
+          [style.color]="selectedCategory(category.id) ? theme.get('colorTextSecondary') : '' "
+          >
         {{ category.name }}
       </h5>
-    </div>
+      </div>
+      
   </a>
 </div>
 

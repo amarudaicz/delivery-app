@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Theme } from 'src/app/interfaces/theme-interface';
+import { AdminService } from 'src/app/services/admin/admin.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -12,14 +13,19 @@ export class ConfigThemingComponent implements OnInit {
   currentProp: string[] = [];
   allThemes: any|Theme[];
 
-  constructor(private theme: ThemesService) {}
+  constructor(private theme: ThemesService, private adminService:AdminService) {}
 
   ngOnInit(): void {
-    this.theme.setTheme(1)
-    this.currentTheme = this.theme.getCurrentTheme();
 
-    this.currentProp = Object.keys(this.currentTheme).splice(2, 10);
-    this.allThemes = this.theme.getAllThemes();
+    this.adminService.getLocal().subscribe(data=>{
+      console.log(data);
+      
+      this.theme.setTheme(data.theme)
+      this.currentTheme = this.theme.getCurrentTheme();
+      this.currentProp = Object.keys(this.currentTheme).splice(2, 10);
+      this.allThemes = this.theme.getAllThemes();
+    })
+
   }
 
   changeThemeLocal(idTheme:number) {

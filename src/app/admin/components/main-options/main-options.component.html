@@ -1,0 +1,96 @@
+<div class="card options">
+    <div class="header-group-options">
+        <div class="title-group-options">
+            <h1>Grupos de opciones</h1>
+            <p>Aqui encontraras las opciones y adicionales que tus clientes podran elejir en los productos que tengan
+                asociado el grupo de opciones </p>
+        </div>
+
+
+        <div class="button-create-group">
+            <p-button (click)="activeCreateGroup = true">Crear grupo</p-button>
+        </div>
+    </div>
+
+    <div class="container-dinamic">
+        <div class="container-state">
+            <div class="state-options">
+                <span>Grupo</span>
+                <span>Opciones</span>
+            </div>
+
+        </div>
+
+        <div class="container-list-options">
+            <div cdkDropList class="group-options-list" (cdkDropListDropped)="drop($event)">
+                <div class="" *ngFor="let group of groupOptions; index as indexGroup" cdkDrag>
+
+                    <div class="option-box">
+                        <div class="name-option space-option">
+                            <div cdkDragHandle class="drag-handle d-flex">
+                                <i class="pi pi-ellipsis-v"></i>
+                                <i class="pi pi-ellipsis-v" style="margin-left: -9px;"></i>
+                            </div>
+                            <div class="type-price space-option">
+                                <h3 class="d-inline">
+                                    {{group.nameVariation}}
+                                </h3>
+                                <p [ngSwitch]="group.typePrice">
+                                    <font *ngSwitchCase="1">Determina el precio final</font>
+                                    <font *ngSwitchCase="2">Incrementa el precio final</font>
+                                    <font *ngSwitchCase="3">Sin Costo</font>
+                                </p>
+
+                                <p [ngSwitch]="group.multiple">
+                                    <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' | max: ' + group.max}})</font>
+                                    <font *ngSwitchCase="false">Respuestas(1<span *ngIf="(group.min === 1 && group.max === 1) || group.typePrice === 1">, requerido</span>)</font>
+                                </p>
+                            </div>
+
+
+                        </div>
+
+                        <button (click)="toogleGroup(group)" type="button" class="">
+                            <i matRipple class="pi button-toogle-acordeon"
+                                [ngClass]="isAccordionExpanded(group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="container-acordeon" [class.expanded]="isAccordionExpanded(group)">
+
+                        <div *ngFor="let option of group.options; index as i" class="input-options-group">
+
+                            <div class="check-option-group" [class.with-price]="group.typePrice !== 3">
+                                <mat-checkbox [checked]="option.active" (click)="toogleOption(option)"
+                                    [id]="option.nameOption" [disabled]="!isAccordionExpanded(group)" color="primary">
+                                    {{option.nameOption}}</mat-checkbox>
+                            </div>
+
+                            <mat-form-field *ngIf="group.typePrice !== 3" appearance="outline">
+                                <mat-label>Precio</mat-label>
+                                <span matTextPrefix>$&nbsp;</span>
+                                <input [disabled]="!option.active!"
+                                    matInput type="number" class="input-price-option" [(ngModel)]="option.price"
+                                    [value]="option.price">
+                            </mat-form-field>
+
+
+                        </div>
+                            
+                        <p-button (click)="updateGroupOption(group)">Actualizar</p-button>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<app-add-group-option *ngIf="activeCreateGroup" (closeForm)="activeCreateGroup = false"></app-add-group-option>

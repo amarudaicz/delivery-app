@@ -1,0 +1,65 @@
+<div class="container">
+
+
+    <div class="content">
+        
+
+        <app-header-landing *ngIf="!currentBanner">
+
+        </app-header-landing>
+        
+        <div class="banner" *ngIf="currentBanner">
+            
+            <img class="logo-landing" src="./assets/logos/logo-de.png" alt="">
+    
+            <div class="container-banners">
+    
+                <div [ngSwitch]="currentBanner" class="banner-landing">
+    
+                    <app-banner (emitBanner)="updateCurrentBanner($event)" *ngSwitchCase="1"
+                    [banner]="model[0]"></app-banner>
+    
+                    <app-banner (emitBanner)="updateCurrentBanner($event)" *ngSwitchCase="2"
+                    [banner]="model[1]"></app-banner>
+    
+                    <app-banner (emitBanner)="updateCurrentBanner($event)" *ngSwitchCase="3"
+                    [banner]="model[2]"></app-banner>
+    
+                    <app-banner (emitBanner)="updateCurrentBanner($event)" *ngSwitchCase="4"
+                    [banner]="model[3]"></app-banner>
+                </div>
+    
+            </div>
+    
+    
+            <div class="dots">
+    
+                <div *ngFor="let dot of [1,2,3,4];" (click)="updateCurrentBanner(dot)" class="dot" [class.dot-active]="currentBanner===dot">
+    
+                </div>
+    
+            </div>
+        </div>
+
+        <div class="landing" id="landing" *ngIf="!currentBanner">
+            
+            <app-recents></app-recents>
+
+         
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

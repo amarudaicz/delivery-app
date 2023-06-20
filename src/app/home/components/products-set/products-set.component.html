@@ -4,7 +4,7 @@
             Nuestras recomendaciones
         </h2>
 
-        <a class="link-category" [routerLink]="title.toLowerCase()">
+        <a class="link-category" *ngIf="title" [routerLink]="title.toLowerCase()">
             <span>
                 Ver mas
             </span>

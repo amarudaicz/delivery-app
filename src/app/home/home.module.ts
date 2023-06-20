@@ -14,6 +14,7 @@ import { PromotionsLocalComponent } from './components/promotions-local/promotio
 import { ProductsSetComponent } from './components/products-set/products-set.component';
 import { PreviewCategoryComponent } from './components/preview-category/preview-category.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { LandingModule } from '../landing/landing.module';
 
 @NgModule({ 
   declarations: [
@@ -32,10 +33,12 @@ import { SkeletonModule } from 'primeng/skeleton';
     RouterModule,
     MatSnackBarModule,
     MatRippleModule,
-    SkeletonModule
+    SkeletonModule,
+    LandingModule,
   ] ,
   exports:[
-    NewselterBoxComponent
+    NewselterBoxComponent,
+    ProductsSetComponent
   ]
 })
 export class HomeModule { }

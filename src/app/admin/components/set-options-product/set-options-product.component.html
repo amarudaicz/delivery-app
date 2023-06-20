@@ -1,0 +1,159 @@
+<div class="container-list-options">
+
+    <div cdkDropList class="selected-options" *ngIf="selectedOptions.length">
+        
+        <h4 class="mt-2 mb-2">Grupos activos</h4>
+
+        <div class="list">
+
+            <div class="container-option" [ngClass]="{ 'expanded': isAccordionExpanded(indexGroup,group) }" *ngFor="let group of selectedOptions; index as indexGroup" cdkDrag (cdkDragDropped)="drop($event)" [cdkDragDisabled]="!isAccordionExpanded(indexGroup, group, true) || group.typePrice === 1">
+    
+                <div class="option-box">
+                   
+                    <div style="display: flex; flex-wrap: wrap;">
+    
+                        <div class="name-option space-option" [ngClass]="{'option-disable':!isAccordionExpanded(indexGroup,group, true)}">
+        
+                            <div cdkDragHandle *ngIf="isAccordionExpanded(indexGroup, group, true)" class="drag-handle">
+                                <i class="pi pi-ellipsis-v"></i>
+                                <i class="pi pi-ellipsis-v" style="margin-left: -9px;"></i>
+                            </div>
+        
+                            <div [ngClass]="{'option-disable':!isAccordionExpanded(indexGroup,group, true)}">
+                                <h3 class="d-inline">
+                                    {{group.nameVariation}}
+                                </h3>
+        
+                                <div class="type-price space-option">
+                                    <p [ngSwitch]="group.typePrice">
+                                        <font *ngSwitchCase="1">Determina el precio final</font>
+                                        <font *ngSwitchCase="2">Incrementa el precio final</font>
+                                        <font *ngSwitchCase="3">Sin Costo</font>
+                                    </p>
+                                </div>
+
+                                <div class="type-price space-option">
+                                    <p [ngSwitch]="group.multiple">
+                                        <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' max: ' + group.max}})</font>
+                                        <font *ngSwitchCase="false">Respuestas(1)</font>
+                                    </p>
+                                </div>
+        
+        
+                            </div>
+        
+                        </div>
+    
+                        <div class="container-switch-expand">
+                       
+                            <mat-slide-toggle color="primary"
+                            [checked]="isAccordionExpanded(indexGroup, group, true)"
+                            (click)="toggleGroup(indexGroup,group)"
+                            (click)="toogleAcordeon(indexGroup,group, true)"
+                            ></mat-slide-toggle>
+            
+                            <button type="button" class="" (click)="toogleAcordeon(indexGroup, group)">
+                                <i matRipple class="pi button-toogle-acordeon" [ngClass]="isAccordionExpanded(indexGroup,group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+                            </button>
+                        </div>
+                    </div>
+    
+    
+    
+                    <div *ngIf="isAccordionExpanded(indexGroup, group, true)" class="container-state-option">
+                        <i class="pi pi-circle-fill" style="color: rgb(127, 255, 104);"></i>
+                        <span>Grupo activo</span>
+                    </div>
+    
+    
+    
+                    <!-- <div  [ngClass]="{'option-disable':!isAccordionExpanded(indexGroup,group)}" class="options-select space-option">
+                        {{getOptions(group.options)}}
+        
+                    </div> -->
+                </div>
+    
+                <div class="container-acordeon" [class.expanded]="!draggin && isAccordionExpanded(indexGroup,group)">
+    
+                    <div *ngFor="let option of group.options; index as i" class="input-options-group">
+    
+                        <div class="check-option-group" [class.with-price]="group.typePrice !== 3">
+                            <mat-checkbox [checked]="option.active" (click)="toogleOption(indexGroup, i)" [id]="option.nameOption" [disabled]="!isAccordionExpanded(indexGroup,group, true)" color="primary"> {{option.nameOption}}</mat-checkbox>
+                        </div>
+    
+                        <mat-form-field  *ngIf="group.typePrice !== 3" appearance="outline">
+                            <mat-label>Precio</mat-label>
+                            <span matTextPrefix>$&nbsp;</span>
+                            <input (input)="updatePriceOption(group, option, price.value )"  #price [disabled]="!option.active" matInput type="number" class="input-price-option" [(ngModel)]="option.price" [value]="option.price">
+                        </mat-form-field>
+    
+    
+                    </div>
+    
+                </div>
+    
+            </div>    
+
+        </div>
+
+    </div>
+
+
+    <div *ngIf="currentGroupOption.length" cdkDropList class="group-options-list">
+
+        <h4 class="mt-2 mb-2">Grupos disponibles</h4>
+        <div class="list list-overflow">
+
+            <div class="container-option" [ngClass]="{ 'expanded': isAccordionExpanded(indexGroup,group) }" *ngFor="let group of currentGroupOption; index as indexGroup" cdkDrag [cdkDragDisabled]="!isAccordionExpanded(indexGroup, group, true) || group.typePrice === 1">
+    
+                <div class="option-box">
+                   
+                    <div class="container-display-options">
+    
+                        <div class="name-option space-option" [ngClass]="{'option-disable':!isAccordionExpanded(indexGroup,group, true)}">
+        
+                            <div *ngIf="isAccordionExpanded(indexGroup, group, true)" class="drag-handle">
+                                <i class="pi pi-ellipsis-v"></i>
+                                <i class="pi pi-ellipsis-v" style="margin-left: -9px;"></i>
+                            </div>
+        
+                            <div [ngClass]="{'option-disable':!isAccordionExpanded(indexGroup,group, true)}">
+                                <h3 class="d-inline">
+                                    {{group.nameVariation}}
+                                </h3>
+        
+                                <div class="type-price space-option">
+                                    <p [ngSwitch]="group.typePrice">
+                                        <font *ngSwitchCase="1">Determina el precio final</font>
+                                        <font *ngSwitchCase="2">Incrementa al precio final</font>
+                                        <font *ngSwitchCase="3">Sin Costo</font>
+                                    </p>
+                                </div>
+                            </div>
+        
+                        </div>
+    
+                        <div class="container-switch-expand">
+
+                            <mat-slide-toggle color="primary"
+                            [checked]="isAccordionExpanded(indexGroup, group, true)"
+                            (click)="toggleGroup(indexGroup,group)">
+                            </mat-slide-toggle>
+            
+                            <button type="button" class="" (click)="toogleAcordeon(indexGroup, group)">
+                                <i matRipple class="pi button-toogle-acordeon" [ngClass]="isAccordionExpanded(indexGroup,group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+                            </button>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+  
+
+
+
+</div>

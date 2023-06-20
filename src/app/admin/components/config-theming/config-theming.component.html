@@ -4,8 +4,8 @@
   <div class="container-current-theme" >
     <h4>Tema actual</h4>
     <div class="container-theme">
-      <span>{{ currentTheme.name }}</span>
-      <mat-radio-button (change)="changeThemeLocal(currentTheme.id)" color="primary" checked></mat-radio-button>
+      <span>{{ currentTheme?.name }}</span>
+      <mat-radio-button (change)="changeThemeLocal(currentTheme?.id)" color="primary" checked></mat-radio-button>
       <div 
         class="color-theme"
         *ngFor="let prop of currentProp"

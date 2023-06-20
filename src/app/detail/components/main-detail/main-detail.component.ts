@@ -18,7 +18,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./main-detail.component.scss'],
   animations: [fadeIn],
 })
-export class MainDetailComponent implements OnInit, OnDestroy {
+export class MainDetailComponent implements OnInit {
   constructor(
     public theme: ThemesService,
     private route: ActivatedRoute,
@@ -28,20 +28,25 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     private layoutState:LayoutStateService
   ) {
     this.layoutState.state.header = false
+    this.layoutState.state.navigation = false
     this.layoutState.updateState()
   }
   
   ngOnInit(): void {
-    this.localService.initDataLocal(localStorage.getItem('origin'))
+    const origin = sessionStorage.getItem('origin')
 
+    
+    this.routeService.setCurrent('detail');
     if (this.dialogConfig.data) {
       this.product = this.dialogConfig.data
       this.modePreview = true
       return
     }
     
-    this.routeService.setCurrent('detail');
-
+    if (!origin && !this.modePreview){
+      this.localService.initDataLocal(this.route.snapshot.params['local'])
+    }
+    
     const idProduct = this.route.snapshot.queryParams['id'];
     console.log(idProduct);
     
@@ -59,8 +64,4 @@ export class MainDetailComponent implements OnInit, OnDestroy {
   modePreview:boolean = false
 
 
-
-  ngOnDestroy(){
-    this.layoutState.state.header=true
-  }
 }

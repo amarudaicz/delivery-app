@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { OptionProduct } from 'src/app/interfaces/optionProduct-interface';
 import { v4 as uuidv4 } from 'uuid';
 interface Item {
   name: string;
-  price: number;
+  productPrice: number;
   especifications: string;
   options: string;
-  category: string;
+  category_name: string;
   quantity: number;
+  total:number;
+  userOptions:Array<any>
 }
 @Injectable({
   providedIn: 'root',
@@ -18,7 +21,7 @@ export class WpService {
 
   
   encodeText(cart: any[], userData: any, subtotal: number) {
-    const categories = cart.map((e) => e.category);
+    const categories = cart.map((e) => e.category_name);
 
 
     const cleanCategories = categories.filter((elemento, indice) => {
@@ -26,15 +29,16 @@ export class WpService {
     });
 
     cleanCategories.forEach((cat) => {
-    const categoryItems: Item[] = cart.filter((e) => e.category === cat);
+    const categoryItems: Item[] = cart.filter((e) => e.category_name === cat);
 
 
 
     categoryItems.forEach((e: Item, index: number) => {
-this.products += `${index === 0 ? e.category.toUpperCase()+`
+this.products += `${index === 0 ? e.category_name.toUpperCase()+`
 ---------
-`: ''}X${e.quantity} ${e.name} $${e.price}.00 ${e.options}
-${e.especifications !== '' ? `Especificaciones: ${e.especifications}` : ''}
+`: ''}X${e.quantity} ${e.name} $${e.total}.00 
+${this.readUserOptions(e.userOptions)}
+${e.especifications !== '' ? `Especificaciones: ${e.especifications}` : ''}\n
 `}); 
 });
 
@@ -58,13 +62,14 @@ ${this.products}
 
 
 console.log(text);
-const encodedText = encodeURIComponent(text);
+const encodedText = encodeURIComponent(text).replace(/%0A/g, '%0A%20');
+
 this.clearMessage()
 return encodedText
 }
 
   
-  genIdOrder(): string {
+genIdOrder(): string {
     let codigo = '';
     const caracteres =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -74,17 +79,43 @@ return encodedText
         Math.floor(Math.random() * caracteres.length)
       );
     }
-    return codigo;
-  }
+  return codigo;
+}
 
 
-  redirectWp(encodedText:string, telephone:number){
+redirectWp(encodedText:string, phone:number){
 
-    location.assign(`https://api.whatsapp.com/send?phone=+${telephone}&text=${encodedText}`)
+  location.assign(`https://api.whatsapp.com/send?phone=+${phone}&text=${encodedText}`)
 
-  }
+}
 
-  clearMessage(){
-    this.products = ''
-  }
+clearMessage(){
+  this.products = ''
+}
+
+
+readUserOptions(userOptions:OptionProduct[]){
+  let text:string = ''
+  
+  userOptions.forEach(e =>{
+    if (e.multiple){
+      const multiples = e.multipleOptions?.map(e => e.nameOption).join(', ')
+      text +=  `\n${e.nameVariation}: ${multiples}`
+      return
+    }
+
+    
+    
+    text += `\n${e.nameVariation}: ${e.nameOption}`
+
+  })
+
+  console.log(text);  
+  return text.toLocaleUpperCase().trim()
+
+
+}
+
+
+
 }

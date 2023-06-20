@@ -2,14 +2,26 @@
 <!-- <app-primary-cards></app-primary-cards> -->
 
 <div class="grid">
-
-    <div class="col-12 xl:col-6" >
-        <app-list-products ></app-list-products>
-        <app-config-theming></app-config-theming>
+    <div class="col-12">
+        <app-primary-cards></app-primary-cards>
     </div>
+
+    <div class="col-12 xl:col-6">
+        <app-new-product></app-new-product>
+    </div>
+
+    <div class="col-12 xl:col-6">
+        <div class="mb-3">
+            <app-main-options></app-main-options>
+        </div>
+
+        <div class="">
+            <app-config-theming></app-config-theming>
+        </div>
+    </div>
+
     
     <div class="col-12 xl:col-6" >
-        <app-new-product ></app-new-product>
         <app-chart></app-chart> 
     </div>
 </div>

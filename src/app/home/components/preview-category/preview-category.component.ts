@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product-interface';
 import { PreviewCategoryService } from 'src/app/services/preview-category/preview-category.service';
 
@@ -7,11 +7,11 @@ import { PreviewCategoryService } from 'src/app/services/preview-category/previe
   templateUrl: './preview-category.component.html',
   styleUrls: ['./preview-category.component.scss']
 })
-export class PreviewCategoryComponent implements OnInit {
+export class PreviewCategoryComponent implements OnInit, OnDestroy  {
 
-  products:Product[]|any = [1,2,3,4]
+  products?:Product[]|any = [1,2,3,4]
   
-  constructor(private previewCategory:PreviewCategoryService){
+  constructor(private previewCategory:PreviewCategoryService, ){
     
   }
   
@@ -19,13 +19,15 @@ export class PreviewCategoryComponent implements OnInit {
     
     console.log(this.previewCategory.category_id);
     
-    if (!this.previewCategory.category_id) for (let i = 0; i < 10; i++) this.products.push(i)
-    
-    this.previewCategory.getProductsByCategory().subscribe((data) =>{
-      if (data) this.products = data
+    this.previewCategory.productsByCategory.subscribe((data) =>{
+      if (data.length) this.products = data
+      
     })
       
   }
 
+  ngOnDestroy(): void {
+    
+  }
 
 }
