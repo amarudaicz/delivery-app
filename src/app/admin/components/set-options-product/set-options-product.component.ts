@@ -39,11 +39,11 @@ export class SetOptionsProductComponent {
       this.selectedOptions = this.product.variations
       console.log(this.selectedOptions);
 
-      this.adminService.getLocal().subscribe((data: Local) => {
-        console.log(data.options_group);
+      this.adminService.optionsGroup.subscribe((data) => {
+        console.log(data);
   
         //eliminar los q estan en seleected
-        this.currentGroupOption = this.removeSelectedOfCurrent(copy(data.options_group), this.selectedOptions)
+          this.currentGroupOption = this.removeSelectedOfCurrent(copy(data), this.selectedOptions)
       })
 
     }else{

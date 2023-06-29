@@ -1,19 +1,56 @@
-<div class="card p-0 container-table-products">
+<ng-template #noCategory>
+
+    <div class="card p-3">
+        <p><b>Parece que no tienes categorías activas en tu tienda</b>, puedes crear una nueva categoría haciendo click
+            en el boton que se encuentra debajo de la seccion Categorías.</p>
+    </div>
+
+</ng-template>
+
+<app-new-product [category_id]="dataCategory?.id" (close)="newProduct = false" *ngIf="newProduct">
+
+</app-new-product>
 
 
-    <div *ngIf="dataCategory" class="d-flex p-3 header-table gap-3 wrap">
 
-        <h1 class="d-flex title-list-dinamic">{{dataCategory.category_name}}
+<div *ngIf="dataCategory else noCategory" class="card p-0 container-table-products">
 
-            <span [style.color]="'#6366F1'" class="mr-4 ml-2">({{filtredProducts.length}})</span>
+    <div class="d-flex justify-content-between py-3 px-2 md:px-5 header-table gap-3 wrap state-category">
 
-        </h1>
+        <div class="d-flex">
+            <h1 class="mr-2 title-list-dinamic">{{dataCategory.category_name}}</h1>
+            <div class="d-flex gap-2">
+                <span class="">
+                    | {{dataCategory.active ? 'Actualmente disponible' : 'Categoria no disponible'}}
+                </span>
+                
+                <i class="pi pi-circle-fill mt-1" [ngClass]="dataCategory.active ? 'text-green-500' : 'text-red-500'"></i>
+            </div>
 
-        <div class="buttons-list">
+            <div class="toogle-category ml-4">
+                <mat-slide-toggle (click)="setStateCategory(dataCategory, dataCategory.active)" [checked]="dataCategory.active ? true : false" class="" color="primary" [matTooltip]="dataCategory.active ? 'Desactivar' : 'Activar'">                 
 
-            <p-button class="new" label="Nuevo producto" class="p-2" icon="pi pi-plus"
-                styleClass="p-button-primary p-button-sm">
+                </mat-slide-toggle>
+            </div>    
+        </div>
+
+
+        <div class="d-flex gap-3">
+
+            <p-button (click)="newProduct = true" class="new" label="Agregar producto" icon="pi pi-plus"
+                styleClass="p-button-primary p-button-text p-button-sm">
             </p-button>
+
+            <button class="">
+                <i class="pi pi-trash button-icon"></i>
+            </button>
+
+            <button class="">
+                <i class="fa-solid button-icon fa-pen"></i>
+            </button>
+
+         
+
 
         </div>
 
@@ -23,27 +60,30 @@
 
 
 
-    <div class="table-products">
+    <div class="table-products" *ngIf="filtredProducts.length">
         <div class="container-item-table shadow-1 hover:shadow-5" *ngFor="let product of filtredProducts">
 
             <div class="item">
 
                 <div class="d-flex between wrap gap-2">
 
-                    <div class="d-flex">
+                    <div class="d-flex" [ngClass]="product.stock ? '' :'opacity-50'">
                         <div class="image-item mr-4">
-                            <img appImageFallback [src]="product.image" class="shadow-6 border-round-sm" alt="{{product.name}}"
-                                width="100">
+                            <img appImageFallback [src]="product.image" class="shadow-6 border-round-sm"
+                                alt="{{product.name}}" width="100">
                         </div>
 
                         <div class="item-name">
+                            <p class="product-id">#{{product.id}}</p>
                             <p>
-                                {{product.name}}
-                                -
-                                {{product.price | currency:'USD'}}
+                                <b>
+                                    {{product.name}}
+                                    -
+                                    {{product.price | currency:'USD'}}
+                                </b>
                             </p>
 
-                            <div *ngIf="product.variations.length" class="d-flex mt-2" style="color: #3f3f3f;">
+                            <div *ngIf="product.variations.length" class="d-flex mt-2 text-gray">
                                 <i class="fa-solid fa-list mr-2"></i>
                                 <p>{{product.variations.length}} Grupos de opciones </p>
                             </div>
@@ -51,23 +91,23 @@
                     </div>
 
                     <div class="state-product d-flex gap-2">
-                        <i class="pi pi-circle-fill"></i>
-                        <span>{{true ? 'Disponible' : 'No disponible hasta nuevo aviso.'}} </span>
+                        <i class="pi pi-circle-fill" [ngClass]="product.stock ? 'text-green-500' : 'text-red-500' "></i>
+                        <span>{{product.stock ? 'Disponible' : 'No disponible'}} </span>
                     </div>
 
                     <div class="toogle-product d-flex gap-4">
 
-                        
-                        <button (click)="deleteProduct(product.id, $event)">
-                            <i  class="btn-edit pi pi-trash"></i>
-                        </button>                        
 
-                        <button class="mr-2" (click)="editProduct(product)">
-                            <i  class="btn-edit fa-solid fa-pen"></i>
-                            <!-- <i class="btn-edit pi pi-sliders-h"></i> -->
+                        <button (click)="deleteProduct(product.id)">
+                            <i class="btn-edit pi pi-trash"></i>
                         </button>
 
-                        <mat-slide-toggle color="primary"></mat-slide-toggle>
+                        <button class="mr-2" (click)="editProduct(product)">
+                            <i class="btn-edit fa-solid fa-pen"></i>
+                        </button>
+
+                        <mat-slide-toggle (change)="setStockProduct(product, product.stock)"
+                            [checked]="product.stock ? true : false" color="primary"></mat-slide-toggle>
                     </div>
 
                 </div>
@@ -90,4 +130,4 @@
     <ng-template #loader>
         <app-loader-full></app-loader-full>
     </ng-template>
-    <p-confirmDialog  class="alert-dele" [style]="{width: window.innerWidth > 550 ?'50vw' : '90vw'}"></p-confirmDialog>
+    <p-confirmDialog class="alert-dele" [style]="{width: window.innerWidth > 550 ?'50vw' : '90vw'}"></p-confirmDialog>

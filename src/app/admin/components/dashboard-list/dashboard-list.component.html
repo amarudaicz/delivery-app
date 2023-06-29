@@ -3,7 +3,7 @@
  
         <p-accordion [activeIndex]="activeIndex" >
     
-            <p-accordionTab [iconPos]="'end'" >
+            <p-accordionTab classList="acordeon-categories" [iconPos]="'end'" >
     
                 <ng-template pTemplate="header">
                     
@@ -18,9 +18,17 @@
                 <ng-template pTemplate="content" (click)="currentSection = 'products'">
     
                     <ul>
-                        <li [class.active]="isCatSelected(category)" (click)="emitSelected(category)" class="item-list d-flex" *ngFor="let category of categories">
-                          <i class="pi  mr-2 icon-list" [class.active]="isCatSelected(category)" [ngClass]="isCatSelected(category) ? 'pi-circle-fill': 'pi-circle' "></i>
-                            {{category.category_name}} <span>| {{getProductsByCat(category)}} Productos</span>
+                        <li matRipple [class.active]="isCatSelected(category)" (click)="emitSelected(category)" class="item-list d-flex" *ngFor="let category of categories">
+                          <i class="pi pi-circle-fill mr-2 icon-list" [class.active]="category.active"></i>
+                          <span>
+                              {{category.category_name}}
+                          </span>
+                            <span class="ml-2 font-light" [ngClass]="isCatSelected(category) ? 'text-black' : 'text-gray' ">| {{getProductsByCat(category)}} Productos</span>
+                        </li>
+
+                        <li (click)="newCategory()" matRipple class="item-list d-flex">
+                            <i class="pi pi-plus mr-2"></i>
+                            Nueva categoria
                         </li>
                     </ul>
     
@@ -32,7 +40,8 @@
     
     
         <p-accordion [expandIcon]="''" [collapseIcon]="''">
-            <p-accordionTab (click)="emitSelected({section:'groups'})">
+
+            <p-accordionTab classList="acordeon-groups" (click)="emitSelected({section:'groups'})">
     
                 <ng-template pTemplate="header">
                     

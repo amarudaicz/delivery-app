@@ -2,7 +2,7 @@
 
     <div cdkDropList class="selected-options" *ngIf="selectedOptions.length">
         
-        <h4 class="mt-2 mb-2">Grupos activos</h4>
+        <h4 class="mt-2 font-light mb-2">Grupos activos</h4>
 
         <div class="list">
 
@@ -101,7 +101,7 @@
 
     <div *ngIf="currentGroupOption.length" cdkDropList class="group-options-list">
 
-        <h4 class="mt-2 mb-2">Grupos disponibles</h4>
+        <h4 class="mt-2 font-light mb-2">Grupos disponibles</h4>
         <div class="list list-overflow">
 
             <div class="container-option" [ngClass]="{ 'expanded': isAccordionExpanded(indexGroup,group) }" *ngFor="let group of currentGroupOption; index as indexGroup" cdkDrag [cdkDragDisabled]="!isAccordionExpanded(indexGroup, group, true) || group.typePrice === 1">

@@ -67,7 +67,8 @@ export class AddProductCartComponent implements OnInit {
 
     this.product.variations?.forEach(e => {
       if (e.multiple) {
-        e.options = e.options.filter(e=> e.active)
+        
+        
 
         this.form.addControl(e.nameVariation, this.formBuilder.array([]))
         this.countOptions[e.nameVariation] = e.min || e.max ? false : true
@@ -75,7 +76,6 @@ export class AddProductCartComponent implements OnInit {
         
         return
       }else if(e.required || e.typePrice === 1){
-        e.options = e.options.filter(e=> e.active)
         this.saveOptions(e.options[0], e)
         this.form.addControl(e.nameVariation, this.formBuilder.control(null , [Validators.required, ]));
         this.form.get(e.nameVariation)?.setValue(e.options[0].nameOption)

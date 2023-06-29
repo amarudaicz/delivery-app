@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { OptionProduct } from 'src/app/interfaces/optionProduct-interface';
 import { Product } from 'src/app/interfaces/product-interface';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
+import { NewCategoryComponent } from '../new-category/new-category.component';
 
 @Component({
   selector: 'app-dashboard-list',
@@ -20,7 +22,7 @@ export class DashboardListComponent implements OnInit {
   activeIndex?: number
 
 
-  constructor(private adminService: AdminService, private dinamicList: DinamicListService) {
+  constructor(private adminService: AdminService, private dinamicList: DinamicListService, private dialog:MatDialog) {
 
     this.dinamicList.currentSection.subscribe(data => {
       if (!data) return
@@ -44,6 +46,7 @@ export class DashboardListComponent implements OnInit {
 
     this.adminService.getCategories().subscribe(categories => {
       this.categories = categories
+      this.dinamicList.setSection({section:'products', category:this.categories[0]})
     })
 
 
@@ -85,6 +88,15 @@ export class DashboardListComponent implements OnInit {
         section: 'groups',
       })
     }
+
+
+  }
+
+
+  newCategory(){
+    this.dialog.open(NewCategoryComponent, {
+      
+    })
 
 
   }

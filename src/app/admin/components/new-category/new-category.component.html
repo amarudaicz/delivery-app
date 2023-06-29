@@ -1,30 +1,39 @@
 <div class="card new-category">
-  <h2 class="mb-2">Nueva categoria</h2>
+  <h1>Nueva categoria</h1>
+  <p class="mb-3" style="max-width: 700px;">Ingresa el nombre de la categoría tambien puedes agregar una descripcion breve y una imagen que la represente. Asegúrate de que los datos sean precisos y correctos al momento de guardar</p>
   
   <div class="container-form-category">
   <form appearance="outline" [formGroup]="categoryForm" (ngSubmit)="submitForm()">
-    <div class="form-category">
-      <mat-form-field >
-        <mat-label>Nombre de la categoría</mat-label>
-        <input matInput formControlName="name" placeholder="Nombre de la categoría">
-        <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">Este campo es requerido</mat-error>
-      </mat-form-field>
-  
-      <div class="container-input-image">
-        <p-fileUpload [cancelIcon]="'true'" *ngIf="!previewImageCategory" chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" chooseLabel="Imagen" mode="basic" accept="image/*" [maxFileSize]="1000000">
-        </p-fileUpload>
-        
-        <ul class="container-remove-image" *ngIf="previewImageCategory">
-          <span>{{previewImageCategory}}</span>
-          <p-button icon="pi pi-times" class="button-remove-image" (click)="dataForm?.delete('image')" (click)="previewImageCategory = false" ></p-button>
-        </ul>
 
+      <div class="d-flex gap-2 wrap align-items-start mb-2" >
+        <mat-form-field >
+          <mat-label>Nombre de la categoría</mat-label>
+          <input matInput formControlName="name" placeholder="Nombre de la categoría">
+          <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">Este campo es requerido</mat-error>
+        </mat-form-field>
+
+          <span class="d-flex gap-2">
+            <p-fileUpload chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" [chooseLabel]="previewImageCategory || 'Imagen' " mode="basic" accept="image/*" [maxFileSize]="1000000">
+            </p-fileUpload>
+            <p-button *ngIf="previewImageCategory" icon="pi pi-times" class="button-remove-image" (click)="image = false" ></p-button>
+          </span>
       </div>
 
-    </div>   
+      <mat-form-field>
+
+        <mat-label>Descripcion(opcional)</mat-label>
+        <textarea formControlName="description" placeholder="Ingresa una descripcion breve" matInput> </textarea>
+
+      </mat-form-field>
+
     
     <div class="button-add-category">
-      <button pButton color="primary" type="submit">Agregar categoría</button>
+      <button [disabled]="loadForm" pButton color="primary" type="submit">
+        <div class="d-flex gap-1">
+          Guardar categoría
+          <i class="pi pi-spinner pi-spin" *ngIf="loadForm"></i>
+        </div>
+      </button>
     </div>
   </form>
   </div>

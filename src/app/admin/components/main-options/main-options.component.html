@@ -1,22 +1,31 @@
-<div class="card options">
-    <div class="header-group-options">
-        <div class="title-group-options">
+<div class="card">
+    <div class="d-flex justify-content-between gap-3 flex-column md:flex-row">
+        <div class="flex-1">
             <h1>Grupos de opciones</h1>
             <p>Aqui encontraras las opciones y adicionales que tus clientes podran elejir en los productos que tengan
                 asociado el grupo de opciones </p>
+
+                <span *ngIf="!groupOptions.length" class="mt-2 d-flex gap-2 text-gray-700 ">
+                    <i class="pi pi-info-circle text-sm"></i> 
+                    Puedes crear un nuevo grupo haciendo click en el boton Crear grupo
+                </span>
         </div>
 
 
-        <div class="button-create-group">
+        <div class="button-create-group w-full md:w-fit">
             <p-button (click)="activeCreateGroup = true">Crear grupo</p-button>
         </div>
     </div>
 
-    <div class="container-dinamic">
+    <div class="container-dinamic" *ngIf="groupOptions.length">
         <div class="container-state">
             <div class="state-options">
                 <span>Grupo</span>
-                <span>Opciones</span>
+                <span class="d-flex gap-1">
+
+                    <i class="pi pi-circle-fill text-sm" [style.color]="'green'"></i>
+                    Opciones disponibles
+                </span>
             </div>
 
         </div>
@@ -27,33 +36,40 @@
 
                     <div class="option-box">
                         <div class="name-option space-option">
-                            <div cdkDragHandle class="drag-handle d-flex">
-                                <i class="pi pi-ellipsis-v"></i>
-                                <i class="pi pi-ellipsis-v" style="margin-left: -9px;"></i>
+                            <div class="d-flex gap-2">
+                                <div cdkDragHandle class="drag-handle d-flex">
+                                    <i class="pi pi-ellipsis-v"></i>
+                                    <i class="pi pi-ellipsis-v" style="margin-left: -9px;"></i>
+                                </div>
+    
+                                <div class="type-price space-option">
+                                    <h3 class="d-inline">
+                                        {{group.nameVariation}}
+                                    </h3>
+                                    <p [ngSwitch]="group.typePrice">
+                                        <font *ngSwitchCase="1">Determina el precio final</font>
+                                        <font *ngSwitchCase="2">Incrementa el precio final</font>
+                                        <font *ngSwitchCase="3">Sin Costo</font>
+                                    </p>
+    
+                                    <p [ngSwitch]="group.multiple">
+                                        <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' | max: ' + group.max}})</font>
+                                        <font *ngSwitchCase="false">Respuestas(1<span *ngIf="(group.min === 1 && group.max === 1) || group.typePrice === 1">, requerido</span>)</font>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="type-price space-option">
-                                <h3 class="d-inline">
-                                    {{group.nameVariation}}
-                                </h3>
-                                <p [ngSwitch]="group.typePrice">
-                                    <font *ngSwitchCase="1">Determina el precio final</font>
-                                    <font *ngSwitchCase="2">Incrementa el precio final</font>
-                                    <font *ngSwitchCase="3">Sin Costo</font>
-                                </p>
 
-                                <p [ngSwitch]="group.multiple">
-                                    <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' | max: ' + group.max}})</font>
-                                    <font *ngSwitchCase="false">Respuestas(1<span *ngIf="(group.min === 1 && group.max === 1) || group.typePrice === 1">, requerido</span>)</font>
-                                </p>
-                            </div>
-
+                            <button (click)="toogleGroup(group)" type="button" class="">
+                                <i matRipple class="pi button-toogle-acordeon"
+                                    [ngClass]="isAccordionExpanded(group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+                            </button>
 
                         </div>
 
-                        <button (click)="toogleGroup(group)" type="button" class="">
-                            <i matRipple class="pi button-toogle-acordeon"
-                                [ngClass]="isAccordionExpanded(group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
-                        </button>
+                        <div class="options-available">
+                            <p>{{getOptions(group.options)}}</p>
+                        </div>
+
 
                     </div>
 
@@ -79,7 +95,8 @@
                         </div>
                             
                         <p-button (click)="updateGroupOption(group)">Actualizar</p-button>
-
+                        <p-button class="ml-2" (click)="deleteGroupOption(group, indexGroup)" styleClass="p-button-outlined p-button-danger">Eliminar grupo</p-button>
+                    
                     </div>
 
                 </div>

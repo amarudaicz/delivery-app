@@ -1,8 +1,8 @@
 <div class="container-list p-3">
     <h1 class="title">Actualizar Precios del Grupo</h1>
     <p>
-        Selecciona los productos en los que deseas aplicar los cambios en el precio del grupo de opciones. <br>
-        Recuerda que puedes modificar el precio individualmente editando el producto en la seccion Categorias
+        Selecciona los productos en los que quieres aplicar los cambios en grupo de opciones. <br>
+        Recuerda que puedes modificar las opciones de un producto en especifico editando en la seccion Categorias
     </p>
 
     <mat-checkbox (click)="selectAll()" color="primary">Seleccionar todos</mat-checkbox>
@@ -22,10 +22,10 @@
                         </h2>
                     </summary>
 
-                    <div class="grid relative align-items-start gap-4 md:gap-6 pt-3">
+                    <div class="grid relative align-items-center gap-4 md:gap-6 pt-3">
 
                         <ul>
-                            <h3><u>Precio Actual</u></h3>
+                            <h3><u>Opciones Actuales</u></h3>
                             <li class="py-1 " *ngFor="let option of product.variations[0].options">
                                 <span
                                     [style]="{'text-decoration': option.active ? '' : 'line-through', color: option.active  ? 'green' : 'red' }">{{option.nameOption}}:
@@ -33,10 +33,10 @@
                             </li>
                         </ul>
 
-                        <i class="pi pi-arrow-right icon-compare "></i>
+                        <i class="pi pi-arrow-right"></i>
 
                         <ul>
-                            <h3><u>Nuevo Precio </u> </h3>
+                            <h3><u>Opciones Actualizadas</u> </h3>
                             <li class="py-1 " *ngFor="let option of data.group.options">
                                 <span [style]="{
                                     'text-decoration': option.active ? '' : 'line-through', 

@@ -18,8 +18,13 @@
 
             
             &.active {
-
+                
                 background: #d2d2d27a;
+                span{
+
+                    color: #000;
+                }
+
 
                 &::before {
                     content: "";
@@ -32,11 +37,7 @@
                 }
             }
 
-            span {
-                margin-left: 6px;
-                font-weight: 100;
-                color: #949494;
-            }
+           
 
 
             .icon-list{
@@ -65,3 +66,4 @@
         }
     }
 }
+

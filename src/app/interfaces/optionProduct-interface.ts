@@ -1,4 +1,5 @@
 export interface OptionProduct {
+  id:number
   nameVariation: string;
   multiple?: boolean;
   typePrice: number;

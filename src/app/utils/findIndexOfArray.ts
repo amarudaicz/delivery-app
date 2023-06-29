@@ -1,0 +1,1 @@
+export const findIndexById = (array:any[], element:any) => array.findIndex(e=> e.id === element.id)

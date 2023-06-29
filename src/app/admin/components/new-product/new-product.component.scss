@@ -1,7 +1,51 @@
 @use '../../../../mixin.scss' as m;
 .new-product{
+    width: 100vw;
+    position: relative;
     margin: 0 0 0.5rem 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 888;
+    height: 100vh;
+    background: white;
+    overflow-y: auto;
+
+
+    @include m.tablet{
+        width: 70%;
+    
+    }
+
+    @include m.laptop{
+        width: 50%;
+    }
+
 }
+
+.header-new-product{
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    background: #3b3c54;
+    color: white;
+    flex-wrap: wrap;
+
+    @include m.tablet{
+        flex-wrap: nowrap;
+    }
+}
+
+.overlay-new-product{
+    z-index: 777;
+    width: 100vw;
+    height: 100vh;
+    background: #0000005d;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 
 .container-form{
     

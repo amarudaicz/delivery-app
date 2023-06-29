@@ -1,125 +1,141 @@
-@use '../../../../mixin.scss' as m;
+@use "../../../../mixin.scss" as m;
 
 .container-table-products {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 143px);
-    padding-bottom: 36px !important;
-    margin-bottom: .5rem;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 143px);
+  padding-bottom: 36px !important;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 
-    ::-webkit-scrollbar {
-        width: 0;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 
-    }
-
-    .title-list-dinamic {
-        font-size: 26px;
-
-    }
-
+  .title-list-dinamic {
+    font-size: 26px;
+  }
 }
 
 .p-input-icon-left {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .header-table {
-    border-bottom: 3px solid #6366f1;
+  border-bottom: 1.5px solid #6366f1;
 }
 
-
 .action-list {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
 
-    width: 100%;
+  .buttons-list {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 
-
-    .buttons-list {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-
-        .new {}
-
-        .refresh {}
-
-        .delete {}
-
+    .new {
     }
 
-
-    .visible-column {
-        display: none;
-
-        @include m.tablet {
-            display: initial;
-
-        }
+    .refresh {
     }
 
+    .delete {
+    }
+  }
+
+  .visible-column {
+    display: none;
+
+    @include m.tablet {
+      display: initial;
+    }
+  }
 }
 
 .sticky-header {
-    position: sticky;
-    top: 0;
-    background-color: #fff;
-    /* Ajusta el color de fondo según tus preferencias */
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  /* Ajusta el color de fondo según tus preferencias */
 }
 
+.state-category {
+  .toogle-category {
+    display: none;
+  }
+
+  .text-state-category {
+    display: initial;
+  }
+
+  &:hover {
+    .toogle-category {
+      display: initial;
+    }
+
+    .text-state-category {
+      display: none;
+    }
+  }
+}
 
 .table-products {
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
+  display: flex;
+  flex-direction: column;
 
-    .container-item-table {
-        &:hover {
-            .toogle-product {
-                display: flex;
-            }
+  .container-item-table {
+    &:hover {
+      .toogle-product {
+        display: flex;
+      }
 
-            .state-product{
-                display: none;
-            }
-        }
-    }
-
-    .toogle-product {
-        font-size: 16px;
+      .state-product {
         display: none;
-
-
-        .btn-edit{
-            cursor: pointer;
-            font-size: 21px;
-            padding: 10px;
-            transition: all .2s;
-            transform: translateY(2px);
-
-            &:hover{
-                background: #ebebeb;
-                border-radius: 25px;
-            }
-
-        }
+      }
     }
+  }
 
+  .toogle-product {
+    font-size: 16px;
+    display: none;
 
+    .btn-edit {
+      cursor: pointer;
+      font-size: 21px;
+      padding: 10px;
+      transition: all 0.2s;
+      transform: translateY(2px);
 
-    .item {
-        padding: 10px 40px 10px 20px;
-        border: thin solid #b2b2b21c;
-        border-width: 1px 0 1px 0;
-
+      &:hover {
+        background: #ebebeb;
+        border-radius: 25px;
+      }
     }
+  }
 
+  .item {
+    padding: 18px;
 
+    border: thin solid #b2b2b21c;
+    border-width: 1px 0 1px 0;
+    position: relative;
+  
+    @include m.tablet{
+      padding: 10px 40px 10px 20px;
+    }
+  
+  }
+}
+
+.product-id {
+  font-size: 14px;
+  color: #3f3f3f;
 }

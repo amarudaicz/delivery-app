@@ -81,7 +81,7 @@ import { SelectProductsGroupComponent } from './components/select-products-group
     ListCategoriesComponent,
     DashboardListComponent,
     ImageFallbackDirective,
-    SelectProductsGroupComponent
+    SelectProductsGroupComponent,
   ],
   imports: [
     CommonModule,

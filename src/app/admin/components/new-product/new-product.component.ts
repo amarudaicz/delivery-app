@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { BehaviorSubject, firstValueFrom, map, Observable, startWith } from 'rxjs';
+import { BehaviorSubject, catchError, firstValueFrom, map, Observable, startWith } from 'rxjs';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -38,16 +38,25 @@ import { AdminService } from 'src/app/services/admin/admin.service';
 import { noScriptValidator } from 'src/app/utils/validators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SetOptionsProductComponent } from '../set-options-product/set-options-product.component';
+import { enterRight } from 'src/app/animations/main-animations';
+import { fadeIn } from 'src/app/animations/main-detail-animations';
+import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
+import { handleError } from 'src/app/utils/handle-error-http';
+import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
 
 @Component({
   selector: 'app-new-product',
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.scss'],
   providers: [MatAutocomplete, ConfirmationService, History, MessageService],
+  animations:[enterRight, fadeIn]
 })
 export class NewProductComponent implements OnInit {
 
   @ViewChild(SetOptionsProductComponent) setOptions!: SetOptionsProductComponent;
+
+  @Output() close = new EventEmitter(false)
+  @Input() category_id?:number
 
   categories?: any[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -74,11 +83,12 @@ export class NewProductComponent implements OnInit {
     private cloudinary: CloudinaryService,
     private http: HttpClient,
     private adminService: AdminService,
-    private toast: MatSnackBar
+    private toast: MatSnackBar,
+    private dinamicList:DinamicListService,
+    private notificationsAdmin:NotificationsAdminService
   ) {
     this.form = this.formBuilder.group({
       name: ['', Validators.required, noScriptValidator()],
-      category_id: ['', Validators.required, noScriptValidator()],
       price: ['', Validators.required, noScriptValidator()],
       ingredients: [null],
       description: [null],
@@ -92,6 +102,8 @@ export class NewProductComponent implements OnInit {
   image: any
 
   ngOnInit(): void {
+    console.log(this.category_id);
+    
 
     this.adminService.getCategories().subscribe((data) => { this.categories = data; console.log(data); })
 
@@ -103,7 +115,8 @@ export class NewProductComponent implements OnInit {
 
 
     if (this.form.invalid) {
-      this.toast.open('Completar los campos requeridos.', 'Ok', {duration:3000})
+      this.form.markAllAsTouched()
+      this.toast.open('Completar los campos requeridos', '', {duration:3000})
       return
     }
 
@@ -113,13 +126,20 @@ export class NewProductComponent implements OnInit {
     this.form.get('name')?.setValue(this.capitalize(this.form.get('name')?.value))
     this.form.get('description')?.setValue(this.capitalize(this.form.get('description')?.value))
 
-    const product = { variations: JSON.stringify(this.optionsGroup), ingredients: JSON.stringify(this.ingredientsList), ...this.form.value };
+    const product = { variations: JSON.stringify(this.optionsGroup), ingredients: JSON.stringify(this.ingredientsList), ...this.form.value, category_id:this.category_id };
 
-    this.adminService.postProduct(product).subscribe(res => {
+    this.adminService.postProduct(product).pipe(
+      catchError(() => {
+        this.processLoad = false
+        return handleError(undefined, this.notificationsAdmin)
+
+      })).subscribe((res) => {
       this.resetForm()
       this.toast.open('Producto creado con exito', '',  {duration:3000})
       this.adminService.products = undefined
-
+      this.dinamicList.updateDinamicList.next(true)
+      this.dinamicList.updateDashboardList.next(true)
+      this.closeForm()
     })
 
   }
@@ -141,6 +161,7 @@ export class NewProductComponent implements OnInit {
   showPreview() {
 
     if (this.form.invalid) {
+      this.form.markAllAsTouched()
       this.toast.open('Completar los campos requeridos.', 'Ok', {duration:3000})
       return
     }
@@ -189,6 +210,10 @@ export class NewProductComponent implements OnInit {
     }
 
 
+  }
+
+  closeForm(){
+    this.close.emit(true)
   }
 
   resetForm() {
@@ -339,6 +364,7 @@ export class NewProductComponent implements OnInit {
             show: () => {
               this.optionsGroup = [
                 {
+                  id:110,
                   nameVariation: 'Tamaño',
                   multiple: false,
                   typePrice: 1,

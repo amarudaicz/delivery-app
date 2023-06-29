@@ -48,7 +48,9 @@ export class MainOptionsComponent implements OnInit {
   }
 
   getOptions(optionsArray: any[]) {
-    return optionsArray.map(e => e.nameOption).join(', ')
+    console.log(optionsArray);
+    
+    return optionsArray.filter(e=> e.active).map(e => e.nameOption).join(', ')
   }
 
 
@@ -88,7 +90,7 @@ export class MainOptionsComponent implements OnInit {
     }
 
     if (!group.options.filter(o => o.active).length) {
-      this.alert.new('Debes tener como minimo una opcion activa en el grupo. De lo contrario no se podra definir el precio final', 'Ok',{push:true, panelClass:'w-8rem', section:'Grupo de opciones' })
+      this.alert.new('Debes tener como minimo una opcion activa en el grupo de opciones. De lo contrario no se mostrara el grupo.', 'Ok',{push:true, panelClass:'w-8rem', section:'Grupo de opciones' })
       return
     }
       
@@ -96,12 +98,11 @@ export class MainOptionsComponent implements OnInit {
     this.adminService.getProductsAdmin().pipe(
       map(products => products.filter(e => e.variations.some(e =>
         e.nameVariation === group.nameVariation))
+
       )).subscribe(products => {
-
         console.log(products);
-
+        
         if (products.length) {
-
           window.history.pushState({modal:true}, 'modal');
 
           const dialogRef = this.dialog.open(SelectProductsGroupComponent, {
@@ -109,15 +110,10 @@ export class MainOptionsComponent implements OnInit {
           })
   
           dialogRef.afterClosed().subscribe((data: { products: Product[], group: OptionProduct }) => {
-            console.log(data);
-
             if (!data) {
               this.ngOnInit()
-              
-
               return
             }
-
             
             if (data.products.length) {
               this.updateOptionsGroupAndNotify({...data, variations: this.groupOptions })
@@ -127,7 +123,6 @@ export class MainOptionsComponent implements OnInit {
           })
           
         }else{
-          
           this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
         }
         
@@ -135,10 +130,41 @@ export class MainOptionsComponent implements OnInit {
     })
   }
 
+  deleteGroupOption(group:any, index:number){
+    this.adminService.getProductsAdmin().pipe(
+      map(products => products.filter(e => e.variations.some(e =>
+        e.nameVariation === group.nameVariation))
+      )).subscribe(products => {
+        if (products.length){
+          const idProducts = products.map(e => e.name).join(', ')
+          this.alert.new(`No es posible eliminar un grupo de opciones si existen productos que hacen uso de el. Ver productos (${idProducts})`, 'Ok',{push:true, section:'Grupo de opciones',panelClass:'w-12rem'})
+          return
+        }
+
+        this.adminService.deleteOptionGroup(group.id).subscribe(
+          (res)=>{
+            this.alert.new(`El grupo ${group.nameVariation} a sido eliminado con exito`, 'Ok', {push:true} )
+            const optionsUpdates = this.groupOptions.filter(e=> e.id !== group.id)
+            this.adminService.optionsGroup.next(optionsUpdates)
+            
+          },
+          (err)=>{
+            console.log(err);
+            this.alert.new(`A ocurrido un error intente nuevamente`, 'Ok')
+          }
+        )
+
+
+
+
+
+      })
+
+  }
 
   private updateOptionsGroupAndNotify(data: any) {
 
-    this.adminService.updateOptionsGroup(data).subscribe((res:any)=>{
+    this.adminService.updateOptionGroup(data).subscribe((res:any)=>{
 
       this.toast.open('Grupo de opciones actualizado', '', { duration: 3000 });
       this.toast.open(res.info, '', { duration: 3000 });

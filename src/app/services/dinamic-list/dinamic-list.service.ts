@@ -8,7 +8,7 @@ import { AdminService } from '../admin/admin.service';
 export class DinamicListService {
 
 
-  currentSection = new BehaviorSubject<any>(undefined);
+  currentSection = new BehaviorSubject<any>({ });
   categoryId?:number
 
   updateDinamicList = new BehaviorSubject<any>(false);
@@ -16,13 +16,9 @@ export class DinamicListService {
 
   
 
-
   
   constructor(private adminService:AdminService) { 
-    this.adminService.getCategories().subscribe(categories=>{
-      this.categoryId = categories[0].id
-      this.setSection({section:'products' , category:categories[0]})
-    })
+    
   }
  
  

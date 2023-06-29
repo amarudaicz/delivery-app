@@ -6,7 +6,8 @@
       matRipple
       [matRippleColor]="'#00000012'"
       class="category-card"
-    >
+      [ngStyle]="{'background-image':category.image}">
+      
       <!-- <img
         class="card-image"
         src="{{ category.image }}"

@@ -1,27 +1,8 @@
 @use '../../../../mixin.scss' as m;
 
 
-.header-group-options {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  row-gap: 15px;
-
-
-  .title-group-options {
-    max-width: 80%;
-  }
-
-
-  .button-create-group {}
-
-}
-
-
-
 .container-state {
-  padding: 10px;
+  padding: 15px;
   background: #eeeeee;
   border-bottom: 3px solid #6366F1;
   box-shadow: 0px 5px 10px -8px #000000
@@ -52,12 +33,20 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: space-between;
+  flex: 1;
+
+  @include m.tablet{
+    flex: 0;
+
+  
+  }
 
 
   .type-price {
 
     @include m.tablet {
-      min-width: 200px;
+      min-width: 250px;
     }
 
     p {
@@ -147,14 +136,14 @@
 }
 
 .option-box {
-  padding: 15px 10px;
+  padding: 15px 40px;
 
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
+  gap: 15px;
   flex-direction: row;
   align-items: center;
-  flex-wrap: wrap;
   justify-content: space-between;
   box-sizing: border-box;
   background: white;
@@ -162,12 +151,20 @@
 
 
   @include m.tablet {
-    justify-content: start;
+
 
   }
 }
 
 
+.options-available{
+  display: none;
+
+  @include m.tablet{
+    display: initial;
+
+  }
+}
 
 
 .container-acordeon {

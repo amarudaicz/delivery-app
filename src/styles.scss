@@ -171,6 +171,7 @@ button {
     padding: 10px;
     transition: all .2s;
     transform: translateY(2px);
+    font-size: 21px;
 
     &:hover {
         background: #ebebeb;
@@ -179,4 +180,14 @@ button {
 
 
 
+}
+
+
+.acordeon-categories{
+    .p-accordion-header{
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        
+    }
 }

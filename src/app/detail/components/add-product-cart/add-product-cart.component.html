@@ -20,13 +20,14 @@
                 *ngFor="let option of optionGroup.options; index as i"
               >
                 <mat-radio-button
+                *ngIf="option.active"
                 (change)="saveOptions(option, optionGroup)"
                   color="primary"
                   [value]="option.nameOption"
                   >{{ option.nameOption }}</mat-radio-button
                 >
               
-                <span *ngIf="option.price !== 0"
+                <span *ngIf="option.price !== 0 && option.active"
                   ><b>{{ option.price | currency }}</b>
                 </span>
 
@@ -68,6 +69,8 @@
                 class="container-values-options"
               >
                 <mat-checkbox 
+                *ngIf="option.active"
+
                   (change)="saveOptions(option, optionGroup)"
                   (change)="handleCheckboxChange(optionGroup)"
                   color="primary"
@@ -76,7 +79,7 @@
                   {{ option.nameOption }}
                 </mat-checkbox>
 
-                <span *ngIf="option.price">
+                <span *ngIf="option.price && option.active">
                   <b>{{ option.price | currency }}</b></span
                 >
               </div>

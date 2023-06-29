@@ -57,8 +57,9 @@ export class AddGroupOptionComponent implements OnDestroy {
     this.optionsList = this.formOptions.get('options') as FormArray;
 
 
-    this.adminService.getLocal().subscribe(data => {
-      this.currentOptions = data.options_group
+    this.adminService.optionsGroup.subscribe(data => {
+      console.log(data);
+      this.currentOptions = data
     })
 
     
@@ -68,8 +69,6 @@ export class AddGroupOptionComponent implements OnDestroy {
 
   saveOptions() {
     console.log(this.formVariations);
-
-    const _typeOption = this.formVariations.controls['typeOption'];
 
     if (this.formVariations.invalid || this.formOptions.invalid) {
       this.formVariations.markAllAsTouched();
@@ -85,8 +84,9 @@ export class AddGroupOptionComponent implements OnDestroy {
       this.formVariations.get('multiple')?.setValue(false)
     }
 
+    this.formVariations.get('nameVariation')?.setValue(this.capitalize(this.formVariations.get('nameVariation')?.value))
 
-    const option = { ...this.formVariations.value, ...this.formOptions.value }
+    const option = { ...this.formVariations.value, ...this.formOptions.value, id:this.genId(this.currentOptions) }
 
     console.log(option);
 
@@ -135,6 +135,18 @@ export class AddGroupOptionComponent implements OnDestroy {
     this.closeForm.emit(false)
   }
 
+
+
+  genId(arr:any[]){
+    if (!arr.length) {
+      return 1
+    }
+
+    const lastId = arr[arr.length - 1].id
+    console.log(lastId);
+    
+    return lastId + 1
+  }
 
   ngOnDestroy(): void {
     this.layoutService.unblockBody()

@@ -1,39 +1,40 @@
-@use '../../../../mixin.scss' as m ;
-.container-dinamic-list{
+@use "../../../../mixin.scss" as m;
+.container-dinamic-list {
+  justify-content: space-between;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
 
-    justify-content: space-between;
-    display: flex;
-    gap: 15px;
-    flex-direction: column;
-    
-    @include m.laptop{
-        flex-direction: row;
-    
-
-    }
+  @include m.laptop {
+    flex-direction: row;
+  }
 }
 
-
-.dashboard-list{
-    width: 100%;
-    
-    
-    @include m.laptop{
-        width: 25%;
-    }
-
-    @include m.desktop{
-        width: 20%;
-    }
+.dashboard-list {
+  position: relative;
+  width: 100%;
+  max-height: calc(100vh - 143px);
+  overflow-y: scroll;
+  border-radius: 12px;
+  scrollbar-width: 0;
 
 
+  &::-webkit-scrollbar {
+    width: 0px; /* Para Safari y Chrome */
+  }
+  scrollbar-width: none; /* Para Firefox */
+  -ms-overflow-style: none; /* Para IE y Edge */
 
+  @include m.laptop {
+    width: 25%;
+  }
 
+  @include m.desktop {
+    width: 20%;
+  }
 }
 
-
-.current-list{
-    flex: 1;
-    flex-basis: 0;
-    
+.current-list {
+  flex: 1;
+  flex-basis: 0;
 }

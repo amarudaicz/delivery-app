@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LayoutService } from "../service/app.layout.service";
 import { MenuService } from "../app.menu.service";
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
+import { AdminService } from 'src/app/services/admin/admin.service';
 
 @Component({
     selector: 'app-config',
@@ -10,7 +11,6 @@ import { RouteDataService } from 'src/app/services/routeData/route-data-service.
 export class AppConfigComponent implements OnInit {
 
     ngOnInit(): void {
-        this.routeData.setCurrent('admin')
     }
 
     @Input() minimal: boolean = false;
@@ -18,7 +18,12 @@ export class AppConfigComponent implements OnInit {
     scales: number[] = [12, 13, 14, 15, 16];
 
     
-    constructor(public layoutService: LayoutService, public menuService: MenuService, private routeData:RouteDataService) { }
+    constructor(public layoutService: LayoutService, public menuService: MenuService, private routeData:RouteDataService, private adminService:AdminService) { 
+        this.routeData.setCurrent('admin')
+        // this.adminService.getProductsAdmin().subscribe()
+        // this.adminService.getCategories().subscribe()
+        this.adminService.getLocal().subscribe()
+    }
 
 
     get visible(): boolean {

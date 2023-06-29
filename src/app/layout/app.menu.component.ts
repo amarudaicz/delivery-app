@@ -17,7 +17,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/admin'] }
+                    { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/admin'] }
                 ]
             },
             {
@@ -25,9 +25,8 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Productos', icon: 'fa-solid fa-table', routerLink: ['products'] },
                     { label: 'Nuevo Producto', icon: 'pi pi-plus', routerLink: ['new-product'] },
-                    { label: 'Grupo de opciones', icon: 'pi pi-list', routerLink: ['options-group'] },
-                    { label: 'Ajustes', icon: 'pi pi-fw pi-sliders-v', routerLink: ['config'] },
-                    { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] }
+                    { label: 'Ajustes', icon: 'pi pi-sliders-v', routerLink: ['config'] },
+                    { label: 'Ayuda', icon: 'pi pi-question', routerLink: ['help'] }
                 ]
             }
         ];

@@ -56,7 +56,7 @@ export class MainHomeComponent implements OnInit, OnDestroy{
 
     //OBTENIENDO LAS CATEGORIAS
     this.localService.getCategories().subscribe((data) => {
-      if (data.length) this.categories = data;
+      if (data.length) this.categories = data.filter(c => c.active);
     });
     
     //CHECK QUE EL TEMA ESTE CARGADO CUANDO SETLOCAL()

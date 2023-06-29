@@ -1,122 +1,101 @@
 <div class="container-edit-product">
 
   <div class="">
+    
+    <div class="container-buttons-edit">
+      <p-button type="submit" (click)="saveEditProduct()" [disabled]="processLoad" styleClass="p-button-danger" pRipple
+        class="button-save-secondary">
+        Guardar
+      </p-button>
+
+      <p-button [disabled]="processLoad" matTooltip="Vista previa" icon="pi pi-eye" (click)="showPreview()"
+        type="submit" styleClass="p-button-secondary">
+      </p-button>
+    </div>
 
     <h1 class="mb-3">Editando {{product?.name}}</h1>
 
-      <div class="container-form">
-    
-        <form class="form-edit-product" [formGroup]="formEditProduct"  >
-          <div class="container-inputs">
-            
-            <div id="initialForm">
-              <mat-form-field  appearance="outline"  class="input-group" color="primary">
-                <mat-label>Nombre</mat-label>
-                <input type="text" matInput formControlName="name" />
-                <mat-error>Este campo es requerido</mat-error>
-              </mat-form-field>
-              
-              <mat-form-field
-              appearance="outline"
-              matTooltipClass="tooltip-price" 
-              matTooltipPosition="above" 
+    <div class="container-form">
+
+      <form class="form-edit-product" [formGroup]="formEditProduct">
+        <div class="container-inputs">
+
+          <div id="initialForm">
+            <mat-form-field appearance="outline" class="input-group" color="primary">
+              <mat-label>Nombre</mat-label>
+              <input type="text" matInput formControlName="name" />
+              <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" matTooltipClass="tooltip-price" matTooltipPosition="above"
               matTooltip="El precio ingresado se utilizará para mostrar el valor base del producto en la vista preliminar. Sin embargo, este precio solo se aplicará si NO existe un GRUPO DE OPCIONES que determine el precio final."
               class="input-group" color="primary">
-                <mat-label>Precio base</mat-label>
-                <span matTextPrefix>$&nbsp;</span>
-                <input formControlName="price" type="number" matInput />
-                <mat-error>Este campo es requerido</mat-error>
+              <mat-label>Precio base</mat-label>
+              <span matTextPrefix>$&nbsp;</span>
+              <input formControlName="price" type="number" matInput />
+              <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="input-group full-input" appearance="outline">
+              <mat-label>Ingredientes (Opcional)</mat-label>
+              <mat-chip-grid #chipGrid aria-label="Enter Ingredientes">
+                <mat-chip-row *ngFor="let i of ingredientsList" id="ingredients" (removed)="remove(i, $event)"
+                  [editable]="true" (edited)="edit(i, $event)" [aria-description]="'press enter to edit ' + i">
+                  {{ i }}
+                  <button matChipRemove [attr.aria-label]="'remove ' + i">
+                    <mat-icon>X</mat-icon>
+                  </button>
+                </mat-chip-row>
+                <input formControlName="ingredients" placeholder="Nuevo Ingrediente" id="ingredients"
+                  [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" />
+              </mat-chip-grid>
+            </mat-form-field>
+
+            <!-- DESCRIPCION///////////////////////////////// -->
+
+            <div class="inputs-inline">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Descripcion (Opcional)</mat-label>
+                <textarea maxlength="150" #textarea formControlName="description" matInput></textarea>
+                <mat-hint>Max 150 caracteres/{{textarea.value.length}} </mat-hint>
               </mat-form-field>
-    
-      
-              <mat-form-field class="input-group full-input"  appearance="outline">
-                <mat-label>Ingredientes (Opcional)</mat-label>
-                <mat-chip-grid #chipGrid aria-label="Enter Ingredientes">
-                  <mat-chip-row
-                    *ngFor="let i of ingredientsList"
-                    id="ingredients"
-                    (removed)="remove(i, $event)"
-                    [editable]="true"
-                    (edited)="edit(i, $event)"
-                    [aria-description]="'press enter to edit ' + i"
-                  >
-                    {{ i }}
-                    <button matChipRemove [attr.aria-label]="'remove ' + i">
-                      <mat-icon>X</mat-icon>
-                    </button>
-                  </mat-chip-row>
-                  <input
-                    formControlName="ingredients"
-                    placeholder="Nuevo Ingrediente"
-                    id="ingredients"
-                    [matChipInputFor]="chipGrid"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    [matChipInputAddOnBlur]="true"
-                    (matChipInputTokenEnd)="add($event)"
-                  />
-                </mat-chip-grid>
-              </mat-form-field>
-      
-              <!-- DESCRIPCION///////////////////////////////// -->
-              
-              <div class="inputs-inline">
-                
-                <mat-form-field  appearance="outline">
-                  <mat-label>Descripcion (Opcional)</mat-label>
-                  <textarea maxlength="150" #textarea formControlName="description" matInput></textarea>
-                  <mat-hint>Max 150 caracteres/{{textarea.value.length}} </mat-hint>
-                </mat-form-field>
-        
-                <div class="container-input-image">
-                    <label for="previewImageProduct" class="load-image-text" *ngIf="!previewImageProduct">Carga la imagen de tu producto</label>
-                    <p-fileUpload *ngIf="!previewImageProduct" chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" chooseLabel="Imagen" mode="basic" accept="image/*" [maxFileSize]="1000000">
-                    </p-fileUpload>
-                    
-                    <ul *ngIf="previewImageProduct">
-                      <img [src]="previewImageProduct" alt="" width="150px">
-                      <p-button icon="pi pi-times" class="button-remove-image" (click)="removePreviewImage()" ></p-button>
-                    </ul>
-                </div>
+
+              <div class="container-input-image">
+                <label for="previewImageProduct" class="load-image-text" *ngIf="!previewImageProduct">Carga la imagen de
+                  tu producto</label>
+                <p-fileUpload *ngIf="!previewImageProduct" chooseIcon="pi pi-upload"
+                  (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true"
+                  chooseLabel="Imagen" mode="basic" accept="image/*" [maxFileSize]="1000000">
+                </p-fileUpload>
+
+                <ul *ngIf="previewImageProduct">
+                  <img [src]="previewImageProduct" alt="" width="150px">
+                  <p-button icon="pi pi-times" class="button-remove-image" (click)="removePreviewImage()"></p-button>
+                </ul>
+              </div>
             </div>
-            </div>  
-            
-          </div>
-  
-  
-          <div>
-            <h3 class="mt-4 title">Opciones</h3>
-            <p class="mb-2">Agrega las opciones disponibles para el producto</p>
-    
-            <app-set-options-product [product]="product" (emitterSelectedOptions)="getOptionsSelected($event)"></app-set-options-product>
           </div>
 
-
-          
-        </form>
-      </div>
+        </div>
 
 
-      <div class="container-buttons-edit">
-        <p-button type="submit" 
-        (click)="saveEditProduct()" 
-        [disabled]="processLoad" 
-        styleClass="p-button-danger"
-        pRipple 
-        class="button-save-secondary">
+        <div>
+          <h3 class="mt-4 title">Opciones</h3>
+          <p class="mb-2">Agrega las opciones disponibles para el producto</p>
 
-          Guardar
-        </p-button>
+          <app-set-options-product [product]="product"
+            (emitterSelectedOptions)="getOptionsSelected($event)"></app-set-options-product>
+        </div>
 
-        <p-button
-        [disabled]="processLoad" 
-        class="button-preview-product"
-          (click)="showPreview()"
-          type="button"
-          styleClass="p-button-secondary"
-        >
-          Vista previa</p-button
-        >
-      </div>
+
+
+      </form>
+    </div>
+
+
 
 
   </div>
