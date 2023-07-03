@@ -2,7 +2,12 @@
 
 .container-table-products {
   width: 100%;
-  height: calc(100vh - 143px);
+  height: 90vh;
+
+  @include m.tablet{
+    height: calc(100vh - 143px);
+  }
+  
   padding-bottom: 36px !important;
   margin-bottom: 0.5rem;
   display: flex;
@@ -13,9 +18,6 @@
     width: 0;
   }
 
-  .title-list-dinamic {
-    font-size: 26px;
-  }
 }
 
 .p-input-icon-left {
@@ -70,6 +72,8 @@
 .state-category {
   .toogle-category {
     display: none;
+
+    
   }
 
   .text-state-category {
@@ -126,7 +130,6 @@
 
     border: thin solid #b2b2b21c;
     border-width: 1px 0 1px 0;
-    position: relative;
   
     @include m.tablet{
       padding: 10px 40px 10px 20px;

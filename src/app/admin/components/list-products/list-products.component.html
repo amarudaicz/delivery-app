@@ -15,48 +15,52 @@
 
 <div *ngIf="dataCategory else noCategory" class="card p-0 container-table-products">
 
-    <div class="d-flex justify-content-between py-3 px-2 md:px-5 header-table gap-3 wrap state-category">
+    <p-menu #menuCategory [popup]="true" [model]="modelConfigCategory"></p-menu>
+    <div class="d-flex justify-content-center sm:justify-content-between p-3 md:px-5 header-table gap-y-3 wrap state-category sticky top-0">
 
-        <div class="d-flex">
-            <h1 class="mr-2 title-list-dinamic">{{dataCategory.category_name}}</h1>
-            <div class="d-flex gap-2">
-                <span class="">
-                    | {{dataCategory.active ? 'Actualmente disponible' : 'Categoria no disponible'}}
+        <div class="d-flex w-full sm:w-fit justify-content-between sm:justifi-content-start">
+            <h1 class="mr-2 title overflow-hidden" [style.text-overflow]="'ellipsis'">{{dataCategory.category_name}}</h1>
+            
+            <div class="d-flex flex-1 gap-2 justify-content-center sm:justify-content-start w-12rem">
+                <span class="sm:border-left-1 sm:pl-2">
+                    {{dataCategory.active ? 'Categoria activa' : 'Categoria desactivada'}}
                 </span>
                 
                 <i class="pi pi-circle-fill mt-1" [ngClass]="dataCategory.active ? 'text-green-500' : 'text-red-500'"></i>
             </div>
 
-            <div class="toogle-category ml-4">
+            
+            <div class="toogle-category hidden sm:block  mx-3 ">
                 <mat-slide-toggle (click)="setStateCategory(dataCategory, dataCategory.active)" [checked]="dataCategory.active ? true : false" class="" color="primary" [matTooltip]="dataCategory.active ? 'Desactivar' : 'Activar'">                 
-
+                    
                 </mat-slide-toggle>
             </div>    
+          
+            <button  (click)="menuCategory.toggle($event)" class="md:hidden">
+                <i class="pi pi-ellipsis-v button-icon"></i>
+            </button>
+
+
         </div>
 
 
-        <div class="d-flex gap-3">
+        <div class="d-flex gap-3 ">
 
             <p-button (click)="newProduct = true" class="new" label="Agregar producto" icon="pi pi-plus"
-                styleClass="p-button-primary p-button-text p-button-sm">
+                styleClass="p-button-primary p-button-sm">
             </p-button>
 
-            <button class="">
+            <button class="hidden md:flex">
                 <i class="pi pi-trash button-icon"></i>
             </button>
 
-            <button class="">
+            <button class="hidden md:flex">
                 <i class="fa-solid button-icon fa-pen"></i>
             </button>
-
-         
-
-
         </div>
 
+
     </div>
-
-
 
 
 

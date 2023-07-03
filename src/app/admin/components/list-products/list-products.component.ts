@@ -52,10 +52,20 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   selectedProducts: Product[] = [];
   loadingUpdate: boolean = false;
   dataCategory?: Category;
-  productsByCategory:Product[] = []
-  newProduct:boolean = false
+  productsByCategory: Product[] = [];
+  newProduct: boolean = false;
 
-  
+  modelConfigCategory:any[] = [
+    {
+      label:'Categoria',
+      items: [
+        { label: 'Editar', icon: 'pi pi-pencil',},
+        { label: 'Eliminar', icon: 'pi pi-trash', },
+        {label:'', icon:'fa-solid fa-toggle-on', visible:false, command: () => this.setStateCategory(this.dataCategory!, this.dataCategory!.active) }
+      ],
+    },
+  ];
+
   updateListSubscription: Subscription;
   currentSectionSubscription?: Subscription;
   produtsAdminSubscription?: Subscription;
@@ -66,48 +76,64 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private dinamicList: DinamicListService,
     private toast: MatSnackBar,
-    private notificationsAdmin:NotificationsAdminService
+    private notificationsAdmin: NotificationsAdminService
   ) {
     this.updateListSubscription = this.dinamicList.updateDinamicList.subscribe(
       (update) => {
         if (update) {
-          this.ngOnInit();
+          this.getProducts()
+
         }
       }
     );
+
+
+
   }
 
   ngOnInit(): void {
-    this.currentSectionSubscription = this.dinamicList.currentSection.subscribe(
-      (data) => {
+    this.currentSectionSubscription = this.dinamicList.currentSection.subscribe((data) => {
 
         if (data.category) {
-
+          
           this.dataCategory = data.category;
-          console.log(this.dataCategory);
+          this.modelConfigCategory[0]['label'] = this.dataCategory!.category_name
 
-          this.produtsAdminSubscription = this.adminService
-            .getProductsAdmin()
-            .pipe(
-              map((products) =>
-                products.map((e: any) => ({ editing: false, ...e }))
-              )
-            )
-            .subscribe((products) => {
-              this.products = products;
-              this.productsByCategory = this.products.filter(
-                (e) => e.category_id === this.dataCategory?.id
-              ); 
+          if (window.innerWidth < 576 ) {
+            this.modelConfigCategory[0].items[2].visible = true
+            this.modelConfigCategory[0].items[2].label = this.dataCategory!.active ? 'Desactivar' : 'Activar'
 
-              this.filtredProducts = this.products.filter(
-                (e) => e.category_id === this.dataCategory?.id
-              );
-            });
+          }
+
+          this.getProducts()
+     
         } else {
           return;
         }
       }
     );
+  }
+
+
+  getProducts(){
+    this.produtsAdminSubscription = this.adminService
+    .getProductsAdmin()
+    .pipe(
+      map((products) =>
+        products.map((e: any) => ({ editing: false, ...e }))
+      )
+    )
+    .subscribe((products) => {
+      this.products = products;
+      this.productsByCategory = this.products.filter(
+        (e) => e.category_id === this.dataCategory?.id
+      );
+
+      this.filtredProducts = this.products.filter(
+        (e) => e.category_id === this.dataCategory?.id
+      );
+    });
+
   }
 
   editProduct(product: any) {
@@ -118,22 +144,16 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   filter(data: string) {
     const text = data.toLowerCase();
     if (text === '') {
-      this.filtredProducts = this.productsByCategory
-      return      
+      this.filtredProducts = this.productsByCategory;
+      return;
     }
 
-    this.filtredProducts = this.productsByCategory.filter((elemento:any) => {
+    this.filtredProducts = this.productsByCategory.filter((elemento: any) => {
       for (let prop of ['id', 'name', 'price']) {
         console.log(elemento);
         console.log(elemento[prop]);
-        
-        
-        if (
-          elemento[prop]
-            .toString()
-            .toLowerCase()
-            .includes(text)
-        ){
+
+        if (elemento[prop].toString().toLowerCase().includes(text)) {
           return true;
         }
       }
@@ -166,45 +186,59 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     });
   }
 
-
-  setStateCategory(category:Category, state:number){
+  setStateCategory(category: Category, state: number) {
     console.log(state);
-    category.active = state ? 0 : 1
+    category.active = state ? 0 : 1;
+    
     console.log(this.dataCategory);
-
-    this.adminService.categoryState(category.id, state ? 0 : 1).pipe(
-      catchError(()=>{
+    
+    this.adminService
+    .categoryState(category.id, state ? 0 : 1)
+    .pipe(
+      catchError(() => {
         console.log(this.dataCategory);
-        category.active = category.active ? 0 : 1
-        return handleError(undefined, this.notificationsAdmin)
-      })
-    ).subscribe( res => {
-        this.notificationsAdmin.new(`Categoria ${category.category_name} actualizada a ${state ? 'No disponible, no se mostrara en el inicio de su tienda' : 'Disponible, se mostrara en el inicio de su tienda'}, `, 'Ok', {push:true, section:'Products'})
-      }
-    )
-
-
+          category.active = category.active ? 0 : 1;
+          return handleError(undefined, this.notificationsAdmin);
+        })
+        )
+        .subscribe((res) => {
+        this.modelConfigCategory[0].items[2].label = this.dataCategory!.active ? 'Desactivar' : 'Activar'
+        this.notificationsAdmin.new(
+          `Categoria ${category.category_name} actualizada a ${
+            state
+              ? 'No disponible, no se mostrara en el inicio de su tienda'
+              : 'Disponible, se mostrara en el inicio de su tienda'
+          }, `,
+          'Ok',
+          { push: true, section: 'Products' }
+        );
+      });
   }
 
-
-  setStockProduct(product:Product, stock:number){
+  setStockProduct(product: Product, stock: number) {
     console.log(product.stock);
-    
-    product.stock = stock ? 0 : 1  
+
+    product.stock = stock ? 0 : 1;
 
     this.adminService.stockProduct(product.id, stock ? 0 : 1).subscribe(
-      (res)=>{
-        this.notificationsAdmin.new(`Stock del producto ${product.name} actualizado a ${stock ? 'No disponible' : 'Disponible'}`, 'Ok', {push:true, section:'Products'})
+      (res) => {
+        this.notificationsAdmin.new(
+          `Stock del producto ${product.name} actualizado a ${
+            stock ? 'No disponible' : 'Disponible'
+          }`,
+          'Ok',
+          { push: true, section: 'Products' }
+        );
       },
-      (err)=>{
-        product.stock = product.stock ? 0 : 1
-        this.notificationsAdmin.new(`A ocurrido un error intente nuevamente`)
+      (err) => {
+        product.stock = product.stock ? 0 : 1;
+        this.notificationsAdmin.new(`A ocurrido un error intente nuevamente`);
       }
-    )
-
+    );
   }
 
 
+  
   ngOnDestroy(): void {
     this.updateListSubscription.unsubscribe();
     this.currentSectionSubscription?.unsubscribe();

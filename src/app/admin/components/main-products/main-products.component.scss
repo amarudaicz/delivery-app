@@ -35,6 +35,14 @@
 }
 
 .current-list {
-  flex: 1;
-  flex-basis: 0;
+
+  @include m.laptop {
+    width: 75%;
+  }
+
+  @include m.desktop {
+    width: 80%;
+  }
+
+
 }

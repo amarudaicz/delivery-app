@@ -3,7 +3,7 @@
  
         <p-accordion [activeIndex]="activeIndex" >
     
-            <p-accordionTab classList="acordeon-categories" [iconPos]="'end'" >
+            <p-accordionTab class="acordeon-categories" [iconPos]="'end'" >
     
                 <ng-template pTemplate="header">
                     
@@ -19,11 +19,14 @@
     
                     <ul>
                         <li matRipple [class.active]="isCatSelected(category)" (click)="emitSelected(category)" class="item-list d-flex" *ngFor="let category of categories">
-                          <i class="pi pi-circle-fill mr-2 icon-list" [class.active]="category.active"></i>
-                          <span>
-                              {{category.category_name}}
-                          </span>
-                            <span class="ml-2 font-light" [ngClass]="isCatSelected(category) ? 'text-black' : 'text-gray' ">| {{getProductsByCat(category)}} Productos</span>
+                            <i class="pi pi-circle-fill mr-2 icon-list" [class.active]="category.active"></i>
+
+                            <div class="d-flex overflow-hidden ">
+                                <span class=" text-ellipsis overflow-hidden">
+                                    {{category.category_name}}
+                                </span>
+                                  <span class="ml-2 font-light" [style.text-wrap]="'nowrap'" [ngClass]="isCatSelected(category) ? 'text-black' : 'text-gray' ">| {{getProductsByCat(category)}}</span>
+                            </div>
                         </li>
 
                         <li (click)="newCategory()" matRipple class="item-list d-flex">

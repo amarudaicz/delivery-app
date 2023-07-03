@@ -184,10 +184,41 @@ button {
 
 
 .acordeon-categories{
+    
+    position: sticky;
+    top: 0;
+    z-index: 222;
+
     .p-accordion-header{
-        position: sticky;
-        top: 0;
-        z-index: 1;
+
         
     }
+
+    .p-accordion-content{
+        max-height: 350px;
+        overflow-y: auto;
+
+        @include m.tablet{
+            max-height: none;
+
+        
+        }
+
+    }
+
+}
+
+
+.text-ellipsis{
+    text-overflow: ellipsis;
+}
+
+.gap-y-1{
+    row-gap:0.25rem ;
+}
+.gap-y-2{
+    row-gap:0.5rem ;
+}
+.gap-y-3{
+    row-gap:1rem ;
 }

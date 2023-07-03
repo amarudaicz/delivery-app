@@ -64,9 +64,6 @@ export class LocalDataService {
 
   getCategories() {
     return this.categories
-
-
-
   }
 
   resetData() {
@@ -74,8 +71,10 @@ export class LocalDataService {
     this.products.next([])
   }
 
-  private cleanCategories(products: Product[]) {
-
+  private cleanCategories(products: any[]) {
+    console.log(products);
+    
+    
     const categories = products.map((e) => {
       return { name: e.category_name, image: e.category_image, id: e.category_id };
     });
