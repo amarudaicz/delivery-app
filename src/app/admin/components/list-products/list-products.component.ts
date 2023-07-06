@@ -1,5 +1,6 @@
 import {
   Component,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
@@ -33,6 +34,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { handleError } from 'src/app/utils/handle-error-http';
+import { MatDialog } from '@angular/material/dialog';
+import { NewCategoryComponent } from '../new-category/new-category.component';
+import { DashboardListComponent } from '../dashboard-list/dashboard-list.component';
 
 @Component({
   selector: 'app-list-products',
@@ -47,7 +51,6 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   window: Window = window;
   categoryId?: number;
   products: Product[] = [];
-  filtredProducts: Product[] = [];
   refDialog?: DynamicDialogRef;
   selectedProducts: Product[] = [];
   loadingUpdate: boolean = false;
@@ -59,33 +62,30 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     {
       label:'Categoria',
       items: [
-        { label: 'Editar', icon: 'pi pi-pencil',},
-        { label: 'Eliminar', icon: 'pi pi-trash', },
+        { label: 'Editar', icon: 'pi pi-pencil',command: () => this.editCategory()},
+        { label: 'Eliminar', icon: 'pi pi-trash' ,command: () => this.deleteCategory()},
         {label:'', icon:'fa-solid fa-toggle-on', visible:false, command: () => this.setStateCategory(this.dataCategory!, this.dataCategory!.active) }
       ],
     },
   ];
 
-  updateListSubscription: Subscription;
+  updateListSubscription?: Subscription;
   currentSectionSubscription?: Subscription;
   produtsAdminSubscription?: Subscription;
-
+  dashboard = Inject(DashboardListComponent)
+  
   constructor(
     private localService: LocalDataService,
     private confirmService: ConfirmationService,
     private adminService: AdminService,
     private dinamicList: DinamicListService,
     private toast: MatSnackBar,
-    private notificationsAdmin: NotificationsAdminService
+    private notificationsAdmin: NotificationsAdminService,
+    private dialog:MatDialog
   ) {
-    this.updateListSubscription = this.dinamicList.updateDinamicList.subscribe(
-      (update) => {
-        if (update) {
-          this.getProducts()
 
-        }
-      }
-    );
+
+
 
 
 
@@ -95,10 +95,8 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     this.currentSectionSubscription = this.dinamicList.currentSection.subscribe((data) => {
 
         if (data.category) {
-          
           this.dataCategory = data.category;
           this.modelConfigCategory[0]['label'] = this.dataCategory!.category_name
-
           if (window.innerWidth < 576 ) {
             this.modelConfigCategory[0].items[2].visible = true
             this.modelConfigCategory[0].items[2].label = this.dataCategory!.active ? 'Desactivar' : 'Activar'
@@ -117,7 +115,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
   getProducts(){
     this.produtsAdminSubscription = this.adminService
-    .getProductsAdmin()
+    .products$
     .pipe(
       map((products) =>
         products.map((e: any) => ({ editing: false, ...e }))
@@ -128,43 +126,19 @@ export class ListProductsComponent implements OnInit, OnDestroy {
       this.productsByCategory = this.products.filter(
         (e) => e.category_id === this.dataCategory?.id
       );
-
-      this.filtredProducts = this.products.filter(
-        (e) => e.category_id === this.dataCategory?.id
-      );
     });
 
   }
 
   editProduct(product: any) {
     product.editing = true;
-    console.log(product);
   }
 
-  filter(data: string) {
-    const text = data.toLowerCase();
-    if (text === '') {
-      this.filtredProducts = this.productsByCategory;
-      return;
-    }
-
-    this.filtredProducts = this.productsByCategory.filter((elemento: any) => {
-      for (let prop of ['id', 'name', 'price']) {
-        console.log(elemento);
-        console.log(elemento[prop]);
-
-        if (elemento[prop].toString().toLowerCase().includes(text)) {
-          return true;
-        }
-      }
-      return false;
-    });
-  }
 
   deleteProduct(id: number) {
     //CONFIRMATION
 
-    const as = this.confirmService.confirm({
+   this.confirmService.confirm({
       message: `Realmente quiere eliminar el producto ${id}`,
       header: 'Confirmacion',
       icon: 'pi pi-exclamation-triangle',
@@ -177,43 +151,14 @@ export class ListProductsComponent implements OnInit, OnDestroy {
           )
           .subscribe((res) => {
             this.toast.open(`Producto ${id} eliminado`, '', { duration: 3000 });
-            this.adminService.products = undefined;
-            this.dinamicList.updateDashboardList.next(true);
-            this.dinamicList.updateDinamicList.next(true);
+            this.adminService.getProductsAdmin()
           });
       },
       reject: () => {},
     });
   }
 
-  setStateCategory(category: Category, state: number) {
-    console.log(state);
-    category.active = state ? 0 : 1;
-    
-    console.log(this.dataCategory);
-    
-    this.adminService
-    .categoryState(category.id, state ? 0 : 1)
-    .pipe(
-      catchError(() => {
-        console.log(this.dataCategory);
-          category.active = category.active ? 0 : 1;
-          return handleError(undefined, this.notificationsAdmin);
-        })
-        )
-        .subscribe((res) => {
-        this.modelConfigCategory[0].items[2].label = this.dataCategory!.active ? 'Desactivar' : 'Activar'
-        this.notificationsAdmin.new(
-          `Categoria ${category.category_name} actualizada a ${
-            state
-              ? 'No disponible, no se mostrara en el inicio de su tienda'
-              : 'Disponible, se mostrara en el inicio de su tienda'
-          }, `,
-          'Ok',
-          { push: true, section: 'Products' }
-        );
-      });
-  }
+
 
   setStockProduct(product: Product, stock: number) {
     console.log(product.stock);
@@ -238,9 +183,74 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
 
+
+
+  //CATEGORIES
+  editCategory(){
+      this.dialog.open(NewCategoryComponent, {
+        width:window.innerWidth < 600 ? '90%' : ' 60%',
+        data:this.dataCategory
+      })
+  
+  
+  }
+
+  deleteCategory(){
+
+    const category = this.dataCategory!
+
+    this.confirmService.confirm({
+      message: `Realmente quiere eliminar la categoria ${category.category_name} si hace esto se borraran todos los productos que se encuentren en la lista ${category.category_name}`,
+      header: 'Confirmacion',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel:'Si',
+      rejectLabel:'No',
+      rejectButtonStyleClass: 'p-button-outlined',
+      accept: () => {
+        this.adminService.deleteCategory(category.id).pipe(
+          catchError(err => handleError(undefined, this.notificationsAdmin))
+        ).subscribe(res=>{
+          this.dinamicList.resetDashboard = true
+          this.adminService.getCategories().subscribe(res => res )
+          this.notificationsAdmin.new(`Categoria ${this.dataCategory?.category_name} eliminada con exito`, 'Ok', {push:true})
+        })
+      },
+      reject: () => {},
+    });    
+    
+  }
+
+  setStateCategory(category: Category, state: number) {
+    console.log(state);
+    category.active = state ? 0 : 1;
+    
+    console.log(this.dataCategory);
+    
+    this.adminService.categoryState(category.id, state ? 0 : 1)
+    .pipe(
+      catchError(() => {
+        console.log(this.dataCategory);
+          category.active = category.active ? 0 : 1;
+          return handleError(undefined, this.notificationsAdmin);
+        })
+        )
+        .subscribe((res) => {
+        this.modelConfigCategory[0].items[2].label = this.dataCategory!.active ? 'Desactivar' : 'Activar'
+        this.notificationsAdmin.new(
+          `Categoria ${category.category_name} actualizada a ${
+            state
+              ? 'No disponible, no se mostrara en el inicio de su tienda'
+              : 'Disponible, se mostrara en el inicio de su tienda'
+          }, `,
+          'Ok',
+          { push: true, section: 'Products' }
+        );
+      });
+  }
+
+
   
   ngOnDestroy(): void {
-    this.updateListSubscription.unsubscribe();
     this.currentSectionSubscription?.unsubscribe();
     this.produtsAdminSubscription?.unsubscribe();
   }

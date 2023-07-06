@@ -2,6 +2,7 @@ import { Q } from '@angular/cdk/keycodes';
 import { Component } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Local } from 'src/app/interfaces/local-interface';
+import { AdminService } from 'src/app/services/admin/admin.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
@@ -14,7 +15,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class AppConfigComponent {
   
   localName?: string|null;
-  constructor(public theme:ThemesService, public routeData:RouteDataService, private localService:LocalDataService, private router:Router){
+  constructor(public theme:ThemesService, public routeData:RouteDataService, private localService:LocalDataService, private router:Router, private adminService:AdminService){
     router.events.subscribe(event => {
       
       
@@ -44,16 +45,10 @@ export class AppConfigComponent {
   }
 
   ngOnInit(): void {
+    this.adminService.getCategories()
     
 
-    console.log();
-    
-    
-    setTimeout(() => {
-      
-    }, 3000);
-    
-    
+
     
 
   }

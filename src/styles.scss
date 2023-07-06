@@ -185,23 +185,19 @@ button {
 
 .acordeon-categories{
     
-    position: sticky;
-    top: 0;
-    z-index: 222;
-
+    
     .p-accordion-header{
-
-        
+        position: sticky;
+        top: 0;
+        z-index: 222;
     }
 
     .p-accordion-content{
         max-height: 350px;
         overflow-y: auto;
 
-        @include m.tablet{
-            max-height: none;
-
-        
+        @include m.laptop{
+            max-height: calc(100vh - 338px);;
         }
 
     }
@@ -209,6 +205,20 @@ button {
 }
 
 
+.ui-draggable-dragging.p-draggable-dragging {
+    opacity: 0; /* Cambia la opacidad a 0.8 */
+    /* Agrega otros estilos personalizados según tus necesidades */
+  }
+
+  .preview-drop{
+
+    background: rgb(255, 255, 255);
+    padding:5px 10px ;
+    opacity: 1 !important;
+    animation: all .5s;
+    -webkit-tap-highlight-color:none !important;
+
+  }
 .text-ellipsis{
     text-overflow: ellipsis;
 }
@@ -221,4 +231,8 @@ button {
 }
 .gap-y-3{
     row-gap:1rem ;
+}
+
+.object-contain{
+    object-fit: contain;
 }

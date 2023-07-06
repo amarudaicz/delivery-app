@@ -2,6 +2,7 @@
 >
   <a (click)="emitCategory(category)">
     <div
+      [style.background-image]="'url(' + category.image + ')'"
       [style.border]="selectedCategory(category.id) ? '2px solid' + theme.get('background') : ''"
       matRipple
       [matRippleColor]="'#00000012'"

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
 
@@ -12,7 +13,7 @@ export class MainProductsComponent {
 
   data:any
 
-  constructor(private adminService:AdminService, private dinamicList:DinamicListService){
+  constructor(private adminService:AdminService, private dinamicList:DinamicListService, private layoutService:LayoutService){
 
     this.dinamicList.currentSection.subscribe((data:any)=>{
       console.log(data);
@@ -20,6 +21,8 @@ export class MainProductsComponent {
       this.data = data
 
     })
+
+    this.layoutService.state.staticMenuDesktopInactive = true
     
 
   }

@@ -20,9 +20,10 @@ export class AppConfigComponent implements OnInit {
     
     constructor(public layoutService: LayoutService, public menuService: MenuService, private routeData:RouteDataService, private adminService:AdminService) { 
         this.routeData.setCurrent('admin')
-        // this.adminService.getProductsAdmin().subscribe()
         // this.adminService.getCategories().subscribe()
+        this.adminService.getProductsAdmin()
         this.adminService.getLocal().subscribe()
+        this.adminService.getCategories().subscribe()
     }
 
 

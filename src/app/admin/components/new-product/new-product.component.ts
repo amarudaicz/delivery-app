@@ -105,7 +105,7 @@ export class NewProductComponent implements OnInit {
     console.log(this.category_id);
     
 
-    this.adminService.getCategories().subscribe((data) => { this.categories = data; console.log(data); })
+    this.adminService.categories$.subscribe((data) => this.categories = data )
 
     this.continueTutorial()
   }
@@ -136,9 +136,7 @@ export class NewProductComponent implements OnInit {
       })).subscribe((res) => {
       this.resetForm()
       this.toast.open('Producto creado con exito', '',  {duration:3000})
-      this.adminService.products = undefined
-      this.dinamicList.updateDinamicList.next(true)
-      this.dinamicList.updateDashboardList.next(true)
+      this.adminService.getProductsAdmin()
       this.closeForm()
     })
 
@@ -210,6 +208,8 @@ export class NewProductComponent implements OnInit {
     }
 
 
+
+    
   }
 
   closeForm(){

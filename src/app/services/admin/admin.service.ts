@@ -11,89 +11,81 @@ import { handleError } from 'src/app/utils/handle-error-http';
 import { NotificationsAdminService } from '../notifications-admin/notifications-admin.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
-
-  constructor(private http: HttpClient, private notificationsAdmin:NotificationsAdminService) {
+  constructor(
+    private http: HttpClient,
+    private notificationsAdmin: NotificationsAdminService
+  ) {
     this.credentials = {
       table: localStorage.getItem('admin-local'),
-      local_id: localStorage.getItem('local_id')
+      local_id: localStorage.getItem('local_id'),
+    };
 
-    }
   }
 
-
-  credentials: any
-  local?: Local
-  products?: Product[]
-  categories?: any[]
+  credentials: any;
+  local?: Local;
+  products?: Product[];
+  categories?: any[];
   updateListProducts = new BehaviorSubject<boolean>(false);
   optionsGroup = new BehaviorSubject<OptionProduct[]>([]);
-
+  categories$ = new BehaviorSubject<any[]>([]);
+  products$ = new BehaviorSubject<Product[]>([]);
 
 
 
   //PRODUCTSS!°!°°!°!
   postProduct(product: any) {
-
     console.log(product);
 
-    const dataProduct = new FormData()
-    Object.keys(product).forEach(k => {
+    const dataProduct = new FormData();
+    Object.keys(product).forEach((k) => {
       console.log(k);
       console.log(product[k]);
 
-      dataProduct.append(k, product[k])
-    })
+      dataProduct.append(k, product[k]);
+    });
 
-    return this.http.post(environment.host + `products`, dataProduct)
-
+    return this.http.post(environment.host + `products`, dataProduct);
   }
 
   updateProduct(product: any) {
-    const formData = new FormData()
+    const formData = new FormData();
     console.log(product);
 
-    Object.keys(product).forEach(k => {
+    Object.keys(product).forEach((k) => {
       console.log(k);
       console.log(product[k]);
 
-      formData.append(k, product[k])
-    })
+      formData.append(k, product[k]);
+    });
 
-    return this.http.put(environment.host + `products`, formData)
+    return this.http.put(environment.host + `products`, formData);
   }
 
   deleteProduct(id: number) {
-    return this.http.delete(environment.host + `products/${id}`)
-
+    return this.http.delete(environment.host + `products/${id}`);
   }
 
-
   getProductsAdmin() {
-    console.log(this.products);
-    if (this.products) {
-      return of(this.products)
-    }
 
-    return this.http.get<Product[]>(environment.host + `products`).pipe(
-      map(data => {
+    this.http.get<Product[]>(environment.host + `products`).pipe(
+      map((data) => {
+        this.products$.next(data)
         this.products = data;
         return data;
       })
-    );
+    ).subscribe();
   }
 
-  stockProduct(id:number, stock:number){
-
-    return this.http.put(environment.host + 'products/update-stock', {id, stock})
-
-
+  stockProduct(id: number, stock: number) {
+    return this.http.put(environment.host + 'products/update-stock', {
+      id,
+      stock,
+    });
   }
-
-
-
 
   //LOCAL!!!!!!!!
 
@@ -102,9 +94,9 @@ export class AdminService {
       return of(this.local);
     } else {
       return this.http.get<Local[]>(environment.host + `locals`).pipe(
-        map(data => {
+        map((data) => {
           this.local = data[0];
-          this.optionsGroup.next(data[0].options_group)
+          this.optionsGroup.next(data[0].options_group);
           return data[0];
         })
       );
@@ -112,12 +104,8 @@ export class AdminService {
   }
 
   updateLocal(data: any) {
-    return this.http.put(environment.host + 'locals/put-one', data)
+    return this.http.put(environment.host + 'locals/put-one', data);
   }
-
- 
-
-
 
 
 
@@ -126,70 +114,88 @@ export class AdminService {
 
   //CATEGORIASSS !!!!!!!!!!!
   postCategory(category: any) {
-    const formData = new FormData()
+    const formData = new FormData();
     console.log(category);
 
-    Object.keys(category).forEach(k => {
+    Object.keys(category).forEach((k) => {
       console.log(k);
       console.log(category[k]);
 
-      formData.append(k, category[k])
-    })
+      formData.append(k, category[k]);
+    });
 
-    return this.http.post(environment.host + `admin/categories`, formData, {
-      
-    })
+    return this.http.post(environment.host + `admin/categories`, formData, {});
+  }
+
+  editCategory(category:{name:string, description:string, image:string|File}|any){
+    const formData = new FormData();
+    console.log(category);
+
+    Object.keys(category).forEach((k) => {
+
+      console.log(category[k]);
+
+      formData.append(k, category[k]);
+    });
+
+    return this.http.put(environment.host + `admin/categories`, formData, {});
+
+  }
+
+
+  deleteCategory(id:number){
+
+    return this.http.delete(environment.host + `admin/categories/${id}`)
+
   }
 
   getCategories() {
-
-    if (this.categories) {
-      return of(this.categories)
-    } else {
-      return this.http.get<Category[]>(environment.host + `admin/get-categories`).pipe(
-        map(data => {
-          this.categories = deleteRepeatElement(data)
-          return deleteRepeatElement(data)
-
+    return this.http
+      .get<Category[]>(environment.host + `admin/get-categories`)
+      .pipe(
+        map((data) => {
+          this.categories = deleteRepeatElement(data);
+          this.categories$.next(deleteRepeatElement(data));
+          return deleteRepeatElement(data);
         })
       );
-    }
-
-
   }
 
-  categoryState(category_id:number, state:number){
-    return this.http.put(environment.host + 'admin/categories/set-active', {category_id, state})
-
+  categoryState(category_id: number, state: number) {
+    return this.http.put(environment.host + 'admin/categories/set-active', {
+      category_id,
+      state,
+    });
   }
-
-
 
   //OPTIONS-GROUP!!!!!!!
   postOptionGroup(data: any) {
-    return this.http.post(environment.host + 'admin/options-group', data)
+    return this.http.post(environment.host + 'admin/options-group', data);
   }
 
-  updateOptionGroup(data:{products:Product[] | any[], group:OptionProduct, variations:OptionProduct[]}){
-    data.products = data.products.map(p => p.id)
+  updateOptionGroup(data: {
+    products: Product[] | any[];
+    group: OptionProduct;
+    variations: OptionProduct[];
+  }) {
+    data.products = data.products.map((p) => p.id);
     console.log(data);
-    return this.http.put(environment.host + 'admin/options-group', data)
+    return this.http.put(environment.host + 'admin/options-group', data);
   }
 
-  deleteOptionGroup(id:number){
-    return this.http.delete(environment.host + 'admin/options-group/' + id,)
+  deleteOptionGroup(id: number) {
+    return this.http.delete(environment.host + 'admin/options-group/' + id);
   }
-
-
 
   cleanCategories(products: Product[]) {
-
     const categories = products.map((e) => {
-      return { name: e.category_name, image: e.category_image, id: e.category_id };
+      return {
+        name: e.category_name,
+        image: e.category_image,
+        id: e.category_id,
+      };
     });
 
     return deleteRepeatElement(categories);
   }
-
-
 }

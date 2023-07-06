@@ -95,7 +95,7 @@ export class MainOptionsComponent implements OnInit {
     }
       
 
-    this.adminService.getProductsAdmin().pipe(
+    this.adminService.products$.pipe(
       map(products => products.filter(e => e.variations.some(e =>
         e.nameVariation === group.nameVariation))
 
@@ -131,7 +131,7 @@ export class MainOptionsComponent implements OnInit {
   }
 
   deleteGroupOption(group:any, index:number){
-    this.adminService.getProductsAdmin().pipe(
+    this.adminService.products$.pipe(
       map(products => products.filter(e => e.variations.some(e =>
         e.nameVariation === group.nameVariation))
       )).subscribe(products => {

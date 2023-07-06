@@ -1,3 +1,6 @@
+.new-category{
+    max-height: 90vh;
+}
 .form-category{
     display: flex;
     flex-wrap: wrap;
@@ -24,4 +27,14 @@
     display: flex;
     align-items: center;
     gap: 15px ;
+}
+
+.overlay-placeholder-image{
+    bottom: 0;
+    left:50%;
+    transform: translate(-50%, 0);
+    padding: 5px;
+    border:1px solid;
+    border-radius: 5px;
+    opacity: .7;
 }

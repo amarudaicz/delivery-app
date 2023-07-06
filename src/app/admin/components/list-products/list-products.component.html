@@ -16,7 +16,7 @@
 <div *ngIf="dataCategory else noCategory" class="card p-0 container-table-products">
 
     <p-menu #menuCategory [popup]="true" [model]="modelConfigCategory"></p-menu>
-    <div class="d-flex justify-content-center sm:justify-content-between p-3 md:px-5 header-table gap-y-3 wrap state-category sticky top-0">
+    <div class="d-flex justify-content-center sm:justify-content-between p-3 md:px-5 header-table gap-y-3 wrap state-category sticky top-0 bg-gray-50">
 
         <div class="d-flex w-full sm:w-fit justify-content-between sm:justifi-content-start">
             <h1 class="mr-2 title overflow-hidden" [style.text-overflow]="'ellipsis'">{{dataCategory.category_name}}</h1>
@@ -50,11 +50,11 @@
                 styleClass="p-button-primary p-button-sm">
             </p-button>
 
-            <button class="hidden md:flex">
+            <button class="hidden md:flex" (click)="deleteCategory()">
                 <i class="pi pi-trash button-icon"></i>
             </button>
 
-            <button class="hidden md:flex">
+            <button class="hidden md:flex" (click)="editCategory()">
                 <i class="fa-solid button-icon fa-pen"></i>
             </button>
         </div>
@@ -64,67 +64,71 @@
 
 
 
-    <div class="table-products" *ngIf="filtredProducts.length">
-        <div class="container-item-table shadow-1 hover:shadow-5" *ngFor="let product of filtredProducts">
+    <div class="table-products">
+        <div >
 
-            <div class="item">
-
-                <div class="d-flex between wrap gap-2">
-
-                    <div class="d-flex" [ngClass]="product.stock ? '' :'opacity-50'">
-                        <div class="image-item mr-4">
-                            <img appImageFallback [src]="product.image" class="shadow-6 border-round-sm"
-                                alt="{{product.name}}" width="100">
-                        </div>
-
-                        <div class="item-name">
-                            <p class="product-id">#{{product.id}}</p>
-                            <p>
-                                <b>
-                                    {{product.name}}
-                                    -
-                                    {{product.price | currency:'USD'}}
-                                </b>
-                            </p>
-
-                            <div *ngIf="product.variations.length" class="d-flex mt-2 text-gray">
-                                <i class="fa-solid fa-list mr-2"></i>
-                                <p>{{product.variations.length}} Grupos de opciones </p>
+            <div class="container-item-table shadow-1 hover:shadow-5" *ngFor="let product of productsByCategory">
+    
+                <div class="item">
+    
+                    <div class="d-flex between wrap gap-2">
+    
+                        <div class="d-flex" [ngClass]="product.stock ? '' :'opacity-50'">
+                            <div class="image-item mr-4">
+                                <img appImageFallback [src]="product.image" class="shadow-6 border-round-sm"
+                                    alt="{{product.name}}" width="100">
+                            </div>
+    
+                            <div class="item-name">
+                                <p class="product-id">#{{product.id}}</p>
+                                <p>
+                                    <b>
+                                        {{product.name}}
+                                        -
+                                        {{product.price | currency:'USD'}}
+                                    </b>
+                                </p>
+    
+                                <div *ngIf="product.variations.length" class="d-flex mt-2 text-gray">
+                                    <i class="fa-solid fa-list mr-2"></i>
+                                    <p>{{product.variations.length}} Grupos de opciones </p>
+                                </div>
                             </div>
                         </div>
+    
+                        <div class="state-product d-flex gap-2">
+                            <i class="pi pi-circle-fill" [ngClass]="product.stock ? 'text-green-500' : 'text-red-500' "></i>
+                            <span>{{product.stock ? 'Disponible' : 'No disponible'}} </span>
+                        </div>
+    
+                        <div class="toogle-product d-flex gap-4">
+    
+    
+                            <button (click)="deleteProduct(product.id)">
+                                <i class="btn-edit pi pi-trash"></i>
+                            </button>
+    
+                            <button class="mr-2" (click)="editProduct(product)">
+                                <i class="btn-edit fa-solid fa-pen"></i>
+                            </button>
+    
+                            <mat-slide-toggle (change)="setStockProduct(product, product.stock)"
+                                [checked]="product.stock ? true : false" color="primary"></mat-slide-toggle>
+                        </div>
+    
                     </div>
-
-                    <div class="state-product d-flex gap-2">
-                        <i class="pi pi-circle-fill" [ngClass]="product.stock ? 'text-green-500' : 'text-red-500' "></i>
-                        <span>{{product.stock ? 'Disponible' : 'No disponible'}} </span>
-                    </div>
-
-                    <div class="toogle-product d-flex gap-4">
-
-
-                        <button (click)="deleteProduct(product.id)">
-                            <i class="btn-edit pi pi-trash"></i>
-                        </button>
-
-                        <button class="mr-2" (click)="editProduct(product)">
-                            <i class="btn-edit fa-solid fa-pen"></i>
-                        </button>
-
-                        <mat-slide-toggle (change)="setStockProduct(product, product.stock)"
-                            [checked]="product.stock ? true : false" color="primary"></mat-slide-toggle>
-                    </div>
-
+    
+    
+    
+    
                 </div>
-
-
-
-
+    
+    
+                <div *ngIf="product.editing">
+                    <app-main-edit-product [product]="product"></app-main-edit-product>
+                </div>
             </div>
-
-
-            <div *ngIf="product.editing">
-                <app-main-edit-product [product]="product"></app-main-edit-product>
-            </div>
+        
         </div>
 
 

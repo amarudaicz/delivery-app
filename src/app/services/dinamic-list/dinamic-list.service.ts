@@ -14,8 +14,7 @@ export class DinamicListService {
   updateDinamicList = new BehaviorSubject<any>(false);
   updateDashboardList = new BehaviorSubject<any>(false);
 
-  
-
+  public resetDashboard:boolean=true
   
   constructor(private adminService:AdminService) { 
     
@@ -25,14 +24,18 @@ export class DinamicListService {
  
  
   setSection(section:any){
-    console.log(section);
     
     if (section.category) {
+      
       this.categoryId = section.category.id
+
     }else{
       this.categoryId = undefined
     }
 
     this.currentSection.next(section)
   }
+
+
+
 }

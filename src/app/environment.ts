@@ -1,6 +1,6 @@
 
 export const environment = {
     production:true,
-    host:'http://34.203.206.74/',
+    host:'http://localhost:3001/',
     cloudinary_cloud:'diyorb8ka'
 }

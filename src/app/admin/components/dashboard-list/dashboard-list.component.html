@@ -1,5 +1,5 @@
 <div class="container-dashboard-list">
-    <div class="list">
+    <div class="list">           
  
         <p-accordion [activeIndex]="activeIndex" >
     
@@ -17,21 +17,23 @@
     
                 <ng-template pTemplate="content" (click)="currentSection = 'products'">
     
-                    <ul>
-                        <li matRipple [class.active]="isCatSelected(category)" (click)="emitSelected(category)" class="item-list d-flex" *ngFor="let category of categories">
-                            <i class="pi pi-circle-fill mr-2 icon-list" [class.active]="category.active"></i>
-
-                            <div class="d-flex overflow-hidden ">
-                                <span class=" text-ellipsis overflow-hidden">
-                                    {{category.category_name}}
-                                </span>
-                                  <span class="ml-2 font-light" [style.text-wrap]="'nowrap'" [ngClass]="isCatSelected(category) ? 'text-black' : 'text-gray' ">| {{getProductsByCat(category)}}</span>
+                    <ul cdkDropList  >
+                        <li cdkDrag [cdkDragPreviewClass]="['preview-drop', 'shadow-2']" (cdkDragDropped)="handleDragDrop($event)" (cdkDragStarted)="handleStartDrag($event)"  [class.active]="isCatSelected(category)" (click)="emitSelected(category)" class="item-list d-flex justify-content-between" *ngFor="let category of categories">
+                            <div class="d-flex">
+                                <i class="pi pi-circle-fill mr-2 icon-list" [class.active]="category.active"></i>
+    
+                                <div class="d-flex overflow-hidden ">
+                                    <span class=" text-ellipsis overflow-hidden">
+                                        {{category.category_name}}
+                                    </span>
+                                      <span class="ml-2 font-light" [style.text-wrap]="'nowrap'" [ngClass]="isCatSelected(category) ? 'text-black' : 'text-gray' ">| {{getProductsByCat(category)}}</span>
+                                </div>
                             </div>
-                        </li>
 
-                        <li (click)="newCategory()" matRipple class="item-list d-flex">
-                            <i class="pi pi-plus mr-2"></i>
-                            Nueva categoria
+                            <div cdkDragHandle class="ml-5 drag-handle d-flex cursor-move">
+                                <i class="pi pi-ellipsis-v"></i>
+                                <i class="pi pi-ellipsis-v" style="margin-left: -9px;"></i>
+                            </div>
                         </li>
                     </ul>
     
@@ -41,25 +43,40 @@
     
         </p-accordion>
     
-    
-        <p-accordion [expandIcon]="''" [collapseIcon]="''">
-
-            <p-accordionTab classList="acordeon-groups" (click)="emitSelected({section:'groups'})">
-    
-                <ng-template pTemplate="header">
-                    
-                    <div  class="container-title-seccion d-flex" [class.active]="currentSection === 'groups' ">
-                        <i class="fa-solid fa-list mr-2"></i>
-                        <h4 class="title-seccion" >Grupo de opciones</h4>
-                    </div>
-                    
-                </ng-template>  
-    
-            </p-accordionTab>
-        </p-accordion>
-
-
     </div>
+
+    <p-accordion [expandIcon]="''" [collapseIcon]="''" (click)="newCategory()">
+
+        <p-accordionTab classList="acordeon-groups">
+
+            <ng-template pTemplate="header">
+                
+                <div  class="container-title-seccion d-flex">
+                    <i class="pi pi-plus mr-2"></i>
+                    <h4 class="title-seccion" >Nueva Categoria</h4>
+                </div>
+                
+            </ng-template>  
+
+        </p-accordionTab>
+    </p-accordion>
+
+    <p-accordion [expandIcon]="''" [collapseIcon]="''">
+
+        <p-accordionTab classList="acordeon-groups" (click)="emitSelected({section:'groups'})">
+
+            <ng-template pTemplate="header">
+                
+                <div  class="container-title-seccion d-flex" [class.active]="currentSection === 'groups' ">
+                    <i class="fa-solid fa-list mr-2"></i>
+                    <h4 class="title-seccion" >Grupo de opciones</h4>
+                </div>
+                
+            </ng-template>  
+
+        </p-accordionTab>
+    </p-accordion>
+
 
 
 </div>

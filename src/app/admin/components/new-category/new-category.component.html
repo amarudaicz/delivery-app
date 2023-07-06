@@ -1,40 +1,114 @@
-<div class="card new-category">
-  <h1>Nueva categoria</h1>
-  <p class="mb-3" style="max-width: 700px;">Ingresa el nombre de la categoría tambien puedes agregar una descripcion breve y una imagen que la represente. Asegúrate de que los datos sean precisos y correctos al momento de guardar</p>
+<div class="new-category p-4 overflow-auto">
   
+  <div class="mb-3">
+    <h1>{{ editing ? 'Editando' : 'Nueva categoria'}}</h1>
+    <p *ngIf="!editing" class="" style="max-width: 700px;">Ingresa el nombre de la categoría tambien puedes agregar una descripcion
+      breve y una imagen que la represente. Asegúrate de que los datos sean precisos y correctos al momento de guardar</p>
+  </div>
+
+
   <div class="container-form-category">
-  <form appearance="outline" [formGroup]="categoryForm" (ngSubmit)="submitForm()">
+    <form appearance="outline" [formGroup]="categoryForm" (ngSubmit)="submitForm()">
 
-      <div class="d-flex gap-2 wrap align-items-start mb-2" >
-        <mat-form-field >
-          <mat-label>Nombre de la categoría</mat-label>
-          <input matInput formControlName="name" placeholder="Nombre de la categoría">
-          <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">Este campo es requerido</mat-error>
-        </mat-form-field>
+      <div class="d-flex flex-column mb-3">
 
-          <span class="d-flex gap-2">
+        <div class="d-flex flex-column w-full">
+          <mat-form-field class="w-full mb-2">
+            <mat-label>Nombre de la categoría</mat-label>
+            <input matInput formControlName="name" placeholder="Nombre de la categoría">
+            <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">Este campo es requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Descripcion(opcional)</mat-label>
+            <textarea formControlName="description" maxlength="150" placeholder="Ingresa una descripcion breve"
+              matInput> </textarea>
+            <mat-hint>max 150 caracteres/{{categoryForm.get('description')?.value.length}}</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+        <div class="w-full mt-3">
+          <input type="file" #inputUploadImage (change)="uploadImage($event)" class="hidden" id="upload-image">
+
+          <label for="upload-image">
+            <span class="text-800 title">{{ previewImageSrc ? 'Imagen de la cateogria' : 'Carga tu imagen'}}</span>
+
+            <div
+              class="mt-2 w-full d-flex flex-column relative justify-content-center p-3 border-1 border-600 border-round shadow-1 hover:shadow-5 cursor-pointer">
+
+              <div [ngClass]="previewImageSrc ? 'justify-content-center' : 'justify-content-between'" class="d-flex w-full  wrap">
+
+                <div *ngIf="!previewImageSrc" class="d-flex flex-column flex-1 gap-2">
+
+                  <div class="d-flex flex-column align-items-start w-full p-2 bg-indigo-100 border-round">
+                    <div class="d-flex gap-2 w-full">
+                      <h4>Resolución y calidad</h4>
+                      <i class="pi pi-check text-green-500 font-bold"></i>
+                    </div>
+
+                    <p class="text-gray-700 text-sm">
+                      Asegúrate de que la imagen tenga una resolución adecuada y una buena calidad.
+                    </p>
+                  </div>
+
+                  <div class="d-flex flex-column align-items-start w-full p-2 bg-indigo-100 border-round">
+                    <div class="d-flex gap-2 w-full">
+                      <h4>Orientación</h4>
+                      <i class="pi pi-check text-green-500 font-bold"></i>
+                    </div>
+
+                    <p class="text-gray-700 text-sm">
+                      Verifica que la imagen esté orientada correctamente. Si es necesario, rota la imagen para que se muestre de manera adecuada.</p>
+
+                  </div>
+
+                  <div class="d-flex flex-column align-items-start w-full p-2 bg-indigo-100 border-round">
+                    <div class="d-flex gap-2 w-full">
+                      <h4>Fondo y entorno</h4>
+                      <i class="pi pi-check text-green-500 font-bold"></i>
+                    </div>
+
+                    <p class="text-gray-700 text-sm">
+                      Elige un fondo limpio y sin distracciones para resaltar la imagen de la categoria. Evita fondos desordenados o que puedan restar atención al objeto principal.
+                  </div>
+                </div>
+
+                <div [class.w-auto]="previewImageSrc" class="relative w-full xl:w-auto" >
+                  <img class="w-full object-contain" [src]="previewImageSrc || './assets/images/placeholder-image.svg' " [ngStyle]="{ height:'250px'}"
+                    alt="">
+                  <span *ngIf="!previewImageSrc" class="absolute overlay-placeholder-image">Click aqui</span>
+                </div>
+
+
+              </div>
+
+
+            </div>
+          </label>
+
+          <p-button *ngIf="previewImageSrc" (click)="removeImage(inputUploadImage)" label="Eliminar imagen" icon="pi pi-trash" styleClass="p-button-text mt-2"></p-button>
+
+        </div>
+
+        <!-- <span class="d-flex gap-2">
             <p-fileUpload chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" [chooseLabel]="previewImageCategory || 'Imagen' " mode="basic" accept="image/*" [maxFileSize]="1000000">
             </p-fileUpload>
             <p-button *ngIf="previewImageCategory" icon="pi pi-times" class="button-remove-image" (click)="image = false" ></p-button>
-          </span>
+          </span> -->
       </div>
 
-      <mat-form-field>
 
-        <mat-label>Descripcion(opcional)</mat-label>
-        <textarea formControlName="description" placeholder="Ingresa una descripcion breve" matInput> </textarea>
 
-      </mat-form-field>
+      <div class="button-add-category">
+        <button [disabled]="loadForm" pButton color="primary" type="submit">
+          <div class="d-flex gap-1">
+            Guardar categoría
+            <i class="pi pi-spinner pi-spin" *ngIf="loadForm"></i>
+          </div>
+        </button>
+      </div>
 
-    
-    <div class="button-add-category">
-      <button [disabled]="loadForm" pButton color="primary" type="submit">
-        <div class="d-flex gap-1">
-          Guardar categoría
-          <i class="pi pi-spinner pi-spin" *ngIf="loadForm"></i>
-        </div>
-      </button>
-    </div>
-  </form>
+    </form>
   </div>
 </div>
