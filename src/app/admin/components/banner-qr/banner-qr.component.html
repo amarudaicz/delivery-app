@@ -1,0 +1,35 @@
+
+<div [style.background]="'#7342e5'" class="relative overflow-hidden p-4 banner-qr w-full h-24rem border-round-xl">
+    <div class="flex align-items-center w-full h-full ">
+        <div class="text-qr flex flex-column align-items-center sm:align-items-start w-full md:w-6">
+            <h1 class="title-qr mb-5 text-white text-3xl md:text-6xl font-bold">Acceso QR</h1>
+
+            <div class="list-qr text-white">
+                <ul>
+                    <li class="d-flex gap-3 mb-2" *ngFor="let m of modelListFeatures">
+                        <i [ngClass]="[m.icon]"></i>
+                        <span>{{m.text}}</span>
+                    </li>
+                </ul>
+
+            </div>
+
+
+                <button matRipple class="p-3 bg-white w-8 border-round text-black font-bold cursor-pointer mt-4 shadow-1">
+                    <span class="text-black">
+
+                        Generar codigo QR
+                    </span>
+                </button>
+
+        </div>
+        
+    </div>
+
+
+
+
+    <div class="phone-mockup absolute hidden sm:block">
+        <img class="image-mockup" src="./assets/images/mock-removebg-preview.png" alt="">
+    </div>
+</div>

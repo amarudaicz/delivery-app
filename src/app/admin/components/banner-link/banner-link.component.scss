@@ -1,0 +1,22 @@
+.phone-mockup{
+    bottom: -20px;
+    right: -20px;
+}
+
+.title-link{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.list-qr{
+
+
+}
+
+.image-share-link{
+    transform: translate(0, 33px);
+    
+    img{
+        object-fit: scale-down;
+    }
+    // filter:drop-shadow(-8px -3px 20px rgba(0, 0, 0, 0.55))
+}

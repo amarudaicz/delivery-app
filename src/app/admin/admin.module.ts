@@ -59,6 +59,8 @@ import { DashboardListComponent } from './components/dashboard-list/dashboard-li
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ImageFallbackDirective } from '../directives/image-fallback/image-fallback.directive';
 import { SelectProductsGroupComponent } from './components/select-products-group/select-products-group.component';
+import { BannerQrComponent } from './components/banner-qr/banner-qr.component';
+import { BannerLinkComponent } from './components/banner-link/banner-link.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { SelectProductsGroupComponent } from './components/select-products-group
     DashboardListComponent,
     ImageFallbackDirective,
     SelectProductsGroupComponent,
+    BannerQrComponent,
+    BannerLinkComponent,
   ],
   imports: [
     CommonModule,
