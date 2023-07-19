@@ -241,7 +241,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
             state
               ? 'No disponible, no se mostrara en el inicio de su tienda'
               : 'Disponible, se mostrara en el inicio de su tienda'
-          }, `,
+          }`,
           'Ok',
           { push: true, section: 'Products' }
         );

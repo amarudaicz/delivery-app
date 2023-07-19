@@ -1,0 +1,87 @@
+<div class="w-full card">
+
+    <div class="w-full">
+
+        <div class="mb-4">
+            <button (click)="submitForm()" mat-raised-button color="primary">
+                <span class="d-flex">
+                    Guardar
+                    <i class="ml-2 fa-solid fa-floppy-disk" ></i>
+                </span>
+            </button>
+        </div>
+    
+        <div class="days">
+            <form [formGroup]="form">
+                <div formArrayName="days">
+    
+                    <div class="day mb-4 pb-3 border-bottom-1 border-300" *ngFor="let dayFormGroup of formArrayDays.controls; let i = index"
+                        [formGroupName]="i">
+    
+                        <div class="d-flex justify-content-between mb-3">
+                            
+                            <div class="d-flex gap-3">
+                                <h2 class="title">{{days[i]}}</h2>
+                                
+                                <mat-slide-toggle [checked]="dayFormGroup.get('open')?.value" formControlName="open" color="primary" class="" > </mat-slide-toggle>
+                            </div>
+                        
+                        </div>
+    
+                        <div formArrayName="shifts" *ngIf="dayFormGroup.get('open')?.value">
+    
+                            <div *ngFor="let shiftFormGroup of getShiftsFormArray(dayFormGroup).controls; let j = index"
+                                [formGroupName]="j">
+
+                                <div class="px-3">
+                                    
+                                    <h3 class="mb-2 text-800">Turno {{j + 1}}</h3>
+                                    
+                                    <div class="d-flex wrap">
+                                        <div class="d-flex gap-3 wrap">
+                                            <mat-form-field>
+                                                <mat-label>Horario de apertura</mat-label>
+                                                <mat-select formControlName="start">
+                                                    <mat-option *ngFor="let hour of hours" [value]="hour">{{hour}}</mat-option>
+                                                </mat-select>
+                                                <mat-error>Este campo es requerido</mat-error>
+                                            </mat-form-field>
+            
+                                            <mat-form-field>
+                                                <mat-label>Horario de cierre</mat-label>
+                                                <mat-select formControlName="end">
+                                                    <mat-option *ngFor="let hour of hours" [value]="hour">{{hour}}</mat-option>
+                                                </mat-select>
+                                                <mat-error>Este campo es requerido</mat-error>
+                                            </mat-form-field>
+                                        </div>
+            
+                                        <button class="mb-3 ml-2" mat-button (click)="removeShift(dayFormGroup, j)">
+                                            Eliminar turno
+                                            <i class="pi pi-minus-circle"></i>
+                                        </button>
+        
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            
+                            <button mat-button color="accent" (click)="addShift(dayFormGroup)" class="ml-3 mt-2">
+                                <span class="d-flex">
+                                    Nuevo turno
+                                    <i class="ml-2 pi pi-plus-circle"></i>
+                                </span>
+                            </button>
+                        </div>
+    
+    
+                    </div>
+                </div>
+    
+    
+            </form>
+        </div>
+    </div>
+
+</div>

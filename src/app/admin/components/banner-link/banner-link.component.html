@@ -1,27 +1,44 @@
 <div [style.background]="'#FF725E'"
-    class="relative overflow-hidden banner-qr p-4 w-full h-12rem sm:h-24rem border-round-xl">
+    class="relative overflow-hidden banner-qr p-5 w-full h-24rem border-round-xl">
 
-    <div class="flex align-items-center w-full h-full pl-0 ">
+    <div class="flex align-items-center justify-content-center w-full h-full pl-0 ">
 
-        <div class="d-flex flex-row-reverse xl:flex-row h-full">
-            <div class="text-qr flex flex-column align-items-center sm:align-items-start w-auto">
+        <div class=" relative d-flex justify-content-center flex-row-reverse xl:flex-row h-full">
+
+            <div class="text-qr flex flex-column align-items-center sm:align-items-start w-9">
 
 
                 <div class="list-qr text-white">
                     <h1 class="title-link mb-5 text-white text-3xl md:text-6xl font-bold">Comparte tu enlace</h1>
-                    <p>
-                        Envia un link a tus clientes para que puedan acceder a tu tienda
-                    </p>
+
+                    <ul>
+                        <li class="d-flex gap-3 mb-2" *ngFor="let m of modelListFeatures">
+                            <i [ngClass]="[m.icon]"></i>
+                            <span>{{m.text}}</span>
+                        </li>
+                    </ul>
+                  
                 </div>
 
-                <button matRipple
-                    class="p-3 bg-white w-8 border-round text-black font-bold cursor-pointer mt-4 shadow-1">
-                    <span class="text-black">
-                        Copiar enlace a la tienda
-                        <i class="pi pi-copy font-lg"></i>
-                    </span>
-                </button>
 
+                <div class="relative w-auto sm:w-8 mt-4">
+
+                    <button (click)="copyToClipboard()" matRipple [matRippleColor]="'#ff715e5c'"
+                        class="button-copy p-3 bg-white w-max border-round font-bold cursor-pointer  shadow-1">
+                        <span class="">
+                            {{copyUrl || 'Copiar enlace a la tienda'}}
+                            <i class="pi pi-copy ml-1"></i>
+                        </span>
+                    </button>
+
+                    <div class="d-flex absolute p-2 alert-copy text-gray-700 border-round" [@fadeIn] *ngIf="alertCopy">
+                        <span class="mr-2">
+                            Enlace copiado
+                        </span>
+                        
+                        <i class="fa-solid fa-circle-check text-green-400"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="image-share-link hidden h-full sm:block">

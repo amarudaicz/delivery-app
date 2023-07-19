@@ -15,8 +15,26 @@
 .image-share-link{
     transform: translate(0, 33px);
     
+    color: #ff715e;
     img{
         object-fit: scale-down;
     }
     // filter:drop-shadow(-8px -3px 20px rgba(0, 0, 0, 0.55))
+}
+
+
+.button-copy{
+    &:hover{
+        color: #ff715e;
+    }
+}
+
+
+.alert-copy{
+    width: max-content;
+    background: white;
+    top: -50px;
+    left: 87px;
+    
+
 }

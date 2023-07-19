@@ -69,6 +69,9 @@ $gutter: 1rem; //for primeflex grid system
 .d-flex {
     display: flex;
     align-items: center;
+
+    i{
+    }
 }
 
 .between {
@@ -111,7 +114,6 @@ $gutter: 1rem; //for primeflex grid system
 }
 
 .mdc-button__label {
-    color: rgba(255, 255, 255, 0.87);
 }
 
 .mat-ripple,
@@ -235,4 +237,10 @@ button {
 
 .object-contain{
     object-fit: contain;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

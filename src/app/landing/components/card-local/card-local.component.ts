@@ -72,40 +72,40 @@ export class CardLocalComponent implements OnInit {
 
   islocalOpen(local: Local) {
 
-    const { horarios } = local
-    const currentDate = new Date()
-    const currentHours = currentDate.getHours();
-    const currentMinutes = currentDate.getMinutes();
-    let currentDay = currentDate.toLocaleString('es-AR', { weekday: 'short' });
-    currentDay = currentDay.charAt(0).toUpperCase() + currentDay.slice(1);
-    let openingHours;
+    // const { horarios } = local
+    // const currentDate = new Date()
+    // const currentHours = currentDate.getHours();
+    // const currentMinutes = currentDate.getMinutes();
+    // let currentDay = currentDate.toLocaleString('es-AR', { weekday: 'short' });
+    // currentDay = currentDay.charAt(0).toUpperCase() + currentDay.slice(1);
+    // let openingHours;
 
-    if (horarios?.semana.dias.includes(currentDay)) {
-      openingHours = horarios?.semana;
-    } else if (horarios?.finDeSemana.dias.includes(currentDay)) {
-      openingHours = horarios?.finDeSemana;
-    } else {
-      return false; // El negocio está cerrado porque no es el día correspondiente
-    }
+    // if (horarios?.semana.dias.includes(currentDay)) {
+    //   openingHours = horarios?.semana;
+    // } else if (horarios?.finDeSemana.dias.includes(currentDay)) {
+    //   openingHours = horarios?.finDeSemana;
+    // } else {
+    //   return false; // El negocio está cerrado porque no es el día correspondiente
+    // }
 
-    const maIn = this.getTimeFromString(openingHours.maIn);
-    const maFn = this.getTimeFromString(openingHours.maFn);
-    const taIn = this.getTimeFromString(openingHours.taIn);
-    const taFn = this.getTimeFromString(openingHours.taFn);
+    // const maIn = this.getTimeFromString(openingHours.maIn);
+    // const maFn = this.getTimeFromString(openingHours.maFn);
+    // const taIn = this.getTimeFromString(openingHours.taIn);
+    // const taFn = this.getTimeFromString(openingHours.taFn);
 
-    if (
-      (currentHours > maIn.hours || (currentHours === maIn.hours && currentMinutes >= maIn.minutes)) &&
-      (currentHours < maFn.hours || (currentHours === maFn.hours && currentMinutes <= maFn.minutes))
-    ) {
-      return true; // El negocio está abierto en la mañana
-    }
+    // if (
+    //   (currentHours > maIn.hours || (currentHours === maIn.hours && currentMinutes >= maIn.minutes)) &&
+    //   (currentHours < maFn.hours || (currentHours === maFn.hours && currentMinutes <= maFn.minutes))
+    // ) {
+    //   return true; // El negocio está abierto en la mañana
+    // }
 
-    if (
-      (currentHours > taIn.hours || (currentHours === taIn.hours && currentMinutes >= taIn.minutes)) &&
-      (currentHours < taFn.hours || (currentHours === taFn.hours && currentMinutes <= taFn.minutes))
-    ) {
-      return true; // El negocio está abierto en la tarde/noche
-    }
+    // if (
+    //   (currentHours > taIn.hours || (currentHours === taIn.hours && currentMinutes >= taIn.minutes)) &&
+    //   (currentHours < taFn.hours || (currentHours === taFn.hours && currentMinutes <= taFn.minutes))
+    // ) {
+    //   return true; // El negocio está abierto en la tarde/noche
+    // }
 
     return false; // El negocio está cerrado en la hora actual
   }

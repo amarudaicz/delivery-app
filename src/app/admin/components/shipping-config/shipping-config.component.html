@@ -1,0 +1,54 @@
+<div class="aditional-info w-full card">
+
+    <div class="container-delivery-local container-data-local">
+        <form [formGroup]="form" action="">
+
+            <div class="mb-4">
+
+                <h2 class="title">Envios</h2>
+                <p class="mb-3">Configura las opciones que ofreces para entregar tus productos</p>
+
+                <button [disabled]="loadForm" (click)="editing ? saveForm() : editForm() " mat-raised-button color="primary">
+                    <span class="d-flex gap-2">
+                        {{editing ? 'Guardar' : 'Editar'}}
+                        <i *ngIf="loadForm" class="pi pi-spinner pi-spin "></i>
+                        <i *ngIf="!loadForm" [ngClass]="editing ? 'fa-solid fa-floppy-disk' :'fa-solid fa-pen-to-square'"></i>
+                    </span>    
+                
+                </button>
+
+            </div>
+
+            <div class="card">
+                <mat-checkbox class="" color="primary" formControlName="delivery">
+                    Delivery
+                </mat-checkbox>
+                <mat-checkbox class="" color="primary" formControlName="pick_in_local">
+                    Retiro en local
+                </mat-checkbox>
+    
+                <div *ngIf="form.get('delivery')?.value" class="flex wrap gap-3 mt-2">
+    
+                    <mat-form-field floatLabel="always">
+                        <mat-label>
+                            Costo delivery aproximado
+                        </mat-label>
+                        <span matTextPrefix>$&nbsp;</span>
+                        <input matInput formControlName="delivery_cost" placeholder="0" class="text-right price-deli" type="number">
+                        <span matTextSuffix>.00</span>
+    
+                    </mat-form-field>
+    
+                    <mat-form-field  floatLabel="always">
+                        <mat-label>Tiempo delivery aproximado</mat-label>
+                        <input matInput formControlName="delivery_time" placeholder="20 - 30" class="" type="text">
+                        <span class="text-700" matTextSuffix>min</span>
+                        <mat-error>Indicar aproximado en minutos de la forma 20 - 30</mat-error>
+                    </mat-form-field>
+    
+                </div>
+            </div>
+
+        </form>
+
+    </div>

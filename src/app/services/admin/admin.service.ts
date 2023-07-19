@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, map, BehaviorSubject, catchError } from 'rxjs';
 import { environment } from 'src/app/environment';
 import { Category } from 'src/app/interfaces/category-interfaz';
-import { Local } from 'src/app/interfaces/local-interface';
+import { Local, Schedules } from 'src/app/interfaces/local-interface';
 import { OptionProduct } from 'src/app/interfaces/optionProduct-interface';
 import { Product } from 'src/app/interfaces/product-interface';
 import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement';
@@ -22,19 +22,17 @@ export class AdminService {
       table: localStorage.getItem('admin-local'),
       local_id: localStorage.getItem('local_id'),
     };
-
   }
 
   credentials: any;
-  local?: Local;
+  public local?: Local;
   products?: Product[];
   categories?: any[];
   updateListProducts = new BehaviorSubject<boolean>(false);
   optionsGroup = new BehaviorSubject<OptionProduct[]>([]);
   categories$ = new BehaviorSubject<any[]>([]);
   products$ = new BehaviorSubject<Product[]>([]);
-
-
+  local$ = new BehaviorSubject<Local | undefined>(undefined);
 
   //PRODUCTSS!°!°°!°!
   postProduct(product: any) {
@@ -70,14 +68,16 @@ export class AdminService {
   }
 
   getProductsAdmin() {
-
-    this.http.get<Product[]>(environment.host + `products`).pipe(
-      map((data) => {
-        this.products$.next(data)
-        this.products = data;
-        return data;
-      })
-    ).subscribe();
+    this.http
+      .get<Product[]>(environment.host + `products`)
+      .pipe(
+        map((data) => {
+          this.products$.next(data);
+          this.products = data;
+          return data;
+        })
+      )
+      .subscribe();
   }
 
   stockProduct(id: number, stock: number) {
@@ -90,27 +90,28 @@ export class AdminService {
   //LOCAL!!!!!!!!
 
   public getLocal(): Observable<any> {
-    if (this.local) {
-      return of(this.local);
-    } else {
-      return this.http.get<Local[]>(environment.host + `locals`).pipe(
-        map((data) => {
-          this.local = data[0];
-          this.optionsGroup.next(data[0].options_group);
-          return data[0];
-        })
-      );
-    }
+    return this.http.get<Local[]>(environment.host + `locals`).pipe(
+      map((data) => {
+        this.local$.next(data[0]);
+        this.optionsGroup.next(data[0].options_group);
+        return data[0];
+      })
+    );
   }
 
-  updateLocal(data: any) {
-    return this.http.put(environment.host + 'locals/put-one', data);
+  updateLocal(data:any){
+    return this.http.put(environment.host + 'locals', data)
   }
 
+  updateSchedules(data: Schedules) {
+    return this.http.put(environment.host + 'locals/put-schedules', {
+      schedules: data,
+    });
+  }
 
-
-
-
+  updateLinks(links: { name: string; url: string }) {
+    return this.http.put(environment.host + 'locals/put-links', links);
+  }
 
   //CATEGORIASSS !!!!!!!!!!!
   postCategory(category: any) {
@@ -127,26 +128,23 @@ export class AdminService {
     return this.http.post(environment.host + `admin/categories`, formData, {});
   }
 
-  editCategory(category:{name:string, description:string, image:string|File}|any){
+  editCategory(
+    category: { name: string; description: string; image: string | File } | any
+  ) {
     const formData = new FormData();
     console.log(category);
 
     Object.keys(category).forEach((k) => {
-
       console.log(category[k]);
 
       formData.append(k, category[k]);
     });
 
     return this.http.put(environment.host + `admin/categories`, formData, {});
-
   }
 
-
-  deleteCategory(id:number){
-
-    return this.http.delete(environment.host + `admin/categories/${id}`)
-
+  deleteCategory(id: number) {
+    return this.http.delete(environment.host + `admin/categories/${id}`);
   }
 
   getCategories() {

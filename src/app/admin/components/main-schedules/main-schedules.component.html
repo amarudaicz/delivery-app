@@ -1,0 +1,105 @@
+<div class="w-full card mb-4">
+
+    <div class="mb-4">
+        <h1 class="mb-2">Configura tu horarios</h1>
+        <p>Aquí puedes configurar los horarios de tu negocio en los que tus clientes podran realizar pedidos. Podrás
+            establecer múltiples turnos para un mismo día, por ejemplo, para la mañana y la tarde. No olvides guardar
+            para que los cambios se apliquen en tu tienda</p>
+    </div>
+
+
+    <div class="w-full card">
+
+        <div class="w-fit card" *ngIf="adminService.local$ | async as local">
+            <h2 class="title mb-2">
+                Estado de tu Tienda
+            </h2>
+
+            <div class="text-center">
+                <span class="text-600 ml-2">
+                    {{localService.islocalOpen(local.schedules) ? 'Abierto hasta las ' +
+                    localService.getCurrentShift(local.schedules)?.end : 'Cerrado'}}
+                </span>
+            </div>
+
+        </div>
+
+        <app-schedules (editing)="editing = false" *ngIf="editing"></app-schedules>
+
+        <div class="w-full card" *ngIf="!editing">
+
+            <div class="mb-4">
+                <button (click)="editing = true" mat-raised-button color="primary">
+                    <span class="d-flex">
+                        Editar
+                        <i class="ml-2 fa-solid fa-pen-to-square"></i>
+                    </span>
+                </button>
+
+            </div>
+
+            <div class="" *ngIf="adminService.local$ | async as local">
+
+                <div *ngIf="local.schedules else noDays">
+
+                    <div *ngFor="let day of local.schedules.days" class="mb-4 pb-3 border-bottom-1 border-300">
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <div class="d-flex gap-3">
+                                <h2 class="title">{{fullDay(day.name)}}</h2>
+                            </div>
+
+                            <div class="flex flex-column" *ngIf="day.open; else closed">
+                                <div *ngIf="day.shifts.length !== 0; else noShifts">
+                                    <div class="mb-1" *ngFor="let shift of day.shifts">
+                                        <span class="font-bold">
+                                            {{shift['start'] + ' - ' + shift['end'] }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <ng-template #noShifts>
+                                    <p class="font-bold ml-2">
+                                        Abierto todo el dia
+                                        <i class="pi pi-circle-fill text-green-500 ml-1"></i>
+                                    </p>
+                                </ng-template>
+                            </div>
+                        </div>
+
+                        <ng-template #closed>
+                            <p class="text-600 font-bold">
+                                Cerrado
+                                <i class="pi pi-lock ml-1"></i>
+                            </p>
+                        </ng-template>
+
+                    </div>
+                </div>
+
+
+                <ng-template #noDays>
+
+                    <div *ngFor="let day of days" class="mb-4 pb-3 border-bottom-1 border-300">
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <div class="d-flex gap-3">
+                                <h2 class="title">{{day}}</h2>
+                            </div>
+
+                        </div>
+
+                        <p class="text-600 font-bold">
+                            Cerrado
+                            <i class="pi pi-lock ml-1"></i>
+                        </p>
+                    </div>
+
+                </ng-template>
+            </div>
+        </div>
+
+    </div>
+</div>

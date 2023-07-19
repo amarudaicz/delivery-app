@@ -30,10 +30,14 @@ export class MainOptionsComponent implements OnInit {
   acordionOpen: any
   draggin: boolean = false
   groupEditing?: OptionProduct
+  products:Product[] = []
 
 
   constructor(private adminService: AdminService, private alert:NotificationsAdminService, private toast: MatSnackBar, private dialog: MatDialog, private dinamicList: DinamicListService) {
 
+    this.adminService.products$.subscribe(products=>{
+      this.products = products
+    })
   }
 
 
@@ -60,16 +64,16 @@ export class MainOptionsComponent implements OnInit {
 
   isAccordionExpanded(group: any): boolean {
 
-    return group.nameVariation === this.acordionOpen?.nameVariation
+    return group.id === this.acordionOpen?.id
 
   }
 
   toogleGroup(group: OptionProduct) {
 
-    if (this.acordionOpen?.nameVariation === group.nameVariation)
+    if (this.acordionOpen?.id === group.id)
       this.acordionOpen = undefined
     else
-      this.acordionOpen = group
+    this.acordionOpen = group
 
   }
 
@@ -79,7 +83,7 @@ export class MainOptionsComponent implements OnInit {
 
 
   updateGroupOption(group: OptionProduct){
-    const previousGroup = this.respaldGroupOptions.find(e=> e.nameVariation === group.nameVariation)
+    const previousGroup = this.respaldGroupOptions.find(e=> e.id === group.id)
     console.log(group, previousGroup);
 
 
@@ -93,79 +97,58 @@ export class MainOptionsComponent implements OnInit {
       this.alert.new('Debes tener como minimo una opcion activa en el grupo de opciones. De lo contrario no se mostrara el grupo.', 'Ok',{push:true, panelClass:'w-8rem', section:'Grupo de opciones' })
       return
     }
-      
+    
+    const productsWhitGroup = this.products.filter(e => e.variations.some(e => e.id === group.id))
+      if (productsWhitGroup.length) {
 
-    this.adminService.products$.pipe(
-      map(products => products.filter(e => e.variations.some(e =>
-        e.nameVariation === group.nameVariation))
+        window.history.pushState({modal:true}, 'modal');
 
-      )).subscribe(products => {
-        console.log(products);
-        
-        if (products.length) {
-          window.history.pushState({modal:true}, 'modal');
+        const dialogRef = this.dialog.open(SelectProductsGroupComponent, {
+          data: { products:productsWhitGroup, group: group }
+        })
 
-          const dialogRef = this.dialog.open(SelectProductsGroupComponent, {
-            data: { products, group: group }
-          })
-  
-          dialogRef.afterClosed().subscribe((data: { products: Product[], group: OptionProduct }) => {
-            if (!data) {
-              this.ngOnInit()
-              return
-            }
-            
-            if (data.products.length) {
-              this.updateOptionsGroupAndNotify({...data, variations: this.groupOptions })
-            }else{
-              this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
-            }
-          })
-          
-        }else{
-          this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
-        }
+        dialogRef.afterClosed().subscribe((data: { products: Product[], group: OptionProduct }) => {
+          if (!data) {
+            this.ngOnInit()
+            return
+          }
+         
+          if (data.products.length) {
+            this.updateOptionsGroupAndNotify({...data, variations: this.groupOptions })
+          }else{
+            this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
+          }
+        })
         
-        
-    })
+      }else{
+        this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
+      }
   }
 
   deleteGroupOption(group:any, index:number){
-    this.adminService.products$.pipe(
-      map(products => products.filter(e => e.variations.some(e =>
-        e.nameVariation === group.nameVariation))
-      )).subscribe(products => {
-        if (products.length){
-          const idProducts = products.map(e => e.name).join(', ')
-          this.alert.new(`No es posible eliminar un grupo de opciones si existen productos que hacen uso de el. Ver productos (${idProducts})`, 'Ok',{push:true, section:'Grupo de opciones',panelClass:'w-12rem'})
-          return
+    const productsWhitGroup = this.products.filter(e => e.variations.some(e => e.id === group.id))
+    if (productsWhitGroup.length) {
+      const idProducts = productsWhitGroup.map(e => e.name).join(', ')
+      this.alert.new(`No es posible eliminar un grupo de opciones si existen productos que hacen uso de el. Ver productos (${idProducts})`, 'Ok',{push:true, section:'Grupo de opciones',panelClass:'w-12rem'})
+      return
+    }
+      this.adminService.deleteOptionGroup(group.id).subscribe(
+        (res)=>{
+          this.alert.new(`El grupo ${group.nameVariation} a sido eliminado con exito`, 'Ok', {push:true} )
+          const optionsUpdates = this.groupOptions.filter(e=> e.id !== group.id)
+          this.adminService.optionsGroup.next(optionsUpdates)
+          
+        },
+        (err)=>{
+          console.log(err);
+          this.alert.new(`A ocurrido un error intente nuevamente`, 'Ok')
         }
-
-        this.adminService.deleteOptionGroup(group.id).subscribe(
-          (res)=>{
-            this.alert.new(`El grupo ${group.nameVariation} a sido eliminado con exito`, 'Ok', {push:true} )
-            const optionsUpdates = this.groupOptions.filter(e=> e.id !== group.id)
-            this.adminService.optionsGroup.next(optionsUpdates)
-            
-          },
-          (err)=>{
-            console.log(err);
-            this.alert.new(`A ocurrido un error intente nuevamente`, 'Ok')
-          }
-        )
-
-
-
-
-
-      })
-
+      )
   }
 
   private updateOptionsGroupAndNotify(data: any) {
 
     this.adminService.updateOptionGroup(data).subscribe((res:any)=>{
-
       this.toast.open('Grupo de opciones actualizado', '', { duration: 3000 });
       this.toast.open(res.info, '', { duration: 3000 });
 

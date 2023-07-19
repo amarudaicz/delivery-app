@@ -14,6 +14,8 @@ import { MainUserComponent } from './user/components/main-user/main-user.compone
 import { AuthGuard } from './utils/auth-guard.guard';
 import { MainLoginComponent } from './login/components/main-login/main-login.component';
 import { MainOptionsComponent } from './admin/components/main-options/main-options.component';
+import { MainSchedulesComponent } from './admin/components/main-schedules/main-schedules.component';
+import { LinksSocialComponent } from './admin/components/links-social/links-social.component';
 
 const routes: Routes = [ 
 
@@ -56,16 +58,20 @@ const routes: Routes = [
         component:MainProductsComponent
       },
       {
-        path:'new-product',
-        component:MainNewProductComponent
-      },
-      {
         path:'config',
         component:MainConfigComponent
       },
       {
         path:'options-group',
         component:MainOptionsComponent
+      },
+      {
+        path:'schedules',
+        component:MainSchedulesComponent
+      },
+      {
+        path:'links',
+        component:LinksSocialComponent
       }
     ]
   },

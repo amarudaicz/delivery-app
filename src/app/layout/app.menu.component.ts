@@ -24,9 +24,10 @@ export class AppMenuComponent implements OnInit {
                 label: 'Secciones',
                 items: [
                     { label: 'Productos', icon: 'fa-solid fa-table', routerLink: ['products'] },
-                    { label: 'Nuevo Producto', icon: 'pi pi-plus', routerLink: ['new-product'] },
                     { label: 'Ajustes', icon: 'pi pi-sliders-v', routerLink: ['config'] },
-                    { label: 'Ayuda', icon: 'pi pi-question', routerLink: ['help'] }
+                    { label: 'Horarios', icon: 'pi pi-clock', routerLink: ['schedules'] },
+                    { label: 'Redes sociales', icon: 'pi pi-share-alt', routerLink: ['links'] },
+                    { label: 'Ayuda', icon: 'pi pi-question', routerLink: ['help'] },
                 ]
             }
         ];

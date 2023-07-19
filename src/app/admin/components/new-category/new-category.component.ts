@@ -69,7 +69,7 @@ export class NewCategoryComponent {
 
       this.adminService.editCategory({
         ...this.categoryForm.value, 
-        imageSrc: this.image, 
+        image: this.image, 
         id:this.dataEditCategory.id}).subscribe((res) => this.processForm('edit'));
 
 

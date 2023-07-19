@@ -1,0 +1,47 @@
+<div class="w-full card">
+
+    <div class="mb-3">
+        <h2 class="title">
+            Metodos de pago
+        </h2>
+        <p>Configura los metodos de pago que ofreces a tus clientes</p>
+    </div>
+
+        <form [formGroup]="form">
+
+            <div class="mb-4">
+                <button [disabled]="loadForm" (click)="editing ? saveForm() : editForm() " mat-raised-button
+                    color="primary">
+                    <span class="d-flex gap-2">
+                        {{editing ? 'Guardar' : 'Editar'}}
+                        <i *ngIf="loadForm" class="pi pi-spinner pi-spin "></i>
+                        <i *ngIf="!loadForm"
+                            [ngClass]="editing ? 'fa-solid fa-floppy-disk' :'fa-solid fa-pen-to-square'"></i>
+                    </span>
+
+                </button>
+            </div>
+
+            <div class="card">
+                <mat-checkbox class="" color="primary" formControlName="cash">
+                    Efectivo
+                </mat-checkbox>
+
+                <mat-checkbox class="" color="primary" formControlName="transfer">
+                    Transferencia
+                </mat-checkbox>
+
+                <div *ngIf="form.get('transfer')?.value" class="flex wrap gap-3 mt-2">
+
+                    <mat-form-field >
+                        <mat-label>
+                            Alias o CBU
+                        </mat-label>
+                        <input matInput formControlName="cbu" placeholder="Ingresa tu alias o CBU" type="text">
+                    </mat-form-field>
+
+                </div>
+            </div>
+        </form>
+
+</div>

@@ -61,6 +61,12 @@ import { ImageFallbackDirective } from '../directives/image-fallback/image-fallb
 import { SelectProductsGroupComponent } from './components/select-products-group/select-products-group.component';
 import { BannerQrComponent } from './components/banner-qr/banner-qr.component';
 import { BannerLinkComponent } from './components/banner-link/banner-link.component';
+import { SchedulesComponent } from './components/schedules/schedules.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MainSchedulesComponent } from './components/main-schedules/main-schedules.component';
+import { LinksSocialComponent } from './components/links-social/links-social.component';
+import { ShippingConfigComponent } from './components/shipping-config/shipping-config.component';
+import { PaymentsMethodsConfigComponent } from './components/payments-methods-config/payments-methods-config.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +92,11 @@ import { BannerLinkComponent } from './components/banner-link/banner-link.compon
     SelectProductsGroupComponent,
     BannerQrComponent,
     BannerLinkComponent,
+    SchedulesComponent,
+    MainSchedulesComponent,
+    LinksSocialComponent,
+    ShippingConfigComponent,
+    PaymentsMethodsConfigComponent,
   ],
   imports: [
     CommonModule,
@@ -124,7 +135,8 @@ import { BannerLinkComponent } from './components/banner-link/banner-link.compon
     MatSelectModule,
     MatSnackBarModule,
     MatTooltipModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonModule
   ],
   exports:[
     PrimaryCardsComponent,

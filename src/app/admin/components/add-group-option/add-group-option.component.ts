@@ -52,7 +52,7 @@ export class AddGroupOptionComponent implements OnDestroy {
 
     this.formOptions = this.formBuilder.group({
       options: this.formBuilder.array([]),
-    }, Validators.required)
+    }, Validators.required) 
 
     this.optionsList = this.formOptions.get('options') as FormArray;
 

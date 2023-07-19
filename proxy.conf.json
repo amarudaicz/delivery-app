@@ -1,0 +1,10 @@
+{
+    "/api": {
+      "target": "https://api.qrserver.com",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/v1/create-qr-code/"
+      }
+    }
+  }

@@ -16,19 +16,19 @@ export interface Local {
     instagram: string;
     website: string;
     maps: string;
-    horarios: Horarios;
+    schedules: Schedules;
     options_group: OptionProduct[]
+    links:{name:string, url:string, icon:string}[]
+    shipping:any
+    pay_methods:any
 }
 
-export interface Horarios {
-    semana: Dias;
-    finDeSemana: Dias;
+export interface Schedules {
+    days:Days[]
 }
 
-export interface Dias {
-    dias: string[];
-    maIn: string;
-    maFn: string;
-    taIn: string;
-    taFn: string;
+export interface Days {
+    name:string,
+    open:boolean,
+    shifts:{start:string,end:string}[]
 }
