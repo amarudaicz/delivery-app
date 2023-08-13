@@ -70,12 +70,10 @@ export class SetOptionsProductComponent {
     console.log(index);
     
 
-    if (existTypePrice1 !== -1 && group.typePrice === 1 && this.selectedOptions[existTypePrice1].nameVariation !== group.nameVariation) {
+    if (existTypePrice1 !== -1 && group.typePrice === 1 && this.selectedOptions[existTypePrice1].id !== group.id) {
       this.toast.open('Solo Puedes agregar un Grupo que determine el precio final', '', { duration: 3000 })
 
       const typeInCurrent = this.currentGroupOption.findIndex(e => this.areObjectsEqual(e, this.selectedOptions[existTypePrice1]))
-      
-      
       console.log( typeInCurrent, groupInList);
       
       // this.currentGroupOption = [this.selectedOptions[existTypePrice1], ...this.currentGroupOption];
@@ -89,6 +87,8 @@ export class SetOptionsProductComponent {
       this.acordionState.splice(indexAcordeon, 1);
       
       this.emitterSelectedOptions.emit(this.selectedOptions)
+    console.log('EMITING',this.selectedOptions);
+
       return
     }
   
@@ -110,6 +110,7 @@ export class SetOptionsProductComponent {
 
 
     }
+    console.log('EMITING',this.selectedOptions);
 
     this.emitterSelectedOptions.emit(this.selectedOptions)
 
@@ -140,9 +141,10 @@ export class SetOptionsProductComponent {
   toogleOption(indexSelected: number, indexOption: number) {
 
     const optionActive = this.selectedOptions[indexSelected].options[indexOption].active
+    const group = this.selectedOptions[indexSelected]
 
     console.log(indexOption);
-
+    console.log(group);
     
     if (optionActive) {
       this.selectedOptions[indexSelected].options[indexOption].active = false;
@@ -150,6 +152,8 @@ export class SetOptionsProductComponent {
     else {
       this.selectedOptions[indexSelected].options[indexOption].active = true
     }
+
+    console.log('EMITING',this.selectedOptions);
 
 
     this.emitterSelectedOptions.emit(this.selectedOptions)

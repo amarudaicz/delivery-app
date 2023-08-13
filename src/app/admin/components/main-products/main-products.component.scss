@@ -26,7 +26,7 @@
   -ms-overflow-style: none; /* Para IE y Edge */
 
   @include m.laptop {
-    width: 25%;
+    width: 30%;
   }
 
 }
@@ -34,11 +34,11 @@
 .current-list {
 
   @include m.laptop {
-    width: 75%;
+    width: 70%;
   }
 
   @include m.desktop {
-    width: 80%;
+    width: 70%;
   }
 
 

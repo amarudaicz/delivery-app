@@ -18,9 +18,9 @@
     <p-menu #menuCategory [popup]="true" [model]="modelConfigCategory"></p-menu>
     <div class="d-flex justify-content-center sm:justify-content-between p-3 md:px-5 header-table gap-y-3 wrap state-category sticky top-0 bg-gray-50">
 
-        <div class="d-flex w-full sm:w-fit justify-content-between sm:justifi-content-start">
-            <h1 class="mr-2 title overflow-hidden" [style.text-overflow]="'ellipsis'">{{dataCategory.category_name}}</h1>
+        <div class="d-flex flex-1 w-full sm:w-fit justify-content-between sm:justifi-content-start">
             
+            <h1 class="mr-2 title overflow-hidden" [style.text-overflow]="'ellipsis'">{{dataCategory.category_name}}</h1>
             <div class="d-flex flex-1 gap-2 justify-content-center sm:justify-content-start w-12rem">
                 <span class="sm:border-left-1 sm:pl-2">
                     {{dataCategory.active ? 'Categoria activa' : 'Categoria desactivada'}}
@@ -121,7 +121,7 @@
     
     
     
-                </div>
+                </div> 
     
     
                 <div *ngIf="product.editing">

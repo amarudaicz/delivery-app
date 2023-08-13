@@ -9,12 +9,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class RouteDataService {
   constructor() {
     this.orign = sessionStorage.getItem('origin')
-    this.current = sessionStorage.getItem('current')
   }
 
   orign:string|null
   origin$ = new BehaviorSubject<any>('')
-  current:string|null
+  current = new BehaviorSubject<any>('')
 
 
   setOrigin(origin:string) {
@@ -24,7 +23,7 @@ export class RouteDataService {
 
   setCurrent(current:string){
     sessionStorage.setItem('current', current )
-    this.current = current
+    this.current.next(current)
   }
 
   getOrigin(){

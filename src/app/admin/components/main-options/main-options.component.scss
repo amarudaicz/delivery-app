@@ -12,18 +12,27 @@
   height: calc(100vh - 289px);
   margin-top: 10px;
   border: 1px solid #a4a4a4;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Para Firefox */
+
+  &::-webkit-scrollbar {
+    width: 0;
+    -ms-overflow-style: none;
+    /* Para IE y Edge */
+  }
 }
 
 .state-options {
   display: flex;
   padding: 0 25px;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
 
 }
 
 .container-list-options {
-  height: calc(100% - 44px);
-  overflow-y: scroll;
 
 }
 
@@ -35,9 +44,11 @@
   gap: 10px;
   justify-content: space-between;
   flex: 1;
+  flex-wrap: wrap;
 
   @include m.tablet{
     flex: 0;
+    flex-wrap: nowrap;
 
   
   }
@@ -129,14 +140,13 @@
   border: solid 1px #ccc;
   min-height: 60px;
   display: block;
-  background: white;
   border-radius: 4px;
   overflow: hidden;
   transition: all .2s;
 }
 
 .option-box {
-  padding: 15px 40px;
+  padding: 15px 20px;
 
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
@@ -171,8 +181,7 @@
   height: 0;
   width: 100%;
   visibility: hidden;
-  border-bottom: 3px solid black;
-
+  border-bottom: 1px solid #ccc;
 
 
 
@@ -180,7 +189,6 @@
     visibility: visible;
     height: auto;
     padding: 15px;
-    background: rgb(255, 255, 255);
   }
 
   .input-options-group {

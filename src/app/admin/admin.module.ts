@@ -100,9 +100,9 @@ import { PaymentsMethodsConfigComponent } from './components/payments-methods-co
   ],
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
     DragDropModule,
     SharedModule,
 

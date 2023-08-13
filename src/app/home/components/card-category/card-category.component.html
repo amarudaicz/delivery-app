@@ -1,12 +1,11 @@
-<div class="container-card" *ngIf="category.id else loader" 
->
-  <a (click)="emitCategory(category)">
     <div
+    *ngIf="category; else loader"
+    (click)="emitCategory(category, $event)"
       [style.background-image]="'url(' + category.image + ')'"
-      [style.border]="selectedCategory(category.id) ? '2px solid' + theme.get('background') : ''"
+      [style.border]="selectedCategory(category.id) ? '2px solid' + theme.get('background') : '2px solid transparent'"
       matRipple
       [matRippleColor]="'#00000012'"
-      class="category-card"
+      class="category-card border-round-2xl"
       [ngStyle]="{'background-image':category.image}">
       
       <!-- <img
@@ -23,8 +22,6 @@
       </h5>
       </div>
       
-  </a>
-</div>
 
 <ng-template #loader>
   <p-skeleton size="100px" borderRadius="30px"></p-skeleton>

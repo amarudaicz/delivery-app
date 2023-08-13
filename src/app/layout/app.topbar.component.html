@@ -1,14 +1,15 @@
 <div class="container-topbar">
     <div class="layout-topbar" id="header-admin">
+
+        <button #menubutton class="p-link mr-3 layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+            <i class="pi pi-bars"></i>
+        </button>
+        
         <a class="layout-topbar-logo" routerLink="">
             <img src="assets\logos\logo-de.png" width="70px" alt="logo">
         </a>
     
-        <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
-            <i class="pi pi-bars"></i>
-        </button>
-    
-    
+        
         <div #topbarmenu class="layout-topbar-menu d-flex" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
       
             <div class="p-3 d-flex state-local mr-4 hidden md:flex" *ngIf="adminService.local$ | async as local">
@@ -17,10 +18,11 @@
                 
             </div>
 
-            <div class="session relative">
+            <div  class="session relative z-10" (mouseenter)="panelSession = true" (mouseleave)="panelSession = false">
 
-                <button (blur)="onBlurPanel()" (click)="panelSession = !panelSession" class="btn-session py-2 px-4 border-round border-1 border-800">
-                    <div class="d-flex text-800 hover:text-900 cursor-pointer" *ngIf="adminService.local$ | async as local">
+                <button class="btn-session py-2 px-4 border-round border-1 border-800 cursor-pointer">
+                    
+                    <div class="d-flex text-800 hover:text-900" *ngIf="adminService.local$ | async as local">
                         <span>{{local.name_url}}</span>
 
                         <i class="pi pi-sign-out ml-3 hidden md:block"></i>
@@ -29,16 +31,22 @@
                     </div>
                 </button>
 
-                <div [@fadeIn] *ngIf="panelSession" class="border-1 border-800 border-top-none panel-session absolute w-full text-800" >
+                <div  [@fadeIn] *ngIf="panelSession" class="border-1 border-800 border-top-none panel-session absolute w-full text-800" >
                     <ul>
+
                         <li class="pb-2 pt-3 pl-4 d-flex hover:text-900 cursor-pointer">
-                            Ver tienda
+                            <button class="cursor-pointer hover:text-primary"   (click)="watchStore()">
+                                Ver Tienda
+                                <i class=""></i>
+                            </button>
                             <i class=""></i>
                         </li>
 
-                        <li class="py-2 pl-4 d-flex hover:text-900 cursor-pointer">
-                            Cerrar Session
-                            <i class=""></i>
+                        <li class="py-2 pl-4 d-flex cursor-pointer">
+                            <button class="cursor-pointer hover:text-primary" (click)="logOut()">
+                                Cerrar Session
+                                <i class=""></i>
+                            </button>
                         </li>
 
                         <li class="py-2 pl-4 d-flex hover:text-900 cursor-pointer">
@@ -49,6 +57,7 @@
 
 
                 </div>
+
             </div>
         </div>
     </div>

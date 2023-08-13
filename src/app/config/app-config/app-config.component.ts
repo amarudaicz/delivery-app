@@ -15,24 +15,23 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 export class AppConfigComponent {
   
   localName?: string|null;
+
   constructor(public theme:ThemesService, public routeData:RouteDataService, private localService:LocalDataService, private router:Router, private adminService:AdminService){
     router.events.subscribe(event => {
-      
-      
       if (event instanceof NavigationStart && event.id === 1) {
         const local = event.url.split('/')[1]
         console.log(local);
-        
+
         const origin = this.routeData.getOrigin()
 
         if (local === 'admin') {
           return
         }
+        
         if (local && local !== 'user' && local !== 'cart' && local !== '' && local !== 'login'){
-          this.localService.initDataLocal(local)
+          // this.localService.initDataLocal(local)
         }else if (origin){
-          console.log('origin');
-          this.localService.initDataLocal(this.routeData.getOrigin())
+          // this.localService.initDataLocal(this.routeData.getOrigin())
         }else{
           this.router.navigate(['/'])
         }
@@ -46,11 +45,6 @@ export class AppConfigComponent {
 
   ngOnInit(): void {
     this.adminService.getCategories()
-    
-
-
-    
-
   }
 
 }

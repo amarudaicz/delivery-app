@@ -13,6 +13,7 @@ import { Product } from 'src/app/interfaces/product-interface';
 import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement';
 import { ThemesService } from '../themes/themes.service';
 import { RecentsService } from '../recents/recents.service';
+import { RouteDataService } from '../routeData/route-data-service.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +22,12 @@ export class LocalDataService {
   constructor(
     private http: HttpClient,
     private theme: ThemesService,
-    private recents: RecentsService
+    private recents: RecentsService,
+    private routeService:RouteDataService
   ) {}
 
   public load: boolean = true;
-  public local = new BehaviorSubject<any>(undefined);
+  public local$ = new BehaviorSubject<any>(undefined);
   private products = new BehaviorSubject<Product[]>([]);
   private categories = new BehaviorSubject<Category[]>([]);
 
@@ -35,8 +37,7 @@ export class LocalDataService {
   }
 
   setLocal(name_url: string | null) {
-    console.log(this.load);
-
+    
     if (this.load)
       this.http
         .get<Local[]>(environment.host + `locals/${name_url}`) //puntopizza
@@ -46,7 +47,9 @@ export class LocalDataService {
           this.setSessionLocal(local);
           this.theme.setTheme(local.theme);
           this.recents.addRecent(local);
-          this.local.next(local);
+          this.local$.next(local);
+          this.routeService.setOrigin(local.name_url);
+
         });
   }
 
@@ -56,7 +59,7 @@ export class LocalDataService {
         .get<Product[]>(environment.host + `products/${table}`)
         .subscribe((data) => {
           console.log(data);
-          this.products.next(data);
+          this.products.next(this.cleanProducts(data));
           this.categories.next(this.cleanCategories(data));
           this.load = false;
         });
@@ -69,22 +72,26 @@ export class LocalDataService {
   getCategories() {
     return this.categories;
   }
-
+ 
   resetData() {
+    this.load = true
     this.categories.next([]);
     this.products.next([]);
   }
 
-  private cleanCategories(products: any[]) {
-    console.log(products);
+  private cleanCategories(products: Product[]|any[]) {
 
-    const categories = products.map((e) => {
+
+    const categories = products.filter(p => p.category_active).sort((a, b) => a.category_sort - b.category_sort).map((e) => {
       return {
         name: e.category_name,
         image: e.category_image,
         id: e.category_id,
       };
     });
+
+    console.log(categories);
+    
 
     return deleteRepeatElement(categories);
   }
@@ -100,6 +107,31 @@ export class LocalDataService {
       return JSON.parse(local);
     } else return false;
   }
+
+
+  cleanProducts(products:Product[]){
+    return products.filter(p => p.stock)
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   islocalOpen(schedule: Schedules) {
 

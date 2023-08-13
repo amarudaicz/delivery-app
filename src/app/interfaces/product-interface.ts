@@ -12,6 +12,7 @@ export interface Product {
     category_id:number,
     category_name: string,
     category_image:string,
+    category_active:1|0
     local_id:number, 
     editing?:boolean
     selected?:boolean

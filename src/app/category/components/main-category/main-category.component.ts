@@ -30,15 +30,18 @@ export class MainCategoryComponent implements OnInit {
   ) 
   {
     this.category = this.route.snapshot.params['category']
+    scrollTo(0,0) 
   }
 
 
   ngOnInit(): void {
     this.routeService.setCurrent('categories');
-    console.log(); 
+    console.log(this.route.snapshot.url);
+    this.localService.initDataLocal(this.route.snapshot.url[0].path)
 
     this.localService.getProducts$().subscribe((data)=>{
       console.log(data);
+      if (!data.length) return 
       this.products = data.filter(e => e.category_name.toLowerCase() === this.category)
     })
  

@@ -18,8 +18,8 @@ export class ThemesService {
     {
       id:1,
       name:'Default',
-      background:'#FF6262',
-      backgroundSec:'#480AF3',
+      background:'#ff725e',
+      backgroundSec:'#7342e5',
       backgroundPage: '#edede9',
       colorPrimary:'#2c3e24',
       colorSecondary: '#2c3e50',

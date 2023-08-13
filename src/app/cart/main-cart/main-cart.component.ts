@@ -16,7 +16,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class MainCartComponent implements OnInit {
   
-  constructor(private layoutState:LayoutStateService){
+  constructor(private layoutState:LayoutStateService, ) {
 
   }
 
@@ -25,6 +25,7 @@ export class MainCartComponent implements OnInit {
   
   ngOnInit(): void {
     this.layoutState.state.header=true
+    this.layoutState.state.navigation=true
     this.layoutState.updateState()
     
   }

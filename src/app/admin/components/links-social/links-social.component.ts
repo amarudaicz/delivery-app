@@ -93,7 +93,7 @@ export class LinksSocialComponent implements OnInit {
     }
 
     this.loadForm = true
-    this.adminService
+    this.adminService 
     .updateLinks(this.form.value)
     .pipe( 
       catchError((err) => {
@@ -101,8 +101,6 @@ export class LinksSocialComponent implements OnInit {
       })
       )
       .subscribe((res) => {
-        this.loadForm = false;
-        this.editing = false;
         this.form.disable();
         this.form.markAsPristine();
         this.notificationsAdmin.new(
@@ -112,14 +110,16 @@ export class LinksSocialComponent implements OnInit {
             push: true,
             section: 'Enlaces',
           }
-        );
-      });
-  };
+          );
+        });
+
+        this.editing = false;
+        this.loadForm = false;
+      };
 
   editForm() {
     this.editing = true;
     this.form.enable()
-
 
   }
 

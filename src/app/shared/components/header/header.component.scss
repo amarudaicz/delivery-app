@@ -1,3 +1,5 @@
+@use '../../../../mixin.scss' as m;
+
 header {
   position: fixed;
   top: 0;
@@ -10,7 +12,7 @@ header {
 }
 
 .container-header {
-  padding: 15px 15px;
+  padding: 15px 20px;
   transition: all .6s;
   background: white;
   width: 100%;
@@ -25,6 +27,7 @@ header {
   align-items: center;
   width: 100%;
   max-width: 1100px;
+  margin: 0 auto;
 }
 
 .menu-icon {
@@ -33,36 +36,36 @@ header {
   z-index: 20;
 
   .container-bars {
-    width: 45px;
+    width: 25px;
     display: flex;
     flex-direction: column;
-    row-gap: 5px;
+    row-gap: 4px;
     
     .bar {
-      background: #2d2d2d;
+      background: #000000e0;
       transition: transform .5s;
       width: 100%;
-      height: 7px;
+      height: 4px;
       border-radius: 10px;
-    }
-
-    .bar-2 {
-      width: 75%;
-    }
-
-    .bar-3 {
-      width: 60%;
-    }
-
-    &.menu-visible{
-
-      .bar-2{
-        transform: translateX(11px);
-      }
       
+    }
+
+
+    &.close{
+      position: relative;
+
+      .bar{
+        position: absolute;
+      }
+
+      .bar-1{
+        transform: rotate(45deg);
+      }
+      .bar-2{
+        visibility: hidden;
+      }
       .bar-3{
-        transform: translateX(17px);
-        transition-delay: .1s;
+        transform: rotate(-45deg);
       }
     }
 
@@ -71,29 +74,38 @@ header {
 }
 
 
+.local-name{
+  margin-left:36px ;
+}
+
 .container-menu {
-  display: none;
-  width: 65vw;
+  width: 60vw;
+
+  @include m.tablet{
+    width: 45vw;
+  }
+
+  
   height: 100vh;
-  padding: 55px 10px 0 13px;
+  padding: 70px 10px 0 13px;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100%;
   z-index: 10;
   background: rgb(255, 255, 255);
-  transition: all 1s;
+  transition: all .3s;
+  display: flex;
 
   
   &.menu-visible {
-    display: flex;
+    left: 0;
   }
+
   justify-content: space-between;
   flex-direction: column;
     
 }
 .container-logo{
-  width: 100%;
-
 
   .logo-app{
     width: 100px;
@@ -240,7 +252,7 @@ header {
 
 .local-image {
   img {
-    border-radius: 50%;
+    border-radius: 5px;
     object-fit: cover;
   }
 }

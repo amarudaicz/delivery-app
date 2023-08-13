@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +19,7 @@ import { AppLayoutComponent } from "./app.layout.component";
 import { SharedModule } from '../shared/shared.module';
 import { RoutesAdmingModule } from './admin-routing.module';
 import { AdminModule } from '../admin/admin.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -31,11 +31,10 @@ import { AdminModule } from '../admin/admin.module';
         AppLayoutComponent,
     ],
     imports: [
+        CommonModule,
         SharedModule,
-        BrowserModule,
         FormsModule,
         HttpClientModule,
-        BrowserAnimationsModule,
         InputTextModule,
         SidebarModule,
         BadgeModule,

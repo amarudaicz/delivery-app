@@ -45,7 +45,7 @@ $gutter: 1rem; //for primeflex grid system
 .chip {
     background: #2d2d2d;
     width: fit-content;
-    padding: 3px 15px;
+    padding: 4px 15px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
@@ -89,10 +89,7 @@ $gutter: 1rem; //for primeflex grid system
 }
 
 .container {
-
     height: auto;
-    width: 100vw;
-
 }
 
 .title {
@@ -134,8 +131,10 @@ button {
     font-size: 14px;
     background: none;
     border: none;
-
+    cursor: pointer;
 }
+
+
 
 .mdc-list-item__primary-text {
     width: 100%;
@@ -243,4 +242,9 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+
+.text-sec{
+    color: #ff725e !important;
 }

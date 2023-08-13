@@ -6,6 +6,7 @@ import { MainHomeComponent } from './components/main-home/main-home.component';
 import { MainLandingComponent } from '../landing/components/main-landing/main-landing.component';
 
 const routes: Routes = [
+  
   {
     path: '',
     children: [
@@ -13,6 +14,8 @@ const routes: Routes = [
         path:'',
         component:MainLandingComponent,
       },
+
+      {path:'faq', component:MainCategoryComponent},
       {
         path: ':local',
         component: MainHomeComponent,
@@ -26,11 +29,7 @@ const routes: Routes = [
         component: MainCategoryComponent,
         data: { page: '' },
       },
-      {
-        path: ':local/:category/:product',
-        component: MainDetailComponent,
-        data: { animation: 'detail', page: 'detail' },
-      }
+
     ],
   },
 ];

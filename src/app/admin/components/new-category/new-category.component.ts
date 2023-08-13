@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, HostListener, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { catchError } from 'rxjs';
@@ -22,6 +22,7 @@ export class NewCategoryComponent {
   image: string|File|null = null;
   loadForm: boolean = false;
   editing:boolean=false
+  allCategories:Category[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,22 +32,38 @@ export class NewCategoryComponent {
     public dialogRef: MatDialogRef<NewCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public dataEditCategory:Category,
   ) {
+
     this.categoryForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: [''],
+      sort_order:''
     });
-
-    console.log(this.dataEditCategory);
     
+    this.adminService.categories$.subscribe(categories=>{
+      console.log(categories);
+      if (!categories) return 
+      this.allCategories = categories
+      this.categoryForm.get('sort_order')?.setValue(this.allCategories[this.allCategories.length - 1].sort_order + 1)
+    })
+
     if (this.dataEditCategory) {
       this.editing = true
       this.patchForm()
- 
+      console.log(this.dataEditCategory);
     }
+
     
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    window.history.pushState({modal:true}, 'modal');
+  }
+  
+  @HostListener('window:popstate')
+  onPopState() {
+    // Detectar el evento de retroceso del historial
+    this.dialogRef.close();
+  }
 
   submitForm() {
     if (this.categoryForm.valid) {
@@ -110,7 +127,7 @@ export class NewCategoryComponent {
   }
 
   patchForm(){
-    this.categoryForm.patchValue({name:this.dataEditCategory.category_name, description:this.dataEditCategory.category_description || ''})
+    this.categoryForm.patchValue({name:this.dataEditCategory.category_name, description:this.dataEditCategory.category_description || '' ,sort_order:this.dataEditCategory.sort_order})
     this.previewImageSrc = this.dataEditCategory.category_image
     this.image = this.dataEditCategory.category_image
   }

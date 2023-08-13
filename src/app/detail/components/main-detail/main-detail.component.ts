@@ -18,7 +18,11 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   styleUrls: ['./main-detail.component.scss'],
   animations: [fadeIn],
 })
-export class MainDetailComponent implements OnInit {
+export class MainDetailComponent implements OnInit, OnDestroy {
+
+  product?: Product;
+  modePreview:boolean = false
+
   constructor(
     public theme: ThemesService,
     private route: ActivatedRoute,
@@ -36,32 +40,28 @@ export class MainDetailComponent implements OnInit {
     const origin = sessionStorage.getItem('origin')
 
     
-    this.routeService.setCurrent('detail');
     if (this.dialogConfig.data) {
       this.product = this.dialogConfig.data
       this.modePreview = true
       return
     }
     
-    if (!origin && !this.modePreview){
+    if (!this.modePreview){
       this.localService.initDataLocal(this.route.snapshot.params['local'])
     }
     
     const idProduct = this.route.snapshot.queryParams['id'];
-    console.log(idProduct);
     
     this.localService.getProducts$().subscribe((data) => {
-      console.log(data);
-      
       this.product = data.filter((e) => e.id === Number(idProduct))[0];
-      console.log(this.product);
-      
     });
 
   }
 
-  product?: Product;
-  modePreview:boolean = false
-
+  ngOnDestroy(): void {
+    this.layoutState.state.header = true
+    this.layoutState.state.navigation = true
+    this.layoutState.updateState()
+  }
 
 }

@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MainCategoryComponent } from './components/main-category/main-category.component';
 import { ProductsByCategoryComponent } from './components/products-by-category/products-by-category.component';
 import { HomeModule } from '../home/home.module';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -14,7 +15,9 @@ import { HomeModule } from '../home/home.module';
   imports: [
     CommonModule, 
     SharedModule,
-    HomeModule
+    HomeModule,
+    MatRippleModule
+
   ],
   exports: [ 
   ]  

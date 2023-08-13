@@ -1,7 +1,5 @@
 .container{
-
-    height: auto;
-    width: 100vw;
+    height: auto;   
 
 }
 
@@ -11,11 +9,7 @@
 
 
 .categories{
-    padding: 15px 0;
     
-    .title-categories{
-        margin: 0 0 15px 0;
-    }
 
     .container-categories{
         scroll-snap-type: x mandatory;

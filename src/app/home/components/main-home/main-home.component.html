@@ -9,15 +9,13 @@
             <app-promotions-local>  </app-promotions-local>
 
             
-            <section class="categories">
+            <section class="categories mt-3">
     
-                <h2 class="title-categories">Categorias</h2>
+                <h2 class="title mb-2">Categorias</h2>
         
                 <div class="container-categories" *ngIf="categories">
                     <app-card-category *ngFor="let category of categories" [category]="category"> </app-card-category>
-    
                     <ng-template #cardCategoryLoader>
-    
                     </ng-template>
                 </div>
             

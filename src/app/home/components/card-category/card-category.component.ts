@@ -26,8 +26,9 @@ export class CardCategoryComponent implements OnInit, OnDestroy  {
   
   @Input() category?:any
 
-  emitCategory(category:any){
-    this.previewCategory.setCategory(category.id)
+  emitCategory(category:any, event:any){
+      this.previewCategory.setCategory(category.id)
+      event.target.scrollIntoView()
   }
 
   selectedCategory(id:number){

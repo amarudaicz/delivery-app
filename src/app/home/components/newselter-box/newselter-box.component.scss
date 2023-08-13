@@ -5,12 +5,9 @@
     // background: -webkit-linear-gradient(to bottom, #1e2f40, #1d2334);  /* Chrome 10-25, Safari 5.1-6 */
     // background: linear-gradient(to bottom, #1e2f40, #1d2334); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     position: relative;
-
-    border-radius: 15px;
-    padding: 15px;
+    padding: 16px;
     box-shadow: 0 2px 20px -3px #4a4a4a;
     overflow: hidden;
-
 
     .circle{
       position: absolute;
@@ -76,6 +73,7 @@
   .arrow-wrapper{
 
     z-index: 5;
+    width: 50px;
     
     .btn-arrow{
 
@@ -83,8 +81,10 @@
     }
 
     .arrow{
+
+      font-size: 22px;
       padding: 5px;
-      margin-right: -5px;
+      margin-right: -32px;
       color: white;
       border-radius: 50%;
 

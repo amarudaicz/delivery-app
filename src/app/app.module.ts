@@ -22,29 +22,25 @@ import { AppConfigComponent } from './config/app-config/app-config.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HttpInterceptorService } from './services/iterceptor-jwt/interceptorJwt';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CartService } from './services/cartData/cart.service';
 
 @NgModule({ 
   declarations: [
     AppComponent,
     AppConfigComponent,
-    
   ],
   imports: [
-    AdminModule,
-    RouterModule,
-    
     BrowserModule,
     AppRoutingModule,
-    SharedModule,
-    HomeModule,  
-    BrowserAnimationsModule,
-    CategoryModule,
-    DetailModule,
-    ReactiveFormsModule,
-    CartModule,
-    HttpClientModule,
+    RouterModule,
     UserModule,
-    AppLayoutModule,
+    CartModule,
+    DetailModule,
+    SharedModule,
+    CategoryModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     MatSnackBarModule,
     
     ServiceWorkerModule.register('ngsw-worker.js', {

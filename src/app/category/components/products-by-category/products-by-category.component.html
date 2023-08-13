@@ -1,17 +1,22 @@
-<section class="products-category">
+<section class="">
 
-    
-    <div class="container-products">
+    <div class="">
         
-        <h2 *ngIf="products" class="chip title-category" [style.background]="theme.currentTheme.backgroundSec" [style.color]="theme.currentTheme.colorTextSecondary">
-            {{products[0].category_name}}
-        </h2>
-        
+        <div class="d-flex gap-2">
 
-        <app-products-set [products]="products"></app-products-set>
+            <button (click)="backHome()" class="p-1 px-2 border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
+                    <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
+            </button>
+
+            <h2 *ngIf="products" class="chip my-3" [ngStyle]="{'background':theme.get('background'), color:theme.get('colorTextSecondary')}">
+                {{products[0].category_name}}
+            </h2>
+        </div>
         
-        <div class="container-flex">
-            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        <div class="flex justify-content-center gap-3 wrap">
+            <div class="w-full md:w-5" *ngFor="let product of products">
+                <app-product-card [linkMode]="'name'"  [product]="product"></app-product-card>
+            </div>
         </div>  
 
     </div>

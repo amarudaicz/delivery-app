@@ -1,56 +1,59 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, interval } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cartItems: any[] = [];
-  private cartSubject = new BehaviorSubject<any[]>([]);
+  public cartItems: any[] = [];
+  public cartSubject = new ReplaySubject<any[]>(1);
 
 
   constructor() {
     this.reset()
-    
-    
+    // interval(3000).subscribe(i=>{
+    //   this.cartSubject.next(this.cartItems)
+    // })
   }
 
   reset(){
     const items = localStorage.getItem('cartItems');
+    console.log(items);
+    
     if (items) {
       this.cartItems = JSON.parse(items);
       this.cartSubject.next(this.cartItems);
     }
   }
-
+ 
   addToCart(item: any): void {
     
-    let lastId;
-    console.log(item);
     console.log(this.cartItems);
     
+    let lastId;
 
     const index = this.cartItems.findIndex((i) => i.idProduct === item.idProduct && this.compareArrays(i.userOptions, item.userOptions));
-    console.log(index);
     
     if (this.cartItems.length === 0) {
       lastId = 1;
     } else {
       lastId = this.cartItems[this.cartItems.length - 1].idCart + 1;
     }
-    item.idCart = lastId
 
-    
+    item.idCart = lastId
+    console.log(index);
+
+
     if (index !== -1) {
-      console.log('aumentando quanity');
       this.cartItems[index].quantity += item.quantity
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));  
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     }else{
       this.cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-    }    
-    
-    this.reset()    
+    }
+
+    console.log(this.cartItems);
+    this.cartSubject.next(this.cartItems)
   }
 
 
@@ -66,7 +69,8 @@ export class CartService {
 
   }
 
-  getCartItems(): BehaviorSubject<any[]> {
+  getCartItems(): ReplaySubject<any[]> {
+    console.log(this.cartSubject);
     return this.cartSubject;
   }
 
@@ -80,7 +84,9 @@ export class CartService {
   }
 
   clearCart(){
-    this.cartItems.length=0
+    this.cartItems = []
+    console.log(this.cartItems);
+    
     this.cartSubject.next(this.cartItems);
     localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
 

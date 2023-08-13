@@ -1,12 +1,16 @@
 <!-- CONFIG -->
 <app-app-config></app-app-config>
 
+<div [class.main-container]="routeClass()">
+    
+    <app-header *ngIf="themeLoad"></app-header>
+    
+    <div [@fadeIn]>
+        <router-outlet></router-outlet>
+    </div>
+    
+    <app-navigation *ngIf="themeLoad" [@fadeIn] ></app-navigation>
 
-<app-header *ngIf="themeLoad"></app-header>
-
-<div [@fadeIn] [@routeAnimations]="getRouteData()">
-    <router-outlet></router-outlet>
 </div>
 
-<app-navigation *ngIf="themeLoad" [@fadeIn] ></app-navigation>
 

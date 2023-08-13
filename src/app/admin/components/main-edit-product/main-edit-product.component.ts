@@ -1,7 +1,7 @@
 import { state } from '@angular/animations';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
@@ -46,11 +46,23 @@ export class MainEditProductComponent {
 
   ngOnInit(): void {
 
+    window.history.pushState({modal:true}, 'modal')
+    console.log(window.history);
+    
+    
+  
   }
 
   closeEditProduct(){
     this.product.editing = false
   }
+
+  @HostListener('window:popstate')
+  onPopState() {
+    // Detectar el evento de retroceso del historial
+    this.closeEditProduct()
+  }
+
 
 
 }

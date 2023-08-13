@@ -1,6 +1,6 @@
 <div class="cart">
 
-    <div class="container-title">
+    <div class="container-title mt-3">
       <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip title-cart">Mi carrito</h2>
     </div>
 
@@ -34,6 +34,7 @@
               </div>
             </div>
             <p class="detail-item"><b>Precio:</b> {{ i.total ? (i.total * i.quantity|currency) : (i.productPrice|currency) }}</p>
+          
           </div>
 
 
@@ -67,7 +68,7 @@
       </div>
     </ul>
 
-    <div *ngIf="subtotal !== 0">
+    <div *ngIf="itemsCart.length !== 0">
 
         <div class="subtotal">
           <span>Subtotal:</span>

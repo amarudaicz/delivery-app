@@ -1,7 +1,13 @@
-<div class="card container-chart">
-  <h5>Estadisticas usuarios</h5>
-  <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
-  <!-- <div class="overlay-prox">
-    <h4>Proximamente estadisticas</h4>
-  </div> -->
+<div class="card p-0 container-chart">
+  <div class="p-3">
+    <h2 class="text-2xl mb-2">{{chartUse === 'stats' ? 'Vistas' : 'Ventas'}}</h2>
+    <span >Ultimos {{chartData?.labels.length}} dias | <span class="font-bold" [ngClass]="chartUse === 'stats' ? 'text-primary' : '' " [ngStyle]="{color:chartUse === 'sales' ? '#ff725e' : null}">{{chartUse === 'stats' ? totalCounter : (totalCounter | currency)}} {{chartUse === 'stats' ? 'vistas en total' : 'Total aproximado'}}</span></span>
+    
+  </div>
+
+  <div class="overflow-auto p-1">
+    <div class="w-full">
+      <p-chart [responsive]="true" height="50vh" [type]="innerWidth < 600 ? 'bar' : 'line'" [data]="chartData" [options]="chartOptions"></p-chart>
+    </div>
+  </div>
 </div>

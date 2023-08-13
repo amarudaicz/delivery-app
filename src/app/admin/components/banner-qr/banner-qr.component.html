@@ -15,7 +15,7 @@
             </div>
 
 
-                <button [disabled]="loadingQR" (click)="generateQR()" matRipple [matRippleColor]="'#7342e55c'" class="p-3 bg-white w-8 border-round text-black font-bold cursor-pointer mt-4 shadow-1 hover:text-primary">
+                <button [disabled]="loadingQR" (click)="generateQR()" matRipple [matRippleColor]="'#7342e55c'" class="p-3 bg-white w-max border-round text-black font-bold cursor-pointer mt-4 shadow-1 hover:text-primary">
                     <span class="text-black">
                         Generar codigo QR
                         <i class="pi ml-1" [ngClass]="loadingQR ? 'pi-spinner pi-spin' : 'pi-qrcode'"></i>

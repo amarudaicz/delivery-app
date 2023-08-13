@@ -17,6 +17,8 @@ export class FlotantCartComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.getCartItems().subscribe(data =>{
+      console.log(data);
+      
       this.cartItems = data
     })
     

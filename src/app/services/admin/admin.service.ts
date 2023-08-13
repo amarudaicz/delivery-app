@@ -34,6 +34,9 @@ export class AdminService {
   products$ = new BehaviorSubject<Product[]>([]);
   local$ = new BehaviorSubject<Local | undefined>(undefined);
 
+  stats$ = new BehaviorSubject<{date:string, total_visits:number}[] | undefined>(undefined)
+  sales$ = new BehaviorSubject<{date:string, ammount:number}[] | undefined>(undefined)
+
   //PRODUCTSS!°!°°!°!
   postProduct(product: any) {
     console.log(product);
@@ -128,20 +131,25 @@ export class AdminService {
     return this.http.post(environment.host + `admin/categories`, formData, {});
   }
 
-  editCategory(
-    category: { name: string; description: string; image: string | File } | any
-  ) {
+  editCategory(category: { name: string; description: string; image: string | File } | any) {
+
     const formData = new FormData();
     console.log(category);
 
     Object.keys(category).forEach((k) => {
       console.log(category[k]);
-
       formData.append(k, category[k]);
     });
 
     return this.http.put(environment.host + `admin/categories`, formData, {});
   }
+
+
+  putOrderCategories(categories:Category[]){
+    return this.http.put(`${environment.host}admin/categories/sort-order`, {categories})
+  }
+
+
 
   deleteCategory(id: number) {
     return this.http.delete(environment.host + `admin/categories/${id}`);
@@ -160,7 +168,7 @@ export class AdminService {
   }
 
   categoryState(category_id: number, state: number) {
-    return this.http.put(environment.host + 'admin/categories/set-active', {
+    return this.http.put(environment.host+'admin/categories/set-active', {
       category_id,
       state,
     });
@@ -196,4 +204,27 @@ export class AdminService {
 
     return deleteRepeatElement(categories);
   }
+
+  //STATSSS!!!!!!!!!!!!
+
+  getStats(){
+    this.http.get<any[]>(`${environment.host}stats`).subscribe(res=>{
+      this.stats$.next(res)
+    })
+  }
+
+
+  //SALESSS!!!!!
+  getSales(){
+    this.http.get<any[]>(`${environment.host}sales`).subscribe(res=>{
+      this.sales$.next(res)
+    })
+  }
+  
 }
+
+
+
+
+
+

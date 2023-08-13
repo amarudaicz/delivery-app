@@ -8,8 +8,10 @@ export interface OptionProduct {
   required?:boolean
   multipleOptions?:Array<any>,
   min:number,
+  sku?:string,
   max:number
   simple?:boolean,
+  editing?:boolean
 }
 
 

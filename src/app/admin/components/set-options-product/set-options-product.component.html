@@ -23,6 +23,9 @@
                                 <h3 class="d-inline">
                                     {{group.nameVariation}}
                                 </h3>
+                                <span>
+                                    | {{group.sku}}
+                                </span>
         
                                 <div class="type-price space-option">
                                     <p [ngSwitch]="group.typePrice">
@@ -121,6 +124,9 @@
                                 <h3 class="d-inline">
                                     {{group.nameVariation}}
                                 </h3>
+                                   <span>
+                                    | {{group.sku}}
+                                </span>
         
                                 <div class="type-price space-option">
                                     <p [ngSwitch]="group.typePrice">
@@ -129,7 +135,15 @@
                                         <font *ngSwitchCase="3">Sin Costo</font>
                                     </p>
                                 </div>
+                         
+                                <div class="type-price space-option">
+                                    <p [ngSwitch]="group.multiple">
+                                        <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' max: ' + group.max}})</font>
+                                        <font *ngSwitchCase="false">Respuestas(1)</font>
+                                    </p>
+                                </div>
                             </div>
+
         
                         </div>
     

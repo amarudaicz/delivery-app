@@ -16,6 +16,7 @@ export class NavigationComponent implements OnInit {
   
   itemsCart:any
   local?:Local
+  currentRoute?:string 
 
   constructor(public theme:ThemesService, private cartService:CartService,public routeService:RouteDataService, private localData:LocalDataService, public layoutState:LayoutStateService){
 
@@ -23,13 +24,21 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(){
     this.cartService.getCartItems().subscribe((items:any[]) =>{
+        console.log(items);
+        
       this.itemsCart = items.length
     })
     
-    this.localData.local.subscribe((local)=>{
+    this.localData.local$.subscribe((local)=>{
+      console.log(local);
+      
       this.local = local
     })
 
+    this.routeService.getCurrent().subscribe(current=>{
+      this.currentRoute = current
+
+    })
   }
 
   private prevPos = 0;

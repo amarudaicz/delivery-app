@@ -1,5 +1,5 @@
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Component, ElementRef, ErrorHandler, EventEmitter, OnDestroy, Output, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, ErrorHandler, EventEmitter, HostListener, OnDestroy, Output, ViewChild, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent, MatChipEvent, MatChipEditedEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -44,7 +44,9 @@ export class AddGroupOptionComponent implements OnDestroy {
       simple: [false],
       multiple: [true],
       max: [1, Validators.required],
-      min: [0, Validators.required]
+      min: [0, Validators.required],
+      required:[false],
+      sku:['', Validators.required]
     });
 
     console.log(this.containerDisplay);
@@ -62,9 +64,9 @@ export class AddGroupOptionComponent implements OnDestroy {
       this.currentOptions = data
     })
 
-    
 
     this.layoutService.blockBody()
+
   }
 
   saveOptions() {
@@ -75,11 +77,16 @@ export class AddGroupOptionComponent implements OnDestroy {
       this.formOptions.markAllAsTouched();
       this.toast.open('Completar los campos requeridos.', '', { duration: 3000 })
       return;
+    }
 
+    if (!this.optionsList.value.length) {
+      this.toast.open('Debes agregar como minimo una opcion al grupo.', '', { duration: 3000 })
+      this.addOption()
+      return
     }
 
     if (this.formVariations.get('simple')?.value || this.formVariations.get('typePrice')?.value === 1) {
-      this.formVariations.get('min')?.setValue(0)
+      this.formVariations.get('min')?.setValue(1)
       this.formVariations.get('max')?.setValue(1)
       this.formVariations.get('multiple')?.setValue(false)
     }
@@ -135,7 +142,11 @@ export class AddGroupOptionComponent implements OnDestroy {
     this.closeForm.emit(false)
   }
 
-
+  @HostListener('window:popstate')
+  onPopState() {
+    // Detectar el evento de retroceso del historial
+    this.closeAddGroup();
+  }
 
   genId(arr:any[]){
     if (!arr.length) {

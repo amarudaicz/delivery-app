@@ -104,6 +104,8 @@ export class NewProductComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.category_id);
     
+    window.history.pushState({modal:true}, 'modal');
+    
 
     this.adminService.categories$.subscribe((data) => this.categories = data )
 
@@ -146,6 +148,7 @@ export class NewProductComponent implements OnInit {
     const variations: OptionProduct[] = JSON.parse(JSON.stringify(options))
 
     console.log(variations);
+    this.form.get('price')?.setValue(this.getOptionWithLowestPrice(variations)) 
 
 
     this.optionsGroup = variations
@@ -216,6 +219,11 @@ export class NewProductComponent implements OnInit {
     this.close.emit(true)
   }
 
+  @HostListener('window:popstate')
+  onPopState() {
+    // Detectar el evento de retroceso del historial
+    this.closeForm();
+  }
   resetForm() {
     this.setOptions.resetOptions()
     this.form.reset()
@@ -302,6 +310,21 @@ export class NewProductComponent implements OnInit {
 
   private normalizeValue(value: any): string {
     return value.toLowerCase().replace(/\s/g, '');
+  }
+
+  getOptionWithLowestPrice(product: any): any | null {
+    let lowestPrice: number = Infinity;
+  
+    for (const variation of product) {
+      for (const option of variation.options) {
+        if (option.price < lowestPrice && option.active && variation.typePrice === 1) {
+          lowestPrice = option.price;
+        } 
+      }
+    } 
+  
+    console.log(lowestPrice);
+    return lowestPrice === Infinity ? null : lowestPrice;
   }
 
 

@@ -7,14 +7,15 @@
         <app-banner-qr></app-banner-qr>
     </div>
 
-    <div class="col-12 xl:col-6">
+    <div class="col-12 xl:col-6 ">
         <app-banner-link></app-banner-link>
-       
-        
     </div>
-
     
     <div class="col-12 xl:col-6" >
-        <app-chart></app-chart> 
+        <app-chart  [chartUse]="'stats'"></app-chart> 
+    </div>
+
+    <div class="col-12 xl:col-6" >
+        <app-chart [chartUse]="'sales'"></app-chart> 
     </div>
 </div>

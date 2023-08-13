@@ -43,6 +43,9 @@ export class AuthService {
 
   deleteToken(): void {
     this.cookie.delete('jwt');
+    this.cookie.delete('exp');
+    console.log(this.cookie.getAll());
+    
     this.token = null;
   }
 

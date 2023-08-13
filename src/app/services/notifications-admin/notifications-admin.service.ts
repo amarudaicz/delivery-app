@@ -23,7 +23,7 @@ export class NotificationsAdminService {
   new(message: string, action?: string, 
     config: {
     push?: boolean,
-    duration?: number,
+    duration?: number
     section?: string,
     panelClass?: string} = {duration:5000}) {
     const notification = { id: new Date().getTime().toString(), message, action, section:config?.section, timestamp: new Date().getTime() };
@@ -34,9 +34,11 @@ export class NotificationsAdminService {
       this.notifications.push(notification); // Agregar la notificación al principio del array
       this.allNotifications$.next(this.notifications);
     }
-
+ 
+    console.log(config);
+    config.duration = 5000
     
-    this.toast.open(message, action, {duration:config?.duration, panelClass:config?.panelClass });
+    this.toast.open(message, action, config);
   }
 
 

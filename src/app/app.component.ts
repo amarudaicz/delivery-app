@@ -19,6 +19,7 @@ import { PwaInstallerService } from './services/pwa-installer/pwa-installer.serv
 export class AppComponent implements OnInit {
 
   themeLoad:boolean=false
+  route:string = ''
   
   constructor(
     private contexts: ChildrenOutletContexts,
@@ -37,16 +38,32 @@ export class AppComponent implements OnInit {
     this.themeService.getThemeState().subscribe((state)=>{
       this.themeLoad = state
     })
-    
-    
-    
+    this.routeService.current.subscribe(current=>{
+      this.route = current 
+    })
+
+
+    console.log(this.routeService.getCurrent());
     
   }
 
-  getRouteData() {
-    const route =  this.contexts.getContext('primary')?.route?.snapshot?.data?.['page'];
+  routeClass(){
+
+    console.log(this.route);
     
-    // return route
+    switch (this.route) {
+      case 'admin':
+        return false
+        break;
+    
+      case 'login':
+        return false
+      break;
+
+      default:
+        return true
+        break;
+    }
   }
 
 
@@ -54,7 +71,6 @@ export class AppComponent implements OnInit {
     this.appRef.isStable.subscribe((isStable) => {
       if (isStable) {
         const timeInterval = interval(8 * 60 * 60 * 1000);
-
         timeInterval.subscribe(() => {
           this.update.checkForUpdate().then(() => console.log('checked'));
           console.log('update checked');

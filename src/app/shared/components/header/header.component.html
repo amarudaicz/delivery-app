@@ -8,7 +8,7 @@
 
                 <div class="menu-icon" (click)="toogleMenu()">
 
-                    <div class="container-bars" [class.menu-visible]="stateMenu">
+                    <div class="container-bars" [class.close]="state.menuMobile">
                         <div class="bar-1 bar"></div>
                         <div class="bar-2 bar"></div>
                         <div class="bar-3 bar"></div>
@@ -16,26 +16,20 @@
                  
                 </div>
 
-
-                <div class="search">
-                    <input type="text" class="search__input" placeholder="Buscar">
-                    <button class="search__button">
-                        <i class="pi pi-search search_icon"> </i>
-                    </button>
-                </div>
-
+                <h1 class="local-name">{{local?.name}}</h1>
     
-                
-
-                <div class="local-image">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" width="30px" height="30px" alt="">
+                <div class="local-image d-flex gap-3">
+                    <button (click)="shareLocal()" class="text-700 hover:text-900">
+                        <i class="pi pi-share-alt text-xl "></i>
+                    </button>
+                    <img [src]="local?.image" width="40px" height="40px" alt="">
                 </div>
     
             </div>
 
 
 
-            <div *ngIf="state.menuMobile" (click)="toogleMenu()" class="overlay-menu"></div>
+            <div *ngIf="state.menuMobile" [@fadeIn] (click)="toogleMenu()" class="overlay-menu"></div>
 
             <div class="container-menu" [class.menu-visible]="state.menuMobile">
                 
@@ -58,7 +52,6 @@
                         <button [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')"  class="contact-button">Contacto</button>
                     </div>
         
-        
                 </div>
         
                 <div class="footer-menu">
@@ -66,6 +59,7 @@
                         <img class="logo-app" src="./assets/logos/logo.svg" alt="">
                     </div>
         
+
                     <app-button-install></app-button-install>
                 </div>
             </div>

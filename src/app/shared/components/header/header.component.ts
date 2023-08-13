@@ -13,78 +13,85 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  animations:[
-    fadeIn,
-    headerIn
-  ]
+  animations: [fadeIn, headerIn],
 })
-
 export class HeaderComponent implements OnInit, OnDestroy {
-  local?:Local
+  local?: Local;
 
-  stateMenu:boolean = false
-  stateHeader:boolean = true
-  dataMenu:any[]=[
+  stateMenu: boolean = false;
+  stateHeader: boolean = true;
+  dataMenu: any[] = [
     {
-      name:'Inicio',
-      icon:'fa-solid fa-house',
-      link:'/'
+      name: 'Inicio',
+      icon: 'fa-solid fa-house',
+      link: '/',
     },
     {
-      name:'Informacion',
-      icon:'pi pi-info-circle'
+      name: 'Informacion',
+      icon: 'pi pi-info-circle',
     },
     {
-      name:'Ubicacion',
-      icon:'fa-solid fa-location-dot'
+      name: 'Ubicacion',
+      icon: 'fa-solid fa-location-dot',
     },
     {
-      name:'Instagram',
-      icon:'pi pi-instagram'
-    }
-  ]
-  state:any
-  fixed:boolean = false
-  scrollPos:number = 0
+      name: 'Instagram',
+      icon: 'pi pi-instagram',
+    },
+  ];
+  state: any;
+  fixed: boolean = false;
+  scrollPos: number = 0;
 
   constructor(
-    public theme:ThemesService, 
-    public routeData:RouteDataService, 
-    private localService:LocalDataService,
-    public layoutState:LayoutStateService,
-    private router:Router
-    ){
-      
-    }
-    
+    public theme: ThemesService,
+    public routeData: RouteDataService,
+    private localService: LocalDataService,
+    public layoutState: LayoutStateService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    this.layoutState.stateSubject.subscribe((state)=>{
-      this.state = state
-    })
-      
-    
+    this.layoutState.stateSubject.subscribe((state) => {
+      this.state = state;
+    });
+
+    this.localService.local$.subscribe((local) => {
+      console.log(local);
+      this.local = local;
+    });
   }
 
-  toogleMenu(){
-    this.stateMenu = !this.stateMenu
-    this.layoutState.state.menuMobile = !this.layoutState.state.menuMobile
-    this.layoutState.updateState()
+  toogleMenu() {
+    this.stateMenu = !this.stateMenu;
+    this.layoutState.state.menuMobile = !this.layoutState.state.menuMobile;
+    this.layoutState.updateState();
 
     if (document.body.style.overflow === 'hidden') {
-        document.body.style.overflow = ''
-      }else{
-        document.body.style.overflow = 'hidden'
-      }
-   
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
   }
 
+  shareLocal() {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Título del enlace compartido',
+          text: 'Descripción del enlace compartido',
+          url: `deliapp/${this.local?.name_url}.com`, // Reemplaza esto con tu enlace a compartir
+        })
+        .then(() => console.log('Enlace compartido con éxito'))
+        .catch((error) => console.error('Error al compartir:', error));
+    } else {
+      console.log('La API de Web Share no está soportada en este navegador.');
+      // Aquí puedes proporcionar una alternativa para compartir en navegadores que no soportan la API de Web Share.
+    }
+  }
 
-
-  
   ngOnDestroy(): void {
-    this.stateMenu = false
-    document.body.style.overflow = ''
+    this.stateMenu = false;
+    document.body.style.overflow = '';
   }
-  
-
 }

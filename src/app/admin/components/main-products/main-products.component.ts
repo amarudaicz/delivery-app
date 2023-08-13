@@ -22,9 +22,12 @@ export class MainProductsComponent {
 
     })
 
+    this.hideDashboard()
+  }
+  
+  
+  hideDashboard(){
     this.layoutService.state.staticMenuDesktopInactive = true
-    
-
   }
 
 }

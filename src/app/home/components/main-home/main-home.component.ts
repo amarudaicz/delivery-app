@@ -44,11 +44,10 @@ export class MainHomeComponent implements OnInit, OnDestroy{
     
     //SETING PETICIONES DEL LOCAL
     this.local = this.route.snapshot.params['local'];
-    // this.localService.initDataLocal(this.local);
+    this.localService.initDataLocal(this.local);
 
 
     //SETING ORIGIN
-    this.routeService.setOrigin(this.local!);
 
     //SETEANDO EL PRELOADER DE LAS CATEGORIAS SI NO EXISTE ID SETEADO
     if (!this.previewCategory.category_id)

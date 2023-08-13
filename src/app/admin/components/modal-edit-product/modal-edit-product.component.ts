@@ -1,6 +1,6 @@
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent, MatChipEvent, MatChipEditedEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,7 +16,9 @@ import { CloudinaryService } from 'src/app/services/cloudinary/cloudinary.servic
 import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
-import { noScriptValidator } from 'src/app/utils/validators';
+import { copy } from 'src/app/utils/copyElement';
+import { MainEditProductComponent } from '../main-edit-product/main-edit-product.component';
+import { HttpInterceptorService } from 'src/app/services/iterceptor-jwt/interceptorJwt';
 
 @Component({
   selector: 'app-modal-edit-product',
@@ -27,7 +29,7 @@ export class ModalEditProductComponent {
 
 
 
-  @Input() product?: Product;
+  @Input() product?: Product; 
   @Output() stateProduct = new EventEmitter<Product>()
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -40,6 +42,7 @@ export class ModalEditProductComponent {
   editing: boolean = false
   previewModal: boolean = false
   image: any
+
 
   constructor(
     public theme: ThemesService,
@@ -56,9 +59,9 @@ export class ModalEditProductComponent {
     private dinamicList:DinamicListService
   ) {
     this.formEditProduct = this.formBuilder.group({
-      name: ['', Validators.required, noScriptValidator()],
-      category_id: ['', Validators.required, noScriptValidator()],
-      price: ['', Validators.required, noScriptValidator()],
+      name: ['', Validators.required ],
+      id: ['', Validators.required ],
+      price: ['', Validators.required ],
       ingredients: [null],
       description: [null],
       image: [null]
@@ -70,20 +73,47 @@ export class ModalEditProductComponent {
   ngOnInit(): void {
 
     console.log(this.product);
+    this.product = copy(this.product)
     
-    this.adminService.getCategories().subscribe((data) => { this.categories = data; console.log(data); })
-
     this.formEditProduct.addControl('id', this.formBuilder.control(null))
     this.setEditProduct(this.product!);
 
     this.formEditProduct.valueChanges.subscribe(change => {
       this.editing = true
+      
+    
+      
     })
+
+
+    if (this.getOptionWithLowestPrice(this.optionsGroup)){
+      this.formEditProduct.get('price')?.disable()
+    }
+
+    
+  
   }
+
 
   saveEditProduct() {
 
+
+    if (this.formEditProduct.invalid) {
+      this.formEditProduct.markAllAsTouched()
+      this.toast.open('Completar los campos requeridos', '' , {duration:3000})
+      return  
+    }
+
+
+    if (!this.checkOptionsEmpyt(this.optionsGroup)){
+      this.toast.open('Debes activar al menos una opcion en un grupo', '' , {duration:3000})
+      return
+      
+    }
+
+
     this.formEditProduct.removeControl('ingredients')
+    this.formEditProduct.get('price')?.enable()
     this.formEditProduct.get('name')?.setValue(this.capitalize(this.formEditProduct.get('name')?.value))
 
     const product = {variations:JSON.stringify(this.optionsGroup), ingredients:JSON.stringify(this.ingredientsList), ...this.formEditProduct.value};
@@ -91,34 +121,47 @@ export class ModalEditProductComponent {
     this.adminService.updateProduct(product).subscribe(res => {
       this.toast.open('Producto actualizado con exito', '', {duration:3000})
       this.adminService.products = undefined
-      this.product!.editing = false
-      this.dinamicList.updateDinamicList.next(true)
+      this.adminService.getProductsAdmin()
     })
   }
 
   setEditProduct(product: Product) {
-    console.log(product);
+    this.previewImageProduct = product.image
+    this.ingredientsList = product.ingredients || [];
+    this.optionsGroup = product.variations || [];
 
     this.formEditProduct.patchValue({
       name: product.name,
-      price: product.price,
       id: product.id,
+      price:this.getOptionWithLowestPrice(this.optionsGroup) || product.price,
       image: product.image || null,
       description: product.description,
     });
 
-    this.previewImageProduct = product.image
-    this.ingredientsList = product.ingredients || [];
-    this.optionsGroup = product.variations || [];
+    if (this.getOptionWithLowestPrice(this.optionsGroup)){
+      this.formEditProduct.get('price')?.disable()
+    }
+ 
+
   }
 
   getOptionsSelected(options: OptionProduct[]) {
-     
-    const variations:OptionProduct[] = JSON.parse(JSON.stringify(options))
+    
+    
+    this.optionsGroup = options
+    
+    if (!this.getOptionWithLowestPrice(options)) {
+      this.formEditProduct.get('price')?.setValue(null) 
+      this.formEditProduct.get('price')?.enable()
+      return
+    }
 
-    console.log(variations);
-    this.optionsGroup = variations
+    this.formEditProduct.get('price')?.setValue(this.getOptionWithLowestPrice(options) || this.product?.price) 
+    this.formEditProduct.get('price')?.disable()
 
+
+    console.log(this.formEditProduct.getRawValue);
+    
     this.formEditProduct.removeControl('ingredients')
     const product = {variations:this.optionsGroup, ingredients:this.ingredientsList, ...this.formEditProduct.value}
 
@@ -161,9 +204,8 @@ export class ModalEditProductComponent {
     });
   }
 
-  closeEditProduct() {
 
-  }
+
 
   capitalize(value: string) {
     if (value)
@@ -189,6 +231,27 @@ export class ModalEditProductComponent {
     }
 
 
+  }
+
+
+  getOptionWithLowestPrice(product: any): any | null {
+    let lowestPrice: number = Infinity;
+  
+    for (const variation of product) {
+      for (const option of variation.options) {
+        if (option.price < lowestPrice && option.active && variation.typePrice === 1) {
+          lowestPrice = option.price;
+        } 
+      }
+    } 
+  
+    console.log(lowestPrice);
+    return lowestPrice === Infinity ? 0 : lowestPrice;
+  }
+
+  checkOptionsEmpyt(variations:OptionProduct[]){
+    console.log(variations);
+    return variations.every(v=> v.options.some(v => v.active))
   }
 
 
@@ -227,6 +290,8 @@ export class ModalEditProductComponent {
     }
     // Edit existing fruit
   }
+
+
 
 
 }

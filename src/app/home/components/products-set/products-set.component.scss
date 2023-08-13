@@ -2,7 +2,6 @@
 @use "../../../shared/components/product-card/product-card.component.scss";
 
 .products-set {
-  padding: 15px 0;
   position: relative;
 }
 
@@ -21,27 +20,19 @@
 
 .container-products {
   overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  padding: 15px 0;
+  scroll-snap-type: x proximity;
 }
 
 .container-grid {
   display: grid;
-  grid-auto-columns: 90%;
+  grid-auto-columns: 100%;
   grid-template-rows: repeat(2, max-content);
-  gap: 10px ;
+  gap: 16px ;
   grid-auto-flow: column;
   place-items: center;
 
   @include m.tablet{
-    grid-auto-columns: 55%;
-    grid-template-rows: repeat(2, max-content);
-  }
-
-  @include m.laptop{
-    grid-auto-columns: none;
-    grid-auto-flow: row;
-    grid-template-columns: repeat(2, 49.5%);
+  grid-auto-columns:auto;
 
 
   }

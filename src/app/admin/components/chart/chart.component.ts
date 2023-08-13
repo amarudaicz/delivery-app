@@ -1,91 +1,148 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { AdminService } from 'src/app/services/admin/admin.service';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss']
+  styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent {
-  chartData:any
-  chartOptions:any
-  constructor() { }
+  @Input() chartUse?: string;
 
-  ngOnInit(){
-    this.randomNumbers()
-    this.initChart()
+  chartData: any;
+  chartOptions?: ChartOptions;
+  innerWidth = window.innerWidth;
+  totalCounter: number = 0;
+
+  constructor(private adminService: AdminService) {}
+
+  ngOnInit() {
+    console.log(this.chartUse);
+
+    if (this.chartUse === 'stats') {
+      this.adminService.stats$.subscribe((stats) => {
+        if (!stats) return;
+        this.updateChartData(stats);
+
+        this.totalCounter = stats
+          .map((s) => s.total_visits)
+          .reduce((prev, act) => prev + act);
+      });
+    } else {
+      this.adminService.sales$.subscribe((sales) => {
+        if (!sales) return;
+        this.updateChartData(sales);
+
+        this.totalCounter = sales
+          .map((s) => s.ammount)
+          .reduce((prev, act) => prev + act);
+      });
+    }
+
+    this.initChart();
+  }
+
+  updateChartData(data: any[]) {
+    console.log(data);
+
+    const documentStyle = getComputedStyle(document.documentElement);
+    this.chartData = {
+      labels: data.map((item) => this.formatDate(item.date)), // Aquí puedes usar un formato de fecha específico si lo deseas
+      datasets: [],
+    };
+
+    if (this.chartUse === 'stats') {
+
+      this.chartData.datasets.push({
+        label: 'Vistas',
+        data: data.map((item) => item.total_visits),
+        fill: false,
+        backgroundColor: documentStyle.getPropertyValue('--primary-color'),
+        borderColor: documentStyle.getPropertyValue('--primary-color'),
+      });
+
+    } else {
+
+      this.chartData.datasets.push(
+        {
+          label: 'Total en pesos',
+          data: data.map((e) => e.ammount),
+          fill: false,
+          backgroundColor: '#ff725e',
+          borderColor: '#ff725e',
+        },
+        {
+          label: 'Ventas',
+          data: data.map((e) => e.total_sales),
+          fill: false,
+          backgroundColor: '#0e8174',
+          borderColor: '#0e8174',
+        }
+      );
+    }
   }
 
   initChart() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const textColorSecondary = documentStyle.getPropertyValue(
+      '--text-color-secondary'
+    );
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-    this.chartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-            {
-                label: 'First Dataset',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                fill: false,
-                backgroundColor: documentStyle.getPropertyValue('--bluegray-700'),
-                borderColor: documentStyle.getPropertyValue('--bluegray-700'),
-                tension: .4
-            },
-            {
-                label: 'Second Dataset',
-                data: [28, 48, 40, 19, 86, 27, 90],
-                fill: false,
-                backgroundColor: documentStyle.getPropertyValue('--green-600'),
-                borderColor: documentStyle.getPropertyValue('--green-600'),
-                tension: .4
-            }
-        ]
-    };
-
     this.chartOptions = {
-        plugins: {
-            legend: {
-                labels: {
-                    color: textColor
-                }
-            }
+      responsive: true,
+      maintainAspectRatio: true,
+
+      interaction: {
+        mode: 'index', // Muestra una línea vertical al pasar el mouse por encima
+        intersect: false, // Muestra solo los puntos más cercanos en el eje X
+        axis: 'x',
+      },
+
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor,
+          },
         },
-        scales: {
-            x: {
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            },
-            y: {
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            }
-        }
+      },
+
+      scales: {
+        x: {
+          ticks: {
+            color: textColor,
+          },
+          grid: {
+            color: surfaceBorder,
+          },
+        },
+        y: {
+          ticks: {
+            color: textColor,
+            stepSize: 1000, // Indica que la escala debe usar solo números enteros
+          },
+
+          grid: {
+            color: surfaceBorder,
+          },
+
+          min: 0,
+        },
+      },
+
+      elements: {
+        point: {
+          radius: 4, // Tamaño del punto por defecto
+          hoverRadius: 5, // Tamaño del punto cuando se hace hover
+        },
+      },
     };
-}
-
-
-  private randomNumbers(){
-    const numbers:number[] = []
-
-    for (let i = 0; i < 12; i++) {
-      let random = Math.floor((Math.random() * (150 - 1 + 1)) + 1);
-      numbers.push(random)
-    }
-  
-    return numbers
-  
   }
 
+  formatDate(date: string) {
+    const [year, month, day] = date.split('-');
+    return [day, month].join('-');
+  }
 }

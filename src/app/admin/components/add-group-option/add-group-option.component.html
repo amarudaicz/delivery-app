@@ -23,22 +23,41 @@
 
           <div class="seccion-form mb-3 p-4">
             <h2 class="mb-2">Detalles del grupo</h2>
-            <mat-form-field class="input-50" color="primary">
-              <mat-label>Nombre</mat-label>
 
-              <input formControlName="nameVariation" type="text" matInput placeholder="Ej: Tamaño, Color" />
-              <mat-hint>
-                Ejemplo: Tamaño, Color
-              </mat-hint>
-              <mat-error>Este campo es requerido</mat-error>
-            </mat-form-field>
-
+            <div class="flex wrap">
+              <mat-form-field class="w-full" color="primary">
+                <mat-label>Nombre</mat-label>
+  
+                <input formControlName="nameVariation" type="text" matInput placeholder="Ej: Tamaño, Color" />
+                <mat-hint>
+                  Ejemplo: Tamaño, Color
+                </mat-hint>
+                <mat-error>Este campo es requerido</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="w-full" color="primary">
+                <mat-label>SKU</mat-label>
+  
+                <input formControlName="sku" type="text" matInput placeholder="" />
+                <mat-hint>
+                </mat-hint>
+                <mat-error>Este campo es requerido</mat-error>
+              </mat-form-field>
+  
+            </div>
+           
             <div class="mb-3">
               <mat-checkbox
                 matTooltip="Marcar este campo indica que el usuario podra marcar solo una de las opciones disponibles"
                 matTooltipPosition="above" formControlName="simple" color="primary" class="check-multiple">
                 Respuesta Unica
               </mat-checkbox>
+
+              <mat-checkbox
+              matTooltip="Marcar este campo indica que el usuario debera si o si responder al menos una opcion para poder realizar la compra"
+              matTooltipPosition="above" formControlName="required" color="primary" class="check-multiple">
+              Requerido
+            </mat-checkbox>
             </div>
 
             <div class="container-max-min" *ngIf="!formVariations.get('simple')?.value">
@@ -131,9 +150,13 @@
 
             <form [formGroup]="formOptions">
               <div formArrayName="options">
-                <div class="option" *ngFor="let optionGroup of optionsList.controls; let i = index">
+
+                <div class="option" *ngFor="let optionGroup of optionsList!.controls; let i = index">
+
                   <div class="p-4" [formGroupName]="i">
+
                     <h4 class="mb-1">Opcion #{{i + 1}}</h4>
+
                     <div class="d-inline mr-3">
                       <mat-form-field>
                         <mat-label>Nombre de la Opcion</mat-label>

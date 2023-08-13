@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ComponentRef, Inject, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { Local } from 'src/app/interfaces/local-interface';
@@ -14,6 +14,8 @@ import { Product } from 'src/app/interfaces/product-interface';
 import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
 import { Location } from '@angular/common';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 
 @Component({
   selector: 'app-main-options',
@@ -31,9 +33,10 @@ export class MainOptionsComponent implements OnInit {
   draggin: boolean = false
   groupEditing?: OptionProduct
   products:Product[] = []
+  
+  
 
-
-  constructor(private adminService: AdminService, private alert:NotificationsAdminService, private toast: MatSnackBar, private dialog: MatDialog, private dinamicList: DinamicListService) {
+  constructor(private adminService: AdminService, private alert:NotificationsAdminService, private toast: MatSnackBar, private dialog: MatDialog, private dinamicList: DinamicListService, private layoutService:LayoutStateService) {
 
     this.adminService.products$.subscribe(products=>{
       this.products = products
@@ -45,15 +48,19 @@ export class MainOptionsComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.optionsGroup.subscribe((options: OptionProduct[]) =>{
 
+      options = options.map(e=> {
+        return {...e, editing:false}
+      })
+
       this.groupOptions = copy(options)
+        console.log(this.groupOptions);
+        
       this.respaldGroupOptions = copy(options)
 
     })
   }
 
   getOptions(optionsArray: any[]) {
-    console.log(optionsArray);
-    
     return optionsArray.filter(e=> e.active).map(e => e.nameOption).join(', ')
   }
 
@@ -81,11 +88,21 @@ export class MainOptionsComponent implements OnInit {
     option.active = !option.active
   }
 
+  
+  modalCreateGroup(){
+    window.history.pushState({modal:true}, 'modal');
+    this.activeCreateGroup = true
+    this.layoutService.blockBody()
+  }
+  
+  closeModalCreateGroup(){
+    this.activeCreateGroup = false
+    this.layoutService.unblockBody()
+  }
+
 
   updateGroupOption(group: OptionProduct){
     const previousGroup = this.respaldGroupOptions.find(e=> e.id === group.id)
-    console.log(group, previousGroup);
-
 
     if (JSON.stringify(group) === JSON.stringify(previousGroup)){
       this.alert.new('No se han detectado cambios en el grupo')
@@ -99,11 +116,13 @@ export class MainOptionsComponent implements OnInit {
     }
     
     const productsWhitGroup = this.products.filter(e => e.variations.some(e => e.id === group.id))
+    
       if (productsWhitGroup.length) {
 
         window.history.pushState({modal:true}, 'modal');
 
         const dialogRef = this.dialog.open(SelectProductsGroupComponent, {
+          height:'90%',
           data: { products:productsWhitGroup, group: group }
         })
 
@@ -150,9 +169,12 @@ export class MainOptionsComponent implements OnInit {
 
     this.adminService.updateOptionGroup(data).subscribe((res:any)=>{
       this.toast.open('Grupo de opciones actualizado', '', { duration: 3000 });
-      this.toast.open(res.info, '', { duration: 3000 });
+      setTimeout(() => {
+        this.toast.open(`${res.affectedRows} Productos han sido actualizados `, '', { duration: 3000 });
+      }, 3000);
 
       this.adminService.products = undefined;
+      this.adminService.getProductsAdmin()
       this.adminService.optionsGroup.next(this.groupOptions);
     })
   }

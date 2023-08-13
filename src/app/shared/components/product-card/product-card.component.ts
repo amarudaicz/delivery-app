@@ -17,35 +17,29 @@ export class ProductCardComponent implements OnInit {
     public theme: ThemesService,
     private localService: LocalDataService,
     private formBuilder: FormBuilder,
-    private ratingService:RatingService,
-    private routeData:RouteDataService,
-    private favService:FavoritesService
-  ) {
-    this.ratingForm = this.formBuilder.group({
-      rating: null,
-    });
-  }
+    private ratingService: RatingService,
+    private routeData: RouteDataService,
+    private favService: FavoritesService
+  ) {}
 
   ngOnInit(): void {}
 
-  ratingForm: FormGroup;
-
   @Input() product: Product | any;
-  localName?: string;
-  fav: boolean = false;
+  @Input() linkMode?: 'name' | 'category-name';
 
-  toogleFav(product:any) {
-    this.fav = !this.fav
-    this.favService.toogleFavorite(this.product)
-  }
+  getOptionWithLowestPrice(product: Product): any | null {
+    let lowestPrice: number = Infinity;
+    const existType1 = product.variations.findIndex((v) => v.typePrice === 1);
 
-  saveRating() {
-    console.log(this.product);    
-    this.ratingForm.reset();
-  }
+    if (existType1 === -1) return 0;
 
+    for (const option of product.variations[existType1].options) {
+      if (option.price < lowestPrice && option.active) {
+        lowestPrice = option.price;
+      }
+    }
 
-  compareFav(product:any){
-    return this.favService.compareFavorite({...product, local:this.routeData.getOrigin()})
+    console.log(lowestPrice);
+    return lowestPrice === Infinity ? 0 : lowestPrice;
   }
 }

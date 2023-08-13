@@ -3,14 +3,14 @@
   <div class="">
     
     <div class="container-buttons-edit">
-      <p-button type="submit" (click)="saveEditProduct()" [disabled]="processLoad" styleClass="p-button-danger" pRipple
-        class="button-save-secondary">
+      
+      <button [disabled]="processLoad" matTooltip="Vista previa" (click)="showPreview()">
+        <i class="pi pi-eye mr-2 text-white text-xl"></i>
+      </button>
+      <button mat-raised-button color="primary" type="submit" (click)="saveEditProduct()" [disabled]="processLoad"
+        class="">
         Guardar
-      </p-button>
-
-      <p-button [disabled]="processLoad" matTooltip="Vista previa" icon="pi pi-eye" (click)="showPreview()"
-        type="submit" styleClass="p-button-secondary">
-      </p-button>
+      </button>
     </div>
 
     <h1 class="mb-3">Editando {{product?.name}}</h1>

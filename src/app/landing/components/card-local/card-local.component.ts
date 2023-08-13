@@ -37,7 +37,6 @@ export class CardLocalComponent implements OnInit {
     this.localData.load = true
 
     setTimeout(() => {
-      this.localData.initDataLocal(this.local.name_url)
       this.layoutState.state.menuMobile = false
       this.layoutState.updateState()
       this.themeService.stateTheme.next(false)

@@ -17,63 +17,20 @@ import { MainOptionsComponent } from './admin/components/main-options/main-optio
 import { MainSchedulesComponent } from './admin/components/main-schedules/main-schedules.component';
 import { LinksSocialComponent } from './admin/components/links-social/links-social.component';
 
-const routes: Routes = [ 
-
-
-  {
-    path:'user',
-    redirectTo:'user',
-    pathMatch:'full'
-  },
+const routes: Routes = [
 
   {
-    path:'cart',
-    redirectTo:'cart',
-    pathMatch:'full'
-  },
-
-  {
-    path:'admin',
-    redirectTo:'admin',
-    pathMatch:'full'
-  },
-  {
-    path:'login',
-    redirectTo:'login',
-    pathMatch:'full'
-  },
-
-  {
-    path:'admin',
-    component:AppLayoutComponent,
-    data:{page:'admin'},
+    path: 'admin',
+    data: { page: 'admin' },
     canActivate:[AuthGuard],
-    children:[
-      {
-        path:'',
-        component:MainAdminComponent,
-      },
-      {
-        path:'products',
-        component:MainProductsComponent
-      },
-      {
-        path:'config',
-        component:MainConfigComponent
-      },
-      {
-        path:'options-group',
-        component:MainOptionsComponent
-      },
-      {
-        path:'schedules',
-        component:MainSchedulesComponent
-      },
-      {
-        path:'links',
-        component:LinksSocialComponent
-      }
-    ]
+    loadChildren: () =>
+      import('./layout/app.layout.module').then((m) => m.AppLayoutModule),
+  },
+
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
   },
 
   {
@@ -82,27 +39,23 @@ const routes: Routes = [
   },
 
   {
-    path:'user',
-    component:MainUserComponent
+    path: 'user',
+    component: MainUserComponent,
   },
 
   {
-    path:'login',
-    loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
+    path: ':local/:category/:product',
+    loadChildren:()=> import('./detail/detail.module').then((m) => m.DetailModule)
   },
 
   {
     path: '',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
-  
-
-
-
-]; 
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash:true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -13,16 +13,16 @@
 
 
         <div class="button-create-group w-full md:w-fit">
-            <p-button (click)="activeCreateGroup = true">Crear grupo</p-button>
+            <p-button (click)="modalCreateGroup()">Crear grupo</p-button>
         </div>
     </div>
 
-    <div class="container-dinamic" *ngIf="groupOptions.length">
-        <div class="container-state">
-            <div class="state-options">
+    <div class="container-dinamic relative" *ngIf="groupOptions.length">
+        <div class="container-state sticky top-0">
+            <div class="d-flex justify-content-center sm:justify-content-between ">
                 <span>Grupo</span>
-                <span class="d-flex gap-1">
 
+                <span class="d-flex gap-1 hidden sm:flex">
                     <i class="pi pi-circle-fill text-sm" [style.color]="'green'"></i>
                     Opciones disponibles
                 </span>
@@ -35,7 +35,7 @@
                 <div class="" *ngFor="let group of groupOptions; index as indexGroup" cdkDrag>
 
                     <div class="option-box">
-                        <div class="name-option space-option">
+                        <div class="name-option space-option ">
                             <div class="d-flex gap-2">
                                 <div cdkDragHandle class="drag-handle d-flex">
                                     <i class="pi pi-ellipsis-v"></i>
@@ -46,6 +46,8 @@
                                     <h3 class="d-inline">
                                         {{group.nameVariation}}
                                     </h3>
+                                    <span> | {{group.sku}}</span>
+                                    
                                     <p [ngSwitch]="group.typePrice">
                                         <font *ngSwitchCase="1">Determina el precio final</font>
                                         <font *ngSwitchCase="2">Incrementa el precio final</font>
@@ -54,21 +56,31 @@
     
                                     <p [ngSwitch]="group.multiple">
                                         <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' | max: ' + group.max}})</font>
-                                        <font *ngSwitchCase="false">Respuestas(1<span *ngIf="(group.min === 1 && group.max === 1) || group.typePrice === 1">, requerido</span>)</font>
+                                        <font *ngSwitchCase="false">Respuestas(1<span *ngIf="(group.min === 1 && group.max === 1) || group.typePrice === 1 || group.required">, requerido</span>)</font>
                                     </p>
                                 </div>
                             </div>
 
-                            <button (click)="toogleGroup(group)" type="button" class="">
-                                <i matRipple class="pi button-toogle-acordeon"
-                                    [ngClass]="isAccordionExpanded(group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
-                            </button>
+
+
+                            <div class="d-flex">
+                                <button (click)="toogleGroup(group)" type="button" class="mr-2">
+                                    <i matRipple class="text-xl pi button-toogle-acordeon"
+                                        [ngClass]="isAccordionExpanded(group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+                                </button>
+    
+                                <!-- <button>
+                                    <i matRipple (click)="group.editing = true" class="text-xl fa-solid fa-pen button-toogle-acordeon"></i>
+                                </button> -->
+                            </div>
+
 
                         </div>
 
                         <div class="options-available">
                             <p>{{getOptions(group.options)}}</p>
                         </div>
+
 
 
                     </div>
@@ -93,9 +105,11 @@
 
 
                         </div>
-                            
-                        <p-button (click)="updateGroupOption(group)">Actualizar</p-button>
-                        <p-button class="ml-2" (click)="deleteGroupOption(group, indexGroup)" styleClass="p-button-outlined p-button-danger">Eliminar grupo</p-button>
+
+                        <div class="d-flex gap-2">
+                            <button mat-raised-button color="primary" (click)="updateGroupOption(group)">Actualizar</button>
+                            <button mat-button color="warn" class="" (click)="deleteGroupOption(group, indexGroup)" >Eliminar grupo</button>
+                        </div>
                     
                     </div>
 
@@ -110,4 +124,4 @@
 
 </div>
 
-<app-add-group-option *ngIf="activeCreateGroup" (closeForm)="activeCreateGroup = false"></app-add-group-option>
+<app-add-group-option *ngIf="activeCreateGroup" (closeForm)="closeModalCreateGroup()"></app-add-group-option>

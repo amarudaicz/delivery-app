@@ -1,51 +1,44 @@
-<div class="product-card" *ngIf="product.id; else loader">
-  <a
-    [routerLink]="[product.category_name.toLowerCase() + '/' + product.name]"
-    [queryParams]="{ id: product.id }"
-  >
-    <div class="product-image">
-      <img src="{{ product.image }}" alt="" />
+<a class=""
+  [routerLink]="[linkMode === 'name' ? product.name : product.category_name?.toLowerCase() + '/' + product.name]"
+  [queryParams]="{ id: product.id }"
+>
+<div class="product-card border-round bg-white shadow-3" *ngIf="product.id; else loader">
+
+  <div class="flex flex-row gap-3">
+
+      <div class="product-image">
+        <img src="{{ product.image }}" class="border-round " alt="" />
+      </div>
+
+    <div class="product-info flex flex-column w-full h-full">
+      <span class="product-name mb-1 text-base">{{ product.name }}</span>
+      <span *ngIf="!product.ingredients.length" class="product-ingredients">
+        {{product.description}}
+      </span>
+
+      <span *ngIf="product.ingredients" class="product-ingredients">{{ product.ingredients.join(", ") }}</span>
+ 
+      <div class="mt-2 text-base product-price" *ngIf="getOptionWithLowestPrice(product); else singlePrice">
+        Desde
+        <span class="font-bold">
+          {{ getOptionWithLowestPrice(product) | currency }}
+        </span>
+        <i class="pi"></i>
+      </div>
+
+      <ng-template #singlePrice>
+        <div class="container-price mt-2">
+          <span class="product-price font-bold text-base">{{ product.price | currency }}</span>
+        </div>
+      </ng-template>
+      
     </div>
-
-    <div class="product-title">
-      <h3 class="product-name">{{ product.name }}</h3>
-      <p *ngIf="product.ingredients" class="product-ingredients">{{ product.ingredients.join(", ") }}</p>
-    </div>
-  </a>
-
-  <form
-    class="container-rating"
-    [formGroup]="ratingForm"
-    [style.color]="theme.get('background')"
-  >
-    <p-rating formControlName="rating" [cancel]="false"></p-rating>
-    <i
-      class="pi pi-check"
-      (click)="saveRating()"
-      *ngIf="ratingForm.get('rating')?.value"
-    ></i>
-  </form>
-
-  <div class="container-price-fav">
-    <span class="product-price">{{ product.price | currency }}</span>
-
-    <button
-      matRipple
-      [matRippleUnbounded]="true"
-      [matRippleCentered]="true"
-      [matRippleRadius]="15"
-      class="button-fav"
-      (click)="toogleFav(product)"
-    >
-      <i
-        class="fav"
-        [ngClass]="
-          compareFav(product) ? 'fa-solid fa-heart fav-active' : ' fa-regular fa-heart'
-        "
-      ></i>
-    </button>
+    
   </div>
+
+  
 </div>
+</a>
 
 <ng-template #loader>
   <p-skeleton

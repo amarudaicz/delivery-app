@@ -6,6 +6,8 @@ import { MainNewProductComponent } from '../admin/components/main-new-product/ma
 import { MainOptionsComponent } from '../admin/components/main-options/main-options.component';
 import { MainProductsComponent } from '../admin/components/main-products/main-products.component';
 import { AppLayoutComponent } from './app.layout.component';
+import { MainSchedulesComponent } from '../admin/components/main-schedules/main-schedules.component';
+import { LinksSocialComponent } from '../admin/components/links-social/links-social.component';
 
 const routes: Routes = [
   
@@ -25,17 +27,18 @@ const routes: Routes = [
             component:MainProductsComponent
           },
           {
-            path:'new-product',
-            component:MainNewProductComponent
-          },
-          {
             path:'config',
             component:MainConfigComponent
           },
           {
-            path:'options-group',
-            component:MainOptionsComponent
-          }
+            path:'schedules',
+            component:MainSchedulesComponent
+          },
+          {
+            path:'links',
+            component:LinksSocialComponent
+          },
+          
         ]
       },
     ]

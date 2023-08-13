@@ -1,18 +1,18 @@
 <div class="container-info">
 
     <div *ngIf="!modePreview" class="header-detail">
-        <a  (click)="redirectBack() ">
-            <i class="pi pi-chevron-left icon-back"></i>
-            
-            <h2 class="product-category">{{product.category_name}}</h2>
+
+        <a  (click)="redirectBack()" class="d-flex">
+            <i class="pi pi-chevron-left p-2 text-white border-round bg-bluegray-800 mr-3"></i>
+            <h1 class="title">{{product.category_name}}</h1>
         </a>
 
         
 
         
     </div>
-    
-    <div class="data-product" [style.overflow]="modePreview ? 'unset' : 'scroll'">       
+     
+    <div class="data-product bg-white" #data [style.overflow]="modePreview ? 'unset' : 'scroll'">       
 
         <div class="container-image">
             <img src="{{product.image}}" alt="">
@@ -35,10 +35,11 @@
                     </ul>
                 </div>
         
-                
-              <app-add-product-cart *ngIf="product" [modePreview]="modePreview" [product]="product">
-                    
-              </app-add-product-cart>
+                <div #optionsDisplay>
+                    <app-add-product-cart  *ngIf="product" [modePreview]="modePreview" [product]="product">
+                          
+                    </app-add-product-cart>
+                </div>
          
         </div>
 

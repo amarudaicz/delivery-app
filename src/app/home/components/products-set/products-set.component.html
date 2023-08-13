@@ -1,22 +1,21 @@
-<section class="products-set">
-    <div class="container-chip">
+<section class="products-set mt-3">
+
+    <div class="container-chip mb-2">
         <h2 class="title">
-            Nuestras recomendaciones
+            {{title}}
         </h2>
 
         <a class="link-category" *ngIf="title" [routerLink]="title.toLowerCase()">
             <span>
                 Ver mas
             </span>
-            
         </a>
-
     </div>
 
     <div class="container-products">
-        <div class="container-grid">
+        <div class="container-grid mb-3">
  
-            <app-product-card [style.width]="'100%'" *ngFor="let product of products" [product]="product"></app-product-card>           
+            <app-product-card [linkMode]="'category-name'" [style.width]="'100%'" *ngFor="let product of products" [product]="product"></app-product-card>           
               
          
         </div>  

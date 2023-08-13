@@ -11,7 +11,7 @@
             class="container-radio container-input"
           >
             <div>
-              <h4>{{ optionGroup.nameVariation }}</h4>
+              <h4 class="text-base">{{ optionGroup.nameVariation }}</h4>
             </div>
             <mat-radio-group [formControlName]="optionGroup.nameVariation"
             class="radio-group">
@@ -35,7 +35,8 @@
 
               <!-- ALERTT////// -->
               <span class="alert-form" *ngIf="this.form.get(optionGroup.nameVariation)?.invalid">Elije una opcion <i class="pi pi-info-circle"></i></span>
-           
+              <span class="mt-2" (click)="clearOption(optionGroup.nameVariation)"  *ngIf="(!optionGroup.min || !optionGroup.required) && optionGroup.typePrice !== 1 && form.get(optionGroup.nameVariation)?.value !== ''">limpiar opcion</span>
+
             </mat-radio-group>
           </div>
 
@@ -56,10 +57,7 @@
                 </div>
 
                 <span
-                  [style.background]="theme.get('background')"
-                  [style.color]="theme.get('colorTextSecondary')"
-                  class="chip type-option"
-
+                  class="chip bg-bluegray-200 type-option"
                   >{{optionGroup.min ? 'Requerido' : 'Opcional'}}</span
                 >
               </div>

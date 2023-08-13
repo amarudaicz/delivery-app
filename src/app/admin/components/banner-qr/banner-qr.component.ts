@@ -27,7 +27,7 @@ export class BannerQrComponent {
       text:'Código QR instantaneo',
       icon:'fa-solid fa-circle-check'
     },
-    {
+    { 
       text:'Envia tus clientes a tu aplicacion',
       icon:'fa-solid fa-circle-check'
     },

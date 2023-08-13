@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { ItemCart } from 'src/app/interfaces/itemCart-interfaz';
 import { Product } from 'src/app/interfaces/product-interface';
@@ -15,32 +16,33 @@ import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement';
     fadeIn
   ]
 })
-export class CartItemsComponent {
-  itemsCart: ItemCart[]=[]; // products will be stored as an array of objects
+export class CartItemsComponent implements OnDestroy {
   subtotal = 0;
-
-  constructor(private cartService: CartService, public theme: ThemesService, public routeService:RouteDataService) {}
+  itemsCart:any[]=[]
+  items$?:Subscription
+  constructor(public cartService: CartService, public theme: ThemesService, public routeService:RouteDataService) {
+  }
 
 
   ngOnInit(): void {
     this.routeService.setCurrent('cart')
-    
-    this.cartService.getCartItems().subscribe((items:ItemCart[]) => {
-      this.itemsCart = items;     
-       
-      if (items.length === 0){
+
+
+    this.items$ = this.cartService.getCartItems().subscribe((items) => {
+      console.log(items);
+      this.itemsCart = items
+      
+      if (items.length === 0) {
         this.subtotal = 0
         return
       }
       
       this.subtotal = items.map(e => e.total*e.quantity).reduce((prev, act)=>prev + act)
-
       
     });
   }
 
   clearCart() {
-    this.itemsCart = [];
     this.subtotal = 0;
     this.cartService.clearCart()
   }
@@ -67,4 +69,15 @@ export class CartItemsComponent {
   }
 
 
+  ngOnDestroy(): void {
+    console.log('------------------------------');
+    console.log('------------------------------');
+    console.log('DESTROY');
+    console.log('------------------------------');
+    console.log('------------------------------');
+    
+    if (this.items$) {
+      this.items$?.unsubscribe()
+    }
+  }
 }

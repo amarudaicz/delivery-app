@@ -12,6 +12,7 @@ import { CartService } from '../services/cartData/cart.service';
 import { RouterModule } from '@angular/router';
 import {MatRippleModule} from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DetailRoutingModule } from './detail-routing.module';
 
 
 
@@ -23,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   imports: [
     CommonModule,
+    DetailRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
@@ -31,11 +33,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     MatRippleModule,
     MatSnackBarModule,
-    RouterModule
+    RouterModule,
 
   ],
   providers:[
-    CartService
   ]
 })
 export class DetailModule { }

@@ -8,15 +8,15 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login', 
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   animations:[fadeIn]
 })
 export class LoginComponent implements OnDestroy, OnInit {
 
-  register:boolean = false
-
+  register:boolean = false 
+ 
   
 
   constructor(
@@ -33,6 +33,7 @@ export class LoginComponent implements OnDestroy, OnInit {
 
 
   ngOnInit(): void {
+    
     
   }
 
