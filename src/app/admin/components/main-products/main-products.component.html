@@ -11,9 +11,9 @@
     </div>
 
 
-    <div class="current-list" *ngIf="data">
+    <div class="current-list" *ngIf="section">
 
-        <section [ngSwitch]="data.section">
+        <section [ngSwitch]="section">
             <app-list-products *ngSwitchCase="'products'" ></app-list-products>
             <app-main-options *ngSwitchCase="'groups'"></app-main-options>
         </section>

@@ -43,6 +43,7 @@ import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
 import { handleError } from 'src/app/utils/handle-error-http';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
+import { copy } from 'src/app/utils/copyElement';
 
 @Component({
   selector: 'app-new-product',
@@ -109,7 +110,7 @@ export class NewProductComponent implements OnInit {
 
     this.adminService.categories$.subscribe((data) => this.categories = data )
 
-    this.continueTutorial()
+  
   }
 
   async saveProduct() {
@@ -122,12 +123,17 @@ export class NewProductComponent implements OnInit {
       return
     }
 
+    if (!this.checkOptionsEmpyt(this.optionsGroup).state){
+      this.toast.open(this.checkOptionsEmpyt(this.optionsGroup).message, 'Ok')
+      return
+    }
+
     this.processLoad = true
 
     this.form.removeControl('ingredients')
     this.form.get('name')?.setValue(this.capitalize(this.form.get('name')?.value))
     this.form.get('description')?.setValue(this.capitalize(this.form.get('description')?.value))
-
+    this.cleanVariations(this.optionsGroup)
     const product = { variations: JSON.stringify(this.optionsGroup), ingredients: JSON.stringify(this.ingredientsList), ...this.form.value, category_id:this.category_id };
 
     this.adminService.postProduct(product).pipe(
@@ -145,7 +151,7 @@ export class NewProductComponent implements OnInit {
   }
 
   getOptionsSelected(options: OptionProduct[]) {
-    const variations: OptionProduct[] = JSON.parse(JSON.stringify(options))
+    const variations: OptionProduct[] = copy(options)
 
     console.log(variations);
     this.form.get('price')?.setValue(this.getOptionWithLowestPrice(variations)) 
@@ -323,135 +329,39 @@ export class NewProductComponent implements OnInit {
       }
     } 
   
-    console.log(lowestPrice);
+    console.log(lowestPrice); 
     return lowestPrice === Infinity ? null : lowestPrice;
   }
 
 
-  continueTutorial() {
-    const widthScreen = window.innerWidth
 
-    shepherd.addSteps(
-      [
-        {
-          id: 'step6',
-          classes: 'step-variations-form',
-          text: `Si su producto tiene opciones, puede crear variaciones para él. Las variaciones son conjuntos únicos de opciones (como tamaño, color, Kg, Ml, etc.) que existen para este producto concreto. Por ejemplo: 
-            <br>
-            Una camiseta que se ofrece en dos tallas (pequeña y mediana) y dos colores (amarillo y gris) tiene cuatro variaciones,
-            <br>
-            Una gaseosa que se ofrece tiene 3 Medidas (2.5l, 1L, 500ML) tiene 3 variaciones
-            <br>
-            <span style="font-size:11px; color:wheat;">Pase por el formulario para mas informacion</span><br>
-            <span style="font-size:11px; color:wheat;">Los datos ingresados son a modo de ejemplo</span>
-            `,
+  checkOptionsEmpyt(variations:OptionProduct[]){
+    console.log(variations);
+    console.log(variations.find(v=>v.typePrice === 1));
+    const definePrice = variations.find(v=>v.typePrice === 1);
 
-          attachTo: {
-            element: '#variationsForm',
-            on: 'top'
-          },
-          buttons: [
-            {
-              text: 'Siguiente',
-              action: shepherd.next
-            }
-          ],
-          when: {
-            show: () => {
-             
-            },
-            hide: () => {
+    const error = {message:'', state:false}
+    
+    if (definePrice?.options.some(o => o.price === 0)) {
+      error.message = `algunas opciones del grupo ${definePrice.nameVariation} que define el precio final del su producto no tienen precio.`
+      return error
+    }
 
-            }
-          }
+    if (definePrice && definePrice?.options.every(o => !o.active)){
+      error.message = `Debe activar almenos una opcion de su grupo ${definePrice?.nameVariation}.`
+      return error
+    }
 
-        },
-        {
-          id: 'step7',
-          classes: 'step-current-options',
-          text: `Una vez creada tus variaciones, aqui abajo podras editar el precio de cada una, si es que lo afecta  <br>
-              En este ejemplo el producto X tiene 3 variaciones que afectan totalmente su precio                   
-        `,
+    return {message:'', state:true}
+  }
 
-          attachTo: {
-            element: '.container-current-options',
-            on: 'top'
-          },
-          buttons: [
-            {
-              text: 'Siguiente',
-              action: shepherd.next
-            }
-          ],
-          when: {
-            show: () => {
-              this.optionsGroup = [
-                {
-                  id:110,
-                  nameVariation: 'Tamaño',
-                  multiple: false,
-                  typePrice: 1,
-                  options: [
-                    {
-                      nameOption: 'Grande',
-                      price: 700
-                    },
-                    {
-                      nameOption: 'Mediano',
-                      price: 400
-                    },
-                    {
-                      nameOption: 'Chico',
-                      price: 200
-                    }
-                  ],
-                  required: true,
-                  min: 0,
-                  max: 0
+  cleanVariations(variations:OptionProduct[]){
 
-                }
-              ]
-              console.log(this.optionsGroup);
-
-
-            },
-            hide: () => {
-              this.optionsGroup.length = 0
-              console.log(this.optionsGroup);
-            }
-          }
-
-        },
-        {
-          id: 'step8',
-          classes: 'step-save-buttons-options',
-          text: `Finalizando con el producto puedes ver una vista previa y luego guardarlo, automaticamente este producto se mostrara en el inicio de tu aplicacion disponible para comprar`,
-
-          attachTo: {
-            element: '.button-save-product',
-            on: widthScreen > 500 ? 'left' : 'top'
-          },
-          buttons: [
-            {
-              text: 'Finalizar',
-              action: shepherd.complete
-            }
-          ],
-          when: {
-            show: () => {
-              const element = (document.querySelector('.button-preview-product') as HTMLElement);
-              element.style.zIndex = '9999';
-              element.style.position = 'relative';
-            },
-            hide: () => {
-              const element = (document.querySelector('.button-preview-product') as HTMLElement);
-              element.style.zIndex = '1';
-              element.style.position = 'initial';
-            }
-          }
-
-        }
-      ])
+    variations.forEach((v,i,d)=>{
+      if (v.options.every(o => !o.active)) {
+        d.splice(i,1)
+      }
+    })
 
   }
 

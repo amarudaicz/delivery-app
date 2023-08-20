@@ -161,7 +161,7 @@ export class AdminService {
       .pipe(
         map((data) => {
           this.categories = deleteRepeatElement(data);
-          this.categories$.next(deleteRepeatElement(data));
+          this.categories$.next( this.sortCategories(deleteRepeatElement(data)));
           return deleteRepeatElement(data);
         })
       );
@@ -219,6 +219,11 @@ export class AdminService {
     this.http.get<any[]>(`${environment.host}sales`).subscribe(res=>{
       this.sales$.next(res)
     })
+  }
+
+
+  sortCategories(categories:Category[]) {
+    return categories.sort((a, b) => a.sort_order - b.sort_order);
   }
   
 }

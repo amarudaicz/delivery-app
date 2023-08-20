@@ -28,7 +28,7 @@ export class AppConfigComponent {
           return
         }
         
-        if (local && local !== 'user' && local !== 'cart' && local !== '' && local !== 'login'){
+        if (local && local !== 'user' && local !== 'cart' && local !== ''){
           // this.localService.initDataLocal(local)
         }else if (origin){
           // this.localService.initDataLocal(this.routeData.getOrigin())

@@ -12,22 +12,21 @@ import { RecentsService } from 'src/app/services/recents/recents.service';
 export class RecentsComponent implements OnInit  {
 
   locals:Local[] = []
+  recentsCharged:boolean=false
 
   constructor(private http:HttpClient, private recents:RecentsService){
-  
-
+    
     this.recents.getRecents().subscribe(res=>{
-
-      this.locals = res
-      this.recents.localsRecents = res
+      this.locals = res.length ? res : []
+      this.recentsCharged = true
     })
-      
+
+    
   }
   
   ngOnInit(): void {
-    console.log(this.locals);
     
-
+    
  
     
   }

@@ -18,7 +18,7 @@
                 <ng-template pTemplate="content" (click)="currentSection = 'products'">
     
                     <ul cdkDropList  >
-                        <li cdkDrag [cdkDragPreviewClass]="['preview-drop', 'shadow-2']" (cdkDragDropped)="handleDragDrop($event)" (cdkDragStarted)="handleStartDrag($event)"  [class.active]="isCatSelected(category)" (click)="emitSelected(category)" class="item-list d-flex justify-content-between" *ngFor="let category of categories">
+                        <li cdkDrag [cdkDragPreviewClass]="['preview-drop', 'shadow-2']" (cdkDragDropped)="handleDragDrop($event)" (cdkDragStarted)="handleStartDrag($event)"  [class.active]="isCatSelected(category)" (click)="emitCategorySelected(category)" class="item-list d-flex justify-content-between" *ngFor="let category of categories">
                             <div class="d-flex">
                                 <i class="pi pi-circle-fill mr-2 icon-list" [class.active]="category.active"></i>
     
@@ -63,7 +63,7 @@
 
     <p-accordion [expandIcon]="''" [collapseIcon]="''">
 
-        <p-accordionTab classList="acordeon-groups" (click)="emitSelected({section:'groups'})">
+        <p-accordionTab classList="acordeon-groups" (click)="dinamicList.section.next('groups')">
 
             <ng-template pTemplate="header">
                 

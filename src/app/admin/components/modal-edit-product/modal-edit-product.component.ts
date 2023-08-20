@@ -105,10 +105,9 @@ export class ModalEditProductComponent {
     }
 
 
-    if (!this.checkOptionsEmpyt(this.optionsGroup)){
-      this.toast.open('Debes activar al menos una opcion en un grupo', '' , {duration:3000})
+    if (!this.checkOptionsEmpyt(this.optionsGroup).state){
+      this.toast.open(this.checkOptionsEmpyt(this.optionsGroup).message, 'Ok')
       return
-      
     }
 
 
@@ -116,6 +115,9 @@ export class ModalEditProductComponent {
     this.formEditProduct.get('price')?.enable()
     this.formEditProduct.get('name')?.setValue(this.capitalize(this.formEditProduct.get('name')?.value))
 
+    this.cleanVariations(this.optionsGroup)
+    console.log(this.optionsGroup);
+    
     const product = {variations:JSON.stringify(this.optionsGroup), ingredients:JSON.stringify(this.ingredientsList), ...this.formEditProduct.value};
 
     this.adminService.updateProduct(product).subscribe(res => {
@@ -151,12 +153,12 @@ export class ModalEditProductComponent {
     this.optionsGroup = options
     
     if (!this.getOptionWithLowestPrice(options)) {
-      this.formEditProduct.get('price')?.setValue(null) 
+      this.formEditProduct.get('price')?.setValue(this.product?.price) 
       this.formEditProduct.get('price')?.enable()
       return
     }
 
-    this.formEditProduct.get('price')?.setValue(this.getOptionWithLowestPrice(options) || this.product?.price) 
+    this.formEditProduct.get('price')?.setValue(this.getOptionWithLowestPrice(options)) 
     this.formEditProduct.get('price')?.disable()
 
 
@@ -251,7 +253,32 @@ export class ModalEditProductComponent {
 
   checkOptionsEmpyt(variations:OptionProduct[]){
     console.log(variations);
-    return variations.every(v=> v.options.some(v => v.active))
+    console.log(variations.find(v=>v.typePrice === 1));
+    const definePrice = variations.find(v=>v.typePrice === 1);
+
+    const error = {message:'', state:false}
+    
+    if (definePrice?.options.some(o => o.price === 0)) {
+      error.message = `Una opcion del grupo ${definePrice.nameVariation} que define el precio final de su producto no tiene precio.`
+      return error
+    }
+
+    if (definePrice && definePrice?.options.every(o => !o.active)){
+      error.message = `Debe activar almenos una opcion de su grupo ${definePrice?.nameVariation}.`
+      return error
+    }
+
+    return {message:'', state:true}
+  }
+
+  cleanVariations(variations:OptionProduct[]){
+
+    variations.forEach((v,i,d)=>{
+      if (v.options.every(o => !o.active)) {
+        d.splice(i,1)
+      }
+    })
+
   }
 
 

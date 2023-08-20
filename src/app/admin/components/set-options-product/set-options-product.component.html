@@ -87,7 +87,7 @@
                         <mat-form-field  *ngIf="group.typePrice !== 3" appearance="outline">
                             <mat-label>Precio</mat-label>
                             <span matTextPrefix>$&nbsp;</span>
-                            <input (input)="updatePriceOption(group, option, price.value )"  #price [disabled]="!option.active" matInput type="number" class="input-price-option" [(ngModel)]="option.price" [value]="option.price">
+                            <input required min="1" (input)="updatePriceOption(group, option, price.value )"  #price  matInput type="number" class="input-price-option" [(ngModel)]="option.price" [value]="option.price">
                         </mat-form-field>
     
     

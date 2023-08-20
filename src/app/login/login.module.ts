@@ -9,12 +9,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { FormLoginComponent } from './components/form-login/form-login.component';
-import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 
 @NgModule({
-  declarations: [MainLoginComponent, LoginComponent, FormLoginComponent,RecoveryPasswordComponent ],
+  declarations: [MainLoginComponent, LoginComponent, FormLoginComponent, ResetPasswordComponent ],
   imports: [
     CommonModule,
     LoginRoutingModule,
@@ -25,5 +25,6 @@ import { RecoveryPasswordComponent } from './components/recovery-password/recove
     MatRippleModule,
 
   ]
+
 })
 export class LoginModule { }

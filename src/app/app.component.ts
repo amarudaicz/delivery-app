@@ -47,24 +47,28 @@ export class AppComponent implements OnInit {
     
   }
 
-  routeClass(){
+  // routeClass(){
 
-    console.log(this.route);
+  //   console.log(this.route);
     
-    switch (this.route) {
-      case 'admin':
-        return false
-        break;
+  //   switch (this.route) {
+  //     case 'admin':
+  //       return false
+  //       break;
     
-      case 'login':
-        return false
-      break;
+  //     case 'login':
+  //       return false
+  //     break;
 
-      default:
-        return true
-        break;
-    }
-  }
+  //     case 'landing':
+  //       return false
+  //     break;
+
+  //     default:
+  //       return true
+  //       break;
+  //   }
+  // }
 
 
   checkUpdate() {

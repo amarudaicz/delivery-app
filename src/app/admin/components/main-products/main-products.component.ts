@@ -11,15 +11,12 @@ import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.s
 export class MainProductsComponent {
 
 
-  data:any
+  section:any
 
   constructor(private adminService:AdminService, private dinamicList:DinamicListService, private layoutService:LayoutService){
 
-    this.dinamicList.currentSection.subscribe((data:any)=>{
-      console.log(data);
-      
-      this.data = data
-
+    this.dinamicList.section.subscribe((section:any)=>{
+      this.section = section
     })
 
     this.hideDashboard()

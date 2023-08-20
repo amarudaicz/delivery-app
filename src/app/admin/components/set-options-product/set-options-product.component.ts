@@ -1,6 +1,7 @@
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { S } from '@angular/cdk/keycodes';
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Local } from 'src/app/interfaces/local-interface';
 import { DetailsOptions, OptionProduct } from 'src/app/interfaces/optionProduct-interface';
@@ -17,6 +18,9 @@ export class SetOptionsProductComponent {
   
   @Output() emitterSelectedOptions = new EventEmitter<OptionProduct[]>()
   @Input() product?:Product
+
+
+  form:FormArray
   
   groupOptions: OptionProduct[] = []
   currentGroupOption: OptionProduct[] = []
@@ -28,8 +32,8 @@ export class SetOptionsProductComponent {
   
 
 
-  constructor(private adminService: AdminService, private toast: MatSnackBar) {
-
+  constructor(private formBuilder:FormBuilder, private adminService: AdminService, private toast: MatSnackBar) {
+    this.form = this.formBuilder.array([])
   }
 
 
@@ -140,22 +144,26 @@ export class SetOptionsProductComponent {
 
   toogleOption(indexSelected: number, indexOption: number) {
 
-    const optionActive = this.selectedOptions[indexSelected].options[indexOption].active
     const group = this.selectedOptions[indexSelected]
+    const optionActive = this.selectedOptions[indexSelected].options[indexOption].active
 
-    console.log(indexOption);
     console.log(group);
     
-    if (optionActive) {
-      this.selectedOptions[indexSelected].options[indexOption].active = false;
-    }
-    else {
-      this.selectedOptions[indexSelected].options[indexOption].active = true
-    }
+    console.log(optionActive);
+    // if (!optionActive && this.selectedOptions[indexSelected].options.filter(o => o.active).length === 1 ) {
+    //   // Evitar desactivar la última opción activa en el grupo
+    //       return; // No permitir cambios en la opción si solo queda una opción activa
+    // }
 
-    console.log('EMITING',this.selectedOptions);
+    
+    this.selectedOptions[indexSelected].options[indexOption].active = !optionActive;
+    
+    // Si todas las opciones están inactivas, activar la primera opción
+   
 
-
+    console.log(this.selectedOptions);
+    
+    // Emitir los cambios a través del emitter si es necesario
     this.emitterSelectedOptions.emit(this.selectedOptions)
 
 
@@ -168,12 +176,12 @@ export class SetOptionsProductComponent {
 
 
   isOptionSelected(indexGroup: number, group: OptionProduct, option: DetailsOptions) {
-    const indexOptions = this.selectedOptions.findIndex(e => this.areObjectsEqual(e, group));
+    const indexOptions = this.selectedOptions.find(e => this.areObjectsEqual(e, group));
+    console.log(indexOptions);
+    
 
-    if (indexOptions !== -1) {
-      return this.selectedOptions[indexOptions].options.some(option => option.nameOption === option.nameOption);
-    }
-    return false
+
+
   }
 
   updatePriceOption(group: OptionProduct, option: DetailsOptions, newPrice: string) {
@@ -215,6 +223,7 @@ export class SetOptionsProductComponent {
       this.currentGroupOption = this.groupOptions.slice(0, 3);
     }
   }
+
   areObjectsEqual(obj1: any, obj2: any): boolean {
     // Comparar todas las propiedades excepto la propiedad 'excludedProperty'
     const excludedProperty = 'options';

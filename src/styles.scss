@@ -90,6 +90,9 @@ $gutter: 1rem; //for primeflex grid system
 
 .container {
     height: auto;
+    max-width: 1100px;
+    margin: 0 auto;
+    
 }
 
 .title {
@@ -247,4 +250,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .text-sec{
     color: #ff725e !important;
+}
+
+.text-end{
+    text-align: end !important;
 }

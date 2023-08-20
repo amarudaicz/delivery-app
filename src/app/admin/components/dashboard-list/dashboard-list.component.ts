@@ -27,27 +27,22 @@ export class DashboardListComponent implements OnInit {
 
 
 
-  constructor(private adminService: AdminService, private dinamicList: DinamicListService, private dialog:MatDialog, private notificationsAdmin:NotificationsAdminService) {
+  constructor(private adminService: AdminService, public dinamicList: DinamicListService, private dialog:MatDialog, private notificationsAdmin:NotificationsAdminService) {
 
-    this.dinamicList.currentSection.subscribe(data => {
-      if (!data) return
-      this.currentSection = data.section
-      data.section === 'products' ? this.activeIndex = 0 : this.activeIndex = 1
+    this.dinamicList.section.subscribe(section => {
+      if (!section) return
+      section === 'products' ? this.activeIndex = 0 : this.activeIndex = 1
     })
   
 
   }
-
+ 
 
   ngOnInit(): void {
     this.adminService.categories$.subscribe(categories => {
-      this.categories = this.sortCategories(categories)  
-      
-      if (this.dinamicList.resetDashboard && categories.length) {
-        this.dinamicList.setSection({section:'products', category:this.categories[0]})
-        this.dinamicList.resetDashboard = false
-      }
+      this.categories = this.dinamicList.sortCategories(categories)  
     })
+
 
     this.getProducts()
 
@@ -81,23 +76,14 @@ export class DashboardListComponent implements OnInit {
   }
 
 
-  emitSelected(item: any) {
-
-    if (item.id) {
-      this.dinamicList.setSection({
-        section: 'products',
-        category:item
-      })
-    } else {
-      this.currentSection = 'groups'
-      this.dinamicList.setSection({
-        section: 'groups',
-      })
-    }
-
-
+  emitCategorySelected(item: Category) {
+    this.dinamicList.categoryId = item.id
+    this.dinamicList.category.next(item)
+    this.dinamicList.section.next('products')
   }
 
+
+ 
   newCategory(){
     this.dialog.open(NewCategoryComponent, {
       width:window.innerWidth < 600 ? '90%' : ' 60%'
@@ -123,7 +109,5 @@ export class DashboardListComponent implements OnInit {
     
   }
 
-  sortCategories(categories:Category[]) {
-    return categories.sort((a, b) => a.sort_order - b.sort_order);
-  }
+
 }

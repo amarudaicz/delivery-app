@@ -21,7 +21,7 @@
         <div class="container-inputs">
 
           <div id="initialForm">
-            <mat-form-field appearance="outline" class="input-group" color="primary">
+            <mat-form-field appearance="outline" class="input-group full-input" color="primary">
               <mat-label>Nombre</mat-label>
               <input type="text" matInput formControlName="name" />
               <mat-error>Este campo es requerido</mat-error>
@@ -29,7 +29,7 @@
 
             <mat-form-field appearance="outline" matTooltipClass="tooltip-price" matTooltipPosition="above"
               matTooltip="El precio ingresado se utilizará para mostrar el valor base del producto en la vista preliminar. Sin embargo, este precio solo se aplicará si NO existe un GRUPO DE OPCIONES que determine el precio final."
-              class="input-group" color="primary">
+              class="input-group full-input" color="primary">
               <mat-label>Precio base</mat-label>
               <span matTextPrefix>$&nbsp;</span>
               <input formControlName="price" type="number" matInput />

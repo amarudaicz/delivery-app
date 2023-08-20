@@ -87,4 +87,19 @@ export class AuthService {
       map(response => response) // Se retorna el arreglo de items
     );
   }
+
+  verifyToken(token:string){
+
+    return this.http.get<any>(`${environment.host}login/verify_token?token=${token}`)
+    
+  }
+
+  sendEmailToResetPassword(email:string){
+    return this.http.post(`${environment.host}login/send_reset_password`, email)
+  }
+
+  resetPassword({password, token}:{password:string, token:string}){
+    return this.http.post(`${environment.host}login/reset_password`, {password}, {headers:{'Authorization':`Bearer ${token}`}})
+
+  }
 }

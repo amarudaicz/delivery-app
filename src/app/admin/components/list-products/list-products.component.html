@@ -12,8 +12,7 @@
 </app-new-product>
 
 
-
-<div *ngIf="dataCategory else noCategory" class="card p-0 container-table-products">
+<div *ngIf="dataCategory && dataReady else noCategory" class="card p-0 container-table-products">
 
     <p-menu #menuCategory [popup]="true" [model]="modelConfigCategory"></p-menu>
     <div class="d-flex justify-content-center sm:justify-content-between p-3 md:px-5 header-table gap-y-3 wrap state-category sticky top-0 bg-gray-50">
@@ -135,7 +134,6 @@
     </div>
 
 
-    <ng-template #loader>
-        <app-loader-full></app-loader-full>
-    </ng-template>
+   
+
     <p-confirmDialog class="alert-dele" [style]="{width: window.innerWidth > 550 ?'50vw' : '90vw'}"></p-confirmDialog>

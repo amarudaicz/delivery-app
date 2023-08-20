@@ -104,7 +104,7 @@ export class FormLoginComponent implements OnInit {
       return this.authService.signIn(form).pipe(
         catchError(err => {
           if (err.loaded === 0) this.errorResponse = 'Intente nuevamente en unas horas estamos solucionando un problema'
-          else this.errorResponse = err.error
+          else this.errorResponse = err
 
           this.formSubmitted = false
           return ''
@@ -114,7 +114,7 @@ export class FormLoginComponent implements OnInit {
       return this.authService.logIn(form).pipe(
         catchError(err => {
           if (err.loaded === 0) this.errorResponse = 'Intente nuevamente en unas horas estamos solucionando un problema'
-          else this.errorResponse = err.error
+          else this.errorResponse = err
 
           this.formSubmitted = false
           return ''

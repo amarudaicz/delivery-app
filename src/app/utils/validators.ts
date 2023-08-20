@@ -15,3 +15,13 @@ export function noScriptValidator(): AsyncValidatorFn {
     return of(null);
   };
 }
+
+import { FormGroup, ValidationErrors } from '@angular/forms';
+// Función de validación personalizada
+export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const password = control.get('password')?.value;
+  const confirmPassword = control.get('confirmPassword')?.value;
+
+  // Verifica si las contraseñas coinciden
+  return password === confirmPassword ? null : { passwordsDoNotMatch: true };
+};
