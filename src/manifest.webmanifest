@@ -12,6 +12,12 @@
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "maskable any"
+    },
+    {
+      "src": "assets/logos/logo-de-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
     }
   ]
 }
