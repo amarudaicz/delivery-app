@@ -1,4 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { Navigation } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { ItemCart } from 'src/app/interfaces/itemCart-interfaz';
@@ -20,14 +22,16 @@ export class CartItemsComponent implements OnDestroy {
   subtotal = 0;
   itemsCart:any[]=[]
   items$?:Subscription
-  constructor(public cartService: CartService, public theme: ThemesService, public routeService:RouteDataService) {
+  constructor(public cartService: CartService, public theme: ThemesService, public routeService:RouteDataService, public location:Location) {
   }
 
 
   ngOnInit(): void {
     this.routeService.setCurrent('cart')
 
+    
 
+    
     this.items$ = this.cartService.getCartItems().subscribe((items) => {
       console.log(items);
       this.itemsCart = items

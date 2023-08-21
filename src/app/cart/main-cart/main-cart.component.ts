@@ -25,7 +25,7 @@ export class MainCartComponent implements OnInit {
   
   ngOnInit(): void {
     this.layoutState.state.header=true
-    this.layoutState.state.navigation=true
+    this.layoutState.state.navigation=false
     this.layoutState.updateState()
     
   }

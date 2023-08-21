@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalInfoWpComponent } from '../modal-info-wp/modal-info-wp.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-checkout',
@@ -28,8 +29,9 @@ export class CheckoutComponent implements OnInit {
     private wpService: WpService,
     private matDialog: MatDialog,
     private snackBar:MatSnackBar,
-    private localService:LocalDataService
-
+    private localService:LocalDataService,
+    public location:Location
+ 
   ) {
 
     this.form = this.formBuilder.group({

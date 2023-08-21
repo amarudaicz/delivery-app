@@ -1,6 +1,10 @@
 <div class="checkout">
 
-  <div class="container-title mt-3">
+  <div class="container-title mt-3 d-flex gap-2">
+    <button (click)="location.back()" class="p-1 px-2 border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
+      <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
+    </button>
+
     <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip title-cart">Checkout</h2>
   </div>
 
