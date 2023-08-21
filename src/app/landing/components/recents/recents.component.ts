@@ -15,8 +15,8 @@ export class RecentsComponent implements OnInit  {
   recentsCharged:boolean=false
 
   constructor(private http:HttpClient, private recents:RecentsService){
-    
-    this.recents.getRecents().subscribe(res=>{
+
+    this.recents.recents$.subscribe((res:any)=>{
       this.locals = res.length ? res : []
       this.recentsCharged = true
     })

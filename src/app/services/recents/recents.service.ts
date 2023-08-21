@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, map, of } from 'rxjs';
 import { environment } from 'src/app/environment';
 import { Local } from 'src/app/interfaces/local-interface';
 
@@ -18,6 +18,7 @@ export class RecentsService {
 
   recents: number[]
   localsRecents:Local[]=[]
+  public recents$ = new BehaviorSubject<Local[]>([])
 
 
   addRecent(local: Local) {
@@ -36,6 +37,7 @@ export class RecentsService {
     }
 
 
+    
 
   }
 
@@ -46,12 +48,16 @@ export class RecentsService {
 
   getRecents(){
 
-    if (!this.getLsRecents().length) return of([])
-    
-    if (!this.localsRecents.length) return this.http.post<Local[]>(environment.host + 'locals/get-recents', {recents:this.getLsRecents()})
+    return this.http.post<Local[]>(environment.host + 'locals/get-recents', {recents:this.getLsRecents()}).pipe(
+      map(res=>{
+        this.localsRecents= res
+        this.recents$.next(res)
+      })
+    )
 
-    return of(this.localsRecents)
   }
+  
+  
 
 }
 
