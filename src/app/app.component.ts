@@ -8,6 +8,7 @@ import { ThemesService } from './services/themes/themes.service';
 import { SwUpdate } from '@angular/service-worker';
 import { interval } from 'rxjs';
 import { PwaInstallerService } from './services/pwa-installer/pwa-installer.service';
+import { LayoutStateService } from './services/layoutState/layout-state.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,8 @@ export class AppComponent implements OnInit {
     private themeService:ThemesService,
     private appRef:ApplicationRef,
     private update:SwUpdate,
-    private pwa:PwaInstallerService
+    private pwa:PwaInstallerService,
+    public stateLayout:LayoutStateService
   ){
     this.pwa.checkForUpdates()
 

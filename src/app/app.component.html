@@ -3,7 +3,7 @@
 
 <div [class.main-container]="false">
     
-    <app-header *ngIf="themeLoad"></app-header>
+    <app-header *ngIf="themeLoad && stateLayout.state.header"></app-header>
     
     <div [@fadeIn]>
         <router-outlet></router-outlet>
