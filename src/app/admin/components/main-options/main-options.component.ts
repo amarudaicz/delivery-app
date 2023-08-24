@@ -118,30 +118,30 @@ export class MainOptionsComponent implements OnInit {
     const productsWhitGroup = this.products.filter(e => e.variations.some(e => e.id === group.id))
     
       if (productsWhitGroup.length) {
-
-        window.history.pushState({modal:true}, 'modal');
-
-        const dialogRef = this.dialog.open(SelectProductsGroupComponent, {
-          height:'90%',
-          data: { products:productsWhitGroup, group: group }
-        })
-
-        dialogRef.afterClosed().subscribe((data: { products: Product[], group: OptionProduct }) => {
-          if (!data) {
-            this.ngOnInit()
-            return
-          }
-         
-          if (data.products.length) {
-            this.updateOptionsGroupAndNotify({...data, variations: this.groupOptions })
-          }else{
-            this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
-          }
-        })
-        
-      }else{
         this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
+        return
       }
+
+      window.history.pushState({modal:true}, 'modal');
+
+      const dialogRef = this.dialog.open(SelectProductsGroupComponent, {
+        height:'90%',
+        data: { products:productsWhitGroup, group: group }
+      })
+
+      dialogRef.afterClosed().subscribe((data: { products: Product[], group: OptionProduct }) => {
+        if (!data) {
+          this.ngOnInit()
+          return
+        }
+
+        if (!data.products.length) {
+          this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions}, )
+          return
+        }
+
+        this.updateOptionsGroupAndNotify({...data, variations: this.groupOptions })
+      })
   }
 
   deleteGroupOption(group:any, index:number){
@@ -167,11 +167,16 @@ export class MainOptionsComponent implements OnInit {
 
   private updateOptionsGroupAndNotify(data: any) {
 
+
     this.adminService.updateOptionGroup(data).subscribe((res:any)=>{
       this.toast.open('Grupo de opciones actualizado', '', { duration: 3000 });
-      setTimeout(() => {
-        this.toast.open(`${res.affectedRows} Productos han sido actualizados `, '', { duration: 3000 });
-      }, 3000);
+
+      if (data.products.length) {   
+        setTimeout(() => {
+          this.toast.open(`${res.affectedRows} Productos han sido actualizados `, '', { duration: 3000 });
+        }, 3000);
+      }
+
 
       this.adminService.products = undefined;
       this.adminService.getProductsAdmin()

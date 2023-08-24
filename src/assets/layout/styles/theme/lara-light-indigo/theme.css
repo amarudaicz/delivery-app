@@ -4958,7 +4958,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-menu {
   padding: 0.25rem 0;
-  background: #ffffff;
+  background: #151515;
   color: #495057;
   border: 1px solid #dee2e6;
   border-radius: 6px;
@@ -4966,20 +4966,20 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .p-menu .p-menuitem-link {
   padding: 0.75rem 1.25rem;
-  color: #495057;
+  color: #fff;
   border-radius: 0;
   transition: box-shadow 0.2s;
   user-select: none;
 }
 .p-menu .p-menuitem-link .p-menuitem-text {
-  color: #495057;
+  color: #fff;
 }
 .p-menu .p-menuitem-link .p-menuitem-icon {
-  color: #6c757d;
+  color: #fff;
   margin-right: 0.5rem;
 }
 .p-menu .p-menuitem-link .p-submenu-icon {
-  color: #6c757d;
+  color: #fff;
 }
 .p-menu .p-menuitem-link:not(.p-disabled):hover {
   background: #e9ecef;
@@ -4999,15 +4999,15 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   box-shadow: inset 0 0 0 0.15rem #C7D2FE;
 }
 .p-menu.p-menu-overlay {
-  background: #ffffff;
+  background: #151515;
   border: 0 none;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 .p-menu .p-submenu-header {
   margin: 0;
   padding: 0.75rem 1.25rem;
-  color: #343a40;
-  background: #ffffff;
+  color: #fff;
+  background: #151515;
   font-weight: 700;
   border-top-right-radius: 0;
   border-top-left-radius: 0;

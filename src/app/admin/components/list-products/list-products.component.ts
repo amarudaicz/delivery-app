@@ -108,7 +108,10 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     this.dinamicList.category.subscribe(
       (category) => {
 
-        if (!category) return
+        if (!category){
+          this.dataCategory = undefined
+          return 
+        }
           
         this.dataCategory = category;
         this.dataReady = true

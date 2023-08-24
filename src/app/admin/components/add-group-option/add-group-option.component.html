@@ -20,26 +20,20 @@
     <div #optionsGroup class="options-group">
       <div class="container-inputs-options">
         <form class="form-variations" [formGroup]="formVariations">
-
           <div class="seccion-form mb-3 p-4">
             <h2 class="mb-2">Detalles del grupo</h2>
-
-            <div class="flex wrap">
-              <mat-form-field class="w-full" color="primary">
+            <div class="flex wrap mb-5">
+              <mat-form-field class="w-full" color="primary" appearance="outline">
                 <mat-label>Nombre</mat-label>
-  
                 <input formControlName="nameVariation" type="text" matInput placeholder="Ej: Tamaño, Color" />
-                <mat-hint>
-                  Ejemplo: Tamaño, Color
-                </mat-hint>
                 <mat-error>Este campo es requerido</mat-error>
               </mat-form-field>
-  
-              <mat-form-field class="w-full" color="primary">
-                <mat-label>SKU</mat-label>
-  
+
+              <mat-form-field class="w-full" color="primary" appearance="outline">
+                <mat-label>Identificador</mat-label>
                 <input formControlName="sku" type="text" matInput placeholder="" />
                 <mat-hint>
+                  Palabras claves para identificar el grupo
                 </mat-hint>
                 <mat-error>Este campo es requerido</mat-error>
               </mat-form-field>
@@ -62,7 +56,7 @@
 
             <div class="container-max-min" *ngIf="!formVariations.get('simple')?.value">
               <div class="mr-2" style="display: inline-block;">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                   <mat-label>
                     Minimo de respuestas
                   </mat-label>
@@ -72,7 +66,7 @@
                 </mat-form-field>
               </div>
 
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>
                   Maximo de respuestas
                 </mat-label>
@@ -158,14 +152,14 @@
                     <h4 class="mb-1">Opcion #{{i + 1}}</h4>
 
                     <div class="d-inline mr-3">
-                      <mat-form-field>
+                      <mat-form-field appearance="outline">
                         <mat-label>Nombre de la Opcion</mat-label>
                         <input formControlName="nameOption" matInput type="text">
                         <mat-error>Este campo es requerido</mat-error>
                       </mat-form-field>
                     </div>
 
-                    <mat-form-field *ngIf="formVariations.get('typePrice')?.value !== 3">
+                    <mat-form-field *ngIf="formVariations.get('typePrice')?.value !== 3" appearance="outline">
                       <mat-label>Precio</mat-label>
                       <span matTextPrefix>$&nbsp;</span>
                       <input required matInput formControlName="price" type="number">

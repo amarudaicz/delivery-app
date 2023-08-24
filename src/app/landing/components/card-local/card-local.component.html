@@ -25,7 +25,7 @@
         
     </div>
     
-    <span class="open-local" [ngClass]="islocalOpen(local) ? 'open ' : 'closed'"><i class="pi pi-circle-fill"></i> {{islocalOpen(local) ? 'Abierto' : 'Cerrado'}}</span>
+    <span class="open-local" [ngClass]="localData.islocalOpen(local.schedules) ? 'open ' : 'closed'"><i class="pi pi-circle-fill"></i> {{localData.islocalOpen(local.schedules) ? 'Abierto' : 'Cerrado'}}</span>
 
 
 </div>

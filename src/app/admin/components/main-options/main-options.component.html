@@ -18,7 +18,7 @@
     </div>
 
     <div class="container-dinamic relative" *ngIf="groupOptions.length">
-        <div class="container-state sticky top-0">
+        <div class="container-state sticky top-0 z-5">
             <div class="d-flex justify-content-center sm:justify-content-between ">
                 <span>Grupo</span>
 
@@ -34,7 +34,7 @@
             <div cdkDropList class="group-options-list" (cdkDropListDropped)="drop($event)">
                 <div class="" *ngFor="let group of groupOptions; index as indexGroup" cdkDrag>
 
-                    <div class="option-box">
+                    <div class="option-box cursor-pointer hover:shadow-4" (click)="toogleGroup(group)">
                         <div class="name-option space-option ">
                             <div class="d-flex gap-2">
                                 <div cdkDragHandle class="drag-handle d-flex">
@@ -63,16 +63,12 @@
 
 
 
-                            <div class="d-flex">
+                            <!-- <div class="d-flex">
                                 <button (click)="toogleGroup(group)" type="button" class="mr-2">
                                     <i matRipple class="text-xl pi button-toogle-acordeon"
                                         [ngClass]="isAccordionExpanded(group) ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
                                 </button>
-    
-                                <!-- <button>
-                                    <i matRipple (click)="group.editing = true" class="text-xl fa-solid fa-pen button-toogle-acordeon"></i>
-                                </button> -->
-                            </div>
+                            </div> -->
 
 
                         </div>

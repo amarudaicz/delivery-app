@@ -1,11 +1,11 @@
 <div class="cart">
 
     <div class="container-title mt-3 d-flex gap-2">
-      <button (click)="location.back()" class="p-1 px-2 border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
+      <button (click)="location.back()" matRipple class="chip cursor-pointer border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
         <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
       </button>
   
-      <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip">Mi carrito</h2>
+      <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip w-full">Mi carrito</h2>
     </div>
 
     <ul class="p-list">
@@ -80,18 +80,14 @@
         </div>
   
         <div class="buttons">
-          <button class="button-clear" (click)="clearCart()">
+          <button class="button-clear cursor-pointer" (click)="clearCart()">
             Vaciar carrito
           </button>
-          <a [routerLink]="['checkout']">
-              <button
-                [style.background]="theme.get('background')"
-                [style.color]="theme.get('colorTextSecondary')"
-                class="button-checkout"
-              >
+          <a [routerLink]="['checkout']"       
+          [style.background]="theme.get('background')"
+          [style.color]="theme.get('colorTextSecondary')"
+          class="button-checkout cursor-pointer">
                 Checkout
-              </button>
-
           </a>
         </div>
     </div>
@@ -104,7 +100,7 @@
 
     <!-- CART EMPTYYYYYY-->
     <div *ngIf="subtotal === 0" [@fadeIn] class="empty-cart">
-      <h2>Parece que no hay productos en tu carrito :( </h2>
+      <h2>Tu carrito esta vacío</h2>
       <i class="fa-solid fa-cart-plus"></i>
       <div>
           <a  [routerLink]="'/'+[routeService.getOrigin()]" >

@@ -11,10 +11,12 @@ import  {MatDialogModule} from '@angular/material/dialog';
 import { ModalInfoWpComponent } from './modal-info-wp/modal-info-wp.component'
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [MainCartComponent, CartItemsComponent, CheckoutComponent, ModalInfoWpComponent],
   imports: [
+    MatRippleModule,
     CommonModule,
     RoutesCartRoutingModule,
     MatInputModule,

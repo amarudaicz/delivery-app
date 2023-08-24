@@ -1,5 +1,5 @@
-<div  *ngIf="layoutState.state.navigation">
-  <div class="bottom-nav" [class.hide-nav]="stateMenu" [style.background]="theme.get('backgroundSec')">
+<div  *ngIf="layoutState.stateSubject|async as state">
+  <div *ngIf="state.navigation" class="bottom-nav" [class.hide-nav]="stateMenu" [style.background]="theme.get('backgroundSec')">
     
     <div class="container-nav" >
       <nav class="navigation">
@@ -31,16 +31,7 @@
             <a [routerLink]="['cart']">
               <div class="cart-container">
                 <i [class.item-active]="currentRoute === 'cart'" [style.color]="currentRoute === 'cart' ? theme.get('background') : '' " class="pi pi-shopping-cart icon-nav"></i>
-                <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ itemsCart }}</div>
-              </div>
-            </a>
-          </li>
-
-          <li class="item-nav">
-            <a [routerLink]="['cart']">
-              <div class="cart-container">
-                <i [class.item-active]="currentRoute === 'cart'" [style.color]="currentRoute === 'favorites' ? theme.get('background') : '' " class="fa-regular fa-heart icon-nav"></i>
-                <div *ngIf="itemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ itemsCart }}</div>
+                <div *ngIf="countitemsCart !== 0" [style.background]="theme.currentTheme.background" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ countitemsCart }}</div>
               </div>
             </a>
           </li>

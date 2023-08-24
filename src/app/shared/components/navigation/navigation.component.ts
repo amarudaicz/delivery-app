@@ -14,7 +14,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class NavigationComponent implements OnInit {
   
-  itemsCart:any
+  countitemsCart:any
   local?:Local
   currentRoute?:string 
 
@@ -26,7 +26,7 @@ export class NavigationComponent implements OnInit {
     this.cartService.getCartItems().subscribe((items:any[]) =>{
         console.log(items);
         
-      this.itemsCart = items.length
+      this.countitemsCart = items.length
     })
     
     this.localData.local$.subscribe((local)=>{

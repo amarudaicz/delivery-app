@@ -6,7 +6,7 @@ import { BehaviorSubject, ReplaySubject, interval } from 'rxjs';
 })
 export class CartService {
   public cartItems: any[] = [];
-  public cartSubject = new ReplaySubject<any[]>(1);
+  public cartSubject = new BehaviorSubject<any[]>([]);
 
 
   constructor() {
@@ -69,7 +69,7 @@ export class CartService {
 
   }
 
-  getCartItems(): ReplaySubject<any[]> {
+  getCartItems(): BehaviorSubject<any[]> {
     console.log(this.cartSubject);
     return this.cartSubject;
   }

@@ -1,23 +1,25 @@
 <div class="relative w-full bg-none md:bg-white p-4 shadow-5 flex flex-column md:border-round-right-3xl"
   style="height: 100vh;">
 
-  <div class="flex justify-content-end w-full absolute" style="top:10px;right: 30px;">
+  <div class="hidden md:flex justify-content-end w-full absolute" style="top:10px;right: 30px;">
     <a routerLink="/">
-      <img src="./assets/logos/logo-de.png" class="w-6rem" alt="">
+      <img src="./assets/logos/logo-de.png" class="w-5rem" alt="">
     </a>
-  </div>
+  </div> 
 
   <div class="d-flex w-full justify-content-center flex-1">
 
     <div class="p-4 w-12 xl:w-9 bg-white border-round-xl shadow-7 md:shadow-none ">
-
+      
       <div class="">
-        <h1 class="text-3xl font-bold mb-2">Iniciar session</h1>
-        <span class="text-600 mb-3 block">Ingresa tus credenciales de cliente</span>
 
+        <div class="mb-3">
+          <h1 class="text-3xl text-center font-bold">Iniciar session</h1>
+        </div>
 
-        <div  class="h-2rem">
-          
+        <!-- <span class="text-600 mb-3 block">Ingresa tus credenciales de cliente</span> -->
+
+        <div class="">
           <div [@fadeIn] *ngIf="errorResponse" class="container-errors">
             {{errorResponse}}
           </div>
@@ -53,7 +55,8 @@
                 <input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" class="input-login"
                   formControlName="password" id="password">
                 <span>
-                  <i matRipple [ngClass]="['icon-show-pass', 'pi', showPassword ? 'pi-eye-slash' : 'pi-eye']"
+                  <i matRipple
+                    [ngClass]="['icon-show-pass', 'text-xl', 'flex', 'pi', showPassword ? 'pi-eye-slash' : 'pi-eye']"
                     (click)="showPassword = !showPassword"></i>
                 </span>
               </div>
@@ -64,13 +67,14 @@
               </div>
             </div>
             <div *ngIf="!register" class="mt-2 text-end">
-              <a [routerLink]="['reset_password']" class="cursor-pointer underline font-bold hover:no-underline">Olvidaste tu 
+              <a [routerLink]="['reset_password']"
+                class="cursor-pointer underline font-bold hover:no-underline">Olvidaste tu
                 contraseña?</a>
             </div>
 
 
             <div class="form-group" *ngIf="register">
-              
+
               <div class="input-login-group"
                 [ngClass]="[getError('repeatPassword') ? 'invalid' : '', comparePassword() ? 'invalid' : ''] ">
                 <label for="repeatPassword"><i class="icon-login fa-solid fa-key"></i></label>

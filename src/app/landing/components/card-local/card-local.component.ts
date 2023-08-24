@@ -20,7 +20,7 @@ export class CardLocalComponent implements OnInit {
   constructor(
     private router: Router,
     private layoutState: LayoutStateService,
-    private localData: LocalDataService,
+    public localData: LocalDataService,
     private themeService: ThemesService,
     private previewCategory: PreviewCategoryService,
     private matDialog: MatDialog) {
@@ -49,9 +49,11 @@ export class CardLocalComponent implements OnInit {
   }
 
   preRedirect() {
-    if (this.islocalOpen(this.local)) {
+
+    if (this.localData.islocalOpen(this.local.schedules)){
       this.redirectLocal()
-    } else {
+      return
+    }
 
       const dialogRef = this.matDialog.open(AlertLocalClosedComponent, {
         width: window.innerWidth > 1024 ? '55%' : '95%',
@@ -64,7 +66,6 @@ export class CardLocalComponent implements OnInit {
         }
       })
 
-    }
 
 
   }

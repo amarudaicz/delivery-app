@@ -15,8 +15,6 @@ export class HeaderLandingComponent {
 
   constructor(private layout:LayoutService){
 
-    this.layout.state.overlayMenuActive = true
-
   }
 
 }

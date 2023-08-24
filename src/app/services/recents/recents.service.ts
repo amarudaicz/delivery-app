@@ -11,14 +11,12 @@ export class RecentsService {
 
   constructor(private http:HttpClient) {
 
-    this.recents = JSON.parse(localStorage.getItem('recents') || '[]')
-    console.log(this.recents);
-
+    this.recents = JSON.parse(localStorage.getItem('recents')!) || []
   }
-
+ 
   recents: number[]
   localsRecents:Local[]=[]
-  public recents$ = new BehaviorSubject<Local[]>([])
+  public recents$ = new BehaviorSubject<Local[] | undefined>(undefined)
 
 
   addRecent(local: Local) {
@@ -26,15 +24,17 @@ export class RecentsService {
     const exist = this.recents?.find(e => e === local.id)
     console.log(exist);
 
-
-    console.log(this.recents);
     if (exist) {
       return
-    } else if (this.recents) {
-      this.recents.push(local.id)
-      localStorage.setItem('recents', JSON.stringify(this.recents))
-      return
-    }
+    } 
+      
+    this.recents.push(local.id)
+    localStorage.setItem('recents', JSON.stringify(this.recents))
+    console.log(this.localsRecents, local);
+    
+    this.recents$.next([...this.localsRecents, local])
+    return
+    
 
 
     
@@ -50,7 +50,7 @@ export class RecentsService {
 
     return this.http.post<Local[]>(environment.host + 'locals/get-recents', {recents:this.getLsRecents()}).pipe(
       map(res=>{
-        this.localsRecents= res
+        this.localsRecents = res
         this.recents$.next(res)
       })
     )

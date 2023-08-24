@@ -37,7 +37,6 @@ export class PwaInstallerService {
     if (window.matchMedia('(display-mode: standalone)').matches)
     return true
 
-    else
     return false
   }
 
@@ -71,10 +70,10 @@ export class PwaInstallerService {
   private showUpdateNotification() {
     const snackBarRef = this.snackBar.open('Hay una nueva actualización disponible.', 'Actualizar');
 
-    snackBarRef.onAction().subscribe(() => {
-      this.swUpdate.checkForUpdate().then(version => location.reload())
-      window.location.reload();
-    });
+    // snackBarRef.onAction().subscribe(() => {
+    //   this.swUpdate.checkForUpdate().then(version => location.reload())
+    //   window.location.reload();
+    // });
   }
 
 

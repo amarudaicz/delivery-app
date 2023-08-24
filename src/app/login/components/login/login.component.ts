@@ -8,39 +8,36 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 
 @Component({
-  selector: 'app-login', 
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   animations:[fadeIn]
 })
 export class LoginComponent implements OnDestroy, OnInit {
 
-  register:boolean = false 
- 
-  
+  register:boolean = false
+
+
 
   constructor(
-    private formBuilder: FormBuilder, 
-    private authService:AuthService, 
+    private formBuilder: FormBuilder,
+    private authService:AuthService,
     private cookies:CookieService,
     private layoutState:LayoutStateService,
     private router:Router
   ) {
-    this.layoutState.state.header = false
-    this.layoutState.state.navigation=false;
-    this.layoutState.updateState()
   }
 
 
   ngOnInit(): void {
-    
-    
+
+
   }
 
 
 
 
- 
+
   ngOnDestroy(){
     this.layoutState.state.navigation = true
     this.layoutState.updateState()

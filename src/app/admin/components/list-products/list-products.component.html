@@ -1,8 +1,8 @@
 <ng-template #noCategory>
 
     <div class="card p-3">
-        <p><b>Parece que no tienes categorías activas en tu tienda</b>, puedes crear una nueva categoría haciendo click
-            en el boton que se encuentra debajo de la seccion Categorías.</p>
+        <p><b>Parece que no tienes categorías activas en tu tienda</b>, puedes crear una nueva con
+            en el boton <b> + Nueva categoria</b></p>
     </div>
 
 </ng-template>
@@ -22,7 +22,7 @@
             <h1 class="mr-2 title overflow-hidden" [style.text-overflow]="'ellipsis'">{{dataCategory.category_name}}</h1>
             <div class="d-flex flex-1 gap-2 justify-content-center sm:justify-content-start w-12rem">
                 <span class="sm:border-left-1 sm:pl-2">
-                    {{dataCategory.active ? 'Categoria activa' : 'Categoria desactivada'}}
+                    {{dataCategory.active ? 'Activa' : 'Desactivada'}}
                 </span>
                 
                 <i class="pi pi-circle-fill mt-1" [ngClass]="dataCategory.active ? 'text-green-500' : 'text-red-500'"></i>
@@ -63,16 +63,23 @@
 
 
 
-    <div class="table-products">
+    <div class="table-products relative" *ngIf="productsByCategory.length; else noProducts">
+        <div [@fadeIn] *ngIf="!dataCategory.active" class="category-inactive d-flex z-1 justify-content-center bg-white w-full h-full absolute top-0 left-0">
+            <div class="text-center">
+                <i class="fa-solid fa-eye-slash text-800 text-5xl mb-2"></i>
+                <h3 class="text-2xl text-800 z-2">
+                    Categoría desactivada
+                </h3>
+            </div>
+        </div>
         <div >
-
-            <div class="container-item-table shadow-1 hover:shadow-5" *ngFor="let product of productsByCategory">
+            <div class="container-item-table shadow-1 hover:shadow-5 border-bottom-1 border-black-alpha-50" *ngFor="let product of productsByCategory">
     
                 <div class="item">
     
                     <div class="d-flex between wrap gap-2">
     
-                        <div class="d-flex" [ngClass]="product.stock ? '' :'opacity-50'">
+                        <div class="d-flex z-2" [ngClass]="product.stock && dataCategory.active ? '' :'opacity-40'">
                             <div class="image-item mr-4">
                                 <img appImageFallback [src]="product.image" class="shadow-6 border-round-sm"
                                     alt="{{product.name}}" width="100">
@@ -132,6 +139,11 @@
 
 
     </div>
+
+    <ng-template #noProducts>
+        <p class="p-3">
+            <b>No tienes productos para esta categoria</b>, una categoria sin productos no se mostrara en tu tienda <br> puedes crear un nuevo producto con el boton <b> + Agregar producto</b></p>
+    </ng-template>
 
 
    

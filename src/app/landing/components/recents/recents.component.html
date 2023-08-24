@@ -20,7 +20,7 @@
             </h4>
         </div>
 
-        <div matRipple class="icon-like">
+        <div matRipple class="icon-like border-round-3xl">
             <i class="pi pi-thumbs-up"></i>
         </div>
     </div>
@@ -28,21 +28,25 @@
         <div  *ngFor="let circle of [1,2]; let i" class="circle circle-{{i}}"></div>
 </div>
 
-<h1 class="text-2xl">Recents</h1>
+<h1 class="text-3xl mb-2">Recientes</h1>
 
 <div class="container-recents">
 
 
     <app-card-local *ngFor="let local of locals" [local]="local"></app-card-local>
 
-    <div class="" *ngIf="!locals.length && recentsCharged">
-        <h1>NO RECENTS</h1>
+    <div class="" *ngIf="!locals?.length && recentsCharged">
+        <div class="w-full h-full">
+            <div class="overflow-hidden">
+                <img src="/assets/images/empty-recents.gif" style="transform: translateY(-60px);" class="w-full max-w-27rem block object-contain m-auto" alt="">
+            </div>
+                <h2 class="text-center text-2xl text-800" style="margin-top: -60px;">No se encontraron tiendas</h2>
+        </div> 
     </div>
-
-    <div *ngIf="!locals">
+    
+    <div *ngIf="!locals && !recentsCharged" class="flex flex-column gap-2">
         <div class="skeleton" *ngFor="let pre of [1,2,3,4]">
-            <p-skeleton width="10rem" height="4rem"></p-skeleton>
-            <p-skeleton width="8rem" height="1rem"></p-skeleton>
+            <p-skeleton width="100%" height="5rem"></p-skeleton>
         </div>
     </div> 
 

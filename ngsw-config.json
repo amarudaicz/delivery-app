@@ -37,9 +37,8 @@
     {
       "name": "data-api",
       "urls": [
-        "https://6407ded38ee73db92e3352ce.mockapi.io/products",
-        "https://6407ded38ee73db92e3352ce.mockapi.io/locals",
-        "https://6407ded38ee73db92e3352ce.mockapi.io/locals/:id"
+        "https:localhost:3001/products/puntopizza",
+        "https:localhost:3001/products"
       ],
       "cacheConfig": {
         "strategy": "freshness",

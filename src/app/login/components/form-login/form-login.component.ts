@@ -38,9 +38,9 @@ export class FormLoginComponent implements OnInit {
       password: ['', Validators.required, noScriptValidator()]
     });
 
-    this.layoutState.state.header = false
-    this.layoutState.state.navigation=false;
-    this.layoutState.updateState()
+    // this.layoutState.state.header = false
+    // this.layoutState.state.navigation=false;
+    // this.layoutState.updateState()
   }
 
 

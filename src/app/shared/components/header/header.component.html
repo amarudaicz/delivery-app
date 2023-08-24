@@ -16,7 +16,9 @@
                  
                 </div>
 
-                <h1 class="local-name">{{local?.name}}</h1>
+                <a  [routerLink]="'/'+[routeData.getOrigin()]" >
+                    <h1 class="local-name">{{local?.name}}</h1>
+                </a>
     
                 <div class="local-image d-flex gap-3">
                     <button (click)="shareLocal()" class="text-700 hover:text-900">

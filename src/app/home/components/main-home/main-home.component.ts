@@ -18,7 +18,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class MainHomeComponent implements OnInit, OnDestroy{
   appInstalled: boolean = this.pwaInstaller.isPwaMode();
-  categories: any[] = []; //INTERFACE
+  categories?: Category[]; //INTERFACE
   local: string | null = null;
   themeLoaded: boolean = false;
 
@@ -50,15 +50,11 @@ export class MainHomeComponent implements OnInit, OnDestroy{
     //SETING ORIGIN
 
     //SETEANDO EL PRELOADER DE LAS CATEGORIAS SI NO EXISTE ID SETEADO
-    if (!this.previewCategory.category_id)
-      for (let i = 0; i < 10; i++) this.categories.push(i);
 
     //OBTENIENDO LAS CATEGORIAS
     this.localService.getCategories().subscribe((data) => {
-      console.log(data);
-      if (data.length) this.categories = data
-        console.log(this.categories);
-        
+      if (!data.length) return
+      this.categories = data
     });
     
     //CHECK QUE EL TEMA ESTE CARGADO CUANDO SETLOCAL()

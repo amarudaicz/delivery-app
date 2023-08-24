@@ -1,7 +1,7 @@
 {
     "theme_color": "#ffffff",
     "background_color": "#347cb4",
-    "display": "fullscreen",
+    "display": "standalone",
     "scope": "/",
     "start_url": "/",
     "name": "deli-app",

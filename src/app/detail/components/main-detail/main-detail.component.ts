@@ -31,7 +31,6 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     private dialogConfig: DynamicDialogConfig,
     private layoutState:LayoutStateService
   ) {
-    this.layoutState.state.header = false
     this.layoutState.state.navigation = false
     this.layoutState.updateState()
   }

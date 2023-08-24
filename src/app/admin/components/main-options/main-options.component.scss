@@ -9,7 +9,10 @@
 }
 
 .container-dinamic {
-  height: calc(100vh - 289px);
+  height: auto;
+  @include m.tablet{
+    height: calc(100vh - 289px);
+  }
   margin-top: 10px;
   border: 1px solid #a4a4a4;
   overflow-y: auto;
@@ -189,6 +192,7 @@
     visibility: visible;
     height: auto;
     padding: 15px;
+    border-bottom: 2px solid #000;
   }
 
   .input-options-group {

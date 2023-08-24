@@ -50,6 +50,10 @@ $gutter: 1rem; //for primeflex grid system
     font-weight: 600;
     text-align: center;
     border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 40px;
 }
 
 .link {
@@ -254,4 +258,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .text-end{
     text-align: end !important;
+}
+
+
+.mat-mdc-dialog-content{
+    max-height: none !important;
 }

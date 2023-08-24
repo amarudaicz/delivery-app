@@ -34,8 +34,8 @@
     
             <div class="dots">
     
-                <div *ngFor="let dot of [1,2,3,4];" (click)="updateCurrentBanner(dot)" class="dot" [class.dot-active]="currentBanner===dot">
-    
+                <div *ngFor="let dot of [1,2,3,4];" (click)="updateCurrentBanner(dot)" class="dot" [class.dot-active]="currentBanner === dot">
+                    
                 </div>
     
             </div>
@@ -44,15 +44,6 @@
         <div class="landing container" id="landing" *ngIf="!currentBanner">
             
             <app-recents></app-recents>
-
-         
-
-
-
-
-
-
-
 
 
         </div>
