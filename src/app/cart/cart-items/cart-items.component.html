@@ -1,6 +1,6 @@
 <div class="cart">
 
-    <div class="container-title mt-3 d-flex gap-2">
+    <div class="container-title my-3 d-flex gap-2">
       <button (click)="location.back()" matRipple class="chip cursor-pointer border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
         <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
       </button>
@@ -8,75 +8,85 @@
       <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip w-full">Mi carrito</h2>
     </div>
 
-    <ul class="p-list">
-      <div *ngFor="let i of itemsCart" class="cart-item">
-        <div class="container-image">
-          <img src="{{ i.productImage }}" alt="p Image" />
-        </div>
-        <div class="cart-item-details">
-          <h3 class="title-item">{{ i.name }}</h3>
 
-          <div class="user-options">
-            <div *ngIf="i.userOptions[0] !== null" class="container-options">
-              <div *ngFor="let o of i.userOptions" class="option">
-                
-                <div *ngIf="o.multiple else simple">
-                  <p class="detail-item">
-                    <b>-{{o.nameVariation}}: </b> 
-                    <span style="display: inline-block; margin-right: 3px;" *ngFor="let m of o.multipleOptions; index as i; ">
-                      {{i === o.multipleOptions!.length - 1 ? m.nameOption :  m.nameOption + ',' }}
-                    </span>
-                  </p>
-                </div>
-                <ng-template #simple>
-                  <p class="detail-item">
-                    <b>{{o.typePrice === 1 ? '' : o.nameVariation + ': '}}</b>
-                    <span>{{o.nameOption}}</span>
-                  </p>
-                </ng-template>
-
-              </div>
+    <div class="overflow-auto">
+      <ul class="p-list">
+        <div *ngFor="let i of itemsCart" class="cart-item bg-white shadow-1">
+          <div class="container-image">
+            <img src="{{ i.productImage }}" alt="p Image" />
+          </div>
+          <div class="cart-item-details">
+            <div class="d-flex justify-content-between">
+              <h3 class="title-item">{{ i.name }}</h3>
+               <button class="" (click)="removeProduct(i.idCart)">
+                <i class="fa-solid fa-xmark"></i>
+              </button> 
             </div>
-            <p class="detail-item"><b>Precio:</b> {{ i.total ? (i.total * i.quantity|currency) : (i.productPrice|currency) }}</p>
-          
+  
+            <div class="user-options">
+              <div *ngIf="i.userOptions[0] !== null" class="container-options">
+                <div *ngFor="let o of i.userOptions" class="option">
+                  
+                  <div *ngIf="o.multiple else simple">
+                    <p class="detail-item">
+                      <b>-{{o.nameVariation}}: </b> 
+                      <span style="display: inline-block; margin-right: 3px;" *ngFor="let m of o.multipleOptions; index as i; ">
+                        {{i === o.multipleOptions!.length - 1 ? m.nameOption :  m.nameOption + ',' }}
+                      </span>
+                    </p>
+                  </div>
+                  <ng-template #simple>
+                    <p class="detail-item">
+                      <b>{{o.typePrice === 1 ? '' : o.nameVariation + ': '}}</b>
+                      <span>{{o.nameOption}}</span>
+                    </p>
+                  </ng-template>
+  
+                </div>
+              </div>
+              <p class="detail-item"><b>Precio:</b> {{ i.total ? (i.total * i.quantity|currency) : (i.productPrice|currency) }}</p>
+            
+            </div>
+  
+            <div class="quantity">
+              <button>
+                <i
+                  (click)="setQuantity(i.idCart, -1, inputQuantity.value)"
+                  class="fa-solid fa-minus cursor-pointer  border-2 border-round p-2 font-bold"
+                  [style.borderColor]="theme.get('background')"
+                ></i>
+              </button>
+              <input
+              (change)="setQuantity(i.idCart, $event, inputQuantity.value)"
+                class=" cursor-pointer w-3rem border-2 border-round p-2 text-center font-bold"
+                [id]="i.idCart"
+                min="1"
+                #inputQuantity
+                type="number"
+                [value]="i.quantity"
+              />
+              <button>
+                <i
+                  (click)="setQuantity(i.idCart, 1, inputQuantity.value)"
+                  class="fa-solid fa-plus cursor-pointer  border-2 border-round  p-2 font-bold"
+                  [style.borderColor]="theme.get('background')"
+                ></i>
+              </button>
+            </div>
+            <span class="text-red-600 text-sm" *ngIf="parseInt(inputQuantity.value) < 1">Ingrese una cantidad valida</span>
+            
           </div>
-
-
-
-
-          <div class="quantity">
-            <i
-              (click)="setQuantity(i.idCart, -1, inputQuantity.value)"
-              class="fa-solid fa-minus"
-              [style.borderColor]="theme.get('background')"
-            ></i>
-            <input
-              disabled
-              [id]="i.idCart"
-              #inputQuantity
-              type="number"
-              [value]="i.quantity"
-            />
-            <i
-              (click)="setQuantity(i.idCart, 1, inputQuantity.value)"
-              class="fa-solid fa-plus"
-              [style.borderColor]="theme.get('background')"
-            ></i>
-          </div>
-          
+  
+         
         </div>
-
-        <button class="remove-item" (click)="removeProduct(i.idCart)">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-    </ul>
+      </ul>
+    </div>
 
     <div *ngIf="itemsCart.length !== 0">
 
         <div class="subtotal">
-          <span>Subtotal:</span>
-          <span class="subtotal-value">{{ subtotal | currency }}</span>
+          <span class="text-xl font-bold">Total:</span>
+          <span class="subtotal-value text-2xl">{{ subtotal | currency }}</span>
         </div>
   
         <div class="buttons">
@@ -99,7 +109,7 @@
 
 
     <!-- CART EMPTYYYYYY-->
-    <div *ngIf="subtotal === 0" [@fadeIn] class="empty-cart">
+    <div *ngIf="!itemsCart.length" [@fadeIn] class="empty-cart">
       <h2>Tu carrito esta vacío</h2>
       <i class="fa-solid fa-cart-plus"></i>
       <div>

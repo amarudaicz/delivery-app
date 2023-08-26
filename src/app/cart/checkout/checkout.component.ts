@@ -9,6 +9,7 @@ import { ModalInfoWpComponent } from '../modal-info-wp/modal-info-wp.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { Location } from '@angular/common';
+import { Local } from 'src/app/interfaces/local-interface';
 
 @Component({
   selector: 'app-checkout',
@@ -18,6 +19,7 @@ import { Location } from '@angular/common';
 export class CheckoutComponent implements OnInit {
   form: FormGroup;
   userData: any = this.userService.getUser();
+  local?:Local
   cartItems: any[] = [];
   subtotal: number = 0;
   confirmLeave:boolean = false
@@ -29,19 +31,28 @@ export class CheckoutComponent implements OnInit {
     private wpService: WpService,
     private matDialog: MatDialog,
     private snackBar:MatSnackBar,
-    private localService:LocalDataService,
+    public localService:LocalDataService,
     public location:Location
- 
   ) {
 
+      
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      direction: ['', ],
       payMethod: ['', Validators.required],
+      shippingMethod: ['', Validators.required],
+      direction: ['', ],
       amountReceived: ['', ],
       reference: [''],
-      shippingMethod: ['', Validators.required],
     });
+
+
+    this.localService.local$.subscribe(local=>{
+      console.log('*****************ASdasda*********');
+      if (!local) return
+      
+      this.local = local
+      this.setLocalConfig(local)
+    })
   }
 
   ngOnInit(): void {
@@ -70,9 +81,9 @@ export class CheckoutComponent implements OnInit {
     console.log(this.subtotal);
 
     this.form.patchValue({
-      name: this.userData.name,
-      direction: this.userData.direction,
-      reference: this.userData.reference,
+      name: this.userData?.name,
+      direction: this.userData?.direction,
+      reference: this.userData?.reference,
     });
   }
 
@@ -121,5 +132,26 @@ export class CheckoutComponent implements OnInit {
       }
   
     });
+  }
+
+
+  setLocalConfig(local:Local){
+    console.log(local.pay_methods);
+    const payMethods = local.pay_methods
+    const shippingMethods = local.shipping
+
+    if (payMethods.transfer || payMethods.cash) {
+      this.form.get('payMethod')?.addValidators(Validators.required)
+    }
+
+    if (shippingMethods.delivery || shippingMethods.pick_in_local) {
+      this.form.get('shippingMethod')?.addValidators(Validators.required)
+    }    
+    
+  }
+
+
+  traduceLocalConfig(){
+
   }
 }

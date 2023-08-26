@@ -44,7 +44,7 @@ export class AppConfigComponent {
         if (local && local !== 'user' && local !== 'cart' && local !== '') {
           // this.localService.initDataLocal(local)
         } else if (origin) {
-          // this.localService.initDataLocal(this.routeData.getOrigin())
+          this.localService.initDataLocal(this.routeData.getOrigin())
         } else {
           this.router.navigate(['/']);
         }

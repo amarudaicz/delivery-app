@@ -1,5 +1,5 @@
-<div class="container pb-4">
-  <div class="pad-header content">
+<div class="container" *ngIf="themes.stateTheme | async as load">
+  <div class="pad-header content pb-4" style="height: 100vh;" *ngIf="load">
 
     <router-outlet></router-outlet>
    

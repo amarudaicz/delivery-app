@@ -32,6 +32,7 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     private layoutState:LayoutStateService
   ) {
     this.layoutState.state.navigation = false
+    this.layoutState.state.header = false
     this.layoutState.updateState()
   }
   

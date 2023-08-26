@@ -25,14 +25,14 @@
 
 .container-grid {
   display: grid;
-  grid-auto-columns: 100%;
+  grid-auto-columns: auto;
   grid-template-rows: repeat(2, max-content);
   gap: 16px ;
   grid-auto-flow: column;
   place-items: center;
 
   @include m.tablet{
-  grid-auto-columns:auto;
+    // grid-auto-columns:auto;
 
 
   }

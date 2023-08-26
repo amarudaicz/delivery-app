@@ -56,20 +56,25 @@ export class CartItemsComponent implements OnDestroy {
   removeProduct(id: number) {
     this.cartService.removeFromCart(id)
     console.log(this.subtotal);
-    
-  
   }
 
-  setQuantity(id: number, number: number, currentValue: any) {
-    console.log(id);
-    
-    if (number === 1) {
-      this.cartService.updateQuantity(id, number);
-    } else {
-      if (Number(currentValue) > 1) {
-        this.cartService.updateQuantity(id, number);
-      }
+  setQuantity(id: number, number: any, currentValue: any) {
+    console.log(number.target?.value, typeof(number.target?.value));
+
+    if (Number(currentValue) === 1 && number < 1 || Number(number.target?.value) < 1) {
+      this.removeProduct(id)
+      return
     }
+
+    if (number.target?.value) {
+      this.cartService.updateQuantity(id, Number(number.target.value));
+      return
+    }
+
+    console.log(currentValue, number);
+    
+    number = this.itemsCart.find(i=>i.idCart === id).quantity + number
+    this.cartService.updateQuantity(id, number);
   }
 
 
@@ -84,4 +89,8 @@ export class CartItemsComponent implements OnDestroy {
       this.items$?.unsubscribe()
     }
   }
+
+  parseInt(a:string){
+    return parseInt(a)
+  } 
 }

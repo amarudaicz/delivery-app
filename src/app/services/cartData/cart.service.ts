@@ -17,7 +17,7 @@ export class CartService {
   }
 
   reset(){
-    const items = localStorage.getItem('cartItems');
+    const items = sessionStorage.getItem('cartItems');
     console.log(items);
     
     if (items) {
@@ -46,10 +46,10 @@ export class CartService {
 
     if (index !== -1) {
       this.cartItems[index].quantity += item.quantity
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+      sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     }else{
       this.cartItems.push(item);
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+      sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     }
 
     console.log(this.cartItems);
@@ -63,7 +63,7 @@ export class CartService {
 
     if (index !== -1) {
       this.cartItems.splice(index, 1);
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+      sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
       this.cartSubject.next(this.cartItems);
     }
 
@@ -77,8 +77,8 @@ export class CartService {
   updateQuantity(id: number, number: number) {
     const index = this.cartItems.findIndex((i) => i.idCart === id);
     if (index !== -1) {
-      this.cartItems[index].quantity += number;
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+      this.cartItems[index].quantity = number;
+      sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
       this.cartSubject.next(this.cartItems);
     }
   }
@@ -88,7 +88,7 @@ export class CartService {
     console.log(this.cartItems);
     
     this.cartSubject.next(this.cartItems);
-    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+    sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
 
   }
 

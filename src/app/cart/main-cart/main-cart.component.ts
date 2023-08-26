@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ThemeService } from 'ng2-charts';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { CartService } from 'src/app/services/cartData/cart.service';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
+import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
@@ -16,7 +18,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 })
 export class MainCartComponent implements OnInit {
   
-  constructor(private layoutState:LayoutStateService, ) {
+  constructor(private layoutState:LayoutStateService, public themes:ThemesService) {
 
   }
 

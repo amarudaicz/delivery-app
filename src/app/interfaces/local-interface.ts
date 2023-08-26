@@ -20,11 +20,17 @@ export interface Local {
     options_group: OptionProduct[]
     links:{name:string, url:string, icon:string}[]
     shipping:any
-    pay_methods:any
+    pay_methods:PayMethods
 }
 
 export interface Schedules {
     days:Days[]
+}
+
+export interface PayMethods{
+    cash:boolean,
+    transfer:boolean,
+    cbu:string
 }
 
 export interface Days {
