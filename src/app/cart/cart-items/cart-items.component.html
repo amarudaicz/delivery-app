@@ -1,6 +1,6 @@
 <div class="cart">
 
-    <div class="container-title my-3 d-flex gap-2">
+    <div class="container-title px-2 py-3 d-flex gap-2">
       <button (click)="location.back()" matRipple class="chip cursor-pointer border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
         <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
       </button>
@@ -9,7 +9,7 @@
     </div>
 
 
-    <div class="overflow-auto">
+    <div class="overflow-auto px-2" *ngIf="itemsCart.length; else cartEmpty">
       <ul class="p-list">
         <div *ngFor="let i of itemsCart" class="cart-item bg-white shadow-1">
           <div class="container-image">
@@ -19,7 +19,7 @@
             <div class="d-flex justify-content-between">
               <h3 class="title-item">{{ i.name }}</h3>
                <button class="" (click)="removeProduct(i.idCart)">
-                <i class="fa-solid fa-xmark"></i>
+                <i class="pi pi-trash text-red-400 text-xl"></i>
               </button> 
             </div>
   
@@ -82,18 +82,18 @@
       </ul>
     </div>
 
-    <div *ngIf="itemsCart.length !== 0">
+    <div *ngIf="itemsCart.length; else btnGoHome" class="mt-3 p-2 pb-3">
 
-        <div class="subtotal">
-          <span class="text-xl font-bold">Total:</span>
-          <span class="subtotal-value text-2xl">{{ subtotal | currency }}</span>
+        <div class="subtotal relative py-1 px-3 ">
+          <span class="font-bold text-base">Subtotal:</span>
+          <span class="subtotal-value text-xl font-bold">{{ subtotal | currency }}</span>
         </div>
   
-        <div class="buttons">
-          <button class="button-clear cursor-pointer" (click)="clearCart()">
+        <div class="buttons font-bold">
+          <button matRipple class="button-clear cursor-pointer" (click)="clearCart()">
             Vaciar carrito
           </button>
-          <a [routerLink]="['checkout']"       
+          <a matRipple [routerLink]="['checkout']"       
           [style.background]="theme.get('background')"
           [style.color]="theme.get('colorTextSecondary')"
           class="button-checkout cursor-pointer">
@@ -109,17 +109,19 @@
 
 
     <!-- CART EMPTYYYYYY-->
-    <div *ngIf="!itemsCart.length" [@fadeIn] class="empty-cart">
-      <h2>Tu carrito esta vacío</h2>
-      <i class="fa-solid fa-cart-plus"></i>
-      <div>
-          <a  [routerLink]="'/'+[routeService.getOrigin()]" >
-          <button [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')">
+    <ng-template #btnGoHome>
+      <div class="w-full p-2 pb-3">
+        <a matRipple class="text-center py-2 w-full border-round mt-4 text-white text-base font-bold block" 
+        [routerLink]="'/'+[routeService.getOrigin()]" 
+        [style.background]="theme.get('background')" >
               Ir al inicio
-          </button>
-      
-      </a>
-
+        </a>
       </div>
-    </div>
-  </div>
+    </ng-template>
+
+    <ng-template #cartEmpty>
+      <div [@fadeIn] class="empty-cart">
+        <h2 class="mb-3 text-xl">Tu carrito esta vacío</h2>
+        <i class="fa-solid fa-cart-plus"></i>
+      </div>
+    </ng-template>

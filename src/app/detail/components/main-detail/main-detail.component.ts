@@ -31,15 +31,12 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     private dialogConfig: DynamicDialogConfig,
     private layoutState:LayoutStateService
   ) {
-    this.layoutState.state.navigation = false
-    this.layoutState.state.header = false
-    this.layoutState.updateState()
+  
   }
   
   ngOnInit(): void {
     const origin = sessionStorage.getItem('origin')
 
-    
     if (this.dialogConfig.data) {
       this.product = this.dialogConfig.data
       this.modePreview = true
@@ -48,6 +45,9 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     
     if (!this.modePreview){
       this.localService.initDataLocal(this.route.snapshot.params['local'])
+      this.layoutState.state.navigation = false
+      this.layoutState.state.header = false
+      this.layoutState.updateState()
     }
     
     const idProduct = this.route.snapshot.queryParams['id'];
@@ -55,7 +55,7 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     this.localService.getProducts$().subscribe((data) => {
       this.product = data.filter((e) => e.id === Number(idProduct))[0];
     });
-
+    
   }
 
   ngOnDestroy(): void {

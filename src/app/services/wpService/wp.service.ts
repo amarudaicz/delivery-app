@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OptionProduct } from 'src/app/interfaces/optionProduct-interface';
+import { ProductCart } from 'src/app/interfaces/product-interface';
 import { v4 as uuidv4 } from 'uuid';
 interface Item {
   name: string;
@@ -23,10 +24,11 @@ export class WpService {
   encodeText(cart: any[], userData: any, subtotal: number) {
     const categories = cart.map((e) => e.category_name);
 
-
+    
     const cleanCategories = categories.filter((elemento, indice) => {
       return categories.indexOf(elemento) === indice;
     });
+
 
     cleanCategories.forEach((cat) => {
     const categoryItems: Item[] = cart.filter((e) => e.category_name === cat);
@@ -36,30 +38,30 @@ export class WpService {
     categoryItems.forEach((e: Item, index: number) => {
 this.products += `${index === 0 ? e.category_name.toUpperCase()+`
 ---------
-`: ''}X${e.quantity} ${e.name} $${e.total}.00 
-${this.readUserOptions(e.userOptions)}
-${e.especifications !== '' ? `Especificaciones: ${e.especifications}` : ''}\n
-`}); 
+`: ''}X${e.quantity} ${e.name} ${Intl.NumberFormat('es-AR', {style:'currency', currency:'ARS'}).format(e.total)}
+${this.readUserOptions(e.userOptions).trim()}\n
+${e.especifications !== '' ? `Especificaciones: ${e.especifications}` : ''}`}); 
 });
 
 const text: string = `
-𝗛𝗼𝗹𝗮 𝘁𝗲 𝗽𝗮𝘀𝗼 𝗲𝗹 𝗿𝗲𝘀𝘂𝗺𝗲𝗻 𝗱𝗲 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼:
+*Hola, te envio el resumen de mi compra*
 
-𝗣𝗲𝗱𝗶𝗱𝗼: ${this.genIdOrder()}
-𝗡𝗼𝗺𝗯𝗿𝗲: ${userData.name}
+*Pedido*: ${this.genIdOrder()} 
+*Nombre*: ${userData.name}
 
-𝗙𝗼𝗿𝗺𝗮 𝗗𝗲 𝗣𝗮𝗴𝗼: ${userData.payMethod}
-𝗧𝗼𝘁𝗮𝗹: $${subtotal}.00
-${userData.shippingMethod === 'Delivery'&&userData.amountReceived !== '' ? '𝗣𝗮𝗴𝗼 𝗖𝗼𝗻: $'+userData.amountReceived+'.00' + `
-`: ' '}
-𝗘𝗻𝘁𝗿𝗲𝗴𝗮: ${userData.shippingMethod}
-${userData.shippingMethod === 'Delivery'? '𝗗𝗶𝗿𝗲𝗰𝗰𝗶𝗼𝗻: '+userData.direction+ `
-`: ' '}
-𝗠𝗶 𝗽𝗲𝗱𝗶𝗱𝗼 𝗲𝘀:
+*Forma de pago*: ${userData.payMethod}
+*Total*: $${subtotal}.00 ${userData.shippingMethod === 'Delivery'?'+ ENVIO':''}
+${userData.shippingMethod === 'Delivery' && userData.amountReceived ? `*Pago con*: ${this.formatNumber(userData.amountReceived)}` : ''}
+
+*Entrega*: ${userData.shippingMethod}
+${userData.shippingMethod === 'Delivery' ? 
+`*Dirección*: ${userData.direction}`: ' '}
+
+*Mi compra es*:
 
 ${this.products}
-𝗘𝘀𝗽𝗲𝗿𝗼 𝘁𝘂 𝗿𝗲𝘀𝗽𝘂𝗲𝘀𝘁𝗮 𝗽𝗮𝗿𝗮 𝗰𝗼𝗻𝗳𝗶𝗿𝗺𝗮𝗿 𝗺𝗶 𝗽𝗲𝗱𝗶𝗱𝗼`;
 
+*Espero tu respuesta para confirmar mi pedido*`;
 
 console.log(text);
 const encodedText = encodeURIComponent(text).replace(/%0A/g, '%0A%20');
@@ -68,6 +70,91 @@ this.clearMessage()
 return encodedText
 }
 
+// {name:string, payMethod:string}
+generarMensaje(cart:any[], userData:any , subtotal: number) {
+  console.log(userData);
+  const categoriesRead:any[] = []
+  
+  let mensaje = `*¡Hola!, te envío el resumen de mi compra*\n\n`;
+  const envio = userData.shippingMethod === 'Delivery' ? '+ ENVIO' : '';
+  
+
+  mensaje += `*Pedido*: ${this.genIdOrder()}\n`
+  mensaje += `*Nombre*: ${userData.name}\n\n`;
+  // mensaje += `*Telefono*: ${userData.name}\n\n`;
+
+  mensaje += `*---------------------------*\n`;
+  mensaje += `*Forma de pago*: ${userData.payMethod}\n`;
+  mensaje += `*Total*: ${this.formatNumber(subtotal)}\n`;
+  userData.amountReceived ? mensaje += `*Pago con*: ${this.formatNumber(userData.amountReceived)} \n` : '';
+  mensaje += `*---------------------------*\n\n`;
+
+
+  mensaje += `*Entrega*: ${userData.shippingMethod}\n`;
+  userData.shippingMethod === 'Delivery' ? mensaje += `*Dirección*: ${userData.direction}\n\n` : mensaje += '\n';
+  
+  mensaje += `_Mi compra es_:\n\n`; 
+
+  cart.forEach((product, i) => {
+    console.log(product);
+    if (!categoriesRead.includes(product.category_name)) {
+      mensaje += `*${product.category_name.toUpperCase()}*\n`;
+      mensaje += `*---------------*\n`;
+      categoriesRead.push(product.category_name)
+    }
+
+    mensaje += `x${product.quantity} *${product.name.toUpperCase()}${this.getOptionType1(product) ? ` (${this.getOptionType1(product)?.nameOption?.toUpperCase()})` : ''}:* ${this.formatNumber(product.total)}\n`;
+    if (!product.userOptions.length) {
+      mensaje += `\n`;
+      return
+    }
+
+    mensaje += `${this.readUserOptions(product.userOptions)}\n\n`
+  });
+
+  mensaje += `\n*TOTAL: ${this.formatNumber(subtotal)}${userData.shippingMethod === 'Delivery' ? ' *' : ''}*\n`
+  mensaje += userData.shippingMethod === 'Delivery' ? `► _* Costo de envío a definir de acuerdo a distancia_\n\n` : '\n'
+
+  mensaje += `_Espero tu respuesta para confirmar mi pedido_`;
+
+  const encodedText = encodeURIComponent(mensaje).replace(/%0A/g, '%0A%20');
+  
+  console.log(mensaje);
+  return encodedText
+}
+
+
+readUserOptions(userOptions:OptionProduct[]){
+  let text:any = ''
+  
+  userOptions.forEach(e =>{
+    if (e.typePrice===1) {
+      return
+    }
+
+    if (!e.multiple){
+      text += ` ${e.nameVariation}: ${e.nameOption}\n`
+      return
+    }
+
+
+    let multiples = ''
+    
+    e.multipleOptions?.forEach(e => {
+      multiples += ` \n - ${e.nameOption} ${this.formatNumber(e.price)}`
+    })
+
+    text += ` ${e.nameVariation}:${multiples}`
+    return
+
+  })
+
+  return text.toLocaleUpperCase()
+}
+
+getOptionType1(product:ProductCart){
+  return product.userOptions.find(o => o.typePrice === 1) || null
+}
   
 genIdOrder(): string {
     let codigo = '';
@@ -76,7 +163,7 @@ genIdOrder(): string {
     const longitud = 5;
     for (let i = 0; i < longitud; i++) {
       codigo += caracteres.charAt(
-        Math.floor(Math.random() * caracteres.length)
+        Math.floor(Math.random()*caracteres.length)
       );
     }
   return codigo;
@@ -85,7 +172,7 @@ genIdOrder(): string {
 
 redirectWp(encodedText:string, phone:number){
 
-  location.assign(`https://api.whatsapp.com/send?phone=+${phone}&text=${encodedText}`)
+  window.open(`https://api.whatsapp.com/send?phone=+${phone}&text=${encodedText}`)
 
 }
 
@@ -94,28 +181,46 @@ clearMessage(){
 }
 
 
-readUserOptions(userOptions:OptionProduct[]){
-  let text:string = ''
-  
-  userOptions.forEach(e =>{
-    if (e.multiple){
-      const multiples = e.multipleOptions?.map(e => e.nameOption).join(', ')
-      text +=  `\n${e.nameVariation}: ${multiples}`
-      return
-    }
 
-    
-    
-    text += `\n${e.nameVariation}: ${e.nameOption}`
 
-  })
-
-  console.log(text);  
-  return text.toLocaleUpperCase().trim()
-
+formatNumber(n:number){
+  return Intl.NumberFormat('es-AR', {style:'currency', currency:'ARS', minimumFractionDigits: 0}).format(n)
+}
 
 }
 
-
-
-}
+`
+*¡Hola!, te envío el resumen de mi compra*
+ 
+ *Pedido*: V17DD
+ *Nombre*: Amaru Daicz
+ 
+ *---------------------------*
+ *Forma de pago*: Transferencia
+ *Total*: $ 1.084
+ *---------------------------*
+ 
+ *Entrega*: Local
+ 
+ _Mi compra es_:
+ 
+ *PIZZAS*
+ *---------------*
+ x1 *PALMITOS (Media):* $ 450
+  AGREGA UNA BEBIDA: 
+  - COCACOLA $ 150
+ 
+ x1 *NAPOLITANA (Completa):* $ 600
+ 
+ 
+ *HAMBURGESAS*
+ *---------------*
+ x1 *BIG MAC:* $ 34
+  SALSAS: 
+  - MAYONESA CON CHIMI - $ 150 
+  - SALSA CRIOLLA - $ 0
+ 
+ 
+ *TOTAL: $ 1.084*
+ 
+ _Espero tu respuesta para confirmar mi pedido_`

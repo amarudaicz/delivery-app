@@ -1,6 +1,6 @@
-<div class="mt-3">
+<div class="checkout">
 
-  <div class="container-title d-flex gap-2">
+  <div class="container-title d-flex px-2 py-3 gap-2">
     <button (click)="location.back()" class="chip border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
       <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
     </button>
@@ -9,108 +9,215 @@
       class="chip title-cart w-full">Checkout</h2>
   </div>
 
-  <form [formGroup]="form" (submit)="preLeave()" class="checkout-form" *ngIf="localService.local$ | async as local">
+  <div class="overflow-y-auto px-2">
 
-    <div class="mb-1">
-      <label class="text-base font-bold mb-1">Nombre completo</label>
-      <mat-form-field class="input-group" color="primary" appearance="outline">
-        <input placeholder="Ingresa tu nombre completo" type="text" matInput formControlName="name" />
-        <mat-error>{{setErrorsMessage('name')}}</mat-error>
-      </mat-form-field>
-    </div>
+    <form [formGroup]="form" class="p-1" *ngIf="localService.local$ | async as local">
 
-
-
-    <div class="mb-1"  *ngIf="local.shipping.delivery || local.shipping.pick_in_local">
-      <label class="text-base font-bold mb-1">Metodo de envio</label>
-      <mat-form-field class="input-group" appearance="outline">
-        <mat-select placeholder="Selecciona un metodo de envio" formControlName="shippingMethod">
-          <mat-option value="Delivery" *ngIf="local.shipping.delivery">
-            Delivery
-          </mat-option>
-          <mat-option value="Local" *ngIf="local.shipping.pick_in_local">
-            Buscar en el local
-          </mat-option>
-        </mat-select>
-        <p class="alert-form" *ngIf="this.form.controls['shippingMethod'].value === 'Delivery'"
-          [style.color]="theme.get('background')">
-          El costo del envio puede variar dependiendo la zona, le indicaremos el monto atravez de Whatsapp
-        </p>
-        <mat-error>{{setErrorsMessage('shippingMethod')}}</mat-error>
-      </mat-form-field>
-    </div>
+      <div class="">
+        <label class="text-base font-bold mb-1">Nombre completo*</label>
+        <mat-form-field class="mt-1 w-full" color="primary" appearance="outline">
+          <input placeholder="Ingresa tu nombre completo" type="text" matInput formControlName="name" />
+          <mat-error>{{setErrorsMessage('name')}}</mat-error>
+        </mat-form-field>
+      </div>
 
 
-    <div class="mb-1" *ngIf="form.controls['shippingMethod'].value === 'Delivery' ">
-      <label class="text-base font-bold mb-1">Direccion</label>
-      <mat-form-field appearance="outline" 
-        class="input-group" color="primary">
-        <input placeholder="Ingresa tu direccion" type="text" matInput formControlName="direction" />
-        <mat-error>{{setErrorsMessage('direction')}}</mat-error>
-      </mat-form-field>
 
-      <label class="text-base font-bold mb-1">Referencia de la casa (opcional)</label>
-      <mat-form-field appearance="outline" class="input-group">
-        <textarea formControlName="reference" matInput placeholder="Ej. Casa color rojo, porton de madera"></textarea>
-      </mat-form-field>
-    </div>
+      <div class="" *ngIf="local.shipping.delivery || local.shipping.pick_in_local">
+        <label class="text-base font-bold mb-1">Metodo de envio*</label>
+        <mat-form-field class="mt-1 w-full" appearance="outline">
+          <mat-select placeholder="Selecciona un metodo de envio" formControlName="shippingMethod">
+            <mat-option value="Delivery" *ngIf="local.shipping.delivery">
+              Delivery
+            </mat-option>
+            <mat-option value="Local" *ngIf="local.shipping.pick_in_local">
+              Buscar en el local
+            </mat-option>
+          </mat-select>
+          <p class="alert-form" *ngIf="this.form.controls['shippingMethod'].value === 'Delivery'"
+            [style.color]="theme.get('background')">
+            El costo del envio puede variar dependiendo la zona, le indicaremos el monto atravez de Whatsapp
+          </p>
+          <mat-error>{{setErrorsMessage('shippingMethod')}}</mat-error>
+        </mat-form-field>
+      </div>
 
+
+      <div class="" *ngIf="form.controls['shippingMethod'].value === 'Delivery' ">
+        <div class="">
+          <div class="d-flex gap-2 relative">
+            <div class="block w-full relative">
+              <label class="text-base font-bold mb-1">Direccion*</label>
+              <mat-form-field appearance="outline" class="mb-1 mt-1 w-full" color="primary">
+                <input (blur)="getDirection()"  placeholder="Ingresa tu direccion"
+                  type="text" matInput formControlName="direction" />
+                <!-- <mat-error>{{setErrorsMessage('direction')}}</mat-error> -->
+              </mat-form-field>
+            </div>
+
+            <!-- <div class="w-3">
+              <label class="text-base font-bold mb-1">Numero</label>
+              <mat-form-field appearance="outline" class="mb-1 mt-1 w-full" color="primary">
+                <input placeholder="Nro" type="number" matInput />
+              </mat-form-field>
+            </div> -->
+          </div>
+
+        </div>
+
+        <div class="relative" style="top: -20px;" >
+          
+          <div class="ubication-user mb-3" *ngIf="ubicationUser">
+            <div class="d-flex gap-2 font-medium">
+              <i class="pi pi-map-marker text-xl" [ngStyle]="{color:theme.get('background')}"></i>
+
+              <div class="">
+              <span class=""> {{ubicationUser.address?.streetName + (ubicationUser.address?.streetNumber ? ' ' : ',')  }} </span>
+              <span class="" *ngIf="ubicationUser.address?.streetNumber"> {{ubicationUser.address?.streetNumber + ','}} </span>
+              
+              <span class="" *ngIf="ubicationUser.address?.localName" > {{ubicationUser.address?.localName + ','}}  </span>
+              <span class="" *ngIf="ubicationUser.address?.countrySubdivision"> {{ubicationUser.address?.countrySubdivision + ','}}  </span>
+              <span class=""> {{ubicationUser.address?.country}}  </span>
+              </div>
+
+              <i class="pi pi-times text-xl" (click)="ubicationUser = undefined" [ngStyle]="{color:theme.get('background')}"></i>
+
+            </div>
+          </div>
     
-    <div class="mb-1" *ngIf="local.pay_methods.delivery || local.pay_methods.transfer">
-      <label class="text-base font-bold mb-1">Metodo de pago</label>
-      <mat-form-field  class="input-group"
-      appearance="outline">
-      <mat-select placeholder="Elije un metodo de pago" formControlName="payMethod">
-        <mat-option value="Efectivo" *ngIf="local.pay_methods.cash">
-          Efectivo
-        </mat-option>
+            <ul *ngIf="suggestions && panelSuggestions && !ubicationUser"  class="suggestions relative border-round overflow-y-auto z-2">
+              <li class="p-2" *ngIf="suggestions.length > 1">Encontramos multiples resultados</li>
+              <li (click)="selectDirection(suggestion)" class="cursor-pointer text-overflow-ellipsis overflow-hidden text-nowrap p-2 border-bottom-1 border-800 text-sm hover:bg-white hover:text-black-alpha-90" matRipple
+                *ngFor="let suggestion of suggestions">
+                <i class="pi pi-map-marker"></i>
+                <span class="font-bold">
+                  {{suggestion.address?.streetName}}
+                </span>
+                <span *ngIf="suggestion.address?.streetNumber">
+                  {{suggestion.address?.streetNumber}},
+                </span>
+                <span>
+                  {{suggestion.address?.localName}}
+                  
+                  <span *ngIf="suggestion.address?.countrySubdivision">
+                    {{suggestion.address?.countrySubdivision}},
+                  </span>
+                  
+                  {{suggestion.address?.country}}
+                </span>
+              </li>
+            </ul>
 
-        <mat-option value="Transferencia" *ngIf="local.pay_methods.transfer">
-          Transferencia
-        </mat-option>
-      </mat-select>
+            <div class="cursor-pointer bg-white border-1 border-round border-500 mt-2 p-2" (click)="displayMapView()">
+              <span class="text-base">No encuentras tu direccion? <span [ngStyle]="{color:theme.get('backgroundSec')}" class="font-bold">Ubícate en el mapa </span></span>
+            </div>
 
-      <p class="alert-form" *ngIf="this.form.controls['payMethod'].value === 'Transferencia'"
-        [style.color]="theme.get('background')">
-        Le indicaremos el destino de la transferencia una vez realizado el pedido
-      </p>
+          </div>
 
-      <mat-error>{{setErrorsMessage('payMethod')}}</mat-error>
-    </mat-form-field>
-    </div>
+  
+        <label class="text-base font-bold mb-1">Referencia de la casa (opcional)</label>
+        <mat-form-field appearance="outline" class="w-full mb-1 mt-1">
+          <textarea formControlName="reference" matInput placeholder="Ej. Casa color rojo, porton de madera"></textarea>
+        </mat-form-field>
+      </div>
 
-   
 
-    <div class="" 
-      *ngIf="this.form.controls['payMethod'].value === 'Efectivo' 
+      <div class="mb-1" *ngIf="local.pay_methods.delivery || local.pay_methods.transfer">
+        <label class="text-base font-bold mb-1">Metodo de pago*</label>
+        <mat-form-field class="mt-1 w-full" appearance="outline">
+          <mat-select placeholder="Elije un metodo de pago" formControlName="payMethod">
+            <mat-option value="Efectivo" *ngIf="local.pay_methods.cash">
+              Efectivo
+            </mat-option>
+
+            <mat-option value="Transferencia" *ngIf="local.pay_methods.transfer">
+              Transferencia
+            </mat-option>
+          </mat-select>
+
+          <p class="alert-form" *ngIf="this.form.controls['payMethod'].value === 'Transferencia'"
+            [style.color]="theme.get('background')">
+            Le indicaremos el destino de la transferencia una vez realizado el pedido
+          </p>
+
+          <mat-error>{{setErrorsMessage('payMethod')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+
+
+      <div class="" *ngIf="this.form.controls['payMethod'].value === 'Efectivo' 
       && this.form.controls['shippingMethod'].value === 'Delivery'">
 
-      <label class="text-base font-bold mb-1">Con cuanto pagará (opcional)</label>
-      <mat-form-field
-        class="input-group" color="primary">
-        <input type="number" matInput formControlName="amountReceived" />
-        <span matTextPrefix>$&nbsp;</span>
-        <span matTextSuffix>.00</span>
-      </mat-form-field>
-    </div>
+        <label class="text-base font-bold mb-1">Con cuanto pagará (opcional)</label>
+        <mat-form-field class="mt-1 w-full" color="primary">
+          <input type="number" matInput formControlName="amountReceived" />
+          <span matTextPrefix>$&nbsp;</span>
+          <span matTextSuffix>.00</span>
+          <mat-error>El monto ingresado es menor al subtotal</mat-error>
+        </mat-form-field>
+      </div>
 
 
-    <div class="container-details mt-3">
-      <p class="details-checkout subtotal"><b>Subtotal:</b> <span>{{subtotal|currency}}</span> </p>
-      <p *ngIf="this.form.controls['shippingMethod'].value === 'Delivery'" class="details-checkout "><b>Envio:</b>
+    </form>
+  </div>
+
+
+  <div class="p-2 pb-3">
+
+    <div class="container-details px-2 mb-2">
+      <p class="details-checkout px-2 text-base subtotal"><b>Subtotal:</b> <span
+          class="text-xl font-bold">{{subtotal|currency}}</span> </p>
+      <p *ngIf="this.form.controls['shippingMethod'].value === 'Delivery'" class="details-checkout px-2 text-base">
+        <b>Envio:</b>
 
         <i #tooltip="matTooltip"
           matTooltip="El costo del envio puede variar dependiendo la zona, le indicaremos el monto atravez de Whatsapp"
           matTooltipPosition="above" matTooltipTouchGestures="on" TooltipVisibility="initial" (click)="tooltip.show()"
           [style.color]="theme.get('background')" class="pi pi-info-circle"></i>
       </p>
-
     </div>
 
-    <button [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" type="submit">
+    <button matRipple (click)="preLeave()" class="w-full chip border-round font-bold text-white"
+      [style.background]="theme.get('background')" type="submit">
       Enviar
     </button>
-  </form>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+<div *ngIf="loadMap" class="fixed bg-white display-map mx-auto left-0 top-0 w-full h-full flex flex-column">
+
+  <header class="d-flex justify-content-between p-3 border-bottom-1 border-500">
+    <span class="text-xl font-medium">Ubicate en el mapa</span>
+
+    <div class="d-flex">
+      <button class="mr-4">GUARDAR</button>
+      <button (click)="loadMap = false">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+
+  </header>
+
+  <div class="p-3 h-full w-full">
+    <ol style="list-style: decimal;" class="pb-3 pl-3">
+      <li>Buscá tu ubicación en el mapa.</li>
+      <li>Selecciona para colocar un marcador.</li>
+      <li>Guarda la direccion con el botón "GUARDAR".</li>
+    </ol>
+
+    <div id="mapContainer" class="w-full h-full">
+
+    </div>
+  </div>
 
 
 </div>

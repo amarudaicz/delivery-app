@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Navigation } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
@@ -22,7 +23,12 @@ export class CartItemsComponent implements OnDestroy {
   subtotal = 0;
   itemsCart:any[]=[]
   items$?:Subscription
-  constructor(public cartService: CartService, public theme: ThemesService, public routeService:RouteDataService, public location:Location) {
+  constructor(
+    public cartService: CartService, 
+    public theme: ThemesService, 
+    public routeService:RouteDataService,
+    public location:Location,
+    private toast:MatSnackBar) {
   }
 
 
@@ -54,8 +60,17 @@ export class CartItemsComponent implements OnDestroy {
 
   // This method removes a product from the cart and updates the subtotal
   removeProduct(id: number) {
-    this.cartService.removeFromCart(id)
-    console.log(this.subtotal);
+
+    const product = this.itemsCart.find(i => i.idCart === id)
+
+    console.log(product);
+    
+    const refAlert = this.toast.open(`Quiere eliminar el producto ${product.name}?`, 'Eliminar', {duration:3000})
+
+    refAlert.onAction().subscribe(accept=>{
+      this.cartService.removeFromCart(id)
+      console.log(this.subtotal);
+    })
   }
 
   setQuantity(id: number, number: any, currentValue: any) {

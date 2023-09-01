@@ -1,6 +1,24 @@
 .checkout {
-  
+  width: 100%;
+  // row-gap: 10px;
+  display: grid;
+  grid-template-rows: auto 1fr min-content;
+  min-height: 100%;
+  max-height: 100%;
 }
+
+
+.suggestions{
+  border: 1px solid #0000006b;
+  background: #0f0f0f;
+  color: #f1f1f1;
+}
+
+.display-map{
+  z-index: 9999999999999999999;
+}
+
+
 
 .checkout-form {
   max-width: 500px;
@@ -9,26 +27,10 @@
   border-radius: 5px;
 }
 
-button[type="submit"] {
-
-  margin-top: 30px;
-  display: block;
-  width: 100%;
-  padding: 10px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  background-color: #0062cc;
-}
 
 .input-group{
     width: 100%;
 }
-
 
 .alert-form{
     font-size: 12px;
@@ -51,7 +53,7 @@ button[type="submit"]:hover {
     background: rgb(51, 191, 51);
     border-radius: 5px;
     top: 0;
-    left: -7px;
+    left: 0;
   }
 }
 

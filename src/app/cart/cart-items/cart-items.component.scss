@@ -39,9 +39,16 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px 0;
-  border-top: 1px solid #ccc;
-  margin-top: auto;
+    &::before{
+      position: absolute;
+      content: "";
+      width: 5px;
+      height: 100%;
+      background: rgb(51, 191, 51);
+      border-radius: 5px;
+      top: 0;
+      left: 0;
+    }
 }
 
 .subtotal-value {
@@ -133,19 +140,13 @@
 .empty-cart {
   padding: 15px 0;
   text-align: center;
-
-  h2 {
-    margin-bottom: 15px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   i {
-    font-size: 80px;
+    font-size: 90px;
   }
 
-  button {
-    margin-top: 15px;
-    padding: 10px 30px;
-    border: none;
-    border-radius: 5px;
-  }
 }

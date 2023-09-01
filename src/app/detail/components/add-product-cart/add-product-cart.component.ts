@@ -196,7 +196,7 @@ export class AddProductCartComponent implements OnInit {
         this.addGroupCheckboxes(e, e.options);
 
         return; 
-      } else if (e.required || e.typePrice === 1) {
+      } else if (e.typePrice === 1) {
         const lowOption = this.getOptionWithLowestPrice(e);
         console.log(lowOption);
 

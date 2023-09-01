@@ -25,3 +25,17 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
   // Verifica si las contraseñas coinciden
   return password === confirmPassword ? null : { passwordsDoNotMatch: true };
 };
+
+
+export function minValueValidator(minValue: number): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const value = control.value;
+    console.log(value);
+    
+    if (value && value < minValue) {
+      return { minValue: true };
+    }
+
+    return null;
+  };
+}
