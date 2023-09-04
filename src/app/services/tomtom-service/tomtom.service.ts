@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { services } from '@tomtom-international/web-sdk-services';
+import { LatLng, LngLat, services } from '@tomtom-international/web-sdk-services';
 import * as tt from '@tomtom-international/web-sdk-maps';
+import { Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,38 @@ export class TomtomService {
     return marker
   }
 
+  async reverseSearch(cords:{lng:number, lat:number}){
+    return await services.reverseGeocode({
+        key: this.apiKey,
+        position: [cords.lng,cords.lat],
+        view:'AR'
+      })
+  }
+
+  calculateRoute(originCords:{lng:number, lat:number}|LatLng|undefined, destinCords:{lng:number, lat:number}|LatLng|undefined){
+    console.log(originCords, destinCords);
+
+    const promise = services.calculateRoute({
+      key: this.apiKey,
+      locations:`${originCords?.lng},${originCords?.lat}:${destinCords?.lng},${destinCords?.lat}`,
+      // locations:'4.8,52.3:4.87,52.37'
+    })
+    
+    return from(promise)
+
+  }
+
+
+  MetersToKilometers(metters:number){
+    return metters / 1000
+  }
+
+
+
+
+
+
 
 }
+
+

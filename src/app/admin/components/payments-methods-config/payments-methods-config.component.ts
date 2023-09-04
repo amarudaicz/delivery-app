@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { PayMethods } from 'src/app/interfaces/local-interface';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
 
@@ -24,8 +25,13 @@ export class PaymentsMethodsConfigComponent {
     this.adminService.local$.subscribe(local=>{
 
       if (local?.pay_methods) {
-        this.form.patchValue(local.pay_methods)
+        this.form.patchValue({
+          transfer:local.pay_methods.transfer ? true : false,
+          cash:local.pay_methods.cash ? true : false,
+          cbu:local.pay_methods.cbu,
+        })
       }
+
       this.form.disable()
     })
 
@@ -67,7 +73,7 @@ export class PaymentsMethodsConfigComponent {
 
     this.checkForm()
     
-    this.adminService.updateLocal({pay_methods:this.form.value}).subscribe(res=>{
+    this.adminService.updateLocal({pay_methods:this.getPayMethods()}).subscribe(res=>{
       this.notificationsAdmin.new('Metodos de pago actualizados con exito', 'Ok')
       this.editing = false
       this.loadForm = false
@@ -77,6 +83,28 @@ export class PaymentsMethodsConfigComponent {
     })
 
   } 
+
+  getPayMethods(){
+    const payMethods:any = {}
+
+    if (this.form.value.cash) {
+      payMethods['cash'] = {
+        method:'cash',
+        description:'Efectivo'
+      }
+    }
+
+    if (this.form.value.transfer) {
+      payMethods['transfer'] = {
+        method:'transfer',
+        cbu:this.form.get('cbu')?.value,
+        description:'Transferencia'
+      }
+    }
+
+    return payMethods
+  }
+
   editForm(){
     this.editing = true
     this.form.enable()
@@ -84,10 +112,15 @@ export class PaymentsMethodsConfigComponent {
     
   }
 
-
-
-
   checkForm(){
     this.form.get('transfer')?.value ? null : this.form.get('cbu')?.setValue(null) 
   }
+
+
+  patchForm(payMethods:any[]){
+      // this.form.patchValue()
+
+
+  }
+
 }

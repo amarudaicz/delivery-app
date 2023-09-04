@@ -26,7 +26,12 @@ export class ShippingConfigComponent {
 
     this.adminService.local$.subscribe(local=>{
       if (local?.shipping) {
-        this.form.patchValue(local?.shipping)
+        this.form.patchValue({
+          delivery:local.shipping.delivery ? true : false,
+          delivery_cost:local.shipping.delivery.delivery_cost,
+          delivery_time:local.shipping.delivery.delivery_time,
+          pick_in_local:local.shipping.pick_in_local ? true : false
+        })
       }
       
       this.form.disable()
@@ -82,7 +87,7 @@ export class ShippingConfigComponent {
 
     this.checkForm()
     
-    this.adminService.updateLocal({shipping:this.form.value}).subscribe(res=>{
+    this.adminService.updateLocal({shipping:this.getShippingMethods()}).subscribe(res=>{
       this.notificationsAdmin.new('Metodos de envio actualizados con exito', 'Ok')
       this.editing = false
       this.loadForm = false
@@ -92,14 +97,33 @@ export class ShippingConfigComponent {
     })
 
   } 
+
+
+  getShippingMethods(){
+    const shippingMethods:any = {}
+
+    if (this.form.get('delivery')?.value){
+      shippingMethods.delivery = {
+        method:'delivery',
+        description:'Envio a domicilio',
+        delivery_time:this.form.get('delivery_time')?.value,
+        delivery_cost:this.form.get('delivery_cost')?.value,
+      }
+    }
+
+    if (this.form.get('pick_in_local')?.value){
+      shippingMethods.pick_in_local= {
+        method:'pick_in_local',
+        description:'Buscar en el local',
+      }
+    }
+
+    return shippingMethods
+  }
   editForm(){
     this.editing = true
     this.form.enable()
-
-    
   }
-
-
 
 
   checkForm(){

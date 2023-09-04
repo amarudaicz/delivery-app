@@ -12,6 +12,7 @@ import { ModalInfoWpComponent } from './modal-info-wp/modal-info-wp.component'
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRippleModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [MainCartComponent, CartItemsComponent, CheckoutComponent, ModalInfoWpComponent],
@@ -25,7 +26,8 @@ import { MatRippleModule } from '@angular/material/core';
     ReactiveFormsModule,
     MatDialogModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
 
   ],
 })

@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  OnChanges,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -11,27 +10,27 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 import { UserService } from 'src/app/services/userData/user.service';
 import { WpService } from 'src/app/services/wpService/wp.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalInfoWpComponent } from '../modal-info-wp/modal-info-wp.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { Location } from '@angular/common';
 import { Local } from 'src/app/interfaces/local-interface';
 import { minValueValidator } from 'src/app/utils/validators';
-import { MapboxService } from 'src/app/services/mapbox/mapbox.service';
 import { TomtomService } from 'src/app/services/tomtom-service/tomtom.service';
-import { FuzzySearchResult } from '@tomtom-international/web-sdk-services';
-import * as tt from '@tomtom-international/web-sdk-services';
+import { FuzzySearchResult, LatLng } from '@tomtom-international/web-sdk-services';
+
 import {
+  LngLat,
   MapMouseEvent,
   Marker,
   NavigationControl,
 } from '@tomtom-international/web-sdk-maps';
-import { copy } from 'src/app/utils/copyElement';
+import { fadeIn } from 'src/app/animations/main-detail-animations';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
+  animations:[fadeIn]
 })
 export class CheckoutComponent implements OnInit {
   form: FormGroup;
@@ -40,6 +39,7 @@ export class CheckoutComponent implements OnInit {
   cartItems: any[] = [];
   subtotal: number = 0;
   confirmLeave: boolean = false;
+  formSubmitted:boolean = false
 
   map?: any;
   suggestions?: FuzzySearchResult[];
@@ -47,8 +47,11 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('mapContainer') mapContainer?: ElementRef;
   loadMap: boolean = false;
   currentMarker?:Marker
+  cordsUser?:LngLat
   ubicationUser?:FuzzySearchResult
   previusDirection?:string
+  previusStreetNumber?:number
+  costShipping?:number
 
   constructor(
     public theme: ThemesService,
@@ -76,7 +79,8 @@ export class CheckoutComponent implements OnInit {
       name: ['', Validators.required],
       payMethod: ['', Validators.required],
       shippingMethod: ['', Validators.required],
-      direction: [''],
+      direction: [undefined],
+      streetNumber:[undefined],
       amountReceived: ['', [minValueValidator(this.subtotal)]],
       reference: [''],
     });
@@ -89,23 +93,21 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form.valueChanges.subscribe(() => this.formChange());
-    this.form.get('shippingMethod')?.valueChanges.subscribe(() => {
-      if (this.form.controls['shippingMethod'].value === 'Delivery') {
-        this.form.controls['direction'].setValidators(Validators.required);
-      } else {
-        this.form.controls['direction'].clearValidators();
-      }
-      this.form.controls['direction'].updateValueAndValidity();
-    });
+    this.setFormStates()
 
-    this.form.patchValue({
-      name: this.userData?.name,
-      direction: this.userData?.direction,
-      reference: this.userData?.reference,
-    });
+    // this.userService.getGeolocation().subscribe(location=>{
+    //   console.log(location);
+    //   this.tomtom.reverseSearch({lng:location.longitude, lat:location.latitude}).then(res=>{
+    //   console.log(res);
+    //   this.ubicationUser = res.addresses[0]
+    //   this.tomtom.calculateRoute({lng:-64.321861, lat:-31.165651}, {lng:-65.00505,lat:
+    //     -31.743643}).subscribe(route=>{
+    //     console.log(route);
 
-    this.getDirection();
+    //   })
+    // })
+
+    // })
   }
 
   setErrorsMessage(control: string) {
@@ -127,15 +129,16 @@ export class CheckoutComponent implements OnInit {
   preLeave() {
     console.log(this.form);
 
-    if (this.form.valid) {
-      this.redirectWhatsapp();
+    if (this.form.invalid) {
+      this.formSubmitted = true
+      this.form.markAllAsTouched();
+      this.snackBar.open('Completar todos los campos requeridos', 'Ok', {
+        duration: 3000,
+      });
       return;
     }
 
-    this.form.markAllAsTouched();
-    this.snackBar.open('Completar todos los campos requeridos', 'Ok', {
-      duration: 3000,
-    });
+    this.redirectWhatsapp();
   }
 
   redirectWhatsapp() {
@@ -166,24 +169,29 @@ export class CheckoutComponent implements OnInit {
   }
 
   async getDirection(query?:string) {
-    console.log(this.previusDirection);
-    if (this.previusDirection === this.form.controls['direction'].value) {
+
+    if (!this.directionIsChange() ) {
+      console.log('Invalid');
+      console.log(this.form);
+
       return
     }
+
     this.suggestions = undefined;
-      this.previusDirection = this.form.controls['direction'].value
-      
-    
+    this.previusDirection = this.form.controls['direction'].value
+    this.previusStreetNumber = this.form.controls['streetNumber'].value
+
       if (this.ubicationUser) {
         this.ubicationUser = undefined
       }
 
-      if (this.form.get('direction')?.value.length < 2 ) {
+      if (this.form.get('direction')?.value.length < 2 || this.form.get('direction')?.invalid) {
         return;
       }
 
       this.panelSuggestions = true
-      this.suggestions = (await this.tomtom.getSuggestions(this.form.get('direction')?.value)).results;
+      
+      this.suggestions = (await this.tomtom.getSuggestions(this.form.get('direction')?.value + ' ' + this.form.get('streetNumber')?.value)).results;
   }
 
   onBlurDirection() {
@@ -191,40 +199,138 @@ export class CheckoutComponent implements OnInit {
   }
 
   selectDirection(suggestion: FuzzySearchResult) {
-    //SETEAR UNA VARIABLE CON LA DATA 
-    this.ubicationUser = suggestion
+    this.panelSuggestions = false
+    this.tomtom.calculateRoute({lng:-64.321861, lat:-31.165651}, suggestion.position).subscribe(route=>{
+      const distanceToShipping =  this.tomtom.MetersToKilometers(route.routes[0].summary.lengthInMeters)
+      console.log(distanceToShipping);
+      
+      this.ubicationUser = suggestion
+      this.costShipping = this.localService.calculateShippingCost(distanceToShipping)
+    })
+
+    this.cordsUser = undefined
     // this.form.get('direction')?.setValue(suggestion.address?.streetName);
   }
 
   displayMapView() {
     this.loadMap = true;
+
     setTimeout(async () => {
       this.map = await this.tomtom.getMap('mapContainer');
 
       this.map.on('click', (event: MapMouseEvent<'click'>) => {
         console.log(event);
-        
         const { lng, lat } = event.lngLat;
 
         if(this.currentMarker){
           this.currentMarker.remove()
         }
-
         this.currentMarker = this.tomtom.addMarker(lng, lat, this.map)
+
+
       });
-      
+
       const navControl = new NavigationControl({
         showZoom: true, // Mostrar control de zoom
         showPitch: false, // No mostrar control de inclinación
       });
-      
+
       this.map.addControl(navControl, 'top-right');
 
     }, 100);
 
   }
 
-  saveMarker(){
+  saveMarker(cords?:LatLng){
+
+    if (!this.currentMarker) {
+      return
+    }
+
+    this.cordsUser = this.currentMarker.getLngLat()
+    this.ubicationUser = undefined
+    this.loadMap = false
+
+    this.tomtom.reverseSearch(this.cordsUser).then((res)=>{
+      
+      this.ubicationUser = res['addresses'][0]
+
+      this.tomtom.calculateRoute({lng:-64.321861, lat:-31.165651}, this.ubicationUser?.position).subscribe(route=>{
+        const distanceToShipping =  this.tomtom.MetersToKilometers(route.routes[0].summary.lengthInMeters)
+        console.log(distanceToShipping);
+        
+        this.costShipping = this.localService.calculateShippingCost(distanceToShipping)
+      })
+    })
+  }
+
+  selectShippingMethod(method?:string){
+    if (method) {
+      this.form.get('shippingMethod')?.setValue(method)
+    }
+
+    return this.form.get('shippingMethod')?.value
+  }
+
+  selectPayMethod(method?:string){
+
+    if (method) {
+      this.form.get('payMethod')?.setValue(method)
+    }
+
+    return this.form.get('payMethod')?.value
 
   }
+
+
+    setFormStates(){
+      this.form.valueChanges.subscribe(() => this.formChange());
+    this.form.get('shippingMethod')?.valueChanges.subscribe(() => {
+      if (this.form.controls['shippingMethod'].value === 'Envio a domicilio') {
+        this.form.controls['direction'].setValidators(Validators.required);
+      } else {
+        this.form.controls['direction'].clearValidators();
+      }
+      this.form.controls['direction'].updateValueAndValidity();
+    });
+
+    this.form.get('streetNumber')?.valueChanges.subscribe(value=>{
+      console.log(value);
+
+      // if (this.ubicationUser) {
+      //   this.ubicationUser.address!.streetNumber = value
+      // }
+    })
+
+    this.form.patchValue({
+      name: this.userData?.name,
+      direction: this.userData?.direction,
+      reference: this.userData?.reference,
+    });
+    }
+
+
+    isInputIvalid(input:string){
+      return this.form.get(input)?.invalid && this.form.get(input)?.touched
+    }
+
+
+    directionIsChange(){
+
+      if(this.previusDirection === this.form.controls['direction'].value && this.previusStreetNumber === this.form.controls['streetNumber'].value){
+        return false
+      }
+
+      return true
+    }
+
+
+    enableDirectionInputs(){
+      this.form.get('direction')?.enable()
+      this.form.get('streetNumber')?.enable()
+    }
+
+
+
+    
 }
