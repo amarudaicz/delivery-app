@@ -60,7 +60,6 @@ export class LinksSocialComponent implements OnInit {
       if (!local || !local.links) return;
 
         local.links.forEach((e) => {
-          console.log(e);
           this.linksFormArray.push(
             this.formBuilder.group({
               name: [e.name, Validators.required],
@@ -96,8 +95,9 @@ export class LinksSocialComponent implements OnInit {
     this.adminService 
     .updateLinks(this.form.value)
     .pipe( 
-      catchError((err) => {
-        return handleError(undefined, this.notificationsAdmin);
+      catchError(({error}) => {
+        this.loadForm = false
+        return handleError(error, this.notificationsAdmin);
       })
       )
       .subscribe((res) => {

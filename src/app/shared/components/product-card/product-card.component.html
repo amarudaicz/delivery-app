@@ -18,10 +18,10 @@
 
       <span *ngIf="product.ingredients" class="product-ingredients">{{ product.ingredients.join(", ") }}</span>
  
-      <div class="mt-2 text-base product-price" *ngIf="getOptionWithLowestPrice(product); else singlePrice">
+      <div class="mt-2 text-base product-price" *ngIf="product|lowestPrice; else singlePrice">
         Desde
         <span class="font-bold">
-          {{ getOptionWithLowestPrice(product) | currency }}
+          {{ (product|lowestPrice) | currency }}
         </span>
         <i class="pi"></i>
       </div>

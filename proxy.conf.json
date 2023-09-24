@@ -6,5 +6,15 @@
       "pathRewrite": {
         "^/api": "/v1/create-qr-code/"
       }
+    },
+
+    "/mp":{
+      "target": "https://api.mercadopago.com",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/mp": ""
+      }
+
     }
   }

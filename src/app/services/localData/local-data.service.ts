@@ -5,7 +5,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, throwError } from 'rxjs';
 import { environment } from 'src/app/environment';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { Local, Schedules } from 'src/app/interfaces/local-interface';
@@ -14,6 +14,8 @@ import { deleteRepeatElement } from 'src/app/utils/deleteRepeatElement';
 import { ThemesService } from '../themes/themes.service';
 import { RecentsService } from '../recents/recents.service';
 import { RouteDataService } from '../routeData/route-data-service.service';
+import { handleError } from 'src/app/utils/handle-error-http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -23,13 +25,15 @@ export class LocalDataService {
     private http: HttpClient,
     private theme: ThemesService,
     private recents: RecentsService,
-    private routeService: RouteDataService
+    private routeService: RouteDataService,
+    private route:Router
   ) {}
 
   public load: boolean = true;
   public local$ = new BehaviorSubject<any>(undefined);
+  private local?:Local
   private products = new BehaviorSubject<Product[]>([]);
-  private categories = new BehaviorSubject<Category[]>([]);
+  public categories$ = new BehaviorSubject<Category[]>([]);
 
   initDataLocal(local: string | null) {
     this.setLocal(local);
@@ -39,7 +43,15 @@ export class LocalDataService {
   setLocal(name_url: string | null) {
     if (this.load)
       this.http
-        .get<Local[]>(environment.host + `locals/${name_url}`) //puntopizza
+        .get<Local[]>(environment.host + `locals/${name_url}`).pipe(
+          catchError((err=>{
+            
+            this.route.navigate(['/'])
+            return throwError(
+              () => new Error(err)
+            );
+          }))
+        ) //puntopizza
         .subscribe((data) => {
           console.log(data);
           const local = data[0];
@@ -47,6 +59,7 @@ export class LocalDataService {
           this.theme.setTheme(local.theme);
           this.recents.addRecent(local);
           this.local$.next(local);
+          this.local = local
           this.routeService.setOrigin(local.name_url);
         });
   }
@@ -58,7 +71,7 @@ export class LocalDataService {
         .subscribe((data) => {
           console.log(data);
           this.products.next(this.cleanProducts(data));
-          this.categories.next(this.cleanCategories(data));
+          this.categories$.next(this.cleanCategories(data));
           this.load = false;
         });
   }
@@ -68,18 +81,18 @@ export class LocalDataService {
   }
 
   getCategories() {
-    return this.categories;
+    return this.categories$;
   }
 
   resetData() {
     this.load = true;
-    this.categories.next([]);
+    this.categories$.next([]);
     this.products.next([]);
   }
 
   private cleanCategories(products: Product[] | any[]) {
     const categories = products
-      .filter((p) => p.category_active)
+      .filter((p) => p.category_active && p.stock)
       .sort((a, b) => a.category_sort - b.category_sort)
       .map((e) => {
         return {
@@ -127,31 +140,21 @@ export class LocalDataService {
   }
 
   calculateShippingCost(distance: number) {
-    const prices = [
-      {
-        distance: 0.5,
-        cost: 100,
-      },
-      {
-        distance: 1,
-        cost: 200,
-      },
-      {
-        distance: 2,
-        cost: 300,
-      },
-      {
-        distance: 3,
-        cost: 400,
-      },
-    ];
+  
 
-    prices.sort((a, b) => a.distance - b.distance);
-
-    let cost = 0;
+    const shippingCosts = this.local?.shipping.delivery.shipping_costs.sort((a, b) => a.distance - b.distance);
+    console.log(shippingCosts);
     
-    for (let i = 0; i < prices.length; i++) {
-      const currentPrice = prices[i];
+    let cost = 0;
+
+    if (!shippingCosts?.length) {
+      return -1
+    }
+
+
+    
+    for (let i = 0; i < shippingCosts!.length; i++) {
+      const currentPrice = shippingCosts![i];
   
       if (distance <= currentPrice.distance) {
         // Si la distancia es menor o igual a la distancia actual en el array, utiliza su costo.
@@ -160,6 +163,7 @@ export class LocalDataService {
       }
   
     }
+
     
     return cost;
   }

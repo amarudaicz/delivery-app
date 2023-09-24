@@ -1,0 +1,32 @@
+@use '../../../../mixin.scss' as m;
+
+
+.card-pricing{
+
+    @include m.laptop{
+        max-width: 314px;
+    }
+}
+
+.card-1{
+
+    @include m.tablet{
+
+    }
+}
+
+.card-plan{
+    transition: height .5s ease; /* Transición de la altura máxima */
+    overflow: hidden; /* Oculta el contenido que sobresale de la altura máxima */
+}
+
+
+.card-prox{
+    position: relative;
+    &::after{
+        // content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}

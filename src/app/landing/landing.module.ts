@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AlertLocalClosedComponent } from './components/alert-local-closed/alert-local-closed.component';
+import { LandingRoutingModule } from './landing-routing.module';
 
 
 
@@ -25,6 +26,7 @@ import { AlertLocalClosedComponent } from './components/alert-local-closed/alert
   imports: [
     RouterModule,
     CommonModule,
+    LandingRoutingModule,
     SkeletonModule,
     MatRippleModule,
     MatDialogModule

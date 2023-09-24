@@ -51,7 +51,7 @@ export class CheckoutComponent implements OnInit {
   ubicationUser?:FuzzySearchResult
   previusDirection?:string
   previusStreetNumber?:number
-  costShipping?:number
+  costShipping?:number 
 
   constructor(
     public theme: ThemesService,
@@ -83,6 +83,7 @@ export class CheckoutComponent implements OnInit {
       streetNumber:[undefined],
       amountReceived: ['', [minValueValidator(this.subtotal)]],
       reference: [''],
+      defineCostShipping:[false]
     });
 
     this.localService.local$.subscribe((local) => {
@@ -129,12 +130,11 @@ export class CheckoutComponent implements OnInit {
   preLeave() {
     console.log(this.form);
 
-    if (this.form.invalid) {
+    if (this.isFormInvalid()) {
+      this.isFormInvalid(true)
+
       this.formSubmitted = true
       this.form.markAllAsTouched();
-      this.snackBar.open('Completar todos los campos requeridos', 'Ok', {
-        duration: 3000,
-      });
       return;
     }
 
@@ -144,7 +144,7 @@ export class CheckoutComponent implements OnInit {
   redirectWhatsapp() {
     const encodedText = this.wpService.generarMensaje(
       this.cartItems,
-      this.form.value,
+      {...this.form.value, ubication:this.ubicationUser, costShipping:this.costShipping},
       this.subtotal
     );
     console.log(encodedText);
@@ -200,12 +200,16 @@ export class CheckoutComponent implements OnInit {
 
   selectDirection(suggestion: FuzzySearchResult) {
     this.panelSuggestions = false
-    this.tomtom.calculateRoute({lng:-64.321861, lat:-31.165651}, suggestion.position).subscribe(route=>{
+    this.tomtom.calculateRoute(suggestion.position).subscribe(route=>{
       const distanceToShipping =  this.tomtom.MetersToKilometers(route.routes[0].summary.lengthInMeters)
       console.log(distanceToShipping);
       
       this.ubicationUser = suggestion
       this.costShipping = this.localService.calculateShippingCost(distanceToShipping)
+      console.log(this.costShipping);
+      
+
+
     })
 
     this.cordsUser = undefined
@@ -241,6 +245,11 @@ export class CheckoutComponent implements OnInit {
 
   }
 
+  removeUbication(){
+    this.ubicationUser = undefined
+    this.panelSuggestions = true
+  }
+
   saveMarker(cords?:LatLng){
 
     if (!this.currentMarker) {
@@ -253,12 +262,13 @@ export class CheckoutComponent implements OnInit {
 
     this.tomtom.reverseSearch(this.cordsUser).then((res)=>{
       
-      this.ubicationUser = res['addresses'][0]
-
-      this.tomtom.calculateRoute({lng:-64.321861, lat:-31.165651}, this.ubicationUser?.position).subscribe(route=>{
+      //SETEAR LAS CORDENADAS DEL LOCAL
+      this.tomtom.calculateRoute(res['addresses'][0].position).subscribe(route=>{
+        console.log(route.routes[0].summary.lengthInMeters);
+        
         const distanceToShipping =  this.tomtom.MetersToKilometers(route.routes[0].summary.lengthInMeters)
         console.log(distanceToShipping);
-        
+        this.ubicationUser = res['addresses'][0]
         this.costShipping = this.localService.calculateShippingCost(distanceToShipping)
       })
     })
@@ -285,28 +295,28 @@ export class CheckoutComponent implements OnInit {
 
     setFormStates(){
       this.form.valueChanges.subscribe(() => this.formChange());
-    this.form.get('shippingMethod')?.valueChanges.subscribe(() => {
-      if (this.form.controls['shippingMethod'].value === 'Envio a domicilio') {
+      this.form.get('shippingMethod')?.valueChanges.subscribe((value) => {
+
+      if (value === 'Envio a domicilio') {
         this.form.controls['direction'].setValidators(Validators.required);
+        this.form.controls['streetNumber'].setValidators(Validators.required);
+
       } else {
         this.form.controls['direction'].clearValidators();
+        this.form.controls['streetNumber'].clearValidators();
       }
-      this.form.controls['direction'].updateValueAndValidity();
+        this.form.controls['streetNumber'].updateValueAndValidity();
+        this.form.controls['direction'].updateValueAndValidity();
     });
 
-    this.form.get('streetNumber')?.valueChanges.subscribe(value=>{
-      console.log(value);
+    // this.form.get('streetNumber')?.valueChanges.subscribe(value=>{
+    // })
 
-      // if (this.ubicationUser) {
-      //   this.ubicationUser.address!.streetNumber = value
-      // }
-    })
-
-    this.form.patchValue({
-      name: this.userData?.name,
-      direction: this.userData?.direction,
-      reference: this.userData?.reference,
-    });
+      // this.form.patchValue({
+      //   name: this.userData?.name,
+      //   direction: this.userData?.direction,
+      //   reference: this.userData?.reference,
+      // });
     }
 
 
@@ -328,6 +338,30 @@ export class CheckoutComponent implements OnInit {
     enableDirectionInputs(){
       this.form.get('direction')?.enable()
       this.form.get('streetNumber')?.enable()
+    }
+
+
+    isFormInvalid(showAlerts?:boolean){
+      const shippingMethod = this.form.get('shippingMethod')?.value
+
+      if (this.form.invalid) {
+        showAlerts ? this.snackBar.open('Completar todos los campos requeridos', '' , {duration:3000}) : null
+        return true
+      }
+
+      if (shippingMethod === 'Envio a domicilio' && !this.ubicationUser){
+       showAlerts ? this.snackBar.open('Ingresa una direccion valida', '' , {duration:3000}) : null
+        return true
+      }
+
+      if (shippingMethod === 'Envio a domicilio' && !this.costShipping && !this.form.get('defineCostShipping')?.value) {
+       showAlerts ? this.snackBar.open('Tu ubicacion se encuentra fuera de la zona de entrega', '' , {duration:3000}) : null
+        return true
+      }
+
+
+
+      return false
     }
 
 

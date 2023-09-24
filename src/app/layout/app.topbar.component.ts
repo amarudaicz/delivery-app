@@ -53,7 +53,7 @@ export class AppTopBarComponent implements OnInit {
 
   watchStore() {
     this.localService.resetData()
-    this.localService.initDataLocal(this.local?.name_url!)
+    // this.localService.initDataLocal(this.local?.name_url!)
     setTimeout(() => {
       this.route.navigate(['/' + this.local?.name_url]);
     }, 100);

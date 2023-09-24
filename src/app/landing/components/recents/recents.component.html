@@ -28,19 +28,19 @@
         <div  *ngFor="let circle of [1,2]; let i" class="circle circle-{{i}}"></div>
 </div>
 
-<h1 class="text-3xl mb-2">Recientes</h1>
+<h1 class="mb-2">Recientes</h1>
 
 <div class="container-recents">
 
 
     <app-card-local *ngFor="let local of locals" [local]="local"></app-card-local>
 
-    <div class="" *ngIf="!locals?.length && recentsCharged">
+    <div class="" *ngIf="recentsCharged && !locals?.length">
         <div class="w-full h-full">
-            <div class="overflow-hidden">
-                <img src="/assets/images/empty-recents.gif" style="transform: translateY(-60px);" class="w-full max-w-27rem block object-contain m-auto" alt="">
-            </div>
-                <h2 class="text-center text-2xl text-800" style="margin-top: -60px;">No se encontraron tiendas</h2>
+             <div class="overflow-hidden">
+                <img src="/assets/images/no-results.svg" class="w-full max-w-27rem block object-contain m-auto" alt="">
+            </div> 
+            <h2 class="text-center text-2xl text-800" >No se encontraron tiendas</h2>
         </div> 
     </div>
     

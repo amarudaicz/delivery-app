@@ -1,15 +1,14 @@
-<div class="relative w-full bg-none md:bg-white p-4 shadow-5 flex flex-column md:border-round-right-3xl"
-  style="height: 100vh;">
+<div class="relative w-full min-h-screen bg-none md:bg-white p-4 md:shadow-5 flex flex-column md:border-round-right-3xl">
 
-  <div class="hidden md:flex justify-content-end w-full absolute" style="top:10px;right: 30px;">
-    <a routerLink="/">
-      <img src="./assets/logos/logo-de.png" class="w-5rem" alt="">
-    </a>
-  </div> 
-
+  
   <div class="d-flex w-full justify-content-center flex-1">
-
+    
     <div class="p-4 w-12 xl:w-9 bg-white border-round-xl shadow-7 md:shadow-none ">
+        <div class="static flex justify-content-center md:justify-content-end w-full md:absolute" style="top:10px;right: 30px;">
+          <a routerLink="/">
+            <img src="./assets/logos/logo-de.png" class="w-5rem" alt="">
+          </a>
+        </div> 
       
       <div class="">
 
@@ -27,16 +26,7 @@
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="container-form">
-            <div class="form-group" *ngIf="register">
-              <div class="input-login-group" [ngClass]="getError('email') ? 'invalid' : '' ">
-                <label for="email"><i class="icon-login fa-solid fa-envelope"></i></label>
-                <input type="email" placeholder="Email" class="input-login" formControlName="email" id="email">
-              </div>
-              <div *ngIf="getError('email')">
-                <div class="error-form" *ngIf="getError('email')">Ingrese su email.</div>
-              </div>
-            </div>
-
+  
             <div class="form-group">
               <label class="font-bold">Usuario</label>
 
@@ -66,42 +56,23 @@
                 <div *ngIf="getError('password', 'required')" class="error-form">Ingrese su contraseña.</div>
               </div>
             </div>
-            <div *ngIf="!register" class="mt-2 text-end">
+            <div class="mt-2 text-end">
               <a [routerLink]="['reset_password']"
                 class="cursor-pointer underline font-bold hover:no-underline">Olvidaste tu
                 contraseña?</a>
             </div>
 
-
-            <div class="form-group" *ngIf="register">
-
-              <div class="input-login-group"
-                [ngClass]="[getError('repeatPassword') ? 'invalid' : '', comparePassword() ? 'invalid' : ''] ">
-                <label for="repeatPassword"><i class="icon-login fa-solid fa-key"></i></label>
-                <input type="password" placeholder="Repita su contraseña" class="input-login"
-                  formControlName="repeatPassword" id="repeatPassword">
-              </div>
-
-              <div>
-                <div class="error-form" *ngIf="getError('repeatPassword')">Repita su contraseña.</div>
-                <div class="error-form" *ngIf="comparePassword()">Las contraseñas no coinciden.</div>
-              </div>
-            </div>
-
-
-
-
           </div>
 
           <button [disabled]="formSubmitted" class="submit-btn shadow-3" type="submit">
             <span *ngIf="!formSubmitted">
-              {{register ? 'Registrarse' : 'Acceso' }}
+              Ingresar
             </span>
             <i *ngIf="formSubmitted" class="pi pi-spin pi-spinner"></i>
           </button>
 
           <!-- ocultar -->
-          <a href="" class="mt-4 block text-center"> Quiere abrir una tienda en deli? <br><span
+          <a [routerLink]="['register']" class="mt-4 block text-center"> Quiere abrir una tienda en deli? <br><span
               class="font-bold text-sec underline hover:no-underline">Crear cuenta</span> </a>
 
 

@@ -25,7 +25,7 @@
                     <div class="d-flex text-800 hover:text-900" *ngIf="adminService.local$ | async as local">
                         <span>{{local.name_url}}</span>
 
-                        <i class="pi pi-sign-out ml-3 hidden md:block"></i>
+                        <i class="pi pi-chevron-down ml-2 hidden md:block"></i>
 
                         <i [ngClass]="localService.islocalOpen(local.schedules)? ['text-green-500'] : ['text-red-500']" class="pi pi-circle-fill ml-2 md:hidden"></i>
                     </div>
@@ -34,24 +34,21 @@
                 <div  [@fadeIn] *ngIf="panelSession" class="border-1 border-800 border-top-none panel-session absolute w-full text-800" >
                     <ul>
 
-                        <li class="pb-2 pt-3 pl-4 d-flex hover:text-900 cursor-pointer">
-                            <button class="cursor-pointer hover:text-primary"   (click)="watchStore()">
+                        <li class="pb-2 pt-3 px-4 d-flex justify-content-between">
+                            <button class="cursor-pointer hover:text-primary text-nowrap" (click)="watchStore()">
                                 Ver Tienda
-                                <i class=""></i>
                             </button>
-                            <i class=""></i>
                         </li>
 
-                        <li class="py-2 pl-4 d-flex cursor-pointer">
-                            <button class="cursor-pointer hover:text-primary" (click)="logOut()">
+                        <li class="py-2 px-4 d-flex justify-content-between cursor-pointer">
+                            <button class="cursor-pointer hover:text-primary text-nowrap" (click)="logOut()">
                                 Cerrar Session
-                                <i class=""></i>
                             </button>
                         </li>
 
-                        <li class="py-2 pl-4 d-flex hover:text-900 cursor-pointer">
-                            Pagos
-                            <i class=""></i>
+                        <li class="py-2 px-4 d-flex justify-content-between hover:text-primary cursor-pointer">
+                            <a class="font-semibold text-nowrap" [routerLink]="['payments']">Plan</a>
+                            <i class="pi pi-credit-card ml-2"></i>
                         </li>
                     </ul>
 

@@ -20,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RoutesAdmingModule } from './admin-routing.module';
 import { AdminModule } from '../admin/admin.module';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { CommonModule } from '@angular/common';
         RouterModule,
         AppConfigModule,
         RoutesAdmingModule,
-        AdminModule
+        AdminModule,
+        MatIconModule,
     ],
     exports: [AppLayoutComponent]
 })

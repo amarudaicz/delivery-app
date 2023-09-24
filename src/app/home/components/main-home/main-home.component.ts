@@ -52,7 +52,7 @@ export class MainHomeComponent implements OnInit, OnDestroy{
     //SETEANDO EL PRELOADER DE LAS CATEGORIAS SI NO EXISTE ID SETEADO
 
     //OBTENIENDO LAS CATEGORIAS
-    this.localService.getCategories().subscribe((data) => {
+    this.localService.categories$.subscribe((data) => {
       if (!data.length) return
       this.categories = data
     });

@@ -93,9 +93,9 @@ export class SchedulesComponent {
 
     this.loadForm = true;
     this.adminService.updateSchedules(this.form.value).pipe(
-      catchError((err) => {
+      catchError(({error}) => {
         this.loadForm = false;
-        return handleError(undefined, this.notificationsAdmin);
+        return handleError(error, this.notificationsAdmin);
       })).subscribe((res) => {
         this.local!.schedules = this.form.value
         this.adminService.local$.next(this.local)

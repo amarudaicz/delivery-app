@@ -1,0 +1,26 @@
+<style>
+    #form-checkout {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+    }
+
+    .container {
+        height: 18px;
+        display: inline-block;
+        border: 1px solid rgb(118, 118, 118);
+        border-radius: 2px;
+        padding: 1px 2px;
+    }
+</style>
+
+<div class="relative w-full" style="min-height: 25rem;" >
+    <div class="absolute w-full top-0 left-0 z-2 h-18rem" *ngIf="!isFormMounted" >
+        <app-loader-full class="">
+        </app-loader-full>
+    </div>
+    
+    <div class="z-4" id="cardPaymentBrick_container">
+    
+    </div>
+</div>

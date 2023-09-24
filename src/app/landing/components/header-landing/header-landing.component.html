@@ -63,8 +63,8 @@
 
 
 
-            <div class="mt-2 w-full flex justify-content-center">
-                <a mat-ripple routerLink="/admin" class="p-2 px-3 bg-primary border-round">
+            <div class="mt-2 w-full">
+                <a mat-ripple routerLink="/admin" class="w-full block text-center p-2 px-3 bg-primary border-round">
                     Acceso clientes
                 </a>
             </div>
@@ -77,6 +77,6 @@
     
 </div>
 
-<div *ngIf="menuLanding" [@fadeIn] (click)="menuLanding = false"
-    class="overlay fixed z-1 top-0 left-0 w-full h-full bg-black-alpha-30 opacity-50">
+<div [@fadeIn] *ngIf="menuLanding"  (click)="menuLanding = false"
+    class="overlay fadein fixed z-1 top-0 left-0 w-full h-full bg-black-alpha-30">
 </div>

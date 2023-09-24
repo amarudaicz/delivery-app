@@ -17,9 +17,11 @@ export class ConfigThemingComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.adminService.getLocal().subscribe(data=>{
+    this.adminService.local$.subscribe(data=>{
       console.log(data);
       
+      if (!data) return 
+
       this.theme.setTheme(data.theme)
       this.currentTheme = this.theme.getCurrentTheme();
       this.currentProp = Object.keys(this.currentTheme).splice(2, 10);

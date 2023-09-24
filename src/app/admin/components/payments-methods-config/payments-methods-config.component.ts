@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PayMethods } from 'src/app/interfaces/local-interface';
+import { catchError } from 'rxjs';
+import { Local, PayMethods } from 'src/app/interfaces/local-interface';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
+import { handleError } from 'src/app/utils/handle-error-http';
 
 @Component({
   selector: 'app-payments-methods-config',
@@ -19,34 +21,17 @@ export class PaymentsMethodsConfigComponent {
     this.form = this.formBuilder.group({
       transfer:false,
       cash:[false,],
-      cbu:['',  []]
+      cbu:[null],
+      alias:[null],
+      nameAccount:[null],
+      entity:[]
+
     })
 
-    this.adminService.local$.subscribe(local=>{
+    this.adminService.local$.subscribe(local=> this.patchForm(local!))
 
-      if (local?.pay_methods) {
-        this.form.patchValue({
-          transfer:local.pay_methods.transfer ? true : false,
-          cash:local.pay_methods.cash ? true : false,
-          cbu:local.pay_methods.cbu,
-        })
-      }
 
-      this.form.disable()
-    })
-
-    this.form.get('transfer')?.valueChanges.subscribe((change) => {
-      if (!this.isChangingTransfer) {
-        this.isChangingTransfer = true;
-        this.form.get('transfer')?.setValue(change, { emitEvent: false });
-        this.isChangingTransfer = false;
-      }
-      this.form.get('cbu')?.clearValidators();
-      if (change) {
-        this.form.get('cbu')?.setValidators([Validators.required]);
-      }
-      this.form.get('cbu')?.updateValueAndValidity();
-    });
+    this.setValidators()
 
   }
 
@@ -73,7 +58,13 @@ export class PaymentsMethodsConfigComponent {
 
     this.checkForm()
     
-    this.adminService.updateLocal({pay_methods:this.getPayMethods()}).subscribe(res=>{
+    this.adminService.updateLocal({pay_methods:this.getPayMethods()}).pipe(
+      catchError(({error})=>{
+        this.editing = false;
+        this.loadForm = false;
+        return handleError(error, this.notificationsAdmin)
+      })
+    ).subscribe(res=>{
       this.notificationsAdmin.new('Metodos de pago actualizados con exito', 'Ok')
       this.editing = false
       this.loadForm = false
@@ -98,6 +89,9 @@ export class PaymentsMethodsConfigComponent {
       payMethods['transfer'] = {
         method:'transfer',
         cbu:this.form.get('cbu')?.value,
+        alias:this.form.get('alias')?.value,
+        nameAccount:this.form.get('nameAccount')?.value,
+        entity:this.form.get('entity')?.value,
         description:'Transferencia'
       }
     }
@@ -117,10 +111,52 @@ export class PaymentsMethodsConfigComponent {
   }
 
 
-  patchForm(payMethods:any[]){
-      // this.form.patchValue()
+  patchForm(local:Local){
+    if (!local) return
 
+    if(!local.pay_methods) {
+      this.form.disable()
+      return
+    }
+    
+    this.form.patchValue({
+      transfer:local.pay_methods.transfer ? true: null,
+      cash:local.pay_methods.cash ? true: null,
+      cbu:local.pay_methods.transfer?.cbu,
+      alias:local.pay_methods.transfer?.alias,
+      nameAccount:local.pay_methods.transfer?.nameAccount,
+      entity:local.pay_methods.transfer?.entity
+    })
 
+    this.form.disable()
+    
   }
 
+
+
+  setValidators(){
+    const validator = Validators.required
+    this.form.get('transfer')?.valueChanges.subscribe((value) => {
+      console.log(value);
+      
+      if (value) {
+        this.form.get('cbu')?.setValidators([validator]);
+        this.form.get('alias')?.setValidators([validator]);
+        this.form.get('entity')?.setValidators([validator]);
+        this.form.get('nameAccount')?.setValidators([validator]);
+      } else {
+        this.form.get('cbu')?.clearValidators();
+        this.form.get('alias')?.clearValidators();
+        this.form.get('nameAccount')?.clearValidators();
+        this.form.get('entity')?.clearValidators();
+      }
+
+      // Actualizar la validez de los campos
+      this.form.get('cbu')?.updateValueAndValidity();
+      this.form.get('alias')?.updateValueAndValidity();
+      this.form.get('nameAccount')?.updateValueAndValidity();
+      this.form.get('entity')?.updateValueAndValidity();
+   
+    });
+  }
 }

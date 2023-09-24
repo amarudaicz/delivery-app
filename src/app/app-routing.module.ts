@@ -46,6 +46,11 @@ const routes: Routes = [
   {
     path: ':local/:category/:product',
     loadChildren:()=> import('./detail/detail.module').then((m) => m.DetailModule)
+  },  
+
+  {
+    path:'',
+    loadChildren:()=> import('./landing/landing.module').then(m => m.LandingModule)
   },
 
   {
@@ -55,7 +60,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

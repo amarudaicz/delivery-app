@@ -31,27 +31,30 @@
             {{method}}
           </div>
       </div>
+      
         <div class="h-1rem pt-1 ">
-          
           <span [@fadeIn] class=" px-2 gap-1 d-flex roboto text-gray-800 text-sm" *ngIf="form.get('shippingMethod')?.value === 'Buscar en el local'"><i class="pi pi-map-marker"></i>  {{local.location}}</span>
           <span [@fadeIn] class=" px-3 block error-checkout" *ngIf="form.get('shippingMethod')?.invalid && formSubmitted">Este campo es requerido</span>
         </div>
 
-        <span *ngIf="ubicationUser" class="font-bold block w-fit p-2 border-round bg-white text-base border-1">
-          <span *ngIf="costShipping; else outOfRange">
+        <span [@fadeIn] *ngIf="ubicationUser && form.get('shippingMethod')?.value === 'Envio a domicilio' && costShipping !== -1" class="font-bold block w-fit p-2 border-round bg-white text-base border-1">
+          <span *ngIf="costShipping! > 0; else outOfRange">
             Costo de envio: ${{costShipping}}
           </span>
 
           <ng-template #outOfRange>
-            <span class="d-flex gap-1">
-              <i class="pi pi-info-circle"></i>
-              Tu ubicacion se encuentra fuera de la zona de entrega
-            </span>
-
-            <span class="d-flex font-normal">
-              <mat-checkbox color="primary"></mat-checkbox>
-              Definire el costo de envio con el vendedor
-            </span>
+            <div >
+              <span class="d-flex gap-1">
+                <i class="pi pi-info-circle"></i>
+                Tu ubicacion se encuentra fuera de la zona de entrega
+              </span>
+  
+              <span class="d-flex font-normal">
+                <mat-checkbox color="primary" formControlName="defineCostShipping"></mat-checkbox>
+                Definire el costo de envio con el vendedor
+              </span>
+              
+            </div>
            
           </ng-template>
         </span>
@@ -87,20 +90,7 @@
         </div>
 
         <div class="relative" style='top:-25px' >
-<!-- 
-          <div class="marker-user mt-2 py-2" *ngIf="markerUbicationUser">
-            <div class="d-flex justify-content-between gap-2 font-medium">
-
-              <div class="d-flex gap-2">
-                <i class="pi pi-map-marker text-xl" [ngStyle]="{color:theme.get('background')}"></i>
-                <span>Ubicacion seleccionada en el mapa</span>
-              </div>
-
-              <i class="pi pi-times text-xl" (click)="markerUbicationUser = undefined" [ngStyle]="{color:theme.get('background')}"></i>
-            </div>
-          </div> -->
-          
-          <div class="ubication-user mt-2 py-2" *ngIf="ubicationUser">
+          <div [@fadeIn] class="ubication-user mt-2 py-2" *ngIf="ubicationUser">
             <div class="d-flex justify-content-between gap-2 font-medium">
               <div class="d-flex gap-2">
                 <i class="pi pi-map-marker text-xl" [ngStyle]="{color:theme.get('background')}"></i>
@@ -114,7 +104,7 @@
                 </div>
               </div>
 
-              <i class="pi pi-times text-xl" (click)="ubicationUser = undefined" (click)="enableDirectionInputs()" [ngStyle]="{color:theme.get('background')}"></i>
+              <i class="pi pi-times text-xl" (click)="removeUbication()" (click)="enableDirectionInputs()" [ngStyle]="{color:theme.get('background')}"></i>
 
             </div>
           </div>
@@ -201,7 +191,7 @@
     <div class="container-details px-2 mb-2">
       <p class="details-checkout px-2 text-base subtotal"><b>Subtotal:</b> <span
           class="text-xl font-bold">{{subtotal|currency}}</span> </p>
-      <p *ngIf="costShipping" class="details-checkout px-2 text-base">
+      <p *ngIf="costShipping! > 0" class="details-checkout px-2 text-base">
         <b>Envio:</b>
 
         <span class="text-xl font-bold">{{costShipping|currency}}</span> 

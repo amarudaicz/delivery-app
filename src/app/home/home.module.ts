@@ -34,7 +34,6 @@ import { LandingModule } from '../landing/landing.module';
     MatSnackBarModule,
     MatRippleModule,
     SkeletonModule,
-    LandingModule,
   ] ,
   exports:[
     NewselterBoxComponent,

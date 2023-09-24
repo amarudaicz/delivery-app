@@ -1,0 +1,21 @@
+.input-card-mp {
+  height: 56px;
+  background-color: #05060f0a;
+  border-radius: 4px;
+  padding: 0 1rem;
+  border: 1px solid transparent;
+  border-color: #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s,
+    color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s,
+    background 0.2s cubic-bezier(0.25, 0.01, 0.25, 1) 0s;
+}
+
+.input-card-mp:hover,
+.input-card-mp:focus,
+.input-card-mp:hover .input-card-mp {
+  outline: none;
+  border-color: #3242d2;
+}
+
+

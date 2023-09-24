@@ -5,9 +5,6 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { MainCartComponent } from './main-cart/main-cart.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    children: [
       {
         path: '',
         component: MainCartComponent,
@@ -28,9 +25,7 @@ const routes: Routes = [
         ]
 
       },
-    ],
-  },
-];
+    ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

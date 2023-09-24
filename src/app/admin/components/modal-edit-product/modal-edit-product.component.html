@@ -44,7 +44,7 @@
                   [editable]="true" (edited)="edit(i, $event)" [aria-description]="'press enter to edit ' + i">
                   {{ i }}
                   <button matChipRemove [attr.aria-label]="'remove ' + i">
-                    <mat-icon>X</mat-icon>
+                    <mat-icon>cancel</mat-icon>
                   </button>
                 </mat-chip-row>
                 <input formControlName="ingredients" placeholder="Nuevo Ingrediente" id="ingredients"

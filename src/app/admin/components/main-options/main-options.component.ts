@@ -9,13 +9,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectProductsGroupComponent } from '../select-products-group/select-products-group.component';
 import { DialogRef } from '@angular/cdk/dialog';
-import { map } from 'rxjs';
+import { catchError, map } from 'rxjs';
 import { Product } from 'src/app/interfaces/product-interface';
 import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
 import { Location } from '@angular/common';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
+import { handleError } from 'src/app/utils/handle-error-http';
 
 @Component({
   selector: 'app-main-options',
@@ -116,14 +117,16 @@ export class MainOptionsComponent implements OnInit {
     }
     
     const productsWhitGroup = this.products.filter(e => e.variations.some(e => e.id === group.id))
+    console.log(productsWhitGroup);
     
-      if (productsWhitGroup.length) {
+      if (!productsWhitGroup.length) {
         this.updateOptionsGroupAndNotify({products: [], group, variations: this.groupOptions})
         return
       }
 
       window.history.pushState({modal:true}, 'modal');
 
+      
       const dialogRef = this.dialog.open(SelectProductsGroupComponent, {
         height:'90%',
         data: { products:productsWhitGroup, group: group }
@@ -151,16 +154,15 @@ export class MainOptionsComponent implements OnInit {
       this.alert.new(`No es posible eliminar un grupo de opciones si existen productos que hacen uso de el. Ver productos (${idProducts})`, 'Ok',{push:true, section:'Grupo de opciones',panelClass:'w-12rem'})
       return
     }
-      this.adminService.deleteOptionGroup(group.id).subscribe(
-        (res)=>{
+      this.adminService.deleteOptionGroup(group.id).pipe(
+        catchError(err=>{
+
+          return handleError(err, this.alert)
+        })
+      ).subscribe((res)=>{
           this.alert.new(`El grupo ${group.nameVariation} a sido eliminado con exito`, 'Ok', {push:true} )
           const optionsUpdates = this.groupOptions.filter(e=> e.id !== group.id)
           this.adminService.optionsGroup.next(optionsUpdates)
-          
-        },
-        (err)=>{
-          console.log(err);
-          this.alert.new(`A ocurrido un error intente nuevamente`, 'Ok')
         }
       )
   }

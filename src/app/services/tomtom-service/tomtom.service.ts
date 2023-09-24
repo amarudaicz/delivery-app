@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { LatLng, LngLat, services } from '@tomtom-international/web-sdk-services';
 import * as tt from '@tomtom-international/web-sdk-maps';
 import { Observable, from } from 'rxjs';
+import { LocalDataService } from '../localData/local-data.service';
+import { Local } from 'src/app/interfaces/local-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +11,9 @@ import { Observable, from } from 'rxjs';
 export class TomtomService {
   
   private apiKey = 'FdbTpt17gvVEENxeGcSajuhizlC5BKt6';
-  
-  constructor() {
-    
+  private local?:Local
+  constructor(private localService:LocalDataService) {
+    this.localService.local$.subscribe(local=> this.local = local)
   }
 
   async getSuggestions(query: string) {
@@ -57,17 +59,19 @@ export class TomtomService {
       })
   }
 
-  calculateRoute(originCords:{lng:number, lat:number}|LatLng|undefined, destinCords:{lng:number, lat:number}|LatLng|undefined){
-    console.log(originCords, destinCords);
-
-    const promise = services.calculateRoute({
-      key: this.apiKey,
-      locations:`${originCords?.lng},${originCords?.lat}:${destinCords?.lng},${destinCords?.lat}`,
-      // locations:'4.8,52.3:4.87,52.37'
-    })
+  calculateRoute(destinCords:{lng:number, lat:number}|LatLng|undefined){
     
-    return from(promise)
+      const originCords = this.local?.cords
 
+      const promise = services.calculateRoute({
+        key: this.apiKey,
+        locations:`${originCords}:${destinCords?.lng},${destinCords?.lat}`,
+        // locations:'4.8,52.3:4.87,52.37'
+      })
+      
+      return from(promise)
+      
+    
   }
 
 

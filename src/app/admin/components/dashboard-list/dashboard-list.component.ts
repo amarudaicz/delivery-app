@@ -104,8 +104,8 @@ export class DashboardListComponent implements OnInit {
     })
     
     this.adminService.putOrderCategories(this.categories).pipe(
-      catchError(()=> handleError(undefined, this.notificationsAdmin))
-    ).subscribe()
+      catchError(({error})=> handleError(error, this.notificationsAdmin))
+    ).subscribe(res=> this.notificationsAdmin.new('Orden de categorías actualizado'))
     
   }
 

@@ -40,19 +40,19 @@ export class SetOptionsProductComponent {
   ngOnInit(): void {
 
     if (this.product) {
-      this.selectedOptions = this.product.variations
+      this.selectedOptions = this.product.variations.map(e => { return {...e, editing:false} })
       console.log(this.selectedOptions);
 
       this.adminService.optionsGroup.subscribe((data) => {
-        console.log(data);
-  
+        console.log(this.removeSelectedOfCurrent(copy(data), this.selectedOptions));
         //eliminar los q estan en seleected
           this.currentGroupOption = this.removeSelectedOfCurrent(copy(data), this.selectedOptions)
       })
 
     }else{
       this.adminService.optionsGroup.subscribe((data: OptionProduct[]) => {
-  
+        console.log(data, '*************************');
+        
         this.currentGroupOption = copy(data)
         
       })
@@ -201,15 +201,14 @@ export class SetOptionsProductComponent {
 
   removeSelectedOfCurrent(all:OptionProduct[], selected:OptionProduct[]) {
     const itemsFaltantes = all.filter(a => !selected.some(b =>  this.areObjectsEqual(a, b)));
-
+    
     return itemsFaltantes;//ESTO ES CUADNO EDITAS
-
   }
 
 
   resetOptions(){
-    this.adminService.getLocal().subscribe((data: Local) => {
-      console.log(data.options_group);
+    this.adminService.local$.subscribe((data) => {
+      if (!data) return
 
       this.currentGroupOption = copy(data.options_group)
     })  

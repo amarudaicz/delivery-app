@@ -137,9 +137,9 @@ export class NewProductComponent implements OnInit {
     const product = { variations: JSON.stringify(this.optionsGroup), ingredients: JSON.stringify(this.ingredientsList), ...this.form.value, category_id:this.category_id };
 
     this.adminService.postProduct(product).pipe(
-      catchError(() => {
+      catchError(({error}) => {
         this.processLoad = false
-        return handleError(undefined, this.notificationsAdmin)
+        return handleError(error, this.notificationsAdmin)
 
       })).subscribe((res) => {
       this.resetForm()

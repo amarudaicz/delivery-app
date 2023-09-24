@@ -67,6 +67,9 @@ import { MainSchedulesComponent } from './components/main-schedules/main-schedul
 import { LinksSocialComponent } from './components/links-social/links-social.component';
 import { ShippingConfigComponent } from './components/shipping-config/shipping-config.component';
 import { PaymentsMethodsConfigComponent } from './components/payments-methods-config/payments-methods-config.component';
+import { SubscriptionStateComponent } from './components/subscription-state/subscription-state.component';
+import { InfoPlanBasicComponent } from './components/subscription-state/components/info-plan-basic/info-plan-basic.component';
+import {MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -97,6 +100,8 @@ import { PaymentsMethodsConfigComponent } from './components/payments-methods-co
     LinksSocialComponent,
     ShippingConfigComponent,
     PaymentsMethodsConfigComponent,
+    SubscriptionStateComponent,
+    InfoPlanBasicComponent,
   ],
   imports: [
     CommonModule,
@@ -113,18 +118,12 @@ import { PaymentsMethodsConfigComponent } from './components/payments-methods-co
     ConfirmDialogModule,
     DynamicDialogModule,
     FileUploadModule,
-    InputTextModule,
     MenuModule,
-    MessagesModule,
-    RippleModule,
-    TableModule,
-    ToastModule,
-    VirtualScrollerModule,
     AccordionModule,
     ConfirmPopupModule,
 
     // Material
-    MatAutocompleteModule,
+    MatDialogModule,
     MatCheckboxModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -155,7 +154,6 @@ import { PaymentsMethodsConfigComponent } from './components/payments-methods-co
     AddGroupOptionComponent,
     SetOptionsProductComponent,
     MainEditProductComponent
-
   ],
 })
 export class AdminModule { }

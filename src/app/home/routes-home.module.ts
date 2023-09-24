@@ -7,15 +7,6 @@ import { MainLandingComponent } from '../landing/components/main-landing/main-la
 
 const routes: Routes = [
   
-  {
-    path: '',
-    children: [
-      {
-        path:'',
-        component:MainLandingComponent,
-      },
-
-      {path:'faq', component:MainCategoryComponent},
       {
         path: ':local',
         component: MainHomeComponent,
@@ -29,9 +20,6 @@ const routes: Routes = [
         component: MainCategoryComponent,
         data: { page: '' },
       },
-
-    ],
-  },
 ];
 
 @NgModule({

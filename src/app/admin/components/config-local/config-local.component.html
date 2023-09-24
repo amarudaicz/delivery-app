@@ -1,7 +1,7 @@
 <div class="card data-local">
   <div class="mb-3">
-    <h3 class="title">Datos del local</h3>
-    <p>Configura los datos de tu local, esta informacion sera visible para tus clientes</p>
+    <h3 class="text-xl">Datos del la tienda</h3>
+    <p>Configura los datos de tu tienda, esta informacion sera visible para tus clientes</p>
   </div>
 
   <button [disabled]="processForm" mat-raised-button color="primary"
@@ -17,7 +17,7 @@
   <div class="mt-3 container-form-local">
     <form [formGroup]="form">
 
-      <div class="flex justify-content-start wrap gap-3">
+      <div class="flex justify-content-start align-items-center wrap gap-3">
         <mat-form-field class="h-fit input-field">
           <mat-label> Nombre </mat-label>
           <input matInput formControlName="name" type="text" />
@@ -34,11 +34,24 @@
           <input matInput formControlName="location" type="text" />
         </mat-form-field>
 
+        <div class="flex flex-column">
+
+          <span class="p-2 border-round bg-primary" *ngIf="form.get('cords')?.valid">
+            <i class="pi pi-marker-map"></i>
+            Ubicacion seleccionada
+            <button (click)="[form.get('cords')?.setValue(null), form.markAsDirty()]"><i class="pi pi-times text-white ml-2"></i></button>
+          </span>
+          
+          <button *ngIf="!form.get('cords')?.value" [disabled]="form.disabled" mat-raised-button color="accent" (click)="loadMap = true">Ubicate en el mapa</button>
+          <span *ngIf="!form.get('cords')?.value && !form.disabled" class="text-sm text-red-500">Es necesario que ubiques una dirección o ciudad de referencia*</span>
+          
+        </div>
+        <app-select-ubication-map (emitCords)="getCords($event)" *ngIf="loadMap" (close)="loadMap = false" ></app-select-ubication-map>
 
       </div>
         
         
-      <div class="w-fit border-1 border-round border-700 p-2 relative" [ngClass]="editing ? '' : 'opacity-70'" >
+      <div class="w-fit mt-3 border-1 border-round border-700 p-2 relative" [ngClass]="editing ? '' : 'opacity-70'" >
 
         <div class="mb-2">
           <h4 class="text-xl text-900">Logo</h4>

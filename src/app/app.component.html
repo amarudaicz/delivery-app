@@ -2,17 +2,19 @@
 <app-app-config></app-app-config>
 
 <div [class.main-container]="false">
+
     <div class="">
+
         <app-header *ngIf="themeLoad && stateLayout.state.header"></app-header>
-        
+
         <div [@fadeIn]>
             <router-outlet></router-outlet>
         </div>
+
     </div>
-    
-    
-    <app-navigation *ngIf="themeLoad" [@fadeIn] ></app-navigation>
+
+
+    <app-navigation *ngIf="themeLoad" [@fadeIn]></app-navigation>
 
 </div>
-
 

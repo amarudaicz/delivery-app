@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, LowerCasePipe } from '@angular/common';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
@@ -13,6 +13,10 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRippleModule } from '@angular/material/core';
+import { SelectUbicationMapComponent } from './components/select-ubication-map/select-ubication-map.component';
+import { PricingCardsComponent } from './components/pricing-cards/pricing-cards.component';
+import { LowestPricePipe } from '../pipes/getLowestPrice';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -21,8 +25,10 @@ import { MatRippleModule } from '@angular/material/core';
     LoaderFullComponent,
     FlotantCartComponent, 
     NewselterBoxComponent,
-    ButtonInstallComponent
-    
+    ButtonInstallComponent,
+    SelectUbicationMapComponent,
+    PricingCardsComponent,
+    LowestPricePipe    
   ],
   imports: [
     CommonModule,
@@ -31,7 +37,7 @@ import { MatRippleModule } from '@angular/material/core';
     RatingModule,
     FormsModule,
     ReactiveFormsModule,
-    MatRippleModule
+    MatRippleModule,
   ],
   exports:[
     NavigationComponent,
@@ -39,7 +45,10 @@ import { MatRippleModule } from '@angular/material/core';
     ProductCardComponent,
     LoaderFullComponent,
     FlotantCartComponent,
-    ButtonInstallComponent
+    ButtonInstallComponent,
+    SelectUbicationMapComponent,
+    PricingCardsComponent
+
 
   ]
 })

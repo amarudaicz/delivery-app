@@ -30,14 +30,10 @@ export class RecentsComponent implements OnInit  {
   getRecents(){
     this.recentsService.recents$.subscribe((locals)=>{
 
-      console.log(locals);
-      
-      if (!locals) {
+      if (locals !== undefined) {
         this.recentsCharged = true
-        return
       }
-
-      this.recentsCharged = true
+      
       this.locals = locals
       
     })

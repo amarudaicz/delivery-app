@@ -5,7 +5,7 @@
   <div class="content">
     <div class="user pad-header">
       <h2
-        class="chip title-user mt-3"
+        class="chip title-user w-full mt-3"
         [style.background]="theme.get('backgroundSec')"
         [style.color]="theme.get('colorTextSecondary')"
       >
@@ -13,25 +13,25 @@
       </h2>
 
       <form [formGroup]="form" (ngSubmit)="saveData()" class="checkout-form">
-        <mat-form-field class="input-group" color="primary">
+        <mat-form-field appearance="outline" class="input-group" color="primary">
           <mat-label>Nombre Completo</mat-label>
           <input formControlName="name" type="text" matInput />
           <mat-error>Este campo es requerido</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="input-group" color="primary">
+        <mat-form-field appearance="outline" class="input-group" color="primary">
           <mat-label>Telefono</mat-label>
           <input formControlName="phone" type="number" matInput />
           <mat-error>Este campo es requerido</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="input-group" color="primary">
+        <mat-form-field appearance="outline" class="input-group" color="primary">
           <mat-label>Direccion</mat-label>
           <input formControlName="direction" type="text" matInput />
           <mat-error>Este campo es requerido</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="input-group">
+        <mat-form-field appearance="outline" class="input-group">
           <mat-label>Referencia de la casa (opcional)</mat-label>
           <textarea
             formControlName="reference"

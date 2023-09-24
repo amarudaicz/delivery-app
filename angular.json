@@ -20,6 +20,7 @@
             "outputPath": "dist",
             "index": "src/index.html", 
             "main": "src/main.ts",
+
             "polyfills": [
               "zone.js"
             ],
@@ -44,6 +45,12 @@
           },
           "configurations": {
             "production": {
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -58,9 +65,10 @@
               ],
               "outputHashing": "all"
             },
+            
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
+              "buildOptimizer": true,
+              "optimization": true,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,

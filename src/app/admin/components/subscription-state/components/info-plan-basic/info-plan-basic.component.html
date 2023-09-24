@@ -1,0 +1,26 @@
+<div class="p-4">
+    <div class="">
+        <div class="w-full mb-2">
+            <h3 class="text-4xl font-semibold">Plan basico</h3>
+            <div class="text-4xl font-bold flex align-items-center">
+                <span class="text-xl">$</span>
+                <h4 class="font-extrabold">{{planBasic.price}}$</h4>
+                <span class="text-xl text-700">/mes</span>
+            </div>
+        </div>    
+        
+        <div class="w-full">
+            <ul>
+                <li class="mb-2" *ngFor="let feature of planBasic.features">
+                    <span class="d-flex gap-2">
+                        <i class="pi pi-check text-green-400 font-semibold"></i>
+                        {{feature}}
+                    </span> 
+                </li>
+            </ul>
+        </div>
+
+
+        <button mat-button  (click)="dialogRef.close()" >Cerrar</button>
+    </div>
+</div>

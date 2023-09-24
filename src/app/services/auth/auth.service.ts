@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, map, of, throwError } from 'rxjs';
 import { environment } from 'src/app/environment';
+import { User } from 'src/app/interfaces/user-interface';
 
 interface UserLogin{
   username:string,
@@ -27,6 +28,11 @@ export class AuthService {
 
   private token: string|null = null;
 
+
+  getUser(id?:number){
+    return this.http.get<User>(environment.host + `users`)
+  }
+
   setToken(token: string, exp:number): void {
     this.cookie.set('jwt', token);
     this.cookie.set('exp', String(exp))
@@ -44,6 +50,7 @@ export class AuthService {
   deleteToken(): void {
     this.cookie.delete('jwt');
     this.cookie.delete('exp');
+    this.cookie.deleteAll() 
     console.log(this.cookie.getAll());
     
     this.token = null;
@@ -55,43 +62,25 @@ export class AuthService {
 
     const expDate = new Date(Number(exp) * 1000)
     const currentDate = new Date();
-
+    
     console.log(expDate);
     console.log(currentDate);
-    
-
     if (!token || !exp) return false
     
     return currentDate < expDate;
 
   }    
-  
 
   logIn(user:UserLogin){
     return this.http.post<any>(environment.host + 'login', user)
-    .pipe(
-      catchError(err => {
-        return throwError(() => err.error);
-      }),
-      map(response => response) // Se retorna el arreglo de items
-    );
   }
-
 
   signIn(user:UserRegister){
     return this.http.post<any>(environment.host + 'login/register', user)
-    .pipe(
-      catchError(err => {
-        return throwError(() => err.error);
-      }),
-      map(response => response) // Se retorna el arreglo de items
-    );
   }
 
   verifyToken(token:string){
-
     return this.http.get<any>(`${environment.host}login/verify_token?token=${token}`)
-    
   }
 
   sendEmailToResetPassword(email:string){
@@ -100,6 +89,5 @@ export class AuthService {
 
   resetPassword({password, token}:{password:string, token:string}){
     return this.http.post(`${environment.host}login/reset_password`, {password}, {headers:{'Authorization':`Bearer ${token}`}})
-
   }
 }

@@ -1,0 +1,30 @@
+
+
+<div class="fixed z-5 bg-white display-map mx-auto left-0 top-0 w-full h-full flex flex-column">
+
+    <header class="d-flex justify-content-between p-3 border-bottom-1 border-500">
+      <span class="text-xl font-medium">Ubicate en el mapa</span>
+  
+      <div class="d-flex">
+        <button (click)="saveMarker()" class="mr-4">GUARDAR</button>
+        <button (click)="closeMap()">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+  
+    </header>
+  
+    <div class="p-3 h-full w-full">
+      <ol style="list-style: decimal;" class="pb-3 pl-3">
+        <li>Buscá tu ubicación en el mapa.</li>
+        <li>Selecciona para colocar un marcador.</li>
+        <li>Guarda la dirección con el botón "GUARDAR".</li>
+      </ol>
+  
+      <div id="mapContainer" class="w-full h-full">
+  
+      </div>
+    </div>
+  
+  
+  </div>

@@ -21,7 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppConfigComponent } from './config/app-config/app-config.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HttpInterceptorService } from './services/iterceptor-jwt/interceptorJwt';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from './services/cartData/cart.service';
 
 @NgModule({ 
@@ -33,18 +33,13 @@ import { CartService } from './services/cartData/cart.service';
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    UserModule,
-    CartModule,
-    DetailModule,
-    SharedModule,
-    CategoryModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    SharedModule,
     HttpClientModule,
     MatSnackBarModule,
-    
      ServiceWorkerModule.register('ngsw-worker.js', {
-       enabled: !isDevMode(),
+       enabled: false,
        // Register the ServiceWorker as soon as the application is stable
        // or after 30 seconds (whichever comes first).
        registrationStrategy: 'registerWhenStable:30000'
@@ -55,6 +50,7 @@ import { CartService } from './services/cartData/cart.service';
     
   ],
   providers: [ 
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {horizontalPosition:'center', verticalPosition:'bottom'}},
     DynamicDialogConfig,
     DialogService,
     DynamicDialogRef,

@@ -1,11 +1,11 @@
 {
     "theme_color": "#ffffff",
-    "background_color": "#347cb4",
+    "background_color": "#000",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
     "name": "deli-app",
-    "short_name": "deli",
+    "short_name": "delitienda",
     "icons": [
         {
             "src": "assets/icons/icon-192x192.png",

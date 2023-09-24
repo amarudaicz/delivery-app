@@ -22,7 +22,8 @@ export class ProductCardComponent implements OnInit {
     private favService: FavoritesService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   @Input() product: Product | any;
   @Input() linkMode?: 'name' | 'category-name';

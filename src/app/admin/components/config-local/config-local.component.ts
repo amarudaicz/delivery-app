@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom } from 'rxjs';
 import { Local } from 'src/app/interfaces/local-interface';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { CloudinaryService } from 'src/app/services/cloudinary/cloudinary.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
+import { handleError } from 'src/app/utils/handle-error-http';
 @Component({
   selector: 'app-config-local',
   templateUrl: './config-local.component.html',
@@ -16,13 +17,13 @@ import { NotificationsAdminService } from 'src/app/services/notifications-admin/
   providers: [MessageService],
 })
 export class ConfigLocalComponent implements OnInit {
-  product: any;
   form: FormGroup;
   imageLocal: any;
   previewImageLocal: any;
   editing: boolean = false;
   imageUpload: boolean = false;
   processForm: boolean = false;
+  loadMap:boolean = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,6 +37,7 @@ export class ConfigLocalComponent implements OnInit {
       name: ['', Validators.required],
       phone: ['', Validators.required],
       location: ['', Validators.required],
+      cords:['', Validators.required]
     });
   }
 
@@ -71,9 +73,15 @@ export class ConfigLocalComponent implements OnInit {
     }
 
     this.adminService
-      .updateLocal({ ...data, image: this.imageLocal })
+      .updateLocal({ ...data, image: this.imageLocal }).pipe(
+        catchError(({error})=>{
+          this.editing = false;
+          this.processForm = false;
+          return handleError(error, this.notificationsAdmin)
+        })
+      )
       .subscribe((res) => {
-        this.notificationsAdmin.new('Datos guardados con exito');
+        this.notificationsAdmin.new('Datos de la tienda guardados con exito');
         this.form.markAsPristine();
         this.form.disable();
         this.editing = false;
@@ -87,16 +95,15 @@ export class ConfigLocalComponent implements OnInit {
   }
 
   setDataLocal() {
-    this.adminService.getLocal().subscribe((data) => {
-      console.log(data);
-      this.product = data;
-      this.previewImageLocal = data.image;
-      this.imageLocal = data.image;
+    this.adminService.local$.subscribe((data) => {
+      this.previewImageLocal = data?.image;
+      this.imageLocal = data?.image;
 
       this.form.patchValue({
         name: data?.name,
         location: data?.location,
-        phone: data.phone,
+        phone: data?.phone,
+        cords:data?.cords
       });
     });
   }
@@ -124,5 +131,10 @@ export class ConfigLocalComponent implements OnInit {
     this.imageLocal = null;
     this.imageUpload = false
     this.form.markAsDirty()
+  }
+
+  getCords(cords:{lat:number, lng:number}){
+    console.log(cords);
+    this.form.get('cords')?.setValue(`${cords.lng},${cords.lat}`)
   }
 }

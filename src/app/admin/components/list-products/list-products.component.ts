@@ -149,7 +149,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     //CONFIRMATION
 
     this.confirmService.confirm({
-      message: `Realmente quiere eliminar el producto ${id}`,
+      message: `Realmente quiere eliminar el producto ${this.products.find(e => e.id === id )?.name}`,
       header: 'Confirmacion',
       icon: 'pi pi-exclamation-triangle',
       rejectButtonStyleClass: 'p-button-outlined',
@@ -158,7 +158,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
         this.adminService
           .deleteProduct(id)
           .pipe(
-            catchError(() => handleError(undefined, this.notificationsAdmin))
+            catchError(({error}) => handleError(error, this.notificationsAdmin))
           )
           .subscribe((res) => {
             this.toast.open(`Producto ${id} eliminado`, '', { duration: 3000 });
@@ -172,10 +172,14 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
   setStockProduct(product: Product, stock: number) {
     console.log(product.stock);
-
     product.stock = stock ? 0 : 1;
 
-    this.adminService.stockProduct(product.id, stock ? 0 : 1).subscribe(
+    this.adminService.stockProduct(product.id, stock ? 0 : 1).pipe(
+      catchError(({error})=>{
+        product.stock = product.stock ? 0 : 1;
+        return handleError(error, this.notificationsAdmin) 
+      })
+    ).subscribe(
       (res) => {
         this.notificationsAdmin.new(
           `Stock del producto ${product.name} actualizado a ${
@@ -185,10 +189,6 @@ export class ListProductsComponent implements OnInit, OnDestroy {
           { push: true, section: 'Products' }
         );
       },
-      (err) => {
-        product.stock = product.stock ? 0 : 1;
-        this.notificationsAdmin.new(`A ocurrido un error intente nuevamente`);
-      }
     );
   }
 
@@ -200,7 +200,6 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     });
 
     ref.afterClosed().subscribe(close=>this.ngOnInit())
-
   }
 
   deleteCategory() {
@@ -217,7 +216,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
         this.adminService
           .deleteCategory(category.id)
           .pipe(
-            catchError((err) => handleError(undefined, this.notificationsAdmin))
+            catchError(({error}) => handleError(error, this.notificationsAdmin))
           )
           .subscribe((res) => {
             this.dinamicList.categoryId = undefined
@@ -234,18 +233,14 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
   setStateCategory(category: Category, state: number) {
-    console.log(state);
     category.active = state ? 0 : 1;
-
-    console.log(this.dataCategory);
 
     this.adminService
       .categoryState(category.id, state ? 0 : 1)
       .pipe(
-        catchError(() => {
-          console.log(this.dataCategory);
+        catchError(({error}) => {
           category.active = category.active ? 0 : 1;
-          return handleError(undefined, this.notificationsAdmin);
+          return handleError(error, this.notificationsAdmin);
         })
       )
       .subscribe((res) => {

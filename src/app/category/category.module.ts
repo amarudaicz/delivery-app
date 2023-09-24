@@ -15,9 +15,7 @@ import { MatRippleModule } from '@angular/material/core';
   imports: [
     CommonModule, 
     SharedModule,
-    HomeModule,
     MatRippleModule
-
   ],
   exports: [ 
   ]  

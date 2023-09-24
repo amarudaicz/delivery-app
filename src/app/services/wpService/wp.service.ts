@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { FuzzySearchResponse, FuzzySearchResult } from '@tomtom-international/web-sdk-services';
 import { OptionProduct } from 'src/app/interfaces/optionProduct-interface';
 import { ProductCart } from 'src/app/interfaces/product-interface';
 import { v4 as uuidv4 } from 'uuid';
+import { LocalDataService } from '../localData/local-data.service';
+import { Local } from 'src/app/interfaces/local-interface';
 interface Item {
   name: string;
   productPrice: number;
@@ -16,7 +19,13 @@ interface Item {
   providedIn: 'root',
 })
 export class WpService {
-  constructor() {}
+  constructor(private localService:LocalDataService) {
+      this.localService.local$.subscribe(local=>{
+        this.local = local
+      })
+
+  }
+  local?:Local
   products: string = '';
 
 
@@ -74,10 +83,10 @@ return encodedText
 generarMensaje(cart:any[], userData:any , subtotal: number) {
   console.log(userData);
   const categoriesRead:any[] = []
+
+  const locationUser = userData.ubication
   
   let mensaje = `*¡Hola!, te envío el resumen de mi compra*\n\n`;
-  const envio = userData.shippingMethod === 'Delivery' ? '+ ENVIO' : '';
-  
 
   mensaje += `*Pedido*: ${this.genIdOrder()}\n`
   mensaje += `*Nombre*: ${userData.name}\n\n`;
@@ -87,16 +96,21 @@ generarMensaje(cart:any[], userData:any , subtotal: number) {
   mensaje += `*Forma de pago*: ${userData.payMethod}\n`;
   mensaje += `*Total*: ${this.formatNumber(subtotal)}\n`;
   userData.amountReceived ? mensaje += `*Pago con*: ${this.formatNumber(userData.amountReceived)} \n` : '';
+  mensaje += userData.payMethod === 'Transferencia' ?`*Datos de transferencia*:\n _${this.local?.pay_methods.transfer.nameAccount}_\n _CBU: ${this.local?.pay_methods.transfer.cbu}_\n _Alias: ${this.local?.pay_methods.transfer.alias}_\n _${this.local?.pay_methods.transfer.entity}_\n\n` : ''
   mensaje += `*---------------------------*\n\n`;
 
 
   mensaje += `*Entrega*: ${userData.shippingMethod}\n`;
-  userData.shippingMethod === 'Delivery' ? mensaje += `*Dirección*: ${userData.direction}\n\n` : mensaje += '\n';
+
+  if (userData.shippingMethod === 'Envio a domicilio'){
+      mensaje += `*Dirección*: ${this.formatUbicationName(userData, locationUser.address)}\n` 
+      userData.reference ?  mensaje += `*Referencia*: ${userData.reference}\n` : null 
+      mensaje += `*Ubicacion:* https://www.google.com/maps/place/${locationUser.position.lat},${locationUser.position.lng}\n\n`
+  }
   
   mensaje += `_Mi compra es_:\n\n`; 
 
   cart.forEach((product, i) => {
-    console.log(product);
     if (!categoriesRead.includes(product.category_name)) {
       mensaje += `*${product.category_name.toUpperCase()}*\n`;
       mensaje += `*---------------*\n`;
@@ -108,12 +122,11 @@ generarMensaje(cart:any[], userData:any , subtotal: number) {
       mensaje += `\n`;
       return
     }
-
     mensaje += `${this.readUserOptions(product.userOptions)}\n\n`
   });
 
   mensaje += `\n*TOTAL: ${this.formatNumber(subtotal)}${userData.shippingMethod === 'Delivery' ? ' *' : ''}*\n`
-  mensaje += userData.shippingMethod === 'Delivery' ? `► _* Costo de envío a definir de acuerdo a distancia_\n\n` : '\n'
+  mensaje += !userData.costShipping && userData.shippingMethod === 'Envio a domicilio' ? `_Costo de envío a definir de acuerdo a distancia_\n\n` : '\n'
 
   mensaje += `_Espero tu respuesta para confirmar mi pedido_`;
 
@@ -181,6 +194,12 @@ clearMessage(){
 }
 
 
+formatUbicationName(userData:any,ubication:any){
+
+  return `${ubication.streetName} ${ubication.streetNumber ? ubication.streetNumber : userData.streetNumber}, ${ubication.localName ? ubication.localName : ubication.countrySecondarySubdivision }, ${ubication.countrySubdivision ? ubication.countrySubdivision : ubication.country}`
+}
+
+
 
 
 formatNumber(n:number){
@@ -188,39 +207,3 @@ formatNumber(n:number){
 }
 
 }
-
-`
-*¡Hola!, te envío el resumen de mi compra*
- 
- *Pedido*: V17DD
- *Nombre*: Amaru Daicz
- 
- *---------------------------*
- *Forma de pago*: Transferencia
- *Total*: $ 1.084
- *---------------------------*
- 
- *Entrega*: Local
- 
- _Mi compra es_:
- 
- *PIZZAS*
- *---------------*
- x1 *PALMITOS (Media):* $ 450
-  AGREGA UNA BEBIDA: 
-  - COCACOLA $ 150
- 
- x1 *NAPOLITANA (Completa):* $ 600
- 
- 
- *HAMBURGESAS*
- *---------------*
- x1 *BIG MAC:* $ 34
-  SALSAS: 
-  - MAYONESA CON CHIMI - $ 150 
-  - SALSA CRIOLLA - $ 0
- 
- 
- *TOTAL: $ 1.084*
- 
- _Espero tu respuesta para confirmar mi pedido_`

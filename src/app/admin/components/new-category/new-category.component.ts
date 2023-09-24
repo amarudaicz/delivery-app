@@ -79,9 +79,9 @@ export class NewCategoryComponent {
       this.adminService
         .postCategory({ ...this.categoryForm.value, image: this.image })
         .pipe(
-          catchError(() => {
+          catchError(({error}) => {
             this.loadForm = false;
-            return handleError(undefined, this.notificationsAdmin);
+            return handleError(error, this.notificationsAdmin);
           })
         )
         .subscribe((res) => this.processForm('new'));
