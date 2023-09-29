@@ -63,3 +63,10 @@ export interface Days {
   open: boolean;
   shifts: { start: string; end: string }[];
 }
+
+
+export interface NewLocal{
+  name:string,
+  name_url:string,
+  phone:string,
+}

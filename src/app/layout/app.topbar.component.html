@@ -22,7 +22,7 @@
 
                 <button class="btn-session py-2 px-4 border-round border-1 border-800 cursor-pointer">
                     
-                    <div class="d-flex text-800 hover:text-900" *ngIf="adminService.local$ | async as local">
+                    <div class="w-10rem d-flex justify-content-between text-800 hover:text-900" *ngIf="adminService.local$ | async as local">
                         <span>{{local.name_url}}</span>
 
                         <i class="pi pi-chevron-down ml-2 hidden md:block"></i>

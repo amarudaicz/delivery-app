@@ -76,7 +76,7 @@ export class AuthService {
   }
 
   signIn(user:UserRegister){
-    return this.http.post<any>(environment.host + 'login/register', user)
+    return this.http.post<any>(environment.host + 'admin', user)
   }
 
   verifyToken(token:string){

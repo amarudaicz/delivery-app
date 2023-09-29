@@ -231,7 +231,7 @@ export class NewProductComponent implements OnInit {
     this.closeForm();
   }
   resetForm() {
-    this.setOptions.resetOptions()
+    this.setOptions?.resetOptions()
     this.form.reset()
     this.form.markAsUntouched()
     this.ingredientsList = []

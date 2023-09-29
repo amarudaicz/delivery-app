@@ -58,12 +58,10 @@ export class AddGroupOptionComponent implements OnDestroy {
 
     this.optionsList = this.formOptions.get('options') as FormArray;
 
-
     this.adminService.optionsGroup.subscribe(data => {
-      console.log(data);
-      this.currentOptions = data
+      this.currentOptions = data ? data : []
     })
-
+    
 
     this.layoutService.blockBody()
 
@@ -149,7 +147,7 @@ export class AddGroupOptionComponent implements OnDestroy {
   }
 
   genId(arr:any[]){
-    if (!arr.length) {
+    if (!arr || !arr.length) {
       return 1
     }
 

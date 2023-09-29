@@ -46,6 +46,7 @@ export class SetOptionsProductComponent {
       this.adminService.optionsGroup.subscribe((data) => {
         console.log(this.removeSelectedOfCurrent(copy(data), this.selectedOptions));
         //eliminar los q estan en seleected
+        
           this.currentGroupOption = this.removeSelectedOfCurrent(copy(data), this.selectedOptions)
       })
 

@@ -40,12 +40,13 @@ export class NewCategoryComponent {
 
     this.adminService.categories$.subscribe((categories) => {
       console.log(categories);
-      if (!categories.length) return;
       this.allCategories = categories;
       this.categoryForm
         .get('sort_order')
         ?.setValue(
-          this.allCategories[this.allCategories.length - 1].sort_order + 1
+          this.allCategories.length ? 
+          this.allCategories[this.allCategories.length - 1].sort_order + 1 
+          : 0
         );
     });
 
