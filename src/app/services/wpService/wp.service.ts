@@ -90,17 +90,16 @@ generarMensaje(cart:any[], userData:any , subtotal: number) {
 
   mensaje += `*Pedido*: ${this.genIdOrder()}\n`
   mensaje += `*Nombre*: ${userData.name}\n\n`;
-  // mensaje += `*Telefono*: ${userData.name}\n\n`;
 
   mensaje += `*---------------------------*\n`;
-  mensaje += `*Forma de pago*: ${userData.payMethod}\n`;
+  userData.payMethod ? mensaje += `*Forma de pago*: ${userData.payMethod}\n` : null;
   mensaje += `*Total*: ${this.formatNumber(subtotal)}\n`;
   userData.amountReceived ? mensaje += `*Pago con*: ${this.formatNumber(userData.amountReceived)} \n` : '';
   mensaje += userData.payMethod === 'Transferencia' ?`*Datos de transferencia*:\n _${this.local?.pay_methods.transfer.nameAccount}_\n _CBU: ${this.local?.pay_methods.transfer.cbu}_\n _Alias: ${this.local?.pay_methods.transfer.alias}_\n _${this.local?.pay_methods.transfer.entity}_\n\n` : ''
   mensaje += `*---------------------------*\n\n`;
 
 
-  mensaje += `*Entrega*: ${userData.shippingMethod}\n`;
+  userData.shippingMethod ? mensaje += `*Entrega*: ${userData.shippingMethod}\n` : null;
 
   if (userData.shippingMethod === 'Envio a domicilio'){
       mensaje += `*Dirección*: ${this.formatUbicationName(userData, locationUser.address)}\n` 

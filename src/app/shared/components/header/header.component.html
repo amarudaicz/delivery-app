@@ -38,9 +38,9 @@
                 
                 <div class="content-menu">
                     <ul>
-                        <li class="menu-item" *ngFor="let item of dataMenu">
-                            <a [routerLink]="item.link">
-                                <i [style.color]="theme.get('backgroundSec')" class="item-icon {{item.icon}}"></i>
+                        <li class="menu-item cursor-pointer py-2 border-bottom border-400" *ngFor="let item of dataMenu" class="hover:text-800 py-2" [style.color]="theme.get('backgroundSec')">
+                            <a [routerLink]="item.link" (click)="item.command()" >
+                                <i  class="item-icon {{item.icon}}"></i>
                                 {{item.name}}
                             </a>
                         </li>

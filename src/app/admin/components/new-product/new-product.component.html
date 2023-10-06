@@ -97,7 +97,7 @@
         </div>
 
 
-        <div>
+        <div *ngIf="groupsAvailables?.length">
           <h2 class="mt-4 title">Grupo de opciones</h2>
           <p class="">Agrega los grupos de opciones disponibles para el producto <u>{{form.get('name')?.value}}</u> </p>
 

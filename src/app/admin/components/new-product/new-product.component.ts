@@ -70,22 +70,14 @@ export class NewProductComponent implements OnInit {
   processLoad: boolean = false
   previewModal: boolean = false;
   refPreviewModal?: DynamicDialogRef
-  creatingGroup:boolean = false
-
+  groupsAvailables?:OptionProduct[]
 
   constructor(
     public theme: ThemesService,
-    private localService: LocalDataService,
     private formBuilder: FormBuilder,
-    private configDialog: DynamicDialogConfig,
-    private dialogRef: DynamicDialogRef,
     private dialogService: DialogService,
-    private confirmService: ConfirmationService,
-    private cloudinary: CloudinaryService,
-    private http: HttpClient,
     private adminService: AdminService,
     private toast: MatSnackBar,
-    private dinamicList:DinamicListService,
     private notificationsAdmin:NotificationsAdminService
   ) {
     this.form = this.formBuilder.group({
@@ -109,6 +101,7 @@ export class NewProductComponent implements OnInit {
     
 
     this.adminService.categories$.subscribe((data) => this.categories = data )
+    this.adminService.optionsGroup.subscribe((groups) => this.groupsAvailables = groups)
 
   
   }
@@ -152,11 +145,9 @@ export class NewProductComponent implements OnInit {
 
   getOptionsSelected(options: OptionProduct[]) {
     const variations: OptionProduct[] = copy(options)
-
     console.log(variations);
+
     this.form.get('price')?.setValue(this.getOptionWithLowestPrice(variations)) 
-
-
     this.optionsGroup = variations
   }
 

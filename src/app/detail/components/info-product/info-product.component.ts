@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Route } from '@angular/router';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 import { Location } from '@angular/common';
 
@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 })
 export class InfoProductComponent implements OnInit {
 
-  constructor(public theme:ThemesService, private route:ActivatedRoute, private location:Location){
+  constructor(public theme:ThemesService, private router:Router, private location:Location){
 
   }
 
@@ -26,8 +26,13 @@ export class InfoProductComponent implements OnInit {
   favClicked:boolean = false
   
   redirectBack(){
-    this.location.back()
+    try {
+      this.location.back();
+    } catch (err) {
+      this.router.navigate(['/']);
+    }
   }
+    
 
   toogleFav(){
     this.favClicked = !this.favClicked

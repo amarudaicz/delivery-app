@@ -16,6 +16,9 @@ import { MatRippleModule } from '@angular/material/core';
 import { SelectUbicationMapComponent } from './components/select-ubication-map/select-ubication-map.component';
 import { PricingCardsComponent } from './components/pricing-cards/pricing-cards.component';
 import { LowestPricePipe } from '../pipes/getLowestPrice';
+import { ModalInfoLocalComponent } from './components/modal-info-local/modal-info-local.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { LowestPricePipe } from '../pipes/getLowestPrice';
     ButtonInstallComponent,
     SelectUbicationMapComponent,
     PricingCardsComponent,
-    LowestPricePipe    
+    LowestPricePipe,
+    ModalInfoLocalComponent    
   ],
   imports: [
     CommonModule,
@@ -38,6 +42,8 @@ import { LowestPricePipe } from '../pipes/getLowestPrice';
     FormsModule,
     ReactiveFormsModule,
     MatRippleModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   exports:[
     NavigationComponent,

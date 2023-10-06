@@ -1,0 +1,35 @@
+.icon-search{
+    font-size: 18px;
+}
+
+
+.fixed-search{
+    width: 100%;
+    height: calc(100% - 58px);
+    background: #fff;
+    z-index: 8888;
+    position: fixed;
+    top:0;
+    left: 0;
+    
+}
+
+.input-search{
+
+    &.fixed-input{
+
+        &::after{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            backdrop-filter:saturate(72%) blur(3px);
+            background: none;
+            left: 0;
+            bottom: -10px;
+        }
+    }
+
+
+}
+

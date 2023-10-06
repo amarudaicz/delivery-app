@@ -5,9 +5,10 @@
             {{title}}
         </h2>
 
-        <a class="link-category" *ngIf="title" [routerLink]="title.toLowerCase()">
-            <span>
-                Ver mas
+        <a [style.color]="theme.get('backgroundSec')" class="link-category py-1 px-2 border-1 border-round" *ngIf="title" [routerLink]="title.toLowerCase()">
+            <span class="d-flex gap-2">
+                Lista 
+                <i class="pi pi-arrow-right"></i>
             </span>
         </a>
     </div>

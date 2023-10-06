@@ -1,4 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivationStart, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { headerIn } from 'src/app/animations/haeder-animations';
@@ -8,6 +9,7 @@ import { LayoutStateService } from 'src/app/services/layoutState/layout-state.se
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
+import { ModalInfoLocalComponent } from '../modal-info-local/modal-info-local.component';
 
 @Component({
   selector: 'app-header',
@@ -25,18 +27,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
       name: 'Inicio',
       icon: 'fa-solid fa-house',
       link: '/',
+      command:()=>{}
     },
     {
       name: 'Informacion',
       icon: 'pi pi-info-circle',
+      command:()=>{this.openModalInfo()}
     },
     {
       name: 'Ubicacion',
       icon: 'fa-solid fa-location-dot',
+      command:()=>{
+        window.open(this.localService.getLinkMaps())
+      }
     },
     {
       name: 'Instagram',
       icon: 'pi pi-instagram',
+      command:()=>{}
     },
   ];
   state: any;
@@ -48,7 +56,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public routeData: RouteDataService,
     private localService: LocalDataService,
     public layoutState: LayoutStateService,
-    private router: Router
+    private router: Router,
+    private dialog:MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +83,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  openModalInfo(){
+    this.dialog.open(ModalInfoLocalComponent)
+  }
+  
   shareLocal() {
     if (navigator.share) {
       navigator

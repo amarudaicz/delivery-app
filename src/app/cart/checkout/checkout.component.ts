@@ -77,12 +77,12 @@ export class CheckoutComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      payMethod: ['', Validators.required],
-      shippingMethod: ['', Validators.required],
-      direction: [undefined],
-      streetNumber:[undefined],
-      amountReceived: ['', [minValueValidator(this.subtotal)]],
-      reference: [''],
+      payMethod: [null],
+      shippingMethod: [null],
+      direction: [null],
+      streetNumber:[null],
+      amountReceived: [null, [minValueValidator(this.subtotal)]],
+      reference: [null],
       defineCostShipping:[false]
     });
 
@@ -96,19 +96,19 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.setFormStates()
 
-    // this.userService.getGeolocation().subscribe(location=>{
-    //   console.log(location);
-    //   this.tomtom.reverseSearch({lng:location.longitude, lat:location.latitude}).then(res=>{
-    //   console.log(res);
-    //   this.ubicationUser = res.addresses[0]
-    //   this.tomtom.calculateRoute({lng:-64.321861, lat:-31.165651}, {lng:-65.00505,lat:
-    //     -31.743643}).subscribe(route=>{
-    //     console.log(route);
+  //  this.userService.getGeolocation().subscribe(location=>{
+  //    console.log(location);
+  //    this.tomtom.reverseSearch({lng:location.longitude, lat:location.latitude}).then(res=>{
+  //    console.log(res);
+  //    this.ubicationUser = res['addresses'][0]
+  //    this.tomtom.calculateRoute({lng:-65.00505,lat:
+  //      -31.743643}).subscribe(route=>{
+  //      console.log(route);
 
-    //   })
-    // })
+  //    })
+  //  })
 
-    // })
+  //  })
   }
 
   setErrorsMessage(control: string) {
@@ -148,6 +148,8 @@ export class CheckoutComponent implements OnInit {
       this.subtotal
     );
     console.log(encodedText);
+      this.localService.postSale(this.local!.id, this.subtotal)
+
     this.wpService.redirectWp(
       encodedText,
       this.localService.getSessionLocal().phone
@@ -159,11 +161,11 @@ export class CheckoutComponent implements OnInit {
     const payMethods = local.pay_methods;
     const shippingMethods = local.shipping;
 
-    if (payMethods.transfer || payMethods.cash) {
+    if (payMethods?.transfer || payMethods?.cash) {
       this.form.get('payMethod')?.addValidators(Validators.required);
     }
 
-    if (shippingMethods.delivery || shippingMethods.pick_in_local) {
+    if (shippingMethods?.delivery || shippingMethods?.pick_in_local) {
       this.form.get('shippingMethod')?.addValidators(Validators.required);
     }
   }
@@ -295,6 +297,7 @@ export class CheckoutComponent implements OnInit {
 
     setFormStates(){
       this.form.valueChanges.subscribe(() => this.formChange());
+
       this.form.get('shippingMethod')?.valueChanges.subscribe((value) => {
 
       if (value === 'Envio a domicilio') {
@@ -308,6 +311,9 @@ export class CheckoutComponent implements OnInit {
         this.form.controls['streetNumber'].updateValueAndValidity();
         this.form.controls['direction'].updateValueAndValidity();
     });
+
+
+
 
     // this.form.get('streetNumber')?.valueChanges.subscribe(value=>{
     // })

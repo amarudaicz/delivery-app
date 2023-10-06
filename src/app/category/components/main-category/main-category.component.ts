@@ -39,7 +39,7 @@ export class MainCategoryComponent implements OnInit {
     console.log(this.route.snapshot.url);
     this.localService.initDataLocal(this.route.snapshot.url[0].path)
 
-    this.localService.getProducts$().subscribe((data)=>{
+    this.localService.getProducts().subscribe((data)=>{
       console.log(data);
       if (!data.length) return 
       this.products = data.filter(e => e.category_name.toLowerCase() === this.category)

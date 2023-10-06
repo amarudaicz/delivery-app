@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     private appRef:ApplicationRef,
     private update:SwUpdate,
     private pwa:PwaInstallerService,
-    public stateLayout:LayoutStateService
+    public stateLayout:LayoutStateService,
   ){
     this.pwa.checkForUpdates()
 
@@ -83,6 +83,10 @@ export class AppComponent implements OnInit {
         });
       }
     });
+  }
+
+  getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
     
 

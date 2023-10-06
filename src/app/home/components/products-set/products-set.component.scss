@@ -13,8 +13,6 @@
 
 .link-category{
     font-size: 15px;
-    text-decoration: underline;
-    color: #2b2b2b;
     font-weight: bold;
 }
 
@@ -25,14 +23,14 @@
 
 .container-grid {
   display: grid;
-  grid-auto-columns: auto;
+  grid-auto-columns: 100%;
   grid-template-rows: repeat(2, max-content);
   gap: 16px ;
   grid-auto-flow: column;
   place-items: center;
 
   @include m.tablet{
-    // grid-auto-columns:auto;
+    grid-auto-columns:auto;
 
 
   }

@@ -9,6 +9,7 @@ import {
 } from '@angular/router';
 import { Local } from 'src/app/interfaces/local-interface';
 import { AdminService } from 'src/app/services/admin/admin.service';
+import { CartService } from 'src/app/services/cartData/cart.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { RecentsService } from 'src/app/services/recents/recents.service';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
@@ -28,10 +29,13 @@ export class AppConfigComponent {
     private localService: LocalDataService,
     private router: Router,
     private adminService: AdminService,
-    private recentsService:RecentsService
+    private recentsService:RecentsService,
+    private cartService:CartService
   ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationStart && event.id === 1) {
+
+        
         const local = event.url.split('/')[1];
         console.log(local);
 
@@ -40,8 +44,10 @@ export class AppConfigComponent {
         if (local === 'admin') {
           return;
         }
-
-        if (local && local !== 'user' && local !== 'cart' && local !== '') {
+        
+        
+        if (local && local !== 'user' && local !== 'cart') {
+          console.log('NEW');
           // this.localService.initDataLocal(local)
         } else if (origin) {
           this.localService.initDataLocal(this.routeData.getOrigin())

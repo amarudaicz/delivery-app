@@ -8,18 +8,18 @@ const routes: Routes = [
       {
         path: '',
         component: MainCartComponent,
-        data: { animation: 'detail', page: 'cart' },
+        data: { animation: 'cart', page: 'cart' },
         children:[
           {
             path:'',
             component:CartItemsComponent,
-            data: { animation: 'detail', page: 'cart' },
+            data: { animation: 'cart', page: 'cart' },
 
           },
           {
             path:'checkout',
             component:CheckoutComponent,
-            data: { animation: 'detail', page: 'cart' },
+            data: { animation: 'cart', page: 'cart' },
 
           }
         ]

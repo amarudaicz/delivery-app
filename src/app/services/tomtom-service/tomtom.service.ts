@@ -13,7 +13,10 @@ export class TomtomService {
   private apiKey = 'FdbTpt17gvVEENxeGcSajuhizlC5BKt6';
   private local?:Local
   constructor(private localService:LocalDataService) {
-    this.localService.local$.subscribe(local=> this.local = local)
+    this.localService.local$.subscribe(local=> {
+        console.log(local);
+        
+      this.local = local})
   }
 
   async getSuggestions(query: string) {
@@ -63,6 +66,8 @@ export class TomtomService {
     
       const originCords = this.local?.cords
 
+      console.log(this.local);
+      
       const promise = services.calculateRoute({
         key: this.apiKey,
         locations:`${originCords}:${destinCords?.lng},${destinCords?.lat}`,

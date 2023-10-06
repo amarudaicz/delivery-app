@@ -1,4 +1,4 @@
-<div class="cart">
+<div class="cart h-full">
 
     <div class="container-title px-2 py-3 d-flex gap-2">
       <button (click)="location.back()" matRipple class="chip cursor-pointer border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
@@ -110,7 +110,7 @@
 
     <!-- CART EMPTYYYYYY-->
     <ng-template #btnGoHome>
-      <div class="w-full p-2 pb-3">
+      <div class="w-full h-full p-2 pb-3">
         <a matRipple class="text-center py-2 w-full border-round mt-4 text-white text-base font-bold block" 
         [routerLink]="'/'+[routeService.getOrigin()]" 
         [style.background]="theme.get('background')" >
@@ -120,7 +120,7 @@
     </ng-template>
 
     <ng-template #cartEmpty>
-      <div [@fadeIn] class="empty-cart">
+      <div class="empty-cart">
         <h2 class="mb-3 text-xl">Tu carrito esta vacío</h2>
         <i class="fa-solid fa-cart-plus"></i>
       </div>

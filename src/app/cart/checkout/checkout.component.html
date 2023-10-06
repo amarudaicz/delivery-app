@@ -1,4 +1,4 @@
-<div class="checkout">
+<div class="checkout h-full">
 
   <div class="container-title d-flex px-2 py-3 gap-2">
     <button (click)="location.back()" class="chip border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
@@ -23,7 +23,7 @@
 
 
 
-      <div class="mb-3" *ngIf="local.shipping.delivery || local.shipping.pick_in_local">
+      <div class="mb-3" *ngIf="local.shipping?.delivery || local.shipping?.pick_in_local">
         <label class="text-base font-bold mb-1">Metodo de entrega <span class="text-red-500">*</span></label>
 
         <div class="d-flex gap-3 mt-1">
@@ -146,7 +146,7 @@
       </div>
 
 
-      <div class="mb-3">
+      <div class="mb-3" *ngIf="local.pay_methods">
         <label class="text-base font-bold mb-1">Metodo de pago <span class="text-red-500">*</span></label>
         <div class="d-flex gap-3 mt-1">
           <div class="" *ngFor="let method of localService.getPayMethods(local)" (click)="selectPayMethod(method)">
@@ -155,6 +155,7 @@
             </div>
           </div>
         </div>
+        
         <p [@fadeIn] class="text-sm px-2 border-left-2 mt-1 roboto text-gray-800" *ngIf="this.form.controls['payMethod'].value === 'Transferencia'">
           Le indicaremos el destino de la transferencia una vez realizado el pedido
         </p>
@@ -163,8 +164,6 @@
           <span class="font-sm mt-1 px-3 block error-checkout" [@fadeIn] *ngIf="form.get('payMethod')?.invalid && formSubmitted">Este campo es requerido</span>
         </div>
           
-          
-        
       </div>
 
 

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, AfterContentChecked } from '@angular/core
 import { ActivatedRoute, Params } from '@angular/router';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Category } from 'src/app/interfaces/category-interfaz';
+import { CartService } from 'src/app/services/cartData/cart.service';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { PreviewCategoryService } from 'src/app/services/preview-category/preview-category.service';
@@ -27,10 +28,10 @@ export class MainHomeComponent implements OnInit, OnDestroy{
     private routeService: RouteDataService,
     private localService: LocalDataService,
     private pwaInstaller: PwaInstallerService,
-    private previewCategory: PreviewCategoryService,
     private route: ActivatedRoute,
     private layoutStateService:LayoutStateService,
-    private recents:RecentsService
+    private cartService:CartService,
+    
   ) {
 
     this.layoutStateService.state.header = true
@@ -46,6 +47,9 @@ export class MainHomeComponent implements OnInit, OnDestroy{
     this.local = this.route.snapshot.params['local'];
     this.localService.initDataLocal(this.local);
 
+    if (this.local !== this.routeService.getOrigin()) {
+      this.cartService.clearCart()
+    }
 
     //SETING ORIGIN
 

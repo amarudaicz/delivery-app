@@ -185,7 +185,7 @@ export class AddProductCartComponent implements OnInit {
 
   setOptions() {
     this.product.variations = this.cleanOptions(this.product.variations);
-    this.product.variations.forEach((e) => {
+    this.product.variations?.forEach((e) => {
       e.options = this.sortOptionsByLowestPrice(e.options);
     });
 
@@ -245,7 +245,7 @@ export class AddProductCartComponent implements OnInit {
   }
 
   cleanOptions(variations: OptionProduct[]) {
-    return variations.filter((e) => e.options.some((o) => o.active));
+    return variations?.filter((e) => e.options.some((o) => o.active));
   }
 
   addGroupCheckboxes(groupOption: OptionProduct, checkboxes: any[]) {

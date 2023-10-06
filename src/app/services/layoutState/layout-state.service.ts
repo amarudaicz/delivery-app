@@ -20,6 +20,8 @@ export class LayoutStateService {
   stateSubject = new BehaviorSubject<any>(this.state)
   
   updateState(){
+    console.log('emitingSTate****++++');
+    
     this.stateSubject.next(this.state)
   }
 

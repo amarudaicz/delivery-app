@@ -12,7 +12,7 @@
 
     <div class="product-info flex flex-column w-full h-full">
       <span class="product-name mb-1 text-base">{{ product.name }}</span>
-      <span *ngIf="!product.ingredients.length" class="product-ingredients">
+      <span *ngIf="!product.ingredients?.length" class="product-ingredients">
         {{product.description}}
       </span>
 

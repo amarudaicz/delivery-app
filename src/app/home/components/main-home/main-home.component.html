@@ -3,20 +3,25 @@
     
     <div class="content">
 
-        <div class="pad-header">
+        <div class="">
 
             <app-newselter-box *ngIf="!appInstalled"></app-newselter-box>
-            <app-promotions-local>  </app-promotions-local>
+            
+            <app-search-products>
+
+            </app-search-products>
+
+
+            <!-- <app-promotions-local>  </app-promotions-local> -->
 
             
             <section class="categories mt-3">
     
                 <h2 class="title mb-2">Categorías</h2>
         
-                <div class="container-categories" *ngIf="categories">
+                <div class="container-categories py-2" *ngIf="categories">
                     <app-card-category *ngFor="let category of categories || [1,2,3,4]" [category]="category"> </app-card-category>
-                    <ng-template #cardCategoryLoader>
-                    </ng-template>
+                  
                 </div>
             
             </section>  

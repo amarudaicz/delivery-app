@@ -7,6 +7,7 @@ import { LocalDataService } from 'src/app/services/localData/local-data.service'
 import { PreviewCategoryService } from 'src/app/services/preview-category/preview-category.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 import { AlertLocalClosedComponent } from '../alert-local-closed/alert-local-closed.component';
+import { CartService } from 'src/app/services/cartData/cart.service';
 
 @Component({
   selector: 'app-card-local',
@@ -23,7 +24,9 @@ export class CardLocalComponent implements OnInit {
     public localData: LocalDataService,
     private themeService: ThemesService,
     private previewCategory: PreviewCategoryService,
-    private matDialog: MatDialog) {
+    private matDialog: MatDialog,
+    private cartService: CartService
+    ) {
 
 
   }
@@ -34,7 +37,6 @@ export class CardLocalComponent implements OnInit {
 
   redirectLocal() {
     this.localData.resetData()
-    this.localData.load = true
 
     setTimeout(() => {
       this.layoutState.state.menuMobile = false

@@ -30,9 +30,9 @@ export class ProductCardComponent implements OnInit {
 
   getOptionWithLowestPrice(product: Product): any | null {
     let lowestPrice: number = Infinity;
-    const existType1 = product.variations.findIndex((v) => v.typePrice === 1);
+    const existType1 = product.variations?.findIndex((v) => v.typePrice === 1);
 
-    if (existType1 === -1) return 0;
+    if (existType1 === -1) return 0; 
 
     for (const option of product.variations[existType1].options) {
       if (option.price < lowestPrice && option.active) {

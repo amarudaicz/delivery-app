@@ -19,8 +19,7 @@ export class PreviewCategoryService {
   {
     this.localData.getCategories().subscribe(data=>{
       console.log(data);
-    
-      if (!this.category_id && data.length) {
+      if (data.length) {
         this.setCategory(data![0].id)
       }
 
@@ -33,7 +32,7 @@ export class PreviewCategoryService {
 
   setCategory(id:number){
     this.category_id = id
-    this.localData.getProducts$().subscribe(products=>{
+    this.localData.getProducts().subscribe(products=>{
       const data = products.filter(p=> p.category_id === id)
       this.productsByCategory.next(data)
     })

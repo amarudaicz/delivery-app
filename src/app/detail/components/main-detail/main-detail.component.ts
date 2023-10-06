@@ -52,7 +52,7 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     
     const idProduct = this.route.snapshot.queryParams['id'];
     
-    this.localService.getProducts$().subscribe((data) => {
+    this.localService.getProducts().subscribe((data) => {
       this.product = data.filter((e) => e.id === Number(idProduct))[0];
     });
     

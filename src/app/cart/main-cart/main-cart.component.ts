@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThemeService } from 'ng2-charts';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
@@ -16,7 +16,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
     fadeIn
   ]
 })
-export class MainCartComponent implements OnInit {
+export class MainCartComponent implements OnInit, OnDestroy {
   
   constructor(private layoutState:LayoutStateService, public themes:ThemesService) {
 
@@ -31,5 +31,11 @@ export class MainCartComponent implements OnInit {
     this.layoutState.updateState()
     
   }
- 
+  
+  ngOnDestroy(): void {
+    this.layoutState.state.header=true
+    this.layoutState.state.navigation=true
+    this.layoutState.updateState()
+    
+  }
 }

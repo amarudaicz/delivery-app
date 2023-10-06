@@ -85,11 +85,11 @@ export class ThemesService {
       
     }
   }
-
+  
   changeThemeAdmin(){
     //HTTP PARA EL UPDATE
     
   }
-
-
+  
+  
 }

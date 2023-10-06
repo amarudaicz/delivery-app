@@ -3,18 +3,18 @@
 
 <div [class.main-container]="false">
 
-    <div class="">
+    <div class="flex flex-column h-screen">
 
         <app-header *ngIf="themeLoad && stateLayout.state.header"></app-header>
 
-        <div [@fadeIn]>
+        <div class="h-full overflow-scroll" [@routeAnimations]="getRouteAnimationData()">
             <router-outlet></router-outlet>
         </div>
 
+        
+        <app-navigation *ngIf="themeLoad" [@fadeIn]></app-navigation>
+        
     </div>
-
-
-    <app-navigation *ngIf="themeLoad" [@fadeIn]></app-navigation>
 
 </div>
 

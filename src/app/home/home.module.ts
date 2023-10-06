@@ -15,6 +15,8 @@ import { ProductsSetComponent } from './components/products-set/products-set.com
 import { PreviewCategoryComponent } from './components/preview-category/preview-category.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { LandingModule } from '../landing/landing.module';
+import { SearchProductsComponent } from './components/search-products/search-products.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({ 
   declarations: [
@@ -23,7 +25,8 @@ import { LandingModule } from '../landing/landing.module';
     PromotionsLocalComponent,
     ProductsSetComponent,
     NewselterBoxComponent,
-    PreviewCategoryComponent
+    PreviewCategoryComponent,
+    SearchProductsComponent
     
   ],
   imports: [
@@ -34,6 +37,8 @@ import { LandingModule } from '../landing/landing.module';
     MatSnackBarModule,
     MatRippleModule,
     SkeletonModule,
+    FormsModule,
+    ReactiveFormsModule
   ] ,
   exports:[
     NewselterBoxComponent,

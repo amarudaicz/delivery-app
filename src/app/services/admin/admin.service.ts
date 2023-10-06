@@ -103,7 +103,7 @@ export class AdminService {
   }
 
   updateLocal(data:any){
-    return this.http.put(environment.host + 'locals', data)
+    return this.http.put(`${environment.host}locals`, data)
   }
 
   updateSchedules(data: Schedules) {
