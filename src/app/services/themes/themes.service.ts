@@ -29,7 +29,7 @@ export class ThemesService {
     {
       id:2,
       name:'Vibe',
-      background:'#ffb703',
+      background:'#5457cd',
       backgroundSec:'#023047',
       backgroundPage: '#edede9',
       colorText:'#303030',

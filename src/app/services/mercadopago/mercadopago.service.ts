@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { loadMercadoPago } from '@mercadopago/sdk-js';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/app/environment';
+import { Subscription } from 'src/app/interfaces/subscription-interface';
 
 export interface CardData {
   card_number: string;
@@ -64,5 +65,15 @@ export class MercadopagoService {
     console.log(formData);
     return this.http.post<any>(environment.host + 'subscriptions', formData);
   }
+
+
+  getSubscription(){
+    return this.http.get<Subscription>(environment.host + 'subscriptions')
+  }
+  
+  putSubscription(status:string){
+    return this.http.put<Subscription>(environment.host + 'subscriptions', {status})
+  }
+  
 
 }

@@ -1,4 +1,4 @@
-import { trigger, transition, style, query, animateChild, group, animate } from "@angular/animations";
+import { trigger, transition, style, query, animateChild, group, animate, state } from "@angular/animations";
 
 export const enterRight= trigger('enterRight', [
   transition(':enter', [
@@ -22,3 +22,20 @@ export const enterLeft= trigger('enterRight', [
   ])
 ]);
 
+
+export const enterDownUp = trigger('slideUpDown', [
+  state('void', style({
+        display: 'none'
+      })),
+      transition(':enter', [
+        style({
+          transform: 'translateY(-100%)'
+        }),
+        animate('0.5s ease-out')
+      ]),
+      transition(':leave', [
+        animate('0.5s ease-in', style({
+          transform: 'translateY(-100%)'
+        }))
+      ])
+])

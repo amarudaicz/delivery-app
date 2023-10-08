@@ -8,18 +8,18 @@
         </div>
 
 
-        <div class="" *ngIf="user else loader">
+        <div class="" *ngIf="subscription else loader">
             <div class="mb-4">
                 <h2 class="mb-2 text-2xl text-primary">Suscripcion</h2>
 
                 <div class="p-4 border-round-xl bg-primary-reverse border-1 shadow-3">
 
-                    <div *ngIf="user.subscription_type === 'free' else paidPlan" class="d-flex justify-content-between">
+                    <div *ngIf="false; else paidPlan" class="d-flex justify-content-between">
                         <div class="">
                             <h5 class="mb-2 text-xl">Plan prueba gratiuita</h5>
                             <p class=" text-base">Precio: $0</p>
-                            <p >Tu <b>prueba</b> inicio el dia <b>{{getDateFormat(user.register_date)}}</b> y finaliza el <b>{{getPlanFinish()}}</b></p> 
-                            <button mat-button color="primary" class="mt-1">Mas informacion</button>
+                            <p class="text-balance">Tu <b>prueba</b> inicio el dia <b>{{getDateFormat(subscription!.auto_recurring.start_date)}}</b> y finaliza el <b>{{getFreeTrialFinish()}}</b></p>
+                            <button mat-button color="primary" class="mt-1" (click)="moreInfoPlanBasic()">Mas informacion</button>
                         </div>
                         <div class="">
                             <i class="pi pi-check-square text-2xl font-semibold"></i>
@@ -34,63 +34,68 @@
                               <button mat-button color="primary" class="mt-1" (click)="moreInfoPlanBasic()">Mas informacion</button>
                             </div>
 
-                            <div class="">
-                                <i class="pi pi-check-square text-2xl font-semibold"></i>
+                            
+                            <div class="px-3 py-2 text-white border-round bg-red-500 d-flex gap-2" *ngIf="subscription.status === 'paused'; else check">
+                                <h4 class="">
+                                    Suscripcion pausada
+                                </h4>
+
+                                <i class="pi pi-info-circle"></i>
                             </div>
+
+                            <ng-template #check>
+                                <div class="">
+                                    <i class="pi pi-check-square text-2xl font-semibold"></i>
+                                </div>
+                            </ng-template>
                           </div>
 
                     </ng-template>
                 </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-4" *ngIf="!false">
+
                 <div class="">
                     <h2 class="text-2xl mb-2">Pagos</h2>
                 </div>
-
-                <div class="" *ngIf="user.subscription_type === 'free' else plan">
-                    <p>No se registraron pagos</p>
-                </div>
-
-
-                <ng-template #plan>
-                    <div class="" *ngIf="user.subscription_status else subscriptionStop">
-                        <span  class="block mb-3 p-2 bg-primary border-round w-fit">
+                
+                    <div class="" *ngIf="subscription.status === 'authorized' else subscriptionStop">
+                        <span  class="block mb-3 p-2 bg-primary border-round w-fit text-balance">
                             <i class="pi pi-info-circle text-white"></i>
-                            El pago de tu <b> suscripcion</b> se realizo en las fechas indicadas a continuación
+                            El cobro de tu <b>suscripcion</b> se realizo en las fechas indicadas a continuación
                         </span>
     
                         <div class="d-flex wrap gap-3 p-3 border-round-xl border-1 border-600">
                             <div class="flex-1 text-center">
                                 <h5 class="text-xl mb-2 text-nowrap">Ultimo pago</h5>
-                                <span class="text-2xl">{{getDateFormat(user.last_pay)}}</span>
+                                <span class="text-2xl">{{getDateFormat(subscription.summarized.last_charged_date)}}</span>
                             </div>
                             <div class="flex-1 text-center">
                                 <h5 class="text-xl mb-2 text-nowrap">Proximo pago</h5>
-                                <span class="text-2xl">{{getNextPay()}}</span>
+                                <span class="text-2xl">{{getDateFormat(subscription.next_payment_date)}}</span>
     
                             </div>
                         </div>
-
                     </div>
 
                     <ng-template #subscriptionStop>
                         <div class="p-3 border-round-xl border-1 border-600">
-                            <h4 class="text-xl">Tu suscripcion se encuentra detenida</h4>
-                            <p>Para restablecer tu tienda ponte en contacto con nosotros</p>
+                            <h4 class="text-xl mb-1">
+                                Tu pagos se encuentran pausados
+                            </h4>
+                            <p class="text-base mb-2 text-800 text-balance">No se efectuara ningun cargo a tu tarjeta cuando finalice el mes ya cobrado, puedes reanudar tu suscripcion cuando quieras.</p>
+                            <button [disabled]="disableButtons" mat-raised-button color="primary" (click)="putStatusSubscription(subscription.status)">Reanudar suscripcion</button>
                         </div>
                     </ng-template>
 
-
-
-                </ng-template>
             </div>
 
 
             <div class="mb-4">
                 <h3 class="text-2xl mb-2">Soporte</h3>
                 <div class=" p-3 border-round-xl border-1 border-600">
-                    <p class="text-800 mb-2">Estamos disponibles en Whatsapp para ayudarte ante cualquier problema que puedas tener con tu tienda</p>
+                    <p class="text-800 mb-2 text-balance">Estamos disponibles en Whatsapp para ayudarte ante cualquier problema que puedas tener con tu tienda</p>
                     <div class="">
                         <a matRipple class="py-2 w-fit cursor-pointer px-4 bg-green-600 border-round-sm hover:shadow-4 font-semibold shadow-2 roboto text-white d-flex gap-2">
                             <i class="pi pi-whatsapp"></i>
@@ -112,19 +117,19 @@
                     </span>  
                 </div>
 
-                <div class="p-3 mb-2 border-round-xl border-1 border-600">
+                <div class="p-3 mb-2 border-round-xl border-1 border-600" *ngIf="subscription.status === 'authorized'">
                     <div class="mb-2">
                         <h5 class="text-xl mb-1">Darse de baja</h5>
-                        <p class="text-700">Tu tienda ya no estara disponible para tus clientes una vez halla finalizado el mes ya acreditado, tu cuenta y datos de la tienda estaran disponible para realizar nuevamente la suscripcion</p>
+                        <p class="text-700 text-balance">Tu tienda ya no estara disponible para tus clientes una vez halla finalizado el mes ya acreditado, tu cuenta y datos de la tienda estaran disponible para realizar nuevamente la suscripcion</p>
                     </div>
                     
-                    <button mat-raised-button color="warn">Detener suscripcion</button>
+                    <button mat-raised-button color="warn" (click)="putStatusSubscription(subscription.status)">Detener suscripcion</button>
                 </div>
 
                 <div class="p-3 border-round-xl border-1 border-600">
                     <div class="mb-2">
                         <h5 class="text-xl mb-1">Eliminar mi cuenta</h5>
-                        <p class="text-700">Elimina tu tienda y suscripcion activa, se perderan todos los datos incluida tu cuenta</p>
+                        <p class="text-800 text-balance">Elimina tu tienda y suscripcion activa, se perderan todos los datos incluida tu cuenta</p>
                     </div>
 
                     <button mat-raised-button color="warn">Eliminar cuenta</button>
