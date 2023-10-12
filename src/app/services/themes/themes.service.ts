@@ -14,7 +14,7 @@ export class ThemesService {
   public currentTheme:any
   public stateTheme = new BehaviorSubject<boolean>(false)
 
-  themes:Theme[]=[
+  public themes:Theme[]=[
     {
       id:1,
       name:'Default',

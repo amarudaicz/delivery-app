@@ -225,6 +225,13 @@ export class AdminService {
   sortCategories(categories:Category[]) {
     return categories.sort((a, b) => a.sort_order - b.sort_order);
   }
+
+
+
+  //!!!!! THEMES
+  setTheme(id:number){
+    return this.http.put(`${environment.host}locals/set-theme`, {id})
+  }
   
 }
 

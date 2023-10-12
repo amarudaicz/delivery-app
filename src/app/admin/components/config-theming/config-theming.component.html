@@ -1,31 +1,32 @@
 <div class="card theming-local">
   <h3 class="title">Colores de la aplicacion</h3>
 
-  <div class="container-current-theme" >
+  <div class="container-current-theme">
     <h4>Tema actual</h4>
-    <div class="container-theme">
-      <span>{{ currentTheme?.name }}</span>
-      <mat-radio-button (change)="changeThemeLocal(currentTheme?.id)" color="primary" checked></mat-radio-button>
-      <div 
-        class="color-theme"
-        *ngFor="let prop of currentProp"
-        [style.background]="currentTheme[prop]"
-      ></div>
+    <div class="d-flex w-full">
+      <div class="d-flex ">
+        <span class="w-5rem">{{ currentTheme?.name }}</span>  
+        <mat-radio-button checked color="primary"></mat-radio-button>
+      </div>
+      <div class="color-theme" *ngFor="let prop of currentProp" [style.background]="currentTheme[prop]"></div>
     </div>
   </div>
 
-  <div class="container-all-themes">
+  <div class="container-all-them
+  es">
     <h4>Todos los temas</h4>
-    <div class="container-theme" *ngFor="let theme of allThemes">
-      <span>{{ theme.name }}</span>
-      <mat-radio-button (change)="changeThemeLocal(theme.id)" color="primary"></mat-radio-button>
-      <div
-        class="color-theme"
-        *ngFor="let prop of currentProp"
-        [style.background]="theme[prop]"
-      ></div>
-    </div>
+    <mat-radio-group [disabled]="disableRadio" aria-label="Select an option">
+      <div class="py-2" *ngFor="let theme of allThemes">
+        <div class="d-flex w-full">
+          <div class="d-flex ">
+            <span class="w-5rem">{{ theme.name }}</span>
+            <mat-radio-button [value]="theme.id" (change)="changeThemeLocal(theme.id)"
+              color="primary"></mat-radio-button>
+          </div>
+
+          <div class="color-theme" *ngFor="let prop of currentProp" [style.background]="theme[prop]"></div>
+        </div>
+      </div>
+    </mat-radio-group>
   </div>
 </div>
-
-
