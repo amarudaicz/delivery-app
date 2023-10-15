@@ -38,9 +38,7 @@ export class NotificationsAdminService {
       this.allNotifications$.next(this.notifications);
     }
     
-    
-    
-    this.toast.open(message, action, config);
+    return this.toast.open(message, action, config);
   }
 
 

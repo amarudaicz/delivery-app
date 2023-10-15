@@ -50,7 +50,7 @@ export class CardFormComponent implements OnDestroy, OnInit {
         if (!reload)return
         
           this.isFormMounted = false;
-          (window as any).cardPaymentBrickController.unmount();
+          (window as any).cardPaymentBrickController?.unmount();
           this.ngOnInit()
         })
 
@@ -105,6 +105,6 @@ export class CardFormComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.subscriptionReload.unsubscribe()
     console.log('UNSUBE');
-    (window as any).cardPaymentBrickController.unmount();
+    (window as any).cardPaymentBrickController?.unmount();
   }
 }

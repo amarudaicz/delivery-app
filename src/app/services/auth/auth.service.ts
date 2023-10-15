@@ -52,7 +52,6 @@ export class AuthService {
     this.cookie.delete('exp');
     this.cookie.deleteAll() 
     console.log(this.cookie.getAll());
-    
     this.token = null;
   }
 
@@ -66,6 +65,8 @@ export class AuthService {
     console.log(expDate);
     console.log(currentDate);
     if (!token || !exp) return false
+    
+    console.log(currentDate < expDate);
     
     return currentDate < expDate;
 

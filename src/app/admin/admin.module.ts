@@ -70,6 +70,7 @@ import { PaymentsMethodsConfigComponent } from './components/payments-methods-co
 import { SubscriptionStateComponent } from './components/subscription-state/subscription-state.component';
 import { InfoPlanBasicComponent } from './components/subscription-state/components/info-plan-basic/info-plan-basic.component';
 import {MatDialogModule } from '@angular/material/dialog';
+import { AdminService } from '../services/admin/admin.service';
 
 @NgModule({
   declarations: [
@@ -155,5 +156,6 @@ import {MatDialogModule } from '@angular/material/dialog';
     SetOptionsProductComponent,
     MainEditProductComponent
   ],
+  providers:[AdminService ]
 })
 export class AdminModule { }

@@ -14,7 +14,7 @@
 
                 <div class="p-4 border-round-xl bg-primary-reverse border-1 shadow-3">
 
-                    <div *ngIf="false; else paidPlan" class="d-flex justify-content-between">
+                    <div *ngIf="hasFreeTier; else paidPlan" class="d-flex justify-content-between">
                         <div class="">
                             <h5 class="mb-2 text-xl">Plan prueba gratiuita</h5>
                             <p class=" text-base">Precio: $0</p>
@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <div class="mb-4" *ngIf="!false">
+            <div class="mb-4" >
 
                 <div class="">
                     <h2 class="text-2xl mb-2">Pagos</h2>
@@ -67,10 +67,13 @@
                         </span>
     
                         <div class="d-flex wrap gap-3 p-3 border-round-xl border-1 border-600">
-                            <div class="flex-1 text-center">
+                            
+                            <div class="flex-1 text-center" *ngIf="subscription.summarized.last_charged_date">
                                 <h5 class="text-xl mb-2 text-nowrap">Ultimo pago</h5>
                                 <span class="text-2xl">{{getDateFormat(subscription.summarized.last_charged_date)}}</span>
                             </div>
+
+
                             <div class="flex-1 text-center">
                                 <h5 class="text-xl mb-2 text-nowrap">Proximo pago</h5>
                                 <span class="text-2xl">{{getDateFormat(subscription.next_payment_date)}}</span>
@@ -80,13 +83,28 @@
                     </div>
 
                     <ng-template #subscriptionStop>
+
+
                         <div class="p-3 border-round-xl border-1 border-600">
-                            <h4 class="text-xl mb-1">
-                                Tu pagos se encuentran pausados
-                            </h4>
-                            <p class="text-base mb-2 text-800 text-balance">No se efectuara ningun cargo a tu tarjeta cuando finalice el mes ya cobrado, puedes reanudar tu suscripcion cuando quieras.</p>
-                            <button [disabled]="disableButtons" mat-raised-button color="primary" (click)="putStatusSubscription(subscription.status)">Reanudar suscripcion</button>
+                            <div class="" *ngIf="hasFreeTier; else notFreeTier ">
+                                <p class="text-base mb-2 text-800 text-balance">No se efectuara ningun cargo a tu tarjeta, tu tienda estara disponible hasta que finalice la prueba gratuita.</p>
+                                <button [disabled]="disableButtons" mat-raised-button color="primary" (click)="putStatusSubscription(subscription.status)">Reanudar suscripcion</button>
+                            </div>
+
+
+                            <ng-template #notFreeTier>
+                            <div class="">
+                                <h4 class="text-xl mb-1">
+                                    Tu pagos se encuentran pausados
+                                </h4>
+                                <p class="text-base mb-2 text-800 text-balance">No se efectuara ningun cargo a tu tarjeta, tu tienda estara disponible hasta que finalice el mes ya cobrado, puedes reanudar tu suscripcion cuando quieras.</p>
+                                <button [disabled]="disableButtons" mat-raised-button color="primary" (click)="putStatusSubscription(subscription.status)">Reanudar suscripcion</button>
+                            </div>
+                        </ng-template>
+
                         </div>
+                        
+
                     </ng-template>
 
             </div>
@@ -123,7 +141,7 @@
                         <p class="text-700 text-balance">Tu tienda ya no estara disponible para tus clientes una vez halla finalizado el mes ya acreditado, tu cuenta y datos de la tienda estaran disponible para realizar nuevamente la suscripcion</p>
                     </div>
                     
-                    <button mat-raised-button color="warn" (click)="putStatusSubscription(subscription.status)">Detener suscripcion</button>
+                    <button [disabled]="disableButtons" mat-raised-button color="warn" (click)="putStatusSubscription(subscription.status)">Detener suscripcion</button>
                 </div>
 
                 <div class="p-3 border-round-xl border-1 border-600">
@@ -132,7 +150,7 @@
                         <p class="text-800 text-balance">Elimina tu tienda y suscripcion activa, se perderan todos los datos incluida tu cuenta</p>
                     </div>
 
-                    <button mat-raised-button color="warn">Eliminar cuenta</button>
+                    <button [disabled]="disableButtons" (click)="deleteAccount()" mat-raised-button color="warn">Eliminar cuenta</button>
                 </div>
 
 

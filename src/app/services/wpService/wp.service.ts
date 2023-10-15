@@ -199,10 +199,14 @@ formatUbicationName(userData:any,ubication:any){
 }
 
 
-
-
 formatNumber(n:number){
   return Intl.NumberFormat('es-AR', {style:'currency', currency:'ARS', minimumFractionDigits: 0}).format(n)
+}
+
+
+
+contactSoporte(){
+  window.open(`https://api.whatsapp.com/send?phone=+${3543655547}&text=Hola, necesito comunicarme con el soporte de Deli`)
 }
 
 }

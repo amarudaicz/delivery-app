@@ -11,7 +11,7 @@ import { handleError } from 'src/app/utils/handle-error-http';
 import { NotificationsAdminService } from '../notifications-admin/notifications-admin.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'any',
 })
 export class AdminService {
   constructor(
@@ -231,6 +231,14 @@ export class AdminService {
   //!!!!! THEMES
   setTheme(id:number){
     return this.http.put(`${environment.host}locals/set-theme`, {id})
+  }
+
+
+
+
+  //Account
+  deleteAccount(){
+    return this.http.delete(`${environment.host}admin/delete-account`)
   }
   
 }

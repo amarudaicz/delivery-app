@@ -14,7 +14,8 @@ import { NotificationsAdminService } from 'src/app/services/notifications-admin/
 @Component({
   selector: 'app-dashboard-list',
   templateUrl: './dashboard-list.component.html',
-  styleUrls: ['./dashboard-list.component.scss']
+  styleUrls: ['./dashboard-list.component.scss'],
+
 })
 export class DashboardListComponent implements OnInit {
 

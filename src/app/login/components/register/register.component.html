@@ -1,4 +1,4 @@
-<div class="w-full h-full" >
+<div class="w-full h-full " >
 
   <div class="p-4 ">
 
@@ -10,20 +10,19 @@
         </a>
 
         <h1 class="text-bold text-3xl sm:text-6xl">{{pricing ? 'Precios' : 'Registrá tu tienda'}}</h1>
-        <p class="text-800">Tienes <span class="font-bold text-primary">14 días gratis</span> para
+        <p class="text-800">Tienes <span class="font-bold text-primary">30 días gratis</span> para
           probar la plataforma y notar la diferencia de venta</p>
-
       </div>
 
 
-      <mat-stepper class="w-full md:w-10 lg:w-7 mx-auto border-round shadow-3 muli" [linear]="false"
-        [orientation]="stepperOrientation" #stepper *ngIf="!pricing else panelPricing">
+      <mat-stepper #stepper class="w-full md:w-10 lg:w-7 mx-auto border-round shadow-3 muli" [linear]="true"
+       *ngIf="!pricing else panelPricing">
 
         <mat-step [stepControl]="formDataUser">
           <ng-template matStepContent>
             <div class="mt-4" >
               <form [formGroup]="formDataUser">
-                <ng-template matStepLabel>Datos personales</ng-template>
+                <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Datos personales</ng-template>
   
                 <div class="wrap gap-0 md:flex-nowrap md:gap-4 d-flex mb-2">
   
@@ -84,7 +83,7 @@
 
         <!--FORM DE LA TIENDA *************  -->
         <mat-step [stepControl]="formDataStore">
-          <ng-template matStepLabel>Tienda</ng-template>
+          <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Tienda</ng-template>
 
           <ng-template matStepContent>
             <div class="mt-4" >
@@ -155,7 +154,7 @@
 
 
         <mat-step>
-          <ng-template matStepLabel>Cuenta</ng-template>
+          <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Cuenta</ng-template>
 
           <ng-template matStepContent>
             <div class="mt-4" >
@@ -198,7 +197,7 @@
 
         <mat-step>
 
-          <ng-template  matStepLabel>Pago</ng-template>
+          <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Pago</ng-template>
           <div class="mt-4" >
 
               <app-card-form (previusStep)="previusStep()" (payment)="startSubscription($event)" [reloadForm]="reloadFormMp" >
@@ -206,7 +205,6 @@
               </app-card-form>  
             
           </div>
-
 
         </mat-step>
 
@@ -221,4 +219,9 @@
     </div>
 
   </div>
+
+
+  <!-- <div class="circle-lg bg-primary absolute circle-top-rigth"></div>
+
+  <div class="circle-lg bg-pink-300" style=""></div> -->
 </div>

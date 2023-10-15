@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { WpService } from 'src/app/services/wpService/wp.service';
 
 @Component({
   selector: 'app-pricing-cards',
@@ -7,10 +8,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class PricingCardsComponent {
 
+
   @Output() closePricing = new EventEmitter<boolean>()
   featuresCount:number = 6;
   cardExpandida: boolean = false;
-
+  
+  constructor(private wpService:WpService){}
 
   plans = {
     basic:{
@@ -53,6 +56,10 @@ export class PricingCardsComponent {
     setTimeout(()=> window.scrollTo(0, document.body.scrollHeight), 500 )
     
 
+  }
+
+  contactWp(){
+    this.wpService.contactSoporte()
   }
 
 }

@@ -60,7 +60,9 @@ export class FormLoginComponent implements OnInit {
       })).subscribe((res:any) => {
         this.authService.setToken(res.token, res.exp)
         this.formSubmitted = false
-        this.router.navigate(['/admin'])    
+        
+        console.log('NAVIGATING');
+        this.router.navigate(['admin'])    
       });
   }
 

@@ -21,6 +21,7 @@ import { RoutesAdmingModule } from './admin-routing.module';
 import { AdminModule } from '../admin/admin.module';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { AdminService } from '../services/admin/admin.service';
 
 @NgModule({
     declarations: [
@@ -48,6 +49,8 @@ import { MatIconModule } from '@angular/material/icon';
         AdminModule,
         MatIconModule,
     ],
-    exports: [AppLayoutComponent]
+    exports: [AppLayoutComponent],
+    providers:[
+    ]
 })
 export class AppLayoutModule { }
