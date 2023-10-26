@@ -55,8 +55,8 @@
                                     </p>
     
                                     <p [ngSwitch]="group.multiple">
-                                        <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' | max: ' + group.max}})</font>
-                                        <font *ngSwitchCase="false">Respuestas(1<span *ngIf="(group.min === 1 && group.max === 1) || group.typePrice === 1 || group.required">, requerido</span>)</font>
+                                        <font *ngSwitchCase="true">Multiples respuestas({{!group.min && !group.max ? 'sin limite' : 'min: ' + group.min + ' | max: ' + group.max ? group.max : 'sin limite'}})</font>
+                                        <font *ngSwitchCase="false">Respuestas(1<span *ngIf="group.typePrice === 1 || group.required">, requerido</span>)</font>
                                     </p>
                                 </div>
                             </div>

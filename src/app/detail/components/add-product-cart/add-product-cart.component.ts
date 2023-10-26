@@ -207,11 +207,14 @@ export class AddProductCartComponent implements OnInit {
         );
         this.form.get(e.nameVariation)?.setValue(lowOption.nameOption);
         return;
-      } else {
+      } else if(e.required) {
         this.form.addControl(e.nameVariation, this.formBuilder.control(null));
         this.form.get(e.nameVariation)?.setValue(e.options[0].nameOption);
-
+        this.saveOptions(e.options[0], e)
+      }else{
+        this.form.addControl(e.nameVariation, this.formBuilder.control(null));
       }
+
     });
   }
 
@@ -221,7 +224,6 @@ export class AddProductCartComponent implements OnInit {
     this.options.splice(i, 1)
 
     this.subtotal = this.calcSubtotal(this.options)
-    
   }
 
   sortOptionsByLowestPrice(options: any[]): any[] {

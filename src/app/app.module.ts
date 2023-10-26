@@ -23,6 +23,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogR
 import { HttpInterceptorService } from './services/iterceptor-jwt/interceptorJwt';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from './services/cartData/cart.service';
+import { ScrollSpyDirective } from './directives/scroll-spy.directive';
 
 @NgModule({ 
   declarations: [

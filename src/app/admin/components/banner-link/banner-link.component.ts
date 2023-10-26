@@ -32,7 +32,7 @@ export class BannerLinkComponent {
   constructor(private clipboard:Clipboard, private adminService:AdminService, private notificationsAdmin:NotificationsAdminService){
 
     this.adminService.local$.subscribe(local=>{
-      local ? this.copyUrl = 'deliapp.com/' + local.name_url : null
+      local ? this.copyUrl = 'https://deliapp.app/' + local.name_url : null
     })
   }
   
@@ -41,9 +41,7 @@ export class BannerLinkComponent {
     this.clipboard.copy(this.copyUrl!);
     this.alertCopy = true
 
-    setTimeout(() => {
-      this.alertCopy = false
-    }, 5000);
+    setTimeout(() => this.alertCopy = false, 5000);
     
   }
   

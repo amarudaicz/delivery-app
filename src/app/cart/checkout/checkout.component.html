@@ -24,7 +24,7 @@
 
 
       <div class="mb-3" *ngIf="local.shipping?.delivery || local.shipping?.pick_in_local">
-        <label class="text-base font-bold mb-1">Metodo de entrega <span class="text-red-500">*</span></label>
+        <label class="text-base font-bold mb-1">Forma de entrega <span class="text-red-500">*</span></label>
 
         <div class="d-flex gap-3 mt-1">
           <div class="box-select w-8rem p-2 border-round border-1 font-bold text-center" [ngStyle]="{background:selectShippingMethod() === method ? '#0c183a' : '#fff'}" [class.text-white]="selectShippingMethod() === method" *ngFor="let method of localService.getShippingMethods(local)" (click)="selectShippingMethod(method)">
@@ -37,21 +37,21 @@
           <span [@fadeIn] class=" px-3 block error-checkout" *ngIf="form.get('shippingMethod')?.invalid && formSubmitted">Este campo es requerido</span>
         </div>
 
-        <span [@fadeIn] *ngIf="ubicationUser && form.get('shippingMethod')?.value === 'Envio a domicilio' && costShipping !== -1" class="font-bold block w-fit p-2 border-round bg-white text-base border-1">
+        <span [@fadeIn] *ngIf="ubicationUser && form.get('shippingMethod')?.value === 'Envío a domicilio' && costShipping !== -1" class="font-bold block w-fit p-2 border-round bg-white text-base border-1">
           <span *ngIf="costShipping! > 0; else outOfRange">
-            Costo de envio: ${{costShipping}}
+            Costo de envío: ${{costShipping}}
           </span>
 
           <ng-template #outOfRange>
             <div >
               <span class="d-flex gap-1">
                 <i class="pi pi-info-circle"></i>
-                Tu ubicacion se encuentra fuera de la zona de entrega
+                Tu ubicación se encuentra fuera de la zona de entrega
               </span>
   
               <span class="d-flex font-normal">
                 <mat-checkbox color="primary" formControlName="defineCostShipping"></mat-checkbox>
-                Definire el costo de envio con el vendedor
+                Definire el costo de envío con el vendedor
               </span>
               
             </div>
@@ -63,7 +63,7 @@
 
 
 
-      <div class="" *ngIf="form.controls['shippingMethod'].value === 'Envio a domicilio' ">
+      <div class="" *ngIf="form.controls['shippingMethod'].value === 'Envío a domicilio' ">
         <div class="mb-2">
           <label class="text-base font-bold mb-1 block ">Dirección</label>
           <div class="d-flex gap-2 relative">
@@ -79,7 +79,7 @@
             </div>
 
             <div class="w-3 relative">
-              <label class="font-semibold mb-1 text-sm">Numero <span class="text-red-500">*</span></label>
+              <label class="font-semibold mb-1 text-sm">Número <span class="text-red-500">*</span></label>
               <mat-form-field appearance="outline" class="w-full" color="primary">
                 <input (blur)="getDirection()" formControlName="streetNumber" placeholder="Nro" type="number" matInput />
               </mat-form-field>
@@ -169,7 +169,7 @@
 
 
       <div class="" *ngIf="this.form.controls['payMethod'].value === 'Efectivo'
-      && this.form.controls['shippingMethod'].value === 'Envio a domicilio'">
+      && this.form.controls['shippingMethod'].value === 'Envío a domicilio'">
 
         <label class="text-base font-bold mb-1">Con cuanto pagará (opcional)</label>
         <mat-form-field class="mt-1 w-full" color="primary">
@@ -191,7 +191,7 @@
       <p class="details-checkout px-2 text-base subtotal"><b>Subtotal:</b> <span
           class="text-xl font-bold">{{subtotal|currency}}</span> </p>
       <p *ngIf="costShipping! > 0" class="details-checkout px-2 text-base">
-        <b>Envio:</b>
+        <b>Envío:</b>
 
         <span class="text-xl font-bold">{{costShipping|currency}}</span> 
     </div>

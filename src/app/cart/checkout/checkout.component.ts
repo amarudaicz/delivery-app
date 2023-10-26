@@ -83,7 +83,7 @@ export class CheckoutComponent implements OnInit {
       streetNumber:[null],
       amountReceived: [null, [minValueValidator(this.subtotal)]],
       reference: [null],
-      defineCostShipping:[false]
+      defineCostShipping:[true]
     });
 
     this.localService.local$.subscribe((local) => {
@@ -202,7 +202,7 @@ export class CheckoutComponent implements OnInit {
 
   selectDirection(suggestion: FuzzySearchResult) {
     this.panelSuggestions = false
-    this.tomtom.calculateRoute(suggestion.position).subscribe(route=>{
+    this.tomtom.calculateRoute(this.local!.cords, suggestion.position).subscribe(route=>{
       const distanceToShipping =  this.tomtom.MetersToKilometers(route.routes[0].summary.lengthInMeters)
       console.log(distanceToShipping);
       
@@ -264,8 +264,8 @@ export class CheckoutComponent implements OnInit {
 
     this.tomtom.reverseSearch(this.cordsUser).then((res)=>{
       
-      //SETEAR LAS CORDENADAS DEL LOCAL
-      this.tomtom.calculateRoute(res['addresses'][0].position).subscribe(route=>{
+      //SETEAR LAS CORDENADAS DEL LOCAL 
+      this.tomtom.calculateRoute(this.local!.cords, res['addresses'][0].position).subscribe(route=>{
         console.log(route.routes[0].summary.lengthInMeters);
         
         const distanceToShipping =  this.tomtom.MetersToKilometers(route.routes[0].summary.lengthInMeters)

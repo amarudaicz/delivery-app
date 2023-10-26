@@ -27,7 +27,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Ajustes', icon: 'pi pi-sliders-v', routerLink: ['config'] },
                     { label: 'Horarios', icon: 'pi pi-clock', routerLink: ['schedules'] },
                     { label: 'Redes sociales', icon: 'pi pi-share-alt', routerLink: ['links'] },
-                    { label: 'Ayuda', icon: 'pi pi-question', routerLink: ['help'] },
+                    { label: 'Documentación', icon: 'pi pi-question', routerLink: ['docs'] },
                 ]
             }
         ];

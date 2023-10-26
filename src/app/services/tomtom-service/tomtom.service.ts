@@ -62,10 +62,8 @@ export class TomtomService {
       })
   }
 
-  calculateRoute(destinCords:{lng:number, lat:number}|LatLng|undefined){
+  calculateRoute(originCords:string, destinCords:{lng:number, lat:number}|LatLng|undefined){
     
-      const originCords = this.local?.cords
-
       console.log(this.local);
       
       const promise = services.calculateRoute({

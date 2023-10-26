@@ -42,7 +42,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ] ,
   exports:[
     NewselterBoxComponent,
-    ProductsSetComponent
+    ProductsSetComponent,
+    CardCategoryComponent
   ]
 })
 export class HomeModule { }

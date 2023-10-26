@@ -71,6 +71,9 @@ import { SubscriptionStateComponent } from './components/subscription-state/subs
 import { InfoPlanBasicComponent } from './components/subscription-state/components/info-plan-basic/info-plan-basic.component';
 import {MatDialogModule } from '@angular/material/dialog';
 import { AdminService } from '../services/admin/admin.service';
+import { DocumentationComponent } from './components/documentation/documentation.component';
+import { ScrollSpyDirective } from '../directives/scroll-spy.directive';
+import { HomeModule } from '../home/home.module';
 
 @NgModule({
   declarations: [
@@ -103,6 +106,8 @@ import { AdminService } from '../services/admin/admin.service';
     PaymentsMethodsConfigComponent,
     SubscriptionStateComponent,
     InfoPlanBasicComponent,
+    DocumentationComponent,
+    ScrollSpyDirective
   ],
   imports: [
     CommonModule,
@@ -111,6 +116,7 @@ import { AdminService } from '../services/admin/admin.service';
     ReactiveFormsModule,
     DragDropModule,
     SharedModule,
+    HomeModule,
 
     // PrimeNG
     AutoFocusModule,
@@ -139,7 +145,7 @@ import { AdminService } from '../services/admin/admin.service';
     MatButtonModule
   ],
   exports:[
-    PrimaryCardsComponent,
+    PrimaryCardsComponent, 
     MainAdminComponent,
     ListProductsComponent,
     ChartComponent,
@@ -156,6 +162,5 @@ import { AdminService } from '../services/admin/admin.service';
     SetOptionsProductComponent,
     MainEditProductComponent
   ],
-  providers:[AdminService ]
 })
 export class AdminModule { }

@@ -45,17 +45,18 @@
 
         <div class="d-flex gap-3 ">
 
-            <p-button (click)="newProduct = true" class="new" label="Agregar producto" icon="pi pi-plus"
-                styleClass="p-button-primary p-button-sm">
-            </p-button>
-
+            
             <button class="hidden md:flex" (click)="deleteCategory()">
                 <i class="pi pi-trash button-icon"></i>
             </button>
-
+            
             <button class="hidden md:flex" (click)="editCategory()">
                 <i class="fa-solid button-icon fa-pen"></i>
             </button>
+            
+            <p-button (click)="newProduct = true" class="new" label="Agregar producto" icon="pi pi-plus"
+                styleClass="p-button-primary p-button-sm">
+            </p-button>
         </div>
 
 

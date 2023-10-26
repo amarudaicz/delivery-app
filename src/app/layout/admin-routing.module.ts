@@ -9,6 +9,7 @@ import { AppLayoutComponent } from './app.layout.component';
 import { MainSchedulesComponent } from '../admin/components/main-schedules/main-schedules.component';
 import { LinksSocialComponent } from '../admin/components/links-social/links-social.component';
 import { SubscriptionStateComponent } from '../admin/components/subscription-state/subscription-state.component';
+import { DocumentationComponent } from '../admin/components/documentation/documentation.component';
 
 const routes: Routes = [
   
@@ -42,6 +43,10 @@ const routes: Routes = [
           {
             path:'payments',
             component:SubscriptionStateComponent
+          },
+          {
+            path:'docs',
+            component:DocumentationComponent
           },
           
         ]

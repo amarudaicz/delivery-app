@@ -35,7 +35,7 @@
 
               <!-- ALERTT////// -->
               <span class="alert-form" *ngIf="this.form.get(optionGroup.nameVariation)?.invalid">Elije una opcion <i class="pi pi-info-circle"></i></span>
-              <span class="mt-2" (click)="clearOption(optionGroup.nameVariation)"  *ngIf="(!optionGroup.min || !optionGroup.required) && optionGroup.typePrice !== 1 && form.get(optionGroup.nameVariation)?.value !== ''">limpiar opcion</span>
+              <span class="mt-2" (click)="clearOption(optionGroup.nameVariation)"  *ngIf="(!optionGroup.min || !optionGroup.required) && optionGroup.typePrice !== 1 && form.get(optionGroup.nameVariation)?.value">Deshacer</span>
 
             </mat-radio-group>
           </div>

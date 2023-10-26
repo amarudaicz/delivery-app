@@ -46,6 +46,8 @@ export class NavigationComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
+    console.log('scrol');
+    
     const currentPos = window.pageYOffset || window.scrollY;
     if (currentPos === 0) {
       // Haga cualquier otra acción deseada aquí

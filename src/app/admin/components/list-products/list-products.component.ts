@@ -206,7 +206,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     const category = this.dataCategory!;
 
     this.confirmService.confirm({
-      message: `Realmente quiere eliminar la categoria ${category.category_name} si hace esto se borraran todos los productos que se encuentren en la lista ${category.category_name}`,
+      message: `Realmente quiere eliminar la categoria ${category.category_name}? si hace esto se borraran todos los productos que se encuentren en la lista ${category.category_name}`,
       header: 'Confirmacion',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',

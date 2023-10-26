@@ -59,9 +59,9 @@ export class MainDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.layoutState.state.header = true
-    this.layoutState.state.navigation = true
-    this.layoutState.updateState()
+    // this.layoutState.state.header = true
+    // this.layoutState.state.navigation = true
+    // this.layoutState.updateState()
   }
 
 }

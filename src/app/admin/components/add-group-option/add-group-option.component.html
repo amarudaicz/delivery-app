@@ -58,9 +58,9 @@
               <div class="mr-2" style="display: inline-block;">
                 <mat-form-field appearance="outline">
                   <mat-label>
-                    Minimo de respuestas
+                    Mínimo de respuestas
                   </mat-label>
-                  <input matInput type="number" min="0" formControlName="min">
+                  <input matInput type="number" [min]="0" formControlName="min">
                   <mat-error>Este campo es requerido</mat-error>
 
                 </mat-form-field>
@@ -68,7 +68,7 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>
-                  Maximo de respuestas
+                  Máximo de respuestas
                 </mat-label>
                 <input matInput type="number" formControlName="max">
                 <mat-error>Este campo es requerido</mat-error>
@@ -78,15 +78,15 @@
             <div *ngIf="!formVariations.get('simple')?.value">
 
               <span class="alert-form-add-group" style="margin: -5px 0 0 0;">Para ingresar una cantidad fija (Por ej 2),
-                ingresa el mismo numero como minimo y maximo</span>
+                ingresa el mismo numero como mínimo y máximo</span>
               <span class="alert-form-add-group" style="margin: 0 0 10px 0;">Para <u>NO</u> definir un limite de
-                respuestas ingrese 0 como minimo y maximo</span>
+                respuestas ingrese 0 como mínimo y máximo</span>
             </div>
 
 
             <div class="container-radio-options">
 
-              <span>Configuracion de Precio</span>
+              <span>Configuración de Precio</span>
               <mat-radio-group formControlName="typePrice" aria-label="Select an option">
                 <mat-radio-button
                   matTooltip="Adicionales extras que son incluidos con el producto. Ej: Aderezos, Toppings"
@@ -96,7 +96,8 @@
               Pizza Completa:600$" matTooltipPosition="above" [matTooltipClass]="'tooltip-custom'" color="primary"
                   [value]="1">Determina el precio final</mat-radio-button>
                 <mat-radio-button
-                  matTooltip="Aumenta el valor del precio final del producto. Ej: Chedar:+150$, Doble Hamburgesa:+ 300$"
+                  *ngIf="!formVariations.get('simple')?.value"
+                  matTooltip="Aumenta el valor del precio final del producto. Ej: Chedar:+150$, Doble Hamburguesa:+ 300$"
                   matTooltipPosition="above" color="primary" [value]="2">Incrementa el precio final</mat-radio-button>
               </mat-radio-group>
               <span class="alert-options" *ngIf="formVariations.get('typePrice')?.invalid">

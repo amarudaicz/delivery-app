@@ -9,6 +9,7 @@ import { catchError, throwError } from 'rxjs';
 import { handleError } from 'src/app/utils/handle-error-http';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { WpService } from 'src/app/services/wpService/wp.service';
 
 @Component({
   selector: 'app-subscription-state',
@@ -22,7 +23,7 @@ export class SubscriptionStateComponent implements OnInit {
   hasFreeTier?:boolean
   disableButtons:boolean = false
 
-  constructor(public auth:AuthService, private modal:MatDialog, private mp:MercadopagoService, private toast:MatSnackBar, private adminService:AdminService){
+  constructor(public auth:AuthService, private modal:MatDialog, private mp:MercadopagoService, private toast:MatSnackBar, private adminService:AdminService,private wpService:WpService){
     
     
   }
@@ -100,5 +101,10 @@ export class SubscriptionStateComponent implements OnInit {
     alert.afterDismissed().subscribe(dimiss=> this.disableButtons = false)
     alert.onAction().subscribe(action => supr())
 
+  }
+
+
+  contactSupport(){
+    this.wpService.contactSoporte()
   }
 }

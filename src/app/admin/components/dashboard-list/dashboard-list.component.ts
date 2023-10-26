@@ -98,6 +98,8 @@ export class DashboardListComponent implements OnInit {
   
   handleDragDrop(event:CdkDragDrop<any[]>){
     const {previousIndex, currentIndex} = event
+    const categoriesModified = structuredClone(this.categories)
+    
     moveItemInArray(this.categories, previousIndex, currentIndex);
 
     this.categories.forEach((c, i)=>{

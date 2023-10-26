@@ -11,7 +11,7 @@ import { handleError } from 'src/app/utils/handle-error-http';
 import { NotificationsAdminService } from '../notifications-admin/notifications-admin.service';
 
 @Injectable({
-  providedIn: 'any',
+  providedIn: 'root',
 })
 export class AdminService {
   constructor(
