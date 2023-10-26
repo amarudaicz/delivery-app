@@ -73,7 +73,6 @@ export class DocumentationComponent {
   }
 
   selectDirection(suggestion: FuzzySearchResult) {
-    this.suggestions = []
 
     this.tt.calculateRoute(this.local!.cords, suggestion.position).subscribe(route=>{
       this.distanceToShipping =  this.tt.MetersToKilometers(route.routes[0].summary.lengthInMeters)
