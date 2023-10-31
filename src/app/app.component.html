@@ -7,11 +7,11 @@
 
         <app-header *ngIf="themeLoad && stateLayout.state.header"></app-header>
 
-        <div class="h-full overflow-scroll" [@routeAnimations]="getRouteAnimationData()">
+        <div class="h-full " [class.overflow-y-auto]="stateLayout.state.header && themeLoad" [@routeAnimations]="getRouteAnimationData()">
             <router-outlet></router-outlet>
         </div>
-
         
+
         <app-navigation *ngIf="themeLoad" [@fadeIn]></app-navigation>
         
     </div>

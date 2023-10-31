@@ -15,21 +15,13 @@ html {
 body{
     font-family: system-ui, -apple-system;
     font-size: 14px;
-
     @include m.tablet{
         font-size: 16px;
     }
-
     background: #eff3f8;
     color: #0c183a;
-    height: 100%;
-    max-height: 100%;
-    min-height: 100%;
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
 
 }
 

@@ -300,7 +300,7 @@ export class CheckoutComponent implements OnInit {
 
       this.form.get('shippingMethod')?.valueChanges.subscribe((value) => {
 
-      if (value === 'Envio a domicilio') {
+      if (value === 'Envío a domicilio') {
         this.form.controls['direction'].setValidators(Validators.required);
         this.form.controls['streetNumber'].setValidators(Validators.required);
 
@@ -355,12 +355,12 @@ export class CheckoutComponent implements OnInit {
         return true
       }
 
-      if (shippingMethod === 'Envio a domicilio' && !this.ubicationUser){
+      if (shippingMethod === 'Envío a domicilio' && !this.ubicationUser){
        showAlerts ? this.snackBar.open('Ingresa una direccion valida', '' , {duration:3000}) : null
         return true
       }
 
-      if (shippingMethod === 'Envio a domicilio' && !this.costShipping && !this.form.get('defineCostShipping')?.value) {
+      if (shippingMethod === 'Envío a domicilio' && !this.costShipping && !this.form.get('defineCostShipping')?.value) {
        showAlerts ? this.snackBar.open('Tu ubicacion se encuentra fuera de la zona de entrega', '' , {duration:3000}) : null
         return true
       }

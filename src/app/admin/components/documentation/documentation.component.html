@@ -1,35 +1,33 @@
-<div class="w-full h-full card p-0">
+<div class="w-full h-full p-0 relative">
     <div class="flex flex-column md:flex-row items-start w-full h-full relative">
-        <div class="p-3 md:sticky top-0 left-0 h-full">
+        <div class="py-3 md:sticky top-0 left-0 h-fit md:h-screen bg-primary  border-round-top-xl md:border-round-top-xs md:border-round-left-xl">
             <div class="">
-                <span class="mb-2 text-xl font-bold">Índice</span>
                 <nav>
                     <ul class="sidebar">
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#introduction">
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#introduction">
                                 Introducción</a></li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#categories">Categorías</a>
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#categories">Categorías</a>
                         </li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#products">Productos</a>
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#products">Productos</a>
                         </li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#options-groups"> Grupos de
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#options-groups"> Grupos de
                                 opciones</a></li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#settings"> Datos de la
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#settings"> Datos de la
                                 tienda</a></li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#pay-methods"> Métodos de
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#pay-methods"> Métodos de
                                 pago</a></li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#shipping-methods"> Métodos
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#shipping-methods"> Métodos
                                 de envío</a></li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#themes"> Temas</a></li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#schedules"> Horarios</a>
-                        </li>
-                        <li class="py-2 pl-2 hover:text-primary"><a class="" href="admin/docs#links"> Redes sociales</a>
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#schedules"> Horarios</a></li>
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#themes"> Temas</a></li>
+                        <li class=" "><a class="block py-2 px-3 hover:bg-black-alpha-20" href="admin/docs#links"> Redes sociales</a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
 
-        <section class="flex-1 p-3 bg-gray-100">
+        <section class="flex-1 p-3 bg-white border-round-bottom-xl md:border-round-bottom-xs md:border-round-right-xl">
             <h1 class="text-3xl mb-3">Documentación</h1>
             <article class="article-docs mb-5 card" id="introduction">
                 <h3 class="mb-1 text-2xl">1. Introducción</h3>
@@ -239,23 +237,44 @@
                 </div>
                 <div class="mb-3">
                     <h5 class="text-xl mb-1 font-bold text-base">4.1 Nuevo grupo de opciones</h5>
-                    <p>Para crear un nuevo grupo deberás completar un formulario con los siguientes campos y guardar los datos.</p> jamón
+                    <p>Para crear un nuevo grupo deberás completar un formulario con los siguientes campos y guardar los
+                        datos.</p> jamón
                     <ul class="pl-3 list-disc">
-                        <li><b>Nombre:</b> Nombre de la Variante o atributo que representa al grupo. El nombre que elijas será el que verán tus clientes cuando elijan las opciones referidas a el grupo.</li>
-                        <li><b>Identificador:</b> Palabras clave para identificar el grupo dentro de tu lista de grupos, ya que pueden existir dos grupos que tengan el mismo nombre pero destinado a distintos productos. Este nombre no es visible para tus clientes.</li>
-                        <li><b>Respuesta única:</b> Cuando el campo "respuesta única" dentro del formulario para crear un nuevo grupo está marcado, el cliente solo podrá seleccionar una opción del grupo.</li>
-                        <li><b>Requerido:</b> Cuando el campo "requerido" está marcado, será obligatorio seleccionar al menos una opción del grupo.</li>
-                        <li><b>Mínimo y máximo de respuestas:</b> Si se permite seleccionar más de una opción del grupo, puedes definir límites de respuestas. Por ejemplo, si ofreces la posibilidad de elegir entre varios aderezos para una hamburguesa, puedes establecer un mínimo de tres y un máximo de cinco. O simplemente un máximo de 5 para que no excedan el límite y no forzar un mínimo de respuestas.</li>
-                        <li><b>Tipo de precio:</b> En la configuración de un grupo de opciones, puedes definir cómo afectan las selecciones de los clientes al precio final del producto. Hay tres opciones principales: 
+                        <li><b>Nombre:</b> Nombre de la Variante o atributo que representa al grupo. El nombre que
+                            elijas será el que verán tus clientes cuando elijan las opciones referidas a el grupo.</li>
+                        <li><b>Identificador:</b> Palabras clave para identificar el grupo dentro de tu lista de grupos,
+                            ya que pueden existir dos grupos que tengan el mismo nombre pero destinado a distintos
+                            productos. Este nombre no es visible para tus clientes.</li>
+                        <li><b>Respuesta única:</b> Cuando el campo "respuesta única" dentro del formulario para crear
+                            un nuevo grupo está marcado, el cliente solo podrá seleccionar una opción del grupo.</li>
+                        <li><b>Requerido:</b> Cuando el campo "requerido" está marcado, será obligatorio seleccionar al
+                            menos una opción del grupo.</li>
+                        <li><b>Mínimo y máximo de respuestas:</b> Si se permite seleccionar más de una opción del grupo,
+                            puedes definir límites de respuestas. Por ejemplo, si ofreces la posibilidad de elegir entre
+                            varios aderezos para una hamburguesa, puedes establecer un mínimo de tres y un máximo de
+                            cinco. O simplemente un máximo de 5 para que no excedan el límite y no forzar un mínimo de
+                            respuestas.</li>
+                        <li><b>Tipo de precio:</b> En la configuración de un grupo de opciones, puedes definir cómo
+                            afectan las selecciones de los clientes al precio final del producto. Hay tres opciones
+                            principales:
                             <ul class="pl-3 list-decimal">
-                                <li> <b>Sin Costo Adicional:</b> Esta opción indica que la selección del cliente no tiene un impacto en el precio final del producto. Por lo tanto, no se agrega ningún costo adicional al precio base.</li>
-                                <li><b>Determina el Precio Final:</b> Al elegir este tipo de "efecto", el valor de la opción que selecciones el cliente se usará como precio base del producto. Por ejemplo, si el cliente selecciona una opción que tiene como valor $200, el precio del producto será de $200. Cuando se cambie de opción, el precio cambiará.</li>
-                                <li><b>Incrementa el precio</b> Con este tipo, la selección del cliente aumenta el precio final del producto. Por ejemplo, si el cliente elige una opción con un valor de $200, se sumara este monto al precio base.</li>
+                                <li> <b>Sin Costo Adicional:</b> Esta opción indica que la selección del cliente no
+                                    tiene un impacto en el precio final del producto. Por lo tanto, no se agrega ningún
+                                    costo adicional al precio base.</li>
+                                <li><b>Determina el Precio Final:</b> Al elegir este tipo de "efecto", el valor de la
+                                    opción que selecciones el cliente se usará como precio base del producto. Por
+                                    ejemplo, si el cliente selecciona una opción que tiene como valor $200, el precio
+                                    del producto será de $200. Cuando se cambie de opción, el precio cambiará.</li>
+                                <li><b>Incrementa el precio</b> Con este tipo, la selección del cliente aumenta el
+                                    precio final del producto. Por ejemplo, si el cliente elige una opción con un valor
+                                    de $200, se sumara este monto al precio base.</li>
                             </ul>
                         </li>
-                        <li><b>Opciones:</b> Las opciones del grupo son los valores reales que puede elegir el cliente sobre un producto. Por ejemplo, el grupo "Color" tiene como opciones a Rojo, Verde y Azul.</li>
+                        <li><b>Opciones:</b> Las opciones del grupo son los valores reales que puede elegir el cliente
+                            sobre un producto. Por ejemplo, el grupo "Color" tiene como opciones a Rojo, Verde y Azul.
+                        </li>
                     </ul>
-                    
+
 
 
                 </div>
@@ -464,7 +483,8 @@
                 <h3 class="mb-1 text-2xl">5. Datos de la tienda</h3>
 
                 <span class="font-bold">Ajustes > Datos de la tienda</span>
-                <p class="mb-2">Establece los datos esenciales de tu tienda en esta sección. Asegúrate de proporcionar información precisa para tus clientes. A continuación se describen los campos a completar</p>
+                <p class="mb-2">Establece los datos esenciales de tu tienda en esta sección. Asegúrate de proporcionar
+                    información precisa para tus clientes. A continuación se describen los campos a completar</p>
                 <ul class="list-disc pl-3">
                     <li>
                         <strong>Nombre de la Tienda:</strong>
@@ -472,7 +492,8 @@
                     </li>
                     <li>
                         <strong>Teléfono:</strong>
-                        Proporciona el número de teléfono al que llegarán los pedidos por WhatsApp <i class="pi pi-whatsapp"></i>
+                        Proporciona el número de teléfono al que llegarán los pedidos por WhatsApp <i
+                            class="pi pi-whatsapp"></i>
                     </li>
                     <li>
                         <strong>Dirección:</strong>
@@ -484,22 +505,25 @@
                     </li>
                     <li>
                         <strong>Ubicación en el Mapa:</strong>
-                        Haz clic en el botón "Ubícate en el mapa" para establecer la ubicación precisa de tu tienda, esta ubicación se usara como Kilómetro 0 para calcular los costos de envíos que configures.
-                    </li>   
+                        Haz clic en el botón "Ubícate en el mapa" para establecer la ubicación precisa de tu tienda,
+                        esta ubicación se usara como Kilómetro 0 para calcular los costos de envíos que configures.
+                    </li>
                 </ul>
             </article>
 
             <article class="mb-5" id="pay-methods">
                 <h3 class="mb-1 text-2xl">6. Métodos de pago </h3>
-                
+
                 <span class="font-bold">Ajustes > Métodos de pago</span>
-                <p>Dentro de esta sección configura los métodos de pago disponibles en tu comercio. Asegúrate de proporcionar los datos correctos de las cuentas de banco que utilices.</p>
+                <p>Dentro de esta sección configura los métodos de pago disponibles en tu comercio. Asegúrate de
+                    proporcionar los datos correctos de las cuentas de banco que utilices.</p>
                 <p>Completa los campos requeridos para cada método de pago y guarda los cambios</p>
 
                 <ul class="list-disc pl-3">
                     <li>
                         <strong>Transferencia bancaria</strong>
-                        Permite a los clientes pagar por medio de una transferencia directa a tu cuenta bancaria. Deberás indicar tu CBU o Alias para que sea visible a tus clientes cuando realizen un pedido
+                        Permite a los clientes pagar por medio de una transferencia directa a tu cuenta bancaria.
+                        Deberás indicar tu CBU o Alias para que sea visible a tus clientes cuando realizen un pedido
                     </li>
                     <li>
                         <strong>Pago en Efectivo</strong>
@@ -511,16 +535,23 @@
             <article class="mb-5" id="shipping-methods">
                 <h3 class="mb-1 text-2xl">7. Métodos de entrega</h3>
                 <span class="font-bold">Ajustes > Métodos de entrega</span>
-                <p class="mb-3">Define los métodos que usas para entregar tus productos. Puedes dar elegir a tus clientes entre envío a domicilio, retirar en local o ambas</p>
-                
+                <p class="mb-3">Define los métodos que usas para entregar tus productos. Puedes dar elegir a tus
+                    clientes entre envío a domicilio, retirar en local o ambas</p>
+
                 <div class="mb-3">
                     <h5 class="mb-1 font-bold text-xl">7.1 Envíos a domicilio</h5>
-                    <p>Si ofreces envíos, marca el método "Envío a domicilio", completa los campos <b>costo envío aprox</b> y <b>tiempo envío aprox</b> estos datos deben ser aproximaciones reales ya que serán visibles para tus clientes. Al definir el <b>costo de envió aprox</b> no significa que se incluirá el valor que ingresaste en todos los pedidos que requieran envío. Los datos se usan para mejorar la experiencia del cliente. </p>
+                    <p>Si ofreces envíos, marca el método "Envío a domicilio", completa los campos <b>costo envío
+                            aprox</b> y <b>tiempo envío aprox</b> estos datos deben ser aproximaciones reales ya que
+                        serán visibles para tus clientes. Al definir el <b>costo de envió aprox</b> no significa que se
+                        incluirá el valor que ingresaste en todos los pedidos que requieran envío. Los datos se usan
+                        para mejorar la experiencia del cliente. </p>
 
                 </div>
                 <div class="mb-3">
                     <h5 class="mb-1 font-bold text-xl">7.2 Costos de envío</h5>
-                    <p class="mb-2" >Puedes configurar diferentes costos de envío fácilmente agregando un nuevo rango de envío. Un rango de envío consta de dos datos, el costo del envío y el radio de kilómetros en el que se aplicará el costo</p>
+                    <p class="mb-2">Puedes configurar diferentes costos de envío fácilmente agregando un nuevo rango de
+                        envío. Un rango de envío consta de dos datos, el costo de envío y la distancia maxima en
+                        kilómetros que cubre el costo</p>
 
                     <div class="flex gap-2 flex-column md:flex-row align-items-start">
                         <div class="p-3 bg-blue-100 border-round-xl mb-1">
@@ -528,71 +559,85 @@
                             <span class="block"><b>Rango de envío 1:</b></span>
                             <span class="pl-2 block">Costo: $100</span>
                             <span class="pl-2 mb-2">Kilómetros: 1.5</span>
-    
+
                             <span class="block"><b>Rango de envío 2:</b></span>
                             <span class="pl-2 block">Costo: $200</span>
                             <span class="pl-2">Kilómetros: 2.5</span>
                         </div>
 
                         <div class="flex-1 w-full p-3 border-1 border-red-400 w-fit border-round-xl mb-1">
-                            <span class="block text-xl text-red-400"><i class="pi pi-info-circle mr-2 text-xl"></i> <b>Importante</b></span>
-                            <p>Continuando con el ejemplo si un comprador quiere que le envíen su pedido y se encuentra a 1.6Km de tu tienda se <b>aplicara el costo de envío del rango numero 2 </b> ya que sobrepasa los kilómetros que cubre el rango de envío numero 1 </p>
-                            
-                            <p class="mb-2">Puedes usar nuestro calculador de envíos para saber a cuantos kilómetros exactos se encuentra una dirección</p>
-                            
+                            <span class="block text-xl text-red-400"><i class="pi pi-info-circle mr-2 text-xl"></i>
+                                <b>Importante</b></span>
+                            <p>Continuando con el ejemplo si un comprador quiere que le envíen su pedido y se encuentra
+                                a 1.6Km de tu tienda se <b>aplicara el costo de envío del rango numero 2 </b> ya que
+                                sobrepasa los kilómetros que cubre el rango de envío numero 1 </p>
+
+                            <p class="mb-2">Puedes usar nuestro calculador de envíos para saber a cuantos kilómetros se
+                                encuentra una dirección en particular</p>
+
                             <div class="">
                                 <form [formGroup]="form">
                                     <div class="">
                                         <div class="">
-                                          <div class="d-flex gap-2 relative">
-                                            <div class="block w-full relative">
-                                              <label class="font-semibold mb-1 text-sm">Calle <span class="text-red-500">*</span></label>
-                                              <mat-form-field appearance="outline" class="w-full" color="primary">
-                                                <input (blur)="getDirection()"  placeholder="Ingresa tu dirección"
-                                                  type="text" matInput formControlName="direction" />
-                                                <!-- <mat-error>{{setErrorsMessage('direction')}}</mat-error> -->
-                                              </mat-form-field>
-                                              
+                                            <div class="d-flex gap-2 wrap relative">
+                                                <div class="block flex-1  relative">
+                                                    <label class="font-semibold mb-1 text-sm">Calle <span
+                                                            class="text-red-500">*</span></label>
+                                                    <mat-form-field appearance="outline" class="w-full" color="primary">
+                                                        <input (blur)="getDirection()"
+                                                            placeholder="Ingresa tu dirección" type="text" matInput
+                                                            formControlName="direction" />
+                                                        <!-- <mat-error>{{setErrorsMessage('direction')}}</mat-error> -->
+                                                    </mat-form-field>
+
+                                                </div>
+
+                                                <div class="flex-1 relative">
+                                                    <label class="font-semibold mb-1 text-sm">Número <span
+                                                            class="text-red-500">*</span></label>
+                                                    <mat-form-field appearance="outline" class="w-full" color="primary">
+                                                        <input (blur)="getDirection()" formControlName="streetNumber"
+                                                            placeholder="Nro" type="number" matInput />
+                                                    </mat-form-field>
+                                                </div>
                                             </div>
-                                 
-                                            <div class="w-3 relative">
-                                              <label class="font-semibold mb-1 text-sm">Número <span class="text-red-500">*</span></label>
-                                              <mat-form-field appearance="outline" class="w-full" color="primary">
-                                                <input (blur)="getDirection()" formControlName="streetNumber" placeholder="Nro" type="number" matInput />
-                                              </mat-form-field>
-                                            </div>
-                                          </div>
-                                
+
                                         </div>
-                                
-                                        <div *ngIf="suggestions.length" class="relative" style='top:-25px' >
-                                         
+
+                                        <div *ngIf="suggestions.length" class="relative" style='top:-25px'>
+
                                             <ul class="suggestions relative border-round overflow-y-auto z-2 mt-1 mb-2">
-                                              <li class="p-2">
-    
+                                                <li class="p-2">
+
                                                 </li>
-                                              <li (click)="selectDirection(suggestion)" class="cursor-pointer text-overflow-ellipsis overflow-hidden text-nowrap p-2 border-bottom-1 border-800 text-sm hover:bg-white hover:text-black-alpha-90" matRipple
-                                                *ngFor="let suggestion of suggestions">
-                                                <i class="pi pi-map-marker"></i>
-                                                <span class="font-bold"> {{suggestion.address?.streetName}}</span>
-                                                <span class="" *ngIf="suggestion.address?.streetNumber"> {{suggestion.address?.streetNumber}}</span>
-                                                <span class="" *ngIf="suggestion.address?.localName && suggestion.address?.localName !== suggestion.address?.countrySubdivision">, {{suggestion.address?.localName}}</span>
-                                                <span class="" *ngIf="suggestion.address?.countrySubdivision">, {{suggestion.address?.countrySubdivision}}</span>
-                                                <span class="">, {{suggestion.address?.country}}</span>
-                                              </li>
+                                                <li (click)="selectDirection(suggestion)"
+                                                    class="cursor-pointer text-overflow-ellipsis overflow-hidden p-2 border-bottom-1 border-800 text-sm hover:bg-white hover:text-black-alpha-90"
+                                                    matRipple *ngFor="let suggestion of suggestions">
+                                                    <i class="pi pi-map-marker"></i>
+                                                    <span class="font-bold"> {{suggestion.address?.streetName}}</span>
+                                                    <span class="" *ngIf="suggestion.address?.streetNumber">
+                                                        {{suggestion.address?.streetNumber}}</span>
+                                                    <span class=""
+                                                        *ngIf="suggestion.address?.localName && suggestion.address?.localName !== suggestion.address?.countrySubdivision">,
+                                                        {{suggestion.address?.localName}}</span>
+                                                    <span class="" *ngIf="suggestion.address?.countrySubdivision">,
+                                                        {{suggestion.address?.countrySubdivision}}</span>
+                                                    <span class="">, {{suggestion.address?.country}}</span>
+                                                </li>
                                             </ul>
                                         </div>
 
-                                            
-                                        <span *ngIf="distanceToShipping" class="font-bold text-xl">Distancia : {{distanceToShipping.toFixed(2)}} Kilómetros</span>
-    
-                                      </div>
+
+                                        <span *ngIf="distanceToShipping" class="font-bold text-xl">Distancia :
+                                            {{distanceToShipping.toFixed(2)}} Kilómetros</span>
+
+                                    </div>
                                 </form>
-                            
+
                             </div>
                         </div>
 
-                       
+
                     </div>
 
 
@@ -603,40 +648,54 @@
 
                 </div>
 
-                
-                
             </article>
 
-            <article class="mb-5" id="themes">
-                <h3 class="mb-1 text-2xl">Temas de la tienda</h3>
-
-            </article>
 
             <article class="mb-5" id="schedules">
                 <h3 class="mb-1 text-2xl">Horarios</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci iste vitae hic, eligendi
-                    aspernatur ab nisi? Ratione qui porro sequi, eaque aperiam quisquam inventore cumque! Non voluptates
-                    sit fugiat aliquam?
-                    Quia quo a perspiciatis recusandae, eos et obcaecati tempora, ea saepe, nulla est impedit ratione
-                    provident ipsam suscipit possimus esse dolores aut! Dolores, repudiandae exercitationem nisi nulla
-                    sequi sit ratione?
-                    At tenetur consectetur, neque aspernatur ipsam incidunt iusto. Reiciendis, cumque facilis autem
-                    totam earum illo! Voluptate fuga totam illo ducimus quia quod dolorem nesciunt veniam sapiente
-                    earum, labore nulla similique?</p>
+                <p>Para configurar los horarios de tu tienda dirígete a la sección <b>Horarios</b> del menu lateral. Una
+                    vez dentro podrás configurar los turnos en los que tus clientes podrán realizar pedidos.
+                    Podrás establecer, horario de apertura y cierre para cada uno de los días.
+                </p>
+                <p>Para agregar turnos a un día específico, activa el día, haz clic en <b>Nuevo turno</b> e indica el
+                    horario de apertura y cierre. En caso que lo necesites puedes agregar mas de un turno por día. </p>
+                <p class="mb-2">
+                    Para indicar que un dia completo no recibirán pedidos simplemente desactiva el dia desde el botón
+                    <mat-slide-toggle checked></mat-slide-toggle>
+                </p>
+
+                <div class="w-full p-3 border-1 border-red-400 border-round-xl mb-1">
+                    <span class="block mb-2 text-xl text-red-400"><i class="pi pi-info-circle mr-2 text-xl"></i>
+                        <b>Importante</b></span>
+                    <p class="mb-1">Si un dia permanecen con su tienda abierta hasta la madrugada del dia siguiente, deberás crear un
+                        turno que cubra la madrugada del dia correcto. <br> Ejemplo si los viernes tu horario es de 20pm
+                        hasta 02am, crearás un turno el viernes de 20pm a 24pm y otro el sábado de 00am hasta 2am. De esta forma tu tienda abrirá
+                        ininterrumpidamente de 20pm del viernes a 02am del sábado </p>
+
+                    <ul class="list-disc pl-3">
+                        <li>Viernes: 20pm hasta 24pm</li>
+                        <li>Sábado: 00am hasta 02am</li>
+                    </ul>
+
+                </div>
+
             </article>
+
+
+
+
+            <article class="mb-5" id="themes">
+                <h3 class="mb-1 text-2xl">Temas de la tienda</h3>
+                <span class="mb-3 font-bold">Ajustes > Temas</span>
+                <p>Los colores de la aplicación son importantes para representar tu marca/negocio/rubro. Elije entre los
+                    temas disponibles el que mejor se adapte a tus productos o servicios </p>
+            </article>
+
 
 
             <article class="mb-5" id="links">
                 <h3 class="mb-1 text-2xl">Redes Sociales</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci iste vitae hic, eligendi
-                    aspernatur ab nisi? Ratione qui porro sequi, eaque aperiam quisquam inventore cumque! Non voluptates
-                    sit fugiat aliquam?
-                    Quia quo a perspiciatis recusandae, eos et obcaecati tempora, ea saepe, nulla est impedit ratione
-                    provident ipsam suscipit possimus esse dolores aut! Dolores, repudiandae exercitationem nisi nulla
-                    sequi sit ratione?
-                    At tenetur consectetur, neque aspernatur ipsam incidunt iusto. Reiciendis, cumque facilis autem
-                    totam earum illo! Voluptate fuga totam illo ducimus quia quod dolorem nesciunt veniam sapiente
-                    earum, labore nulla similique?</p>
+                <p>Puedes definir hasta 4 redes sociales para que desde tu tienda tus clientes puedan acceder directamente a cada una de ellas, dirígete a la sección <b>Redes sociales</b> pulsa en editar para agregar tus links y luego guarda los cambios, estos enlaces se mostraran en la información de tu tienda</p>
             </article>
 
 
@@ -645,5 +704,9 @@
 
 
 
+
+    <div (click)="scrollTop()" class="p-3 bg-black-alpha-90 flex fixed bottom-0 right-0 mr-2 mb-2 back-top">
+        <i class="pi pi-arrow-up text-xl text-white"></i>
+    </div>
 
 </div>

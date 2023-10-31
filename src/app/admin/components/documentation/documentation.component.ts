@@ -80,5 +80,8 @@ export class DocumentationComponent {
     })
   }
 
+  scrollTop(){
+    window.scrollTo(0,0)
+  }
 
 }

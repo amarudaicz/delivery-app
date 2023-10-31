@@ -153,13 +153,18 @@ export class SchedulesComponent {
 
   genHours() {
     let horas = [];
-    for (let hora = 0; hora < 24; hora++) {
-      for (let minuto = 0; minuto < 60; minuto += 15) {
-        let horaFormateada =
-          ('0' + hora).slice(-2) + ':' + ('0' + minuto).slice(-2);
-        horas.push(horaFormateada);
+    for (let hora = 0; hora <= 24; hora++) {
+      if(hora===24){
+        horas.push('24:00');
+      }else{
+        for (let minuto = 0; minuto < 60; minuto += 15) {
+            let horaFormateada = ('0' + hora).slice(-2) + ':' + ('0' + minuto).slice(-2);
+            horas.push(horaFormateada);
+            
+          }
       }
     }
+
     return horas;
   }
 

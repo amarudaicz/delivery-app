@@ -108,7 +108,7 @@ export class ShippingConfigComponent implements OnInit {
     if (this.form.get('delivery')?.value){
       shippingMethods.delivery = {
         method:'delivery',
-        description:'Envio a domicilio',
+        description:'Envío a domicilio',
         delivery_time:this.form.get('delivery_time')?.value,
         delivery_cost:this.form.get('delivery_cost')?.value,
         shipping_costs:this.formCostShipping.get('shippingCosts')?.value

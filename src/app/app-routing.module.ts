@@ -16,6 +16,7 @@ import { MainLoginComponent } from './login/components/main-login/main-login.com
 import { MainOptionsComponent } from './admin/components/main-options/main-options.component';
 import { MainSchedulesComponent } from './admin/components/main-schedules/main-schedules.component';
 import { LinksSocialComponent } from './admin/components/links-social/links-social.component';
+import { TermsComponent } from './policies/terms/terms.component';
 
 const routes: Routes = [
 
@@ -42,12 +43,19 @@ const routes: Routes = [
     path: 'user',
     component: MainUserComponent,
   },
+  {
+    path: 'politicas-de-privacidad',
+    component: MainUserComponent,
+  }, {
+    path: 'terminos-y-condiciones',
+    component: TermsComponent,
+  },
 
   {
     path: ':local/:category/:product',
     loadChildren:()=> import('./detail/detail.module').then((m) => m.DetailModule)
   },  
-
+  
   {
     path:'',
     loadChildren:()=> import('./landing/landing.module').then(m => m.LandingModule)
