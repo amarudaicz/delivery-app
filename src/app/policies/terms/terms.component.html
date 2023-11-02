@@ -7,7 +7,7 @@
 
             <div class="w-full md:w-3">
 
-                <a routerLink="" class="cursor-pointer py-3 font-bold px-5 block text-center sm:w-fit border-round bg-primary mb-5">
+                <a mat-ripple [routerLink]="['/']" class="cursor-pointer py-3 font-bold px-5 block text-center sm:w-fit border-round bg-primary mb-5">
                     <i class="pi pi-arrow-left mr-2 font-extrabold"></i>
                     Volver
                 </a>
@@ -31,6 +31,7 @@
                             <li class=""><a class="py-1 my-1 hover:text-primary block"  href="terminos-y-condiciones#interrupcion">Interrupción del servicio</a></li>
                             <li class=""><a class="py-1 my-1 hover:text-primary block"  href="terminos-y-condiciones#reventa">Reventa del servicio</a></li>
                             <li class=""><a class="py-1 my-1 hover:text-primary block"  href="terminos-y-condiciones#contacto">Contacto</a></li>
+                            <li class=""><a class="py-1 my-1 hover:text-primary block"  href="terminos-y-condiciones#ley-aplicable">Ley aplicable</a></li>
                         </ol>
                     </ul>
     
@@ -39,40 +40,38 @@
             </div>
 
 
-            <section class="flex-1 text-900">
-                <h1 class="text-6xl  font-extrabold mb-5">Términos y condiciones</h1>
+            <section class="flex-1">
+                <h1 class="text-6xl font-extrabold mb-5">Términos y condiciones</h1>
 
-                <section class="mb-4">
-                    <h4 id="primero" class="text-2xl mb-3 text-primary font-bold">ANTES DE EMPEZAR</h4>
-                    <p class="my-2">Estos Términos y Condiciones generales (Legales) son las reglas de uso aplicables al
-                        uso de este Sitio web y a los servicios ofrecidos por <b>DELI</b> o a los que se accede a
+                <section class="mb-4  text-900">
+                    <h4 id="primero" class="text-2xl mb-3 text-primary font-bold">ANTES DE EMPEZAR.</h4>
+                    <p class="my-3">Estos Términos y Condiciones generales (Legales) son las reglas de uso aplicables al
+                        Sitio web y a los servicios ofrecidos por <b>DELITIENDA</b> o a los que se accede a
                         través de este sitio (delitienda.app) por parte de los Abonados (Abonado). Cuando se presentan
-                        los términos “nosotros”, “nos”, “nuestro”, refieren a DELI. Cuando se hace referencia a
-                        "usted", "su", "suyo", "usuario", "cliente", se alude a toda persona o empresa que acepte estos
+                        los términos "nosotros", "nuestro", "sitio", "plataforma", refieren a DELITIENDA. Cuando se hace referencia a
+                        "usted", "su", "usuario", "cliente", se alude a toda persona o empresa que acepte estos
                         términos y condiciones.</p>
-                    <p class="my-2">DELI con exclusivo y absoluto criterio, puede modificar estos Legales y
-                        cualquiera de sus políticas incorporadas, en cualquier momento y sin previo aviso, estando
-                        vigentes inmediatamente después de la publicación en este sitio web.</p>
-                    <p class="my-2">
-                        El uso de los servicios ofrecidos por DELI presupone la aceptación de estos términos y
+                    <p class="my-3">DELITIENDA con absoluto criterio, puede modificar los actuales Términos y Condiciones,
+                        en cualquier momento, comunicando la actualización en delitienda.app estando vigentes
+                        inmediatamente después de la publicación.</p>
+                    <p class="my-3">
+                        El uso de los servicios ofrecidos por DELITIENDA presupone la aceptación de estos términos y
                         condiciones generales.</p>
                 </section>
 
-                <section class="mb-4">
-                    <h4 id="definiciones" class="text-2xl mb-3 text-primary font-bold">DEFINICIONES</h4>
+                <section class="mb-4  text-900">
+                    <h4 id="definiciones" class="text-2xl mb-3 text-primary font-bold">DEFINICIONES.</h4>
 
-                    <p class="my-2"><strong>DELI:</strong> Es el grupo encargado de operar comercialmente el Sitio y
-                        proporcionar a sus usuarios un servicio de intermediación a través de una plataforma
-                        digital. </p>
+                    <p class="my-2"><strong>DELITIENDA:</strong> Es el grupo encargado de operar comercialmente el Sitio y
+                        proporciona a sus Usuarios un servicio de   . </p>
 
                     <p class="my-2"><strong>Servicio ofrecido:</strong> Consiste en ofrecer un sistema
-                        autoadministrable para
-                        crear catálogos independientes en línea, con el fin de dar visibilidad a los productos y/o
-                        servicios proporcionados por los usuarios y agilizar las consultas directas a través de
-                        WhatsApp, mediante un enlace proporcionado por DELI.</p>
+                        autoagestionable para
+                        crear catálogos de fácil acceso, con el fin de dar visibilidad a los productos y/o
+                        servicios, agilizar las ventas y/o consultas finales a través de WhatsApp.</p>
 
-                    <p class="my-2"><strong>Plataforma:</strong> Es el sistema de servicios proporcionado por DELI
-                        que permite al usuario exhibir los productos y servicios catalogados y en stock. Esta
+                    <p class="my-2"><strong>Plataforma:</strong> Es el sistema de servicios proporcionado por DELITIENDA
+                        que permite al usuario exhibir los productos y servicios catalogados. Esta
                         plataforma se encuentra operativa a través del sitio delitienda.app.</p>
 
                     <p class="my-2"><strong>Usuario (Comerciante):</strong> Se refiere a cualquier persona mayor de
@@ -82,7 +81,7 @@
                     <p class="my-2"><strong>Cliente:</strong> Corresponde a cualquier individuo mayor de
                         dieciocho (18) años, o entidad jurídica, que adquiera productos o servicios del usuario
                         (comerciante) a
-                        través de la plataforma o enlace, actuando como destinatario final en su propio beneficio.
+                        través de la plataforma.
                     </p>
 
                     <p class="my-2"><strong>Catalogo:</strong> Los artículos o servicios expuestos mediante la
@@ -107,29 +106,26 @@
                 </section>
 
 
-                <section class="mb-4">
-                    <h4 id="clausulas" class="text-2xl mb-3 text-primary font-bold">CLÁUSULAS</h4>
+                <section class="mb-4  text-900">
+                    <h4 id="clausulas" class="text-2xl mb-3 text-primary font-bold">CLÁUSULAS.</h4>
                     <ol class="ol-list flex flex-column gap-6">
                         <li class="li-list" id="alcance">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Alcance</h6>
-                            <p>El registro y uso de los Servicios de DELI por parte de un usuario (en adelante
-                                el/los “Usuario/s”) indica la aceptación absoluta de los presentes Términos y
-                                Condiciones (en adelante Términos y Condiciones o "TYC" indistintamente) y de la
-                                Política de Privacidad. El Usuario garantiza y declara ser mayor
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Alcance.</h6>
+                            <p>El uso de los Servicios de DELITIENDA por parte de un Usuario indica la aceptación absoluta de los presentes Términos y
+                                Condiciones(TYC). El Usuario garantiza y declara ser mayor
                                 de 18 años, y/o en su caso, que tiene la expresa autorización de sus padres o de sus
                                 tutores para poder acceder al sitio web y que es competente para entender y aceptar
                                 sin reservas las obligaciones, afirmaciones, representaciones y garantías
-                                establecidas en estos Términos y Condiciones. Por su parte, DELI, en adelante “el
-                                Administrador”, no se responsabiliza en el caso de no ser veraz la información
+                                establecidas en estos TYC. Por su parte, DELITIENDA, no se responsabiliza en el caso de no ser veraz la información
                                 suministrada al respecto.</p>
 
-                            <p>Los presentes “TYC”, junto con la Política de Privacidad, y documentos
-                                complementarios constituyen la totalidad del acuerdo entre Ud. y DELI respecto del
+                            <p>Los presentes TYC, junto con la Política de Privacidad, y documentos
+                                complementarios constituyen la totalidad del acuerdo entre Ud. y DELITIENDA respecto del
                                 uso del Sitio y la Plataforma.</p>
                         </li>
 
                         <li class="li-list" id="usuarios">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Usuarios
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Usuarios.
                             </h6>
                             <ol class="ol-list pl-4 flex flex-column gap-4 ">
                                 <li class=" li-sublist">
@@ -140,15 +136,8 @@
                                 </li>
 
                                 <li class=" li-sublist">
-                                    El Usuario se obliga a usar los servicios de DELI con estos Términos
-                                    y Condiciones, en forma correcta y lícita. En caso contrario, el Administrador
-                                    podrá suspender la cuenta del Usuario, por no respetar estos Términos y Condiciones
-                                    y/o de la Política de Privacidad los servicios prestados por DELI.
-                                </li>
-
-                                <li class=" li-sublist">
-                                    DELI no se responsabiliza por la certeza o veracidad de los Datos Personales
-                                    provistos por cualquier Usuario, quien garantiza y responde personalmente, en
+                                    DELITIENDA no se responsabiliza por la certeza o veracidad de los Datos Personales
+                                    provistos por cualquier Usuario, quien garantiza y responde personalmente en
                                     cualquier caso, de la veracidad, exactitud, integridad, vigencia y autenticidad
                                     de la Información suministrada por él.
                                 </li>
@@ -171,7 +160,7 @@
                                 </li>
 
 
-                                <li class=" li-sublist">La adecuada utilización de todos los recursos de DELI es, sin excepción, de
+                                <li class=" li-sublist">La adecuada utilización de todos los recursos de DELITIENDA es, sin excepción, de
                                     entera responsabilidad del Usuario de los servicios proporcionados.</li>
                             </ol>
 
@@ -180,26 +169,24 @@
                         </li>
 
                         <li class="li-list" id="suscripcion">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Suscripción</h6>
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Suscripción.</h6>
 
                             <ol class="ol-list pl-4 flex flex-column gap-4 ">
                                 <li class=" li-sublist">
-                                    Cualquier persona que quiera acceder a los servicios prestados por DELI deberá
-                                    registrarse como usuario, completando un formulario de registro (en adelante
+                                    Cualquier persona que quiera acceder a los servicios prestados por DELITIENDA deberá
+                                    registrarse como Usuario, completando un formulario de registro (en adelante
                                     Suscripción) de forma exacta y precisa, con datos ciertos, válidos, actuales, y
                                     verdaderos sobre su información personal y/o comercial.</li>
 
-                                <li class=" li-sublist">Una vez completada la suscripción tendrá acceso a su cuenta en DELI
+                                <li class=" li-sublist">Una vez completada la suscripción tendrá acceso a su cuenta en DELITIENDA
                                     donde
-                                    podrá administrar su tienda, productos, categorías, horarios, ect.</li>
+                                    podrá administrar su tienda, productos, categorías, horarios y todos los aspectos referidos a su tienda.</li>
 
-                                <li class=" li-sublist">La suscripción finaliza y/o se detiene cuando el Usuario desde su
+                                <li class=" li-sublist">La suscripción se detiene y no se efectúan cobros a tu tarjeta, cuando el Usuario desde su
                                     cuenta, en
                                     la sección de Pagos detiene su suscripción y/o elimina su cuenta de forma
                                     permanente.
-                                    Cuando elimine su cuenta en DELI su tienda en la plataforma permanecerá visible para
-                                    sus
-                                    clientes hasta que finalice el pago ya cobrado.</li>
+                                    Cuando elimine su cuenta en DELITIENDA su tienda en la plataforma permanecerá dejara de estar visible para sus clientes en el momento que la elimino, si detiene la suscripción su tienda permanecerá visible hasta que finalice el pago ya cobrado.</li>
 
                             </ol>
 
@@ -208,31 +195,29 @@
                         </li>
 
                         <li class="li-list" id="cuenta">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Cuenta del usuario</h6>
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Cuenta del usuario.</h6>
 
-                            <p class="my-2">Los usuarios ingresan su nombre de usuario y contraseña para acceder a su
-                                cuenta personal (en adelante “Cuenta”). Debes ser la única persona que conoce tu nombre
-                                de usuario y
+                            <p class="my-2">Los usuarios ingresan DELITIENDA con su nombre de usuario y contraseña. Debes ser la única persona que conoce tu nombre de usuario y
                                 contraseña para acceder a tu cuenta, y eres el único responsable de mantener la
-                                confidencialidad de tus datos y contraseña.</p>
+                                confidencialidad de tu usuario y contraseña.</p>
                         </li>
 
 
                         <li class="li-list" id="responsabilidad">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Responsabilidad</h6>
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Responsabilidad.</h6>
 
                             <ol class="ol-list pl-4 flex flex-column gap-4 ">
-                                <li class=" li-sublist">Los servicios prestados por DELI consisten únicamente en facilitar a los usuarios un espacio virtual a través de un sistema de gestión de pedidos online y venta directa de productos y servicios a través de WhatsApp. En este sentido, la plataforma no es propietaria de los productos y/o servicios proporcionados por el Usuario y no es responsable de la existencia, calidad, cantidad, disponibilidad, condición, integridad o legalidad de los bienes proporcionados, adquiridos o vendidos por el Usuario. Cada Usuario reconoce y acepta que es el único responsable de los artículos y/o servicios que publica.</li>
+                                <li class=" li-sublist">Los servicios prestados por DELITIENDA consisten únicamente en facilitar a los usuarios un espacio virtual a través de un sistema de gestión de pedidos online y venta directa de productos y servicios a través de WhatsApp. En este sentido, la plataforma no es propietaria de los productos y/o servicios proporcionados por el Usuario y no es responsable de la existencia, calidad, cantidad, disponibilidad, condición, integridad o legalidad de los bienes proporcionados, adquiridos o vendidos por el Usuario. Cada Usuario reconoce y acepta que es el único responsable de los artículos y/o servicios que publica.</li>
 
-                                <li class=" li-sublist">DELI, al limitarse a prestar servicios de conexión o canales de comunicación entre el Usuario y sus clientes, no será responsable del cumplimiento efectivo de las obligaciones asumidas por el Usuario en el desarrollo de la actividad. Los usuarios conocen y aceptan que al realizar transacciones con clientes o terceros, lo hacen bajo su propia responsabilidad. En ningún caso DELI será responsable por lucro cesante ni por cualesquiera otros daños y/o perjuicios que el Usuario pueda sufrir como resultado de actividades realizadas o no realizadas en los Productos publicados a través de la Plataforma.</li>
-                                <li class=" li-sublist">  DELI NO controla la calidad, seguridad o legalidad de los productos anunciados ni la capacidad de los usuarios para vender los productos publicados, por lo tanto DELI no es responsable de la veracidad o exactitud de los anuncios y tampoco podemos garantizar que los Usuarios completarán ninguna actividad.</li>
+                                <li class=" li-sublist">DELITIENDA, al limitarse a prestar servicios de conexión o canales de comunicación entre el Usuario y sus clientes, no será responsable del cumplimiento efectivo de las obligaciones asumidas por el Usuario en el desarrollo de la actividad. Los usuarios conocen y aceptan que al realizar transacciones con clientes o terceros, lo hacen bajo su propia responsabilidad. En ningún caso DELITIENDA será responsable por lucro cesante ni por cualesquiera otros daños y/o perjuicios que el Usuario pueda sufrir como resultado de actividades realizadas o no realizadas en los Productos publicados a través de la Plataforma.</li>
+                                <li class=" li-sublist">DELITIENDA NO controla la calidad, seguridad o legalidad de los productos anunciados ni la capacidad de los usuarios para vender los productos publicados, por lo tanto DELITIENDA no es responsable de la veracidad o exactitud de los anuncios y tampoco podemos garantizar que los Usuarios completarán ninguna actividad.</li>
 
                               
                             </ol>
                         </li>
 
                         <li class="li-list" id="propiedad-intelectual">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Propiedad intelectual</h6>
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Propiedad intelectual.</h6>
                             <p>
                                 La expresión de ideas, procedimientos, métodos de operación y conceptos matemáticos de
                                 conformidad con lo establecido en el artículo 1º de la Ley 11.723 y sus modificatorias,
@@ -244,7 +229,7 @@
                         </li>
                         <li class="li-list" id="modificacion">
                             <h6 class="font-bold inline-block text-base  mb-2 text-xl">Modificación de los Términos y
-                                Condiciones
+                                Condiciones.
                             </h6>
 
                             <p>El Administrador se reserva el derecho de modificar estos Términos y Condiciones en
@@ -254,17 +239,17 @@
                         </li>
 
                         <li class="li-list" id="recursos-externos">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Acceso a recursos externos
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Acceso a recursos externos.
                             </h6>
                             <ol class="ol-list pl-4 flex flex-column gap-4 ">
-                                <li class=" li-sublist">A través de DELI, los usuarios y clientes pueden acceder a recursos externos proporcionados por terceros. El Usuario reconoce y acepta que el Titular no tiene control sobre estos recursos y por lo tanto no es responsable de su contenido y disponibilidad.</li>
+                                <li class=" li-sublist">A través de DELITIENDA, los usuarios y clientes pueden acceder a recursos externos proporcionados por terceros. El Usuario reconoce y acepta que el Titular no tiene control sobre estos recursos y por lo tanto no es responsable de su contenido y disponibilidad.</li>
                                 <li class=" li-sublist">Los términos aplicables a los recursos proporcionados por terceros, incluidos los términos aplicables a la concesión de derechos sobre el contenido, se establecen en los términos de uso del tercero o, si dicho tercero no existe, se rige por la ley aplicable.</li>
                             </ol>
 
                         </li>
 
                         <li class="li-list" id="interrupcion">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Interrupción del servicio
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Interrupción del servicio.
                             </h6>
                             <ol class="ol-list pl-4 flex flex-column gap-4 ">
 
@@ -279,20 +264,27 @@
                         </li>
 
                         <li class="li-list" id="reventa">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Reventa del Servicio
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Reventa del Servicio.
                             </h6>
 
-                             <p>Los Usuarios no reproducirán, duplicarán, copiarán, venderán, revenderán o explotarán ninguna parte de DELI y de su Servicio sin la autorización previa, expresa y por escrito del Titular, concedida ya sea directamente o a través de un programa de reventa legítimo.</p>
+                             <p>Los Usuarios no reproducirán, duplicarán, copiarán, venderán, revenderán o explotarán ninguna parte de DELITIENDA y de su Servicio sin la autorización previa, expresa y por escrito del Titular, concedida ya sea directamente o a través de un programa de reventa legítimo.</p>
                         </li>
 
 
                         
                         <li class="li-list" id="contacto">
-                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Contacto
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl"> Contacto.
                             </h6>
-                             <p>Todas las comunicaciones relativas a la utilización de DELI deberán remitirse utilizando los datos de contacto señalados a continuación</p>
+                             <p>Todas las comunicaciones relativas a la utilización de DELITIENDA deberán remitirse utilizando los datos de contacto señalados a continuación</p>
 
 
+                        </li>
+                        
+                        <li class="li-list" id="ley-aplicable">
+                            <h6 class="font-bold inline-block text-base mb-2 text-xl">Ley aplicable.</h6>
+                            <p>
+                                Esta Política de Privacidad y Protección de Datos Personales se rige exclusivamente por la ley de la República Argentina.
+                            </p>
                         </li>
 
 

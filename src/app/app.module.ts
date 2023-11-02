@@ -24,6 +24,7 @@ import { HttpInterceptorService } from './services/iterceptor-jwt/interceptorJwt
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from './services/cartData/cart.service';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
+import { PoliciesModule } from './policies/policies.module';
 
 @NgModule({ 
   declarations: [
@@ -37,6 +38,7 @@ import { ScrollSpyDirective } from './directives/scroll-spy.directive';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     SharedModule,
+    PoliciesModule,
     HttpClientModule,
     MatSnackBarModule,
      ServiceWorkerModule.register('ngsw-worker.js', {
