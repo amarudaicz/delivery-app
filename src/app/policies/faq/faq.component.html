@@ -1,0 +1,168 @@
+<div class="w-full">
+    <section class="w-full flex flex-column">
+        <div class="py-8">
+            <div class="text-center py-4">
+                <h1 class="mb-4 text-6xl md:text-7xl font-extrabold">
+                    Podemos <br> ayudarte!
+                </h1>
+
+
+                <button mat-ripple class="py-2 px-5 bg-primary border-round">
+                    <i class="pi pi-whatsapp mr-2"></i>
+                    Contactar 
+                </button>
+
+
+            </div>
+
+        
+        
+        </div>
+
+        <div class="py-4 w-full px-3 md:px-0 md:w-9 m-auto ">
+
+            <div class="text-center mb-4">
+                <h2 class="text-5xl mb-3 font-extrabold">FAQ's</h2>
+                <p class="text-800">Mira las preguntas mas frecuentes sobre DELITIENDA</p>
+            </div>
+
+            <div class="relative mb-6 flex flex-row justify-content-center wrap gap-5 uppercase font-bold">
+
+                <button mat-ripple *ngFor="let theme of faqThemes" (click)="setFaqTeme(theme.id)" class="button-faq  font-bold" [class.button-active]="theme.id === currentFaqThemeId">
+                    {{theme.name}}
+                </button>
+
+            </div>
+
+            <div class="">
+                <div [ngSwitch]="currentFaqThemeId" class="faq w-">
+
+                    <div *ngSwitchCase="1" class="fadein ">
+                        <div class="w-full mb-6 flex wrap gap-6">
+                            <div class=" flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">🤔</span>Me ayudaran a vender mas?</h3>
+                                <p>DELI te proporcionara un medio de venta efectivo, rápido y de fácil acceso para tus clientes, tu deberás compartir el link de tu tienda por redes sociales y mas para generar mas ventas y clientes.</p>
+                            </div>
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">💻</span>Debo tener conocimientos de computación?</h3>
+
+
+                                <p>Puedes administrar tu tienda desde cualquier dispositivo (celular, tablet, pc). 
+                                Una vez con acceso a tu panel de administrador será sencillo cargar tus productos y/o servicios.</p>
+                            </div>  
+                        </div>
+                        
+                        <div class="w-full flex wrap gap-6">
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl">🛒</span>  mi rubro puede estar en DELITIENDA?</h3>
+                                <p>Claro que si, DELI soporta todo tipo de productos y servicios, desde alimentos, indumentaria, limpieza,  y mas. si crees que no puedes no dudes en contactarnos!  </p>
+                            </div>  
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"> <img src="./assets/icons/phone-14.png"  class="inline image-phone"  alt=""> Como recibo mis ventas y/o pedidos?</h3>
+                                <p>Tus clientes ingresan en tu tienda DELI, elijen los productos de tu catalogo que quieran comprar, completan sus datos de pedido y nuestro sistema crea un mensaje que tu cliente enviará por WhatsApp con toda la información de la venta </p>
+                            </div>
+                        </div>
+                        
+                    
+                    </div>
+                    <div *ngSwitchCase="2" class="fadein ">
+                        <div class="w-full mb-6 flex wrap gap-6">
+                            <div class=" flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">🤝​​</span>Como ingresaran a mi tienda?</h3>
+                                <p>Acceder a tu tienda es fácil, DELI te proporcionara un enlace o código QR que podrás enviar por mensaje a tus clientes y publicarlo en redes sociales, este enlace los enviara directamente a tu tienda en DELI.</p>
+                            </div>
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">⏳</span>Cuanto tiempo tarda crear una tienda en DELI?</h3>
+                                <p>Una vez complete el registro de su tienda y cargue sus productos desde el panel administrador, estará disponible para tu clientela mediante el enlace.</p>
+                            </div>  
+                        </div>
+                        
+                        <div class="w-full flex wrap gap-6">
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">🕐</span>Se puede establecer un horario de atención?</h3>
+                                <p>Si, puedes configurar los horarios en los que tu tienda estará recibiendo pedidos por WhatsApp.</p>
+                            </div>  
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"> <img src="./assets/icons/phone-14.png"  class="inline image-phone"  alt=""> Como recibo mis ventas y/o pedidos?</h3>
+                                <p>Tus clientes ingresan en tu tienda DELI, elijen los productos de tu catalogo que quieran comprar, completan sus datos de pedido y nuestro sistema crea un mensaje que tu cliente enviará por WhatsApp con toda la información de la venta </p>
+                            </div>
+                        </div>
+                        
+                    
+                    </div>
+                    <div *ngSwitchCase="3" class="fadein ">
+                        <div class="w-full mb-6 flex wrap gap-6">
+                            <div class=" flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">🤔</span>Me ayudaran a vender mas?</h3>
+                                <p>DELI te proporcionara un medio de venta efectivo, rápido y de fácil acceso para tus clientes, tu deberás compartir el link de tu tienda por redes sociales y mas para generar mas ventas y clientes.</p>
+                            </div>
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">💻</span>Debo tener conocimientos de computación?</h3>
+                                <p>Puedes administrar tu tienda desde cualquier dispositivo (celular, tablet, pc). 
+                                Una vez con acceso a tu panel de administrador será sencillo cargar tus productos y/o servicios.</p>
+                            </div>  
+                        </div>
+                        
+                        <div class="w-full flex wrap gap-6">
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl">🛒</span>  mi rubro puede estar en DELITIENDA?</h3>
+                                <p>Claro que si, DELI soporta todo tipo de productos y servicios, desde alimentos, indumentaria, limpieza,  y mas. si crees que no puedes no dudes en contactarnos!  </p>
+                            </div>  
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"> <img src="./assets/icons/phone-14.png"  class="inline image-phone"  alt=""> Como recibo mis ventas y/o pedidos?</h3>
+                                <p>Tus clientes ingresan en tu tienda DELI, elijen los productos de tu catalogo que quieran comprar, completan sus datos de pedido y nuestro sistema crea un mensaje que tu cliente enviará por WhatsApp con toda la información de la venta </p>
+                            </div>
+                        </div>
+                        
+                    
+                    </div>
+                    <div *ngSwitchCase="4" class="fadein ">
+                        <div class="w-full mb-6 flex wrap gap-6">
+                            <div class=" flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">🤔</span>Me ayudaran a vender mas?</h3>
+                                <p>DELI te proporcionara un medio de venta efectivo, rápido y de fácil acceso para tus clientes, tu deberás compartir el link de tu tienda por redes sociales y mas para generar mas ventas y clientes.</p>
+                            </div>
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl mr-1">💻</span>Debo tener conocimientos de computación?</h3>
+                                <p>Puedes administrar tu tienda desde cualquier dispositivo (celular, tablet, pc). 
+                                Una vez con acceso a tu panel de administrador será sencillo cargar tus productos y/o servicios.</p>
+                            </div>  
+                        </div>
+                        
+                        <div class="w-full flex wrap gap-6">
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"><span class="text-2xl">🛒</span>  mi rubro puede estar en DELITIENDA?</h3>
+                                <p>Claro que si, DELI soporta todo tipo de productos y servicios, desde alimentos, indumentaria, limpieza,  y mas. si crees que no puedes no dudes en contactarnos!  </p>
+                            </div>  
+                            
+                            <div class="flex-auto text-balance  md:flex-1 p-3 border-round-xl bg-yellow-100">
+                                <h3 class=" text-xl mb-2 font-extrabold"> <img src="./assets/icons/phone-14.png"  class="inline image-phone"  alt=""> Como recibo mis ventas y/o pedidos?</h3>
+                                <p>Tus clientes ingresan en tu tienda DELI, elijen los productos de tu catalogo que quieran comprar, completan sus datos de pedido y nuestro sistema crea un mensaje que tu cliente enviará por WhatsApp con toda la información de la venta </p>
+                            </div>
+                        </div>
+                        
+                    
+                    </div>
+
+                
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+    </section>
+
+
+
+</div>
