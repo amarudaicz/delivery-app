@@ -19,7 +19,11 @@ const routes: Routes = [
         path: ':local/:category',
         component: MainCategoryComponent,
         data: { page: '' },
-      },
+      },  
+      {
+        path: ':local/:category/:product',
+        loadChildren:()=> import('./../detail/detail.module').then((m) => m.DetailModule)
+      },  
 ];
 
 @NgModule({

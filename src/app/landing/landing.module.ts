@@ -11,6 +11,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AlertLocalClosedComponent } from './components/alert-local-closed/alert-local-closed.component';
 import { LandingRoutingModule } from './landing-routing.module';
+import { LayoutLandingComponent } from './components/layout-landing/layout-landing.component';
 
 
 
@@ -21,7 +22,8 @@ import { LandingRoutingModule } from './landing-routing.module';
     RecentsComponent,
     HeaderLandingComponent,
     CardLocalComponent,
-    AlertLocalClosedComponent
+    AlertLocalClosedComponent,
+    LayoutLandingComponent
   ],
   imports: [
     RouterModule,

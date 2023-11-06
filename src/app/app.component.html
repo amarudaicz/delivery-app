@@ -7,7 +7,7 @@
 
         <app-header *ngIf="themeLoad && stateLayout.state.header"></app-header>
 
-        <div class="h-full " [class.overflow-y-auto]="stateLayout.state.header && themeLoad" [@routeAnimations]="getRouteAnimationData()">
+        <div class=" " [ngClass]="stateLayout.state.header && themeLoad ? ['overflow-y-auto', 'h-full'] : '' " [@routeAnimations]="getRouteAnimationData()">
             <router-outlet></router-outlet>
         </div>
         

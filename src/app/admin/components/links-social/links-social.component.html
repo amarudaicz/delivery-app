@@ -12,8 +12,8 @@
             <button (click)="editing ? submitForm() : editForm()" mat-raised-button color="primary">
                 <span class="d-flex gap-2" >
                     {{editing ? 'Guardar' : 'Editar'}}
-                    <i *ngIf="!loadForm" [ngClass]="editing ? 'fa-solid fa-floppy-disk' :'fa-solid fa-pen-to-square'"></i>
-                    <i *ngIf="loadForm" class="pi pi-spinner pi-spin "></i>
+                    <i *ngIf="!editing" class="fa-solid fa-pen-to-square"></i>
+                    <i *ngIf="editing" [ngClass]="editing && loadForm ? 'pi pi-spinner pi-spin' : 'fa-solid fa-floppy-disk' "></i>
                 </span>
             </button>
 

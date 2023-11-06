@@ -43,24 +43,14 @@ const routes: Routes = [
 
   {
     path: 'user',
-    component: TermsComponent,
+    component: MainUserComponent,
   },
-  { 
-    path:'preguntas-frecuentes',
-    component:FaqComponent
-  },
-  {
-    path: 'politicas-de-privacidad',
-    component: PrivacyComponent,
-  }, {
-    path: 'terminos-y-condiciones',
-    component: TermsComponent,
-  },
+  // { 
+  //   path:'preguntas-frecuentes',
+  //   component:FaqComponent
+  // },
+ 
 
-  {
-    path: ':local/:category/:product',
-    loadChildren:()=> import('./detail/detail.module').then((m) => m.DetailModule)
-  },  
   
   {
     path:'',

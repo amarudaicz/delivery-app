@@ -6,7 +6,8 @@
             <button (click)="submitForm()" mat-raised-button color="primary">
                 <span class="d-flex">
                     Guardar
-                    <i class="ml-2 fa-solid fa-floppy-disk" ></i>
+                    <i *ngIf="!loadForm else loading;" class="ml-2 fa-solid fa-floppy-disk" ></i>
+                    <ng-template #loading><i class=" ml-2 pi pi pi-spinner pi-spin"></i></ng-template>
                 </span>
             </button>
         </div>

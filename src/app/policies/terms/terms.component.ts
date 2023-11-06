@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router'
 
 @Component({
@@ -7,7 +7,7 @@ import { ActivatedRoute} from '@angular/router'
   styleUrls: ['./terms.component.scss']
 })
 
-export class TermsComponent implements OnInit{
+export class TermsComponent implements OnInit, OnDestroy{
   constructor(private route:ActivatedRoute ){
 
   }
@@ -46,4 +46,9 @@ export class TermsComponent implements OnInit{
 
   }
   
+
+  ngOnDestroy(): void {
+    document.body.style.background = ''
+    
+  }
 }

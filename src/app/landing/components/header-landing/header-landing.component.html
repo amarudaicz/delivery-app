@@ -1,9 +1,8 @@
-<header class="header-landing bg-white shadow-4 mb-3">
+<header class="header-landing bg-white mb-3 px-3 lg:px-0 shadow-4">
 
-    <div class="container d-flex justify-content-between ">
-        <div class="menu-icon">
-    
-            <button class="cursor-pointer" (click)="menuLanding=true">
+    <div class="w-full lg:w-9 m-auto d-flex justify-content-between ">
+        <div class="menu-icon md:hidden">
+            <button class="cursor-pointer " (click)="menuLanding=true">
                 <div class="container-bars">
                     <div class="bar-1 bar"></div>
                     <div class="bar-2 bar"></div>
@@ -12,9 +11,40 @@
             </button>
     
         </div>
-    
-    
-        <img class="logo-landing" src="./assets/logos/logo-de.png" width="50px" alt="">
+
+        <nav class="hidden md:block">
+            <ul  class="d-flex gap-4 text-800 font-semibold">
+                <li>
+                    <a [class.text-primary]="routeActive==='/'" class="cursor-pointer hover:text-primary transition-duration-200"  routerLink="/">Inicio</a>
+                </li>
+
+                <li>
+                    <a class="cursor-pointer hover:text-primary transition-duration-200"  routerLink="/login/register">Precios</a>
+                </li>
+
+                <li>
+                    <a [class.text-primary]="routeActive==='/preguntas-frecuentes'" class="cursor-pointer hover:text-primary transition-duration-200" routerLink="/preguntas-frecuentes">Preguntas frecuentes</a>
+                </li>
+            </ul>
+
+        </nav>
+        <a routerLink="/">
+            <img class="logo-landing" src="./assets/logos/logo-de.png" width="50px" alt="">
+
+        </a>
+
+
+
+        <div class="gap-3 hidden md:flex justify-content-center">
+            <a routerLink="/login/register" class=" px-4 py-3 bg-primary border-round font-semibold text-base hover:shadow-3" mat-ripple>Quiero empezar</a>
+           
+           
+            <a routerLink="/login" class="px-4 py-3 d-flex gap-2 bg-gray-200 border-round font-semibold text-base hover:shadow-3" mat-ripple>
+                Acceso
+                <i class="pi pi-sign-in mt-1"></i>
+            </a>
+
+        </div>
     </div>
 
 
@@ -46,7 +76,7 @@
                 <ul class="mt-4">
                     
                     <li class="p-2 text-base cursor-pointer hover:text-primary-400 transition-duration-200">
-                        <a routerLink="terminos-y-condiciones"> Preguntas frecuentes</a>
+                        <a routerLink="preguntas-frecuentes"> Preguntas frecuentes</a>
                     </li>
 
                     

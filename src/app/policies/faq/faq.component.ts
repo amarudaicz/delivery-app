@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { WpService } from 'src/app/services/wpService/wp.service';
 
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss']
 })
-export class FaqComponent {
+export class FaqComponent implements OnInit, OnDestroy {
 
+
+  constructor(public wp:WpService){}
+  ngOnInit(): void {
+    document.body.style.background = '#fff'
+
+  }
   currentFaqThemeId=1
 
   faqThemes = [
@@ -17,12 +24,9 @@ export class FaqComponent {
       id:2,
       name:'Tienda'
 
-    },{
+    },
+    {
       id:3,
-      name:'Clientes'
-
-    },{
-      id:4,
       name:'Pagos'
 
     }
@@ -33,4 +37,7 @@ export class FaqComponent {
 
   }
 
+  ngOnDestroy(): void {
+    document.body.style.background = ''
+  }
 }

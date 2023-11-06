@@ -97,6 +97,7 @@ export class LinksSocialComponent implements OnInit {
     .pipe( 
       catchError(({error}) => {
         this.loadForm = false
+        this.editing = false;
         return handleError(error, this.notificationsAdmin);
       })
       )
@@ -111,10 +112,11 @@ export class LinksSocialComponent implements OnInit {
             section: 'Enlaces',
           }
           );
+
+          this.editing = false;
+          this.loadForm = false;
         });
 
-        this.editing = false;
-        this.loadForm = false;
       };
 
   editForm() {
