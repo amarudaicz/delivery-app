@@ -1,14 +1,14 @@
 <div class="container-edit-product">
 
   <div class="">
-    
+
     <div class="container-buttons-edit">
-      
+
       <button [disabled]="processLoad" matTooltip="Vista previa" (click)="showPreview()">
         <i class="pi pi-eye mr-2 text-white text-xl"></i>
       </button>
-      <button mat-raised-button color="primary" type="submit" (click)="saveEditProduct()" [disabled]="processLoad"
-        class="">
+      <button mat-raised-button [disabled]="processLoad" color="primary" type="submit" (click)="saveEditProduct()"
+        [disabled]="processLoad" class="">
         Guardar
       </button>
     </div>
@@ -21,24 +21,42 @@
         <div class="container-inputs">
 
           <div id="initialForm">
-            <mat-form-field appearance="outline" class="input-group full-input" color="primary">
-              <mat-label>Nombre</mat-label>
+
+
+            <label for="name" class="font-bold block mb-1">Nombre</label>
+            <mat-form-field appearance="outline" class="w-full" color="primary">
               <input type="text" matInput formControlName="name" />
               <mat-error>Este campo es requerido</mat-error>
             </mat-form-field>
 
+
+            <label for="" class="font-bold block mb-1">Categoría</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-select formControlName="category_id">
+                <mat-option *ngFor="let c of categories" [value]="c.id">
+                  <div class="span d-flex gap-2">
+                    <img width="30" height="30" class="inline object-cover border-round" [src]="c.category_image"
+                      alt="">
+                    {{c.category_name}}
+                  </div>
+                </mat-option>
+              </mat-select>
+              <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+
+
+            <label for="" class="font-bold block mb-1">Precio base</label>
             <mat-form-field appearance="outline" matTooltipClass="tooltip-price" matTooltipPosition="above"
               matTooltip="El precio ingresado se utilizará para mostrar el valor base del producto en la vista preliminar. Sin embargo, este precio solo se aplicará si NO existe un GRUPO DE OPCIONES que determine el precio final."
-              class="input-group full-input" color="primary">
-              <mat-label>Precio base</mat-label>
+              class="full-input" color="primary">
               <span matTextPrefix>$&nbsp;</span>
               <input formControlName="price" type="number" matInput />
               <mat-error>Este campo es requerido</mat-error>
             </mat-form-field>
 
-
-            <mat-form-field class="input-group full-input" appearance="outline">
-              <mat-label>Ingredientes (Opcional)</mat-label>
+            <label for="" class="font-bold block mb- block mb-1">Etiquetas (Opcional)</label>
+            <mat-form-field class="" appearance="outline" class="w-full">
               <mat-chip-grid #chipGrid aria-label="Enter Ingredientes">
                 <mat-chip-row *ngFor="let i of ingredientsList" id="ingredients" (removed)="remove(i, $event)"
                   [editable]="true" (edited)="edit(i, $event)" [aria-description]="'press enter to edit ' + i">
@@ -56,25 +74,66 @@
             <!-- DESCRIPCION///////////////////////////////// -->
 
             <div class="inputs-inline">
+              <div class="w-full">
+                <label for="" class="font-bold block mb-1">Descripcion (Opcional)</label>
+                <mat-form-field appearance="outline" class="w-full">
+                  <textarea maxlength="150" #textarea formControlName="description" matInput></textarea>
+                  <mat-hint>Max 150 caracteres/{{textarea.value.length}} </mat-hint>
+                </mat-form-field>
+              </div>
 
-              <mat-form-field appearance="outline">
-                <mat-label>Descripcion (Opcional)</mat-label>
-                <textarea maxlength="150" #textarea formControlName="description" matInput></textarea>
-                <mat-hint>Max 150 caracteres/{{textarea.value.length}} </mat-hint>
-              </mat-form-field>
+              <div class="container-input-image w-full border-2 border-round-xl border-dashed p-3 ">
+                <label for="imageEdit" class="font-bold mb-2 block" >Carga la imagen de tu producto</label>
 
-              <div class="container-input-image">
-                <label for="previewImageProduct" class="load-image-text" *ngIf="!previewImageProduct">Carga la imagen de
-                  tu producto</label>
-                <p-fileUpload *ngIf="!previewImageProduct" chooseIcon="pi pi-upload"
-                  (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true"
-                  chooseLabel="Imagen" mode="basic" accept="image/*" [maxFileSize]="1000000">
-                </p-fileUpload>
+                <div class="relative w-full text-center">
+                  <input type="file" name="imageEdit" (change)="uploadImage($event)"  class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" >
 
-                <ul *ngIf="previewImageProduct">
-                  <img [src]="previewImageProduct" alt="" width="150px">
-                  <p-button icon="pi pi-times" class="button-remove-image" (click)="removePreviewImage()"></p-button>
+                  <img class="border-round border-1"
+                    [src]="previewImageProduct || 'https://t3.ftcdn.net/jpg/05/08/88/82/360_F_508888212_50sPZWAnDEe0IdZGwd5fb1CUDEFPNJgy.jpg'"
+                    alt="" width="150px">
+                    
+                  <p-button *ngIf="previewImageProduct" icon="pi pi-times" class="button-remove-image" (click)="removePreviewImage()"></p-button>
+
+                </div>
+              </div>
+
+              
+            </div>
+            <div class="w-full p-3 border-2 border-round-xl border-dashed" >
+              <label for="galery" class="mb-1 font-bold block mb-1" >Galería de imágenes</label>
+              <div class="relative w-full text-center">
+                <input type="file" name="galery" multiple (change)="uploadGalery($event)"  class="top-0 left-0 w-full h-full opacity-0 cursor-pointer" [ngClass]="galeryPreview ? 'hidden' : 'absolute'" >
+                <span class="text-80 block mb-2">Carga tus imágenes (4 max)</span>
+                <ul *ngIf="galeryPreview else noGalery" [cdkDropListOrientation]="isMobile ? 'vertical' : 'horizontal'" [cdkDropListLockAxis]="isMobile ? 'y' : 'x'" cdkDropList class="flex align-items-center w-full list-style-none gap-3 overflow-x-auto overflow-y-hidden py-2 flex-column md:flex-row">
+                  <li class="w-fit dragImage flex flex-column gap-2" cdkDrag (cdkDragDropped)="handleDragDrop($event)" [cdkDragPreviewClass]="['opacity-80']"  *ngFor="let i of galeryPreview || [1,2,3]; let index = index">
+                    <img
+                    class="border-round object-contain"
+                    [ngClass]="galeryPreview ? 'w-8rem border-1' :'w-7rem'"
+                    [src]="i"
+                    onerror="this.src = 'https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg'"
+                      alt="preview-image" >
+                      <button mat-button (click)="deleteImageFromGalery(index)" *ngIf="galeryPreview"  class="p-2">
+                        <i class="pi pi-times"></i>
+                      </button>
+                  </li>
                 </ul>
+                <ng-template #noGalery>
+                  <ul class="flex align-items-center w-full list-style-none gap-3 overflow-x-auto overflow-y-hidden py-2 flex-column md:flex-row justify-content-center">
+                    <li class="w-fit dragImage flex flex-column gap-2" *ngFor="let i of [1,2,3]; let index = index">
+                      <img
+                      class="border-round object-contain w-7rem"
+                      src="https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg">
+
+                    </li>
+                  </ul>
+
+                </ng-template>
+                
+                <div *ngIf="galeryPreview" class="flex flex-column align-items-center gap-2">
+                  <span class="text-80">Ordena la galería arrastrando la imagen</span>
+                  <button class="w-fit" color="warn" (click)="deleteAllGaleryImages()"  mat-button>Eliminar todas</button>
+                </div>
+               
               </div>
             </div>
           </div>
@@ -83,9 +142,6 @@
 
 
         <div>
-          <h3 class="mt-4 title">Opciones</h3>
-          <p class="mb-2">Agrega las opciones disponibles para el producto</p>
-
           <app-set-options-product [product]="product"
             (emitterSelectedOptions)="getOptionsSelected($event)"></app-set-options-product>
         </div>

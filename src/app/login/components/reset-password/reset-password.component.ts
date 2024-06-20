@@ -26,7 +26,7 @@ export class ResetPasswordComponent implements OnInit {
   countdownFormatted?:string
   attempsSendEmail:number = 0
   countdownSuscription?:Subscription
-  errorToken?:boolean
+  errorToken?:string
   finishProcess?:boolean
   formSubmitted?:boolean
   errorReset?:string  
@@ -114,29 +114,18 @@ export class ResetPasswordComponent implements OnInit {
   }
 
 
-  sendToken(token:string){
-
+  async sendToken(token:string){
     console.log(token);
     
     if (!token) {
       return
     }
-
-    this.authService.verifyToken(token).pipe(
-      catchError(err=>{
-        console.log(err);
-        this.errorToken = err.error
-        this.isTokenValid =  false
-        return throwError(()=> new Error(err))
-      })
-    ).subscribe(res=>{
-      console.log(res);
-
-      if (!res.error) {
-
-      }
-
-    })
+    const isTokenValid = await this.authService.verifyToken(token)
+    if (!isTokenValid) {
+      this.errorToken = 'El link que uso expiró o no es correcto '
+      this.isTokenValid =  false
+    }
+   
   }
 
   

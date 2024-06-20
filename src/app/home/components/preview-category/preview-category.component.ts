@@ -10,24 +10,18 @@ import { PreviewCategoryService } from 'src/app/services/preview-category/previe
 export class PreviewCategoryComponent implements OnInit, OnDestroy  {
 
   products?:Product[]|any = [1,2,3,4]
-  
   constructor(private previewCategory:PreviewCategoryService, ){
     
   }
   
   ngOnInit(): void {
     
-    console.log(this.previewCategory.category_id);
-    
     this.previewCategory.productsByCategory.subscribe((data) =>{
-      if (data.length) this.products = data
-      
+      if (data.length) this.products = structuredClone(data)
     })
-      
   }
 
   ngOnDestroy(): void {
-    
   }
 
 }

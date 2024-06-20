@@ -1,23 +1,21 @@
 <div class="container-dashboard-list">
     <div class="list">           
  
-        <p-accordion [activeIndex]="activeIndex" >
+        <p-accordion [activeIndex]="0" >
     
-            <p-accordionTab class="acordeon-categories" [iconPos]="'end'" >
-    
-                <ng-template pTemplate="header">
-                    
-                    <div class="d-flex container-title-seccion" [class.active]="currentSection === 'products' ">
-                        <i class="fa-solid fa-layer-group mr-2"></i>
-                        <h4 class="title-seccion">Categorías</h4>
-                    </div>
-    
-                </ng-template>
-    
+            <p-accordionTab  class="acordeon-categories" [iconPos]="'end'" >
+                    <ng-template  pTemplate="header">
+                        
+                        <div (click)="dinamicList.section.next('products')" class="d-flex container-title-seccion w-full" >
+                            <i class="fa-solid fa-layer-group mx-2"></i>
+                            <h4 class="title-seccion" [class.text-primary]="currentSection === 'products' ">Categorías</h4>
+                        </div>
+        
+                    </ng-template>
     
                 <ng-template pTemplate="content" (click)="currentSection = 'products'">
     
-                    <ul cdkDropList  >
+                    <ul cdkDropList cdkDropListLockAxis="y"  >
                         <li cdkDrag [cdkDragPreviewClass]="['preview-drop', 'shadow-2']" (cdkDragDropped)="handleDragDrop($event)" (cdkDragStarted)="handleStartDrag($event)"  [class.active]="isCatSelected(category)" (click)="emitCategorySelected(category)" class="item-list d-flex justify-content-between" *ngFor="let category of categories">
                             <div class="d-flex">
                                 <i class="pi pi-circle-fill mr-2 icon-list" [class.active]="category.active"></i>
@@ -35,6 +33,10 @@
                                 <i class="pi pi-ellipsis-v" style="margin-left: -9px;"></i>
                             </div>
                         </li>
+
+                        <li class="p-3" *ngIf="!categories.length || !categories">
+                            <span class="font-semibold">No tienes categorías en tu tienda</span>
+                        </li>
                     </ul>
     
                 </ng-template>
@@ -45,7 +47,7 @@
     
     </div>
 
-    <p-accordion [expandIcon]="''" [collapseIcon]="''" (click)="newCategory()">
+    <p-accordion id="new-category" [expandIcon]="' '" [collapseIcon]="' '" (click)="newCategory()">
 
         <p-accordionTab classList="acordeon-groups">
 
@@ -61,7 +63,7 @@
         </p-accordionTab>
     </p-accordion>
 
-    <p-accordion [expandIcon]="''" [collapseIcon]="''">
+    <p-accordion id="options-group" [expandIcon]="' '" [collapseIcon]="' '">
 
         <p-accordionTab classList="acordeon-groups" (click)="dinamicList.section.next('groups')">
 
@@ -69,7 +71,7 @@
                 
                 <div  class="container-title-seccion d-flex" [class.active]="currentSection === 'groups' ">
                     <i class="fa-solid fa-list mr-2"></i>
-                    <h4 class="title-seccion" >Grupos de opciones</h4>
+                    <h4 class="title-seccion" [class.text-primary]="currentSection === 'groups' " >Grupos de opciones</h4>
                 </div>
                 
             </ng-template>  

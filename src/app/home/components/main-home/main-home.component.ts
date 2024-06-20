@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, AfterContentChecked } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  AfterContentChecked,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Category } from 'src/app/interfaces/category-interfaz';
@@ -17,11 +24,12 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
   animations: [fadeIn],
   providers: [],
 })
-export class MainHomeComponent implements OnInit, OnDestroy{
+export class MainHomeComponent implements OnInit, OnDestroy {
   appInstalled: boolean = this.pwaInstaller.isPwaMode();
-  categories?: Category[]; //INTERFACE
+  categories?: Category[]|any[] = [1,2,3,4,5]; //INTERFACE
   local: string | null = null;
   themeLoaded: boolean = false;
+  @ViewChild('containerCategories') containerCategories?: ElementRef;
 
   constructor(
     public theme: ThemesService,
@@ -29,26 +37,26 @@ export class MainHomeComponent implements OnInit, OnDestroy{
     private localService: LocalDataService,
     private pwaInstaller: PwaInstallerService,
     private route: ActivatedRoute,
-    private layoutStateService:LayoutStateService,
-    private cartService:CartService,
-    
+    private layoutStateService: LayoutStateService,
+    private cartService: CartService
   ) {
-
-    this.layoutStateService.state.header = true
-    this.layoutStateService.state.navigation = true
-    this.layoutStateService.updateState()
+    this.layoutStateService.state.header = true;
+    this.layoutStateService.state.navigation = true;
+    this.layoutStateService.unblockBody()
+    this.layoutStateService.updateState();
   }
 
   ngOnInit(): void {
     //SETING RUTA
     this.routeService.setCurrent('home');
-    
+
     //SETING PETICIONES DEL LOCAL
     this.local = this.route.snapshot.params['local'];
-    this.localService.initDataLocal(this.local);
+    
+    // this.localService.initDataLocal(this.local);
 
     if (this.local !== this.routeService.getOrigin()) {
-      this.cartService.clearCart()
+      this.cartService.clearCart();
     }
 
     //SETING ORIGIN
@@ -57,19 +65,24 @@ export class MainHomeComponent implements OnInit, OnDestroy{
 
     //OBTENIENDO LAS CATEGORIAS
     this.localService.categories$.subscribe((data) => {
-      if (!data.length) return
-      this.categories = data
+      if (!data.length) return;
+        this.categories = data;
     });
-    
+
+    this.localService.local$.subscribe((local) => {
+      if (!local) return;
+
+      window.document.title = local.name;
+    });
+
     //CHECK QUE EL TEMA ESTE CARGADO CUANDO SETLOCAL()
     this.theme.getThemeState().subscribe((state) => (this.themeLoaded = state));
+
+    console.log(this.containerCategories);
   }
-
-
 
   ngOnDestroy(): void {
-    this.layoutStateService.state.menuMobile = false
-    this.layoutStateService.updateState()
+    this.layoutStateService.state.menuMobile = false;
+    this.layoutStateService.updateState();
   }
-
 }

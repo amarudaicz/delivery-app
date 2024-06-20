@@ -69,6 +69,7 @@ export class MainLandingComponent implements OnInit {
   ngOnInit(): void {
     // this.themeService.setTheme(2)
     this.routeService.setCurrent('landing')
+    window.document.title = 'Delitienda | Vende mas fácil, sin pagar comisión '
   }
   updateCurrentBanner(event: number) {
     console.log(event);

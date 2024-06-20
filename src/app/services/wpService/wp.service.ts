@@ -5,6 +5,8 @@ import { ProductCart } from 'src/app/interfaces/product-interface';
 import { v4 as uuidv4 } from 'uuid';
 import { LocalDataService } from '../localData/local-data.service';
 import { Local } from 'src/app/interfaces/local-interface';
+import { CartService } from '../cartData/cart.service';
+import { Router } from '@angular/router';
 interface Item {
   name: string;
   productPrice: number;
@@ -19,7 +21,8 @@ interface Item {
   providedIn: 'root',
 })
 export class WpService {
-  constructor(private localService:LocalDataService) {
+  constructor(private localService:LocalDataService, private router: Router,
+    private cartService: CartService) {
       this.localService.local$.subscribe(local=>{
         this.local = local
       })
@@ -27,145 +30,109 @@ export class WpService {
   }
   local?:Local
   products: string = '';
+  generarMensaje(cart: any[], userData: any, subtotal: number) {
+    const locationUser = userData.ubication;
+    const shipping = userData.shippingMethod === 'Envío a domicilio';
+    const productsByCategory = this.groupByCategory(cart);
+    const transfer = userData.payMethod === 'Transferencia'; 
 
 
-  
-  encodeText(cart: any[], userData: any, subtotal: number) {
-    const categories = cart.map((e) => e.category_name);
+    let mensaje = `*¡Hola!, te envío el resumen de mi compra*\n\n`;
+    mensaje += `*Pedido*: ${this.genIdOrder()}\n`;
+    mensaje += `*Nombre*: ${userData.name}\n`;
+    mensaje +=  userData.email ? `*Email:* ${userData.email}\n\n` : '\n' ; 
 
-    
-    const cleanCategories = categories.filter((elemento, indice) => {
-      return categories.indexOf(elemento) === indice;
+    userData.payMethod ? mensaje += `*Forma de pago*: ${userData.payMethod}\n` : null;
+    mensaje += `*Total*: ${this.formatNumber(subtotal)}\n`;
+    userData.amountReceived && !transfer ? mensaje += `*Pago con*: ${this.formatNumber(userData.amountReceived)} \n` : '\n';
+    mensaje += transfer ? '' : '\n' ;
+    mensaje += transfer ? `*Datos de transferencia*:\n ►_${this.local?.pay_methods?.transfer?.nameAccount}_\n _CBU: ${this.local?.pay_methods?.transfer?.cbu}_\n _Alias: ${this.local?.pay_methods?.transfer?.alias}_\n _${this.local?.pay_methods?.transfer?.entity}_\n\n` : '';
+
+
+    userData.shippingMethod ? mensaje += `*Entrega*: ${userData.shippingMethod}\n\n` : '';
+
+    if (shipping) {
+        mensaje += `*Dirección*: ${this.formatUbicationName(userData, locationUser.address)}\n`;
+        userData.reference ? mensaje += `*Referencia*: ${userData.reference}\n` : null;
+        mensaje += `*Ubicación:* https://www.google.com/maps/place/${locationUser.position.lat},${locationUser.position.lng}\n`;
+        mensaje +=  locationUser.address.postalCode || userData.postalCode ? `*Código postal:* ${locationUser.address.postalCode ?? userData.postalCode} \n\n` : '\n'
+    }
+
+    mensaje += `_Mi pedido es_:\n\n`;
+
+    Object.keys(productsByCategory).forEach(category => {
+        mensaje += `*-----------------------*\n`;
+        mensaje += `*${category.toUpperCase()}:*\n\n`;
+        productsByCategory[category].forEach((product: ProductCart, i:number, arr:any[]) => {
+            mensaje += ` x${product.quantity} *${product.name.toUpperCase()}*${!this.getOptionType1(product) ? ':' :` (${this.getOptionType1(product)}):`} *${this.formatNumber(product.total)}*`;
+            mensaje += `${this.readUserOptions(product.userOptions)}`;
+
+            mensaje += i + 1 === arr.length ? '\n' : '\n\n' ;
+            // mensaje += this.readUserOptions(product.userOptions).length ? '\n\n' : '\n';
+        });
+        
+        mensaje += `*-----------------------*\n\n`;
     });
 
+    mensaje += `*TOTAL${userData.costShipping && shipping ? ` + envío` : ''}: ${this.formatNumber(subtotal)}*\n`;
+    mensaje += !userData.costShipping && shipping && userData.defineCostShipping ? `_Costo de envío a definir de acuerdo a distancia_\n\n` : '\n';
 
-    cleanCategories.forEach((cat) => {
-    const categoryItems: Item[] = cart.filter((e) => e.category_name === cat);
+    mensaje += `_Espero tu respuesta para confirmar mi pedido_`;
+ 
+    const encodedText = encodeURIComponent(mensaje).replace(/%0A/g, '%0A%20');
 
-
-
-    categoryItems.forEach((e: Item, index: number) => {
-this.products += `${index === 0 ? e.category_name.toUpperCase()+`
----------
-`: ''}X${e.quantity} ${e.name} ${Intl.NumberFormat('es-AR', {style:'currency', currency:'ARS'}).format(e.total)}
-${this.readUserOptions(e.userOptions).trim()}\n
-${e.especifications !== '' ? `Especificaciones: ${e.especifications}` : ''}`}); 
-});
-
-const text: string = `
-*Hola, te envio el resumen de mi compra*
-
-*Pedido*: ${this.genIdOrder()} 
-*Nombre*: ${userData.name}
-
-*Forma de pago*: ${userData.payMethod}
-*Total*: $${subtotal}.00 ${userData.shippingMethod === 'Delivery'?'+ ENVIO':''}
-${userData.shippingMethod === 'Delivery' && userData.amountReceived ? `*Pago con*: ${this.formatNumber(userData.amountReceived)}` : ''}
-
-*Entrega*: ${userData.shippingMethod}
-${userData.shippingMethod === 'Delivery' ? 
-`*Dirección*: ${userData.direction}`: ' '}
-
-*Mi compra es*:
-
-${this.products}
-
-*Espero tu respuesta para confirmar mi pedido*`;
-
-console.log(text);
-const encodedText = encodeURIComponent(text).replace(/%0A/g, '%0A%20');
-
-this.clearMessage()
-return encodedText
+    console.log(mensaje);
+    return encodedText;
 }
 
-// {name:string, payMethod:string}
-generarMensaje(cart:any[], userData:any , subtotal: number) {
-  console.log(userData);
-  const categoriesRead:any[] = []
 
-  const locationUser = userData.ubication
-  
-  let mensaje = `*¡Hola!, te envío el resumen de mi compra*\n\n`;
+groupByCategory(products:ProductCart[]){
+  const groupedProducts:any = {};
 
-  mensaje += `*Pedido*: ${this.genIdOrder()}\n`
-  mensaje += `*Nombre*: ${userData.name}\n\n`;
+  products.forEach((product) => {
+    const { category_name } = product;
 
-  mensaje += `*---------------------------*\n`;
-  userData.payMethod ? mensaje += `*Forma de pago*: ${userData.payMethod}\n` : null;
-  mensaje += `*Total*: ${this.formatNumber(subtotal)}\n`;
-  userData.amountReceived ? mensaje += `*Pago con*: ${this.formatNumber(userData.amountReceived)} \n` : '';
-  mensaje += userData.payMethod === 'Transferencia' ?`*Datos de transferencia*:\n _${this.local?.pay_methods.transfer.nameAccount}_\n _CBU: ${this.local?.pay_methods.transfer.cbu}_\n _Alias: ${this.local?.pay_methods.transfer.alias}_\n _${this.local?.pay_methods.transfer.entity}_\n\n` : ''
-  mensaje += `*---------------------------*\n\n`;
-
-
-  userData.shippingMethod ? mensaje += `*Entrega*: ${userData.shippingMethod}\n` : null;
-
-  if (userData.shippingMethod === 'Envio a domicilio'){
-      mensaje += `*Dirección*: ${this.formatUbicationName(userData, locationUser.address)}\n` 
-      userData.reference ?  mensaje += `*Referencia*: ${userData.reference}\n` : null 
-      mensaje += `*Ubicacion:* https://www.google.com/maps/place/${locationUser.position.lat},${locationUser.position.lng}\n\n`
-  }
-  
-  mensaje += `_Mi compra es_:\n\n`; 
-
-  cart.forEach((product, i) => {
-    if (!categoriesRead.includes(product.category_name)) {
-      mensaje += `*${product.category_name.toUpperCase()}*\n`;
-      mensaje += `*---------------*\n`;
-      categoriesRead.push(product.category_name)
+    if (!groupedProducts[category_name]) {
+      groupedProducts[category_name] = [];
     }
 
-    mensaje += `x${product.quantity} *${product.name.toUpperCase()}${this.getOptionType1(product) ? ` (${this.getOptionType1(product)?.nameOption?.toUpperCase()})` : ''}:* ${this.formatNumber(product.total)}\n`;
-    if (!product.userOptions.length) {
-      mensaje += `\n`;
-      return
-    }
-    mensaje += `${this.readUserOptions(product.userOptions)}\n\n`
+    groupedProducts[category_name].push(product);
   });
 
-  mensaje += `\n*TOTAL: ${this.formatNumber(subtotal)}${userData.shippingMethod === 'Delivery' ? ' *' : ''}*\n`
-  mensaje += !userData.costShipping && userData.shippingMethod === 'Envio a domicilio' ? `_Costo de envío a definir de acuerdo a distancia_\n\n` : '\n'
+  return groupedProducts;
 
-  mensaje += `_Espero tu respuesta para confirmar mi pedido_`;
 
-  const encodedText = encodeURIComponent(mensaje).replace(/%0A/g, '%0A%20');
-  
-  console.log(mensaje);
-  return encodedText
 }
 
 
-readUserOptions(userOptions:OptionProduct[]){
-  let text:any = ''
+readUserOptions(userOptions:OptionProduct[]):string{
+  let text:string = ''
   
   userOptions.forEach(e =>{
-    if (e.typePrice===1) {
+
+    if (e.typePrice === 1) {
       return
     }
 
     if (!e.multiple){
-      text += ` ${e.nameVariation}: ${e.nameOption}\n`
-      return
+      return text += `\n  ${e.nameVariation}: ${e.nameOption}`
+      return 
     }
 
-
     let multiples = ''
-    
-    e.multipleOptions?.forEach(e => {
-      multiples += ` \n - ${e.nameOption} ${this.formatNumber(e.price)}`
+
+    e.multipleOptions?.forEach((e,i) => {
+      multiples += `\n    - ${e.nameOption}${e.price ? ': *'+ this.formatNumber(e.price) + '*' : ''}`
     })
 
-    text += ` ${e.nameVariation}:${multiples}`
-    return
-
+    return text += `\n  ${e.nameVariation}:${multiples}`
   })
 
   return text.toLocaleUpperCase()
 }
 
 getOptionType1(product:ProductCart){
-  return product.userOptions.find(o => o.typePrice === 1) || null
+  return product.userOptions.find(o => o.typePrice === 1)?.nameOption ?? null
 }
   
 genIdOrder(): string {
@@ -185,7 +152,8 @@ genIdOrder(): string {
 redirectWp(encodedText:string, phone:number){
 
   window.open(`https://api.whatsapp.com/send?phone=+${phone}&text=${encodedText}`)
-
+  this.router.navigate([this.local?.name_url!]);
+  this.cartService.clearCart();
 }
 
 clearMessage(){
@@ -195,18 +163,20 @@ clearMessage(){
 
 formatUbicationName(userData:any,ubication:any){
 
-  return `${ubication.streetName} ${ubication.streetNumber ? ubication.streetNumber : userData.streetNumber}, ${ubication.localName ? ubication.localName : ubication.countrySecondarySubdivision }, ${ubication.countrySubdivision ? ubication.countrySubdivision : ubication.country}`
+  return `${ubication.streetName} ${userData.streetNumber ?? ubication.streetNumber}, ${ubication.localName ? ubication.localName : ubication.countrySecondarySubdivision }, ${ubication.countrySubdivision ? ubication.countrySubdivision : ubication.country}`
 }
 
 
 formatNumber(n:number){
+  if (!n) return ''
+  
   return Intl.NumberFormat('es-AR', {style:'currency', currency:'ARS', minimumFractionDigits: 0}).format(n)
 }
 
 
 
 contactSoporte(){
-  window.open(`https://api.whatsapp.com/send?phone=+${3543655547}&text=Hola, necesito comunicarme con el soporte de Deli`)
+  window.open(`https://wa.me/${3543655547}`)
 }
 
 }

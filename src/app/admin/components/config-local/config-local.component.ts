@@ -37,7 +37,6 @@ export class ConfigLocalComponent implements OnInit {
       name: ['', Validators.required],
       phone: ['', Validators.required],
       location: ['', Validators.required],
-      cords:['', Validators.required]
     });
   }
 
@@ -103,7 +102,6 @@ export class ConfigLocalComponent implements OnInit {
         name: data?.name,
         location: data?.location,
         phone: data?.phone,
-        cords:data?.cords
       });
     });
   }
@@ -133,8 +131,4 @@ export class ConfigLocalComponent implements OnInit {
     this.form.markAsDirty()
   }
 
-  getCords(cords:{lat:number, lng:number}){
-    console.log(cords);
-    this.form.get('cords')?.setValue(`${cords.lng},${cords.lat}`)
-  }
 }

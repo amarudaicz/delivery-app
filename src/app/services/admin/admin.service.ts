@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, map, BehaviorSubject, catchError } from 'rxjs';
+import { Observable, of, map, BehaviorSubject, catchError, Subject } from 'rxjs';
 import { environment } from 'src/app/environment';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { Local, Schedules } from 'src/app/interfaces/local-interface';
@@ -18,13 +18,9 @@ export class AdminService {
     private http: HttpClient,
     private notificationsAdmin: NotificationsAdminService
   ) {
-    this.credentials = {
-      table: localStorage.getItem('admin-local'),
-      local_id: localStorage.getItem('local_id'),
-    };
+
   }
 
-  credentials: any;
   public local?: Local;
   products?: Product[];
   categories?: any[];
@@ -36,34 +32,15 @@ export class AdminService {
 
   stats$ = new BehaviorSubject<{date:string, total_visits:number}[] | undefined>(undefined)
   sales$ = new BehaviorSubject<{date:string, ammount:number}[] | undefined>(undefined)
+  loaderProducts = new Subject<boolean>()
 
   //PRODUCTSS!°!°°!°!
   postProduct(product: any) {
-    console.log(product);
-
-    const dataProduct = new FormData();
-    Object.keys(product).forEach((k) => {
-      console.log(k);
-      console.log(product[k]);
-
-      dataProduct.append(k, product[k]);
-    });
-
-    return this.http.post(environment.host + `products`, dataProduct);
+    return this.http.post(environment.host + `products`, product);
   }
 
   updateProduct(product: any) {
-    const formData = new FormData();
-    console.log(product);
-
-    Object.keys(product).forEach((k) => {
-      console.log(k);
-      console.log(product[k]);
-
-      formData.append(k, product[k]);
-    });
-
-    return this.http.put(environment.host + `products`, formData);
+    return this.http.put(environment.host + `products`, product);
   }
 
   deleteProduct(id: number) {
@@ -72,14 +49,14 @@ export class AdminService {
 
   getProductsAdmin() {
     this.http
-      .get<Product[]>(environment.host + `products`)
+      .get<{local:Local, products:Product[]}>(environment.host + `locals`)
       .pipe(
         map((data) => {
-          this.products$.next(data);
-          this.products = data;
+          this.products$.next(data.products);
+          this.products = data.products;
           return data;
         })
-      )
+      ) 
       .subscribe();
   }
 
@@ -90,14 +67,25 @@ export class AdminService {
     });
   }
 
+  
+  fixedProduct(id: number, fixed: number) {
+    return this.http.put(environment.host + 'products/update-fixed', {
+      id,
+      fixed,
+    });
+  }
+
   //LOCAL!!!!!!!!
 
   public getLocal(): Observable<any> {
-    return this.http.get<Local[]>(environment.host + `locals`).pipe(
+    return this.http.get<{local:Local, products:Product[]}>(environment.host + `locals`).pipe(
       map((data) => {
-        this.local$.next(data[0]);
-        this.optionsGroup.next(data[0].options_group);
-        return data[0];
+        this.local$.next(data.local);
+        window.document.title = `Admin | ${data.local.name_url}`
+        this.optionsGroup.next(data.local.options_group);
+        this.products$.next(data.products);
+        this.products = data.products;
+        return data.local;   
       })
     );
   }
@@ -118,30 +106,11 @@ export class AdminService {
 
   //CATEGORIASSS !!!!!!!!!!!
   postCategory(category: any) {
-    const formData = new FormData();
-    console.log(category);
-
-    Object.keys(category).forEach((k) => {
-      console.log(k);
-      console.log(category[k]);
-
-      formData.append(k, category[k]);
-    });
-
-    return this.http.post(environment.host + `admin/categories`, formData, {});
+    return this.http.post(environment.host + `admin/categories`, category, {});
   }
 
   editCategory(category: { name: string; description: string; image: string | File } | any) {
-
-    const formData = new FormData();
-    console.log(category);
-
-    Object.keys(category).forEach((k) => {
-      console.log(category[k]);
-      formData.append(k, category[k]);
-    });
-
-    return this.http.put(environment.host + `admin/categories`, formData, {});
+    return this.http.put(environment.host + `admin/categories`, category, {});
   }
 
 
@@ -185,7 +154,6 @@ export class AdminService {
     variations: OptionProduct[];
   }) {
     data.products = data.products.map((p) => p.id);
-    console.log(data);
     return this.http.put(environment.host + 'admin/options-group', data);
   }
 
@@ -240,6 +208,32 @@ export class AdminService {
   deleteAccount(){
     return this.http.delete(`${environment.host}admin/delete-account`)
   }
+
+  resetPassword(values:{currentPassword:string, password:string,}){
+    return this.http.put(`${environment.host}admin/reset-password`, {...values})
+  }
+
+  updateAccount(values:{username:string, email:string, phone:number}){
+    return this.http.put(`${environment.host}users`, {...values})
+
+  }
+
+  resetAdmin(){
+    this.resetData()
+  }
+
+  resetData(){
+    this.products = undefined
+    this.local = undefined
+    this.categories=undefined
+    this.products$.next([])
+    this.local$.next(undefined)
+    this.sales$.next(undefined)
+    this.stats$.next(undefined)
+    this.categories$.next([])
+  }
+
+
   
 }
 

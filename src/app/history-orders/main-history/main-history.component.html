@@ -1,0 +1,18 @@
+<section class="min-h-screen container px-10" >
+
+    <div class="d-flex justify-content-between my-3">
+        <h2 class="text-xl">Mis compras</h2>
+
+        <a routerLink="/recientes" class="cursor-pointer d-flex gap-2 p-1 border-round" mat-ripple>
+            Recientes 
+            <i class="pi pi-history"></i>
+        </a>
+
+    </div>
+
+    
+    <div *ngFor="let order of orderService.getHistoryOrdersLocal()">
+        <app-card-order [order]="order"></app-card-order>
+    </div>
+
+</section>

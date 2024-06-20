@@ -1,0 +1,163 @@
+<div class="w-full flex justify-content-center p-4 overflow-y-auto">
+
+    <div class="w-fit">
+        <div class="d-flex gap-3 justify-content-between mb-4">
+            <h1 class="">Pedido #{{order.id}}</h1>
+            <div class="flex">
+                <div class="select-container relative border-300">
+                    <select [(ngModel)]="order.status"
+                        (change)="updateStatusOrder(order, order.status)"
+                        class="relative cursor-pointer custom-select pr-5 border-1 border-300">
+                        <option value="pendiente">
+                            pendiente
+                        </option>
+                        <option value="procesando">
+                            procesando
+                        </option>
+                        <option value="enviado">
+                            enviado
+                        </option>
+                        <option value="cancelado">
+                            cancelado
+                        </option>
+                    </select>
+
+                    <i [ngClass]="iconClass(order.status)"
+                        class="absolute pi icon-fill pi-circle-fill"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex w-full flex-column md:flex-row md:w-auto gap-2">
+            <div class="flex flex-column">
+                <div class="flex mb-2">
+                    <div class="flex-1 border-1 p-2 border-400 d-flex flex-column">
+                        <h2 class="font-semibold">Cliente</h2>
+                        <p>{{order.customer_name}}</p>
+                    </div>
+
+                    <div class="flex-1 border-1 p-2 border-400 d-flex flex-column">
+                        <h2 class="font-semibold">Fecha</h2>
+                        <p class="text-nowrap">{{orderUseCase.getDate(order)}}</p>
+                    </div>
+                </div>
+
+                <div class="border-1 p-2 d-flex justify-content-between border-400 mb-2">
+                    <div class="">
+                        <h2>Teléfono</h2>
+                        <p>{{order.customer_phone}}</p>
+                    </div>
+                    
+
+                    <button mat-icon-button color="primary" (click)="copyToClipboard()">
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
+                </div>
+
+                <div class="border-1 p-2 border-400 mb-2" *ngIf="order.customer_email">
+                    <h2>Email</h2>
+                    <p>{{order.customer_email}}</p>
+                </div>
+
+
+                <div class="border-1 p-2 border-400 mb-2">
+                    <h2>Método de pago</h2>
+                    <p>{{order.payment_method}}</p>
+                </div>
+
+                <div class="border-1 p-2 border-400 mb-2">
+
+                    <div class="">
+                        <h2>Método de entrega</h2>
+                        <p>{{order.shipping_address ? 'Envío a domicilio':'Retira en local' }}</p>
+                    </div>
+
+                    <div class="mt-2" *ngIf="order.shipping_address">
+                        <h2 class="font-semibold">Dirección</h2>
+                        <p>{{order.shipping_address}}</p>
+                        <div class="" *ngIf="order.shipping_reference">
+                            <h4>Referencia</h4>
+                            <p>{{order.shipping_reference}}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="border-1 text-xl p-2 border-400">
+                    <h4>Total: {{order.total_amount | currency}}</h4>
+                </div>
+            </div>
+
+            <div class="border-400">
+                <div class="overflow-auto px-2">
+                    <h4 class="pb-2 text-2xl">Productos</h4>
+                    <ul class="p-list">
+                        <li *ngFor="let i of cart" class="cart-item bg-white border-round  ">
+                            <div class="flex wrap w-full gap-1">
+
+                                
+                                <div class="container-image w-full md:w-fit">
+                                    <img src="{{ i.productImage }}" class="object-contain bg-gray-200" alt="p Image" />
+                                </div>
+
+                                <div class="cart-item-details flex-1">
+
+                                    <div class="d-flex justify-content-between mb-2 gap-3">
+                                        <h3 class="title-item text-xl">{{ i.name }}</h3>
+                                        <span class="text-gray-700">#{{i.idProduct}}</span>
+                                    </div>
+
+                                    <div class="user-options">
+
+                                        <div *ngIf="i.userOptions[0]" class="container-options flex flex-column">
+
+                                            <div *ngFor="let o of i.userOptions" class="option ">
+
+                                                <div *ngIf="o.multiple else simple">
+                                                    <p class="">
+                                                        <b>{{o.nameVariation}}: </b>
+                                                        <span style="display: inline-block; margin-right: 3px;"
+                                                            *ngFor="let m of o.multipleOptions; index as i; ">
+                                                            {{i === o.multipleOptions!.length - 1 ? m.nameOption :
+                                                            m.nameOption + ',' }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <ng-template #simple>
+                                                    <p class="">
+                                                        <b>{{o.nameVariation + ': '}}</b> <span>{{o.nameOption}}</span>
+                                                    </p>
+                                                </ng-template>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="">
+                                            <p class=""><b>Cantidad:</b> {{i.quantity}}</p>
+                                        </div>
+
+                                        <p class=""><b>Subtotal:</b> {{ i.total ? (i.total *
+                                            i.quantity|currency) :
+                                            (i.productPrice|currency) }}</p>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

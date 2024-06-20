@@ -35,31 +35,71 @@ export class AppConfigComponent {
     router.events.subscribe((event) => {
       if (event instanceof NavigationStart && event.id === 1) {
 
+        const local = this.cleanUrl(event.url.split('/')[1])
+        const origin = this.routeData.getOrigin();
         
-        const local = event.url.split('/')[1];
+        const raizRoutes= [ '/', '', ' ',]
+        const setInRoutes = ['user', 'cart']
+        const returnInRoutes = ['admin', '/', '', ' ', 'terminos-y-condiciones', 'politicas-de-privacidad', 'recientes', 'login', 'register', 'history']
         console.log(local);
 
-        const origin = this.routeData.getOrigin();
 
-        if (local === 'admin') {
+        if (raizRoutes.includes(local) && local !== 'skip-recents') {
+          this.checkRecents()
           return;
         }
-        
-        
-        if (local && local !== 'user' && local !== 'cart') {
-          console.log('NEW');
-          // this.localService.initDataLocal(local)
-        } else if (origin) {
-          this.localService.initDataLocal(this.routeData.getOrigin())
-        } else {
-          this.router.navigate(['/']);
+
+        if (returnInRoutes.includes(local)) {
+          return;
         }
+
+        if (setInRoutes.includes(local) && origin) {
+          this.localService.initDataLocal(origin)
+          return
+        }
+
+        if (!setInRoutes.includes(local)) {
+          this.localService.initDataLocal(local)
+          return
+        }
+
+        if (local === 'recientes') {
+          this.recentsService.getRecents()
+          return
+        }
+        
+        this.router.navigate(['/']);
+
       }
     });
   }
 
+  cleanUrl(url:string):string{
+    let clean = url
+    if (url.includes('#')) {
+      clean = url.split('#')[0]      
+    }
+
+
+    return clean
+  }
+
   ngOnInit(): void {
-    this.adminService.getCategories();
-    this.recentsService.getRecents().subscribe();
+    // this.adminService.getCategories();
+  }
+
+
+
+  checkRecents(){
+
+    const recentsIds = this.recentsService.getLsRecents()
+    console.log(recentsIds);
+    
+
+    if (recentsIds && recentsIds.length && recentsIds.filter(i=> i !== 10).length){
+      this.router.navigate(['recientes'])
+    }
+
+
   }
 }

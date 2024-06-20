@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, take } from 'rxjs';
 import { Local } from 'src/app/interfaces/local-interface';
 import { AdminService } from 'src/app/services/admin/admin.service';
@@ -20,13 +20,15 @@ export class ShippingConfigComponent implements OnInit {
   loadForm:boolean = false
   isChangingDelivery=false
   local?:Local
+  loadMap:boolean=false
 
   constructor(private formBuilder:FormBuilder, private adminService:AdminService, private notificationsAdmin:NotificationsAdminService){
     this.form = this.formBuilder.group({
       delivery:'',
       pick_in_local:'',
       delivery_cost:['', ],
-      delivery_time:['', ]
+      delivery_time:['', ],
+      cords:[null, []]
     })
 
     this.formCostShipping = this.formBuilder.group({
@@ -37,8 +39,6 @@ export class ShippingConfigComponent implements OnInit {
     
     this.adminService.local$.subscribe(local=>{ 
       this.patchForms(local!)
-      console.log(local, '********************************');
-      
     })
 
 
@@ -53,18 +53,21 @@ export class ShippingConfigComponent implements OnInit {
 
   saveForm(){
     console.log(this.form );
-    
+    const hasDelivery = this.form.get('delivery')?.value;
 
-    if(this.form.invalid || (this.form.get('delivery')?.value && this.formCostShipping.invalid)){
+    if(this.form.invalid || (hasDelivery && this.formCostShipping.invalid)){
       this.notificationsAdmin.new('Completar los campos requeridos')
       this.form.markAllAsTouched()
       this.formCostShipping.markAllAsTouched()
       return
     }
 
+    if (!this.form.get('cords')?.value && hasDelivery ) {
+      this.notificationsAdmin.new('Debes fijar una ubicación para calcular los costos de envío ')
+      return
+    }
+
     if (!this.form.dirty && !this.formCostShipping.dirty ){
-      console.log(this.form, this.formCostShipping);
-      
       this.editing = false
       this.form.disable()
       this.formCostShipping.disable()
@@ -74,22 +77,22 @@ export class ShippingConfigComponent implements OnInit {
     this.loadForm = true
 
 
-    this.checkForm()
+    // this.checkForm()
     
-    this.adminService.updateLocal({shipping:this.getShippingMethods()}).pipe(
+    this.adminService.updateLocal({shipping:this.getShippingMethods(), cords:this.form.get('cords')?.value}).pipe(
       catchError(({error})=>{
         this.loadForm = false
         this.editing = false
         this.blockForm()
-       return handleError(error, this.notificationsAdmin)
+       return handleError(undefined, this.notificationsAdmin)
       })
 
     ).subscribe(res=>{
-      this.notificationsAdmin.new('Metodos de entrega actualizados con exito', 'Ok')
+      this.notificationsAdmin.new('Métodos de entrega actualizados con éxito', 'Ok')
       this.editing = false
       this.loadForm = false
       this.blockForm()
-   
+      this.adminService.getLocal().subscribe()
     })
 
   } 
@@ -103,8 +106,6 @@ export class ShippingConfigComponent implements OnInit {
 
   getShippingMethods(){
     const shippingMethods:any = {}
-    console.log(this.formCostShipping);
-    
     if (this.form.get('delivery')?.value){
       shippingMethods.delivery = {
         method:'delivery',
@@ -124,6 +125,7 @@ export class ShippingConfigComponent implements OnInit {
 
     return shippingMethods
   }
+
   editForm(){
     this.editing = true
     this.form.enable()
@@ -183,30 +185,64 @@ export class ShippingConfigComponent implements OnInit {
 
 
   addValidatorsForms(){
-
-    this.form.get('delivery_cost')?.setValidators([Validators.required]);
-    this.form.get('delivery_time')?.setValidators([
-      Validators.pattern(/^\d{1,2}-\d{1,2}$/),
-      Validators.required,
-    ]);
   }
- 
+  
 
   patchForms(local:Local){
 
     if (local?.shipping) {
       this.form.patchValue({
         delivery:local.shipping.delivery ? true : false,
-        delivery_cost:local.shipping.delivery.delivery_cost,
-        delivery_time:local.shipping.delivery.delivery_time,
-        pick_in_local:local.shipping.pick_in_local ? true : false
+        delivery_cost:local.shipping.delivery?.delivery_cost,
+        delivery_time:local.shipping.delivery?.delivery_time,
+        pick_in_local:local.shipping.pick_in_local ? true : false,
+        cords:local?.cords
       })
 
-      local.shipping.delivery.shipping_costs.forEach( e => this.shippingCostsArray.push(this.createRangeGroup(e.distance, e.cost)))
+      local.shipping.delivery?.shipping_costs?.forEach( e => this.shippingCostsArray.push(this.createRangeGroup(e.distance, e.cost)))
     }
     
+
+    this.shippingCostsArray.controls.sort((a: AbstractControl, b: AbstractControl) => {
+      const valorA = a.get('distance')?.value;
+      const valorB = b.get('distance')?.value;
+
+      // Compara los valores numéricos
+      return valorA - valorB;
+    });
+
     this.form.disable()
     this.formCostShipping.disable()
+  }
+
+
+  getCords(cords:{lat:number, lng:number}){
+    console.log(cords);
+    this.form.get('cords')?.setValue(`${cords.lng},${cords.lat}`)
+    this.form.markAsDirty()
+  }
+
+
+  getRangeInitial(actualDistance:any){
+    const ranges:any[] = this.shippingCostsArray.value
+    const menores = []
+    const mayores = []
+    let initial=0
+    let final=0
+
+    for (const r of ranges) {
+      if (r.distance < actualDistance ) {
+        menores.push(r.distance)
+      }else{
+        mayores.push(r.distance)
+      }
+    }      
+
+    initial = Math.max(...menores)
+    final = Math.min(...mayores)
+    console.log(initial);
+    
+    return `${menores.length ? initial : 0} Hasta ${final} Kilómetros`
   }
 
 }

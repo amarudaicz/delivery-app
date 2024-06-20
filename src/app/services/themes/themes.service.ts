@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Theme } from 'src/app/interfaces/theme-interface';
-
+export type themeProperty = 'background'|'backgroundSec'|'name'|'id'|'colorPrimary'|'colorSecondary'| 'colorTextSecondary'|'colorText'|'backgroundPage'
 @Injectable({
   providedIn: 'root'
 })
 export class ThemesService {
 
   constructor(){}
-
-  
 
   public currentTheme:any
   public stateTheme = new BehaviorSubject<boolean>(false)
@@ -19,55 +17,79 @@ export class ThemesService {
       id:1,
       name:'Default',
       background:'#ff725e',
-      backgroundSec:'#7342e5',
-      backgroundPage: '#edede9',
-      colorPrimary:'#2c3e24',
-      colorSecondary: '#2c3e50',
-      colorText:'#303030',
-      colorTextSecondary: '#fff',
+      backgroundSec:'#480af3',
     },
     {
       id:2,
       name:'Vibe',
       background:'#5457cd',
       backgroundSec:'#023047',
-      backgroundPage: '#edede9',
-      colorText:'#303030',
-      colorTextSecondary: '#fff',
-      colorPrimary:'#fff',
-      colorSecondary: 'string',
     },
     {
       id:3,
-      name:'Like Crazy',
+      name:'Crazy',
       background:'#EF233C',
       backgroundSec:'#2B2D42',
-      colorPrimary:'#EDF2F4',
-      colorSecondary: 'fff',
-      colorText:'#D90429',
-      colorTextSecondary: '#fff',
-      backgroundPage: '#8D99AE',
-    }
+    },
+    {
+      id:4,
+      name:'Seven',
+      background:'#bc6c25',
+      backgroundSec:'#283618',
+    },
+    {
+      id:5,
+      name:'Lato',
+      background:'#ee6c4d',
+      backgroundSec:'#293241',
+    },
+    {
+      id:6,
+      name:'Puna',
+      background:'#f7b801',
+      backgroundSec:'#3d348b',
+    },
+    {
+      id:7,
+      name:'Cali',
+      background:'#ff8552',
+      backgroundSec:'#297373',
+    }, {
+      id:8,
+      name:'Colibrí',
+      background:'#6F0E07',
+      backgroundSec:'#242F40',
+    },
+
+    
   ]
   
-  setTheme(id:number){
-    const theme = this.themes.filter((t:any) => t.id === id)
-    console.log(id);
-    this.currentTheme = theme[0]
+  setTheme(id:any){
+
+    if (!isNaN(id)){
+      const theme = this.themes.filter((t:any) => t.id === Number(id))
+      this.currentTheme = theme[0]
+      this.stateTheme.next(true)
+      return
+    }
+
+    this.currentTheme = JSON.parse(id)
     this.stateTheme.next(true)
+
   }
 
   getTheme(id:number){
-    const theme = this.themes.filter((t:any) => t.id === id)
+
+    const theme = this.themes.filter((t:any) => t.id === Number(id))
     return theme[0]
   }
 
   getCurrentTheme(){
     return this.currentTheme
-  }
+  } 
 
   getThemeState(){
-    console.log(this.stateTheme);
+    console.log(this.stateTheme); 
     return this.stateTheme
   }
 
@@ -79,10 +101,10 @@ export class ThemesService {
     }
   }
 
-  get(property:string){
+  
+  get(property:themeProperty){
     if (this.currentTheme) {
       return this.currentTheme[property]
-      
     }
   }
   

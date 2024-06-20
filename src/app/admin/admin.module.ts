@@ -11,17 +11,10 @@ import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
-import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
-import { MessagesModule } from 'primeng/messages';
-import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
-import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { AccordionModule } from 'primeng/accordion';
 
 // Material
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -57,7 +50,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ListCategoriesComponent } from './components/list-categories/list-categories.component';
 import { DashboardListComponent } from './components/dashboard-list/dashboard-list.component';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { ImageFallbackDirective } from '../directives/image-fallback/image-fallback.directive';
 import { SelectProductsGroupComponent } from './components/select-products-group/select-products-group.component';
 import { BannerQrComponent } from './components/banner-qr/banner-qr.component';
 import { BannerLinkComponent } from './components/banner-link/banner-link.component';
@@ -70,10 +62,22 @@ import { PaymentsMethodsConfigComponent } from './components/payments-methods-co
 import { SubscriptionStateComponent } from './components/subscription-state/subscription-state.component';
 import { InfoPlanBasicComponent } from './components/subscription-state/components/info-plan-basic/info-plan-basic.component';
 import {MatDialogModule } from '@angular/material/dialog';
-import { AdminService } from '../services/admin/admin.service';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { ScrollSpyDirective } from '../directives/scroll-spy.directive';
 import { HomeModule } from '../home/home.module';
+import { DirectivesModule } from '../directives/directives.module';
+import { AccountComponent } from './components/account/account.component';
+import { MainOrdersComponent } from './orders/presentation/main-orders/main-orders.component';
+import {MatTableModule} from '@angular/material/table';
+import { ModalDetailsOrderComponent } from './orders/presentation/modal-details-order/modal-details-order.component';
+import { ListComponent } from './orders/presentation/list/list.component';
+import { CapitalizePipe } from './orders/presentation/capitalize-pipe';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { FastModeComponent } from './orders/presentation/fast-mode/fast-mode.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { SetBuyerFieldsComponent } from './orders/presentation/set-buyer-fields/set-buyer-fields.component';
+import {NativeDateAdapter} from '@angular/material/core';
+import { TomtomService } from '../services/tomtom-service/tomtom.service';
 
 @NgModule({
   declarations: [
@@ -95,19 +99,25 @@ import { HomeModule } from '../home/home.module';
     MainEditProductComponent,
     ListCategoriesComponent,
     DashboardListComponent,
-    ImageFallbackDirective,
     SelectProductsGroupComponent,
     BannerQrComponent,
     BannerLinkComponent,
     SchedulesComponent,
-    MainSchedulesComponent,
+    MainSchedulesComponent, 
     LinksSocialComponent,
     ShippingConfigComponent,
     PaymentsMethodsConfigComponent,
     SubscriptionStateComponent,
     InfoPlanBasicComponent,
     DocumentationComponent,
-    ScrollSpyDirective
+    ScrollSpyDirective, 
+    AccountComponent, 
+    MainOrdersComponent, 
+    ModalDetailsOrderComponent,
+    ListComponent,
+    CapitalizePipe,
+    FastModeComponent,
+    SetBuyerFieldsComponent,
   ],
   imports: [
     CommonModule,
@@ -117,6 +127,7 @@ import { HomeModule } from '../home/home.module';
     DragDropModule,
     SharedModule,
     HomeModule,
+    DirectivesModule,
 
     // PrimeNG
     AutoFocusModule,
@@ -142,7 +153,11 @@ import { HomeModule } from '../home/home.module';
     MatSnackBarModule,
     MatTooltipModule,
     MatSlideToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatChipsModule,
+    MatDatepickerModule,
   ],
   exports:[
     PrimaryCardsComponent, 
@@ -162,5 +177,9 @@ import { HomeModule } from '../home/home.module';
     SetOptionsProductComponent,
     MainEditProductComponent
   ],
+  providers:[
+    NativeDateAdapter,
+    TomtomService
+  ]
 })
 export class AdminModule { }

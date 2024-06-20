@@ -49,13 +49,15 @@ export class MainOptionsComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.optionsGroup.subscribe((options: OptionProduct[]) =>{
 
+      if (!options) {
+        return
+      }
+
       options = options.map(e=> {
         return {...e, editing:false}
       })
 
       this.groupOptions = copy(options)
-        console.log(this.groupOptions);
-        
       this.respaldGroupOptions = copy(options)
 
     })

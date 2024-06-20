@@ -29,7 +29,7 @@ export class NewselterBoxComponent implements OnInit {
   }
 
   setPromt(event:Event){
-
+    
   }
 
 }

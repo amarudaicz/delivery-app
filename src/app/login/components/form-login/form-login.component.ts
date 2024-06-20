@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { catchError, throwError } from 'rxjs';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -20,13 +19,12 @@ export class FormLoginComponent implements OnInit {
   loginForm:FormGroup 
   formSubmitted:boolean = false
   formTrySubmit:boolean = false
-  showPassword:boolean = false
+  showPassword:boolean = false 
   errorResponse?:string
   
   constructor(
     private formBuilder: FormBuilder, 
     private authService:AuthService, 
-    private cookies:CookieService,
     private layoutState:LayoutStateService,
     private router:Router,
     private toast:MatSnackBar

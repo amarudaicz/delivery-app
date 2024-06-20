@@ -4,11 +4,18 @@ import { inject } from "@angular/core";
 
 
 
-export const AuthGuard = () => {
+export const adminGuard = async () => {
   const authService = inject(AuthService)
   const router = inject(Router)
-  const auth = authService.isLogged()
-  console.log(auth)
+  const auth = await authService.isLogged()
   if (auth) return true
   else return router.navigate(['/login'])
+}
+
+export const loginGuard = async () => {
+  const authService = inject(AuthService)
+  const router = inject(Router)
+  const auth = await authService.isLogged()
+  if (!auth) return true 
+  else return router.navigate(['/admin'])
 }

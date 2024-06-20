@@ -34,10 +34,6 @@ export class CartItemsComponent implements OnDestroy {
 
   ngOnInit(): void {
     this.routeService.setCurrent('cart')
-
-    
-
-    
     this.items$ = this.cartService.getCartItems().subscribe((items) => {
       console.log(items);
       this.itemsCart = items

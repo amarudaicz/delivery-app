@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { addItemCart, fadeIn } from 'src/app/animations/main-detail-animations';
 import {
   DetailsOptions,
@@ -15,6 +16,7 @@ import {
 } from 'src/app/interfaces/optionProduct-interface';
 import { Product } from 'src/app/interfaces/product-interface';
 import { CartService } from 'src/app/services/cartData/cart.service';
+import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
 @Component({
@@ -36,13 +38,17 @@ export class AddProductCartComponent implements OnInit {
   options: any[] = [];
   currentCart?: any;
   countOptions: any = {};
+  formTrySubmit: boolean = false;
+  transitionRouteEnd:boolean=false
 
   constructor(
     public theme: ThemesService,
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private toast: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private route: Router,
+    private routeData:RouteDataService
   ) {
     this.form = this.formBuilder.group({
       especifications: [''],
@@ -72,6 +78,11 @@ export class AddProductCartComponent implements OnInit {
 
       this.subtotal = this.product.price;
     }
+
+
+    setTimeout(() => {
+      this.transitionRouteEnd = true
+    }, 300);
   }
 
   saveOrder() {
@@ -82,7 +93,7 @@ export class AddProductCartComponent implements OnInit {
       category_name,
       price: productPrice,
     } = this.product;
-    console.log(this.options);
+    console.log(this.countOptions, Object.values(this.countOptions).some((value) => value === false),  this.form.invalid);
 
     if (this.options.length !== 0) {
       const _type1Index = this.options.findIndex((e) => e.typePrice === 1);
@@ -91,10 +102,19 @@ export class AddProductCartComponent implements OnInit {
     }
 
     if (
-      this.form.valid &&
-      Object.values(this.countOptions).every((value) => value === true)
+      this.form.invalid ||
+      Object.values(this.countOptions).some((value) => value === false)
     ) {
-      this.stateButton = false;
+         this.formTrySubmit = true;
+      this.form.markAllAsTouched();
+      this.toast.open('Completar todos los campos requeridos', 'Ok', {
+        panelClass: 'alert-detail',
+        duration: 3000,
+      });
+      return;
+    } 
+
+     this.stateButton = false;
       const item = {
         name,
         productImage,
@@ -107,19 +127,8 @@ export class AddProductCartComponent implements OnInit {
       };
 
       this.cartService.addToCart(item);
+      this.redirectBack()
       this.stateButton = true;
-      
-      setTimeout(() => {
-        this.location.back();
-      }, 1000);
-
-    } else {
-      this.form.markAllAsTouched();
-      this.toast.open('Completar todos los campos', 'Ok', {
-        panelClass: 'alert-detail',
-        duration: 3000,
-      });
-    }
   }
 
   saveOptions(option: DetailsOptions, optionGroup: OptionProduct) {
@@ -195,7 +204,7 @@ export class AddProductCartComponent implements OnInit {
         this.countOptions[e.nameVariation] = e.min || e.max ? false : true;
         this.addGroupCheckboxes(e, e.options);
 
-        return; 
+        return;
       } else if (e.typePrice === 1) {
         const lowOption = this.getOptionWithLowestPrice(e);
         console.log(lowOption);
@@ -207,23 +216,22 @@ export class AddProductCartComponent implements OnInit {
         );
         this.form.get(e.nameVariation)?.setValue(lowOption.nameOption);
         return;
-      } else if(e.required) {
+      } else if (e.required) {
         this.form.addControl(e.nameVariation, this.formBuilder.control(null));
         this.form.get(e.nameVariation)?.setValue(e.options[0].nameOption);
-        this.saveOptions(e.options[0], e)
-      }else{
+        this.saveOptions(e.options[0], e);
+      } else {
         this.form.addControl(e.nameVariation, this.formBuilder.control(null));
       }
-
     });
   }
 
-  clearOption(controlName:string){
-    this.form.get(controlName)?.setValue('')
-    const i = this.options.findIndex(e=>e.nameVariation === controlName)
-    this.options.splice(i, 1)
+  clearOption(controlName: string) {
+    this.form.get(controlName)?.setValue('');
+    const i = this.options.findIndex((e) => e.nameVariation === controlName);
+    this.options.splice(i, 1);
 
-    this.subtotal = this.calcSubtotal(this.options)
+    this.subtotal = this.calcSubtotal(this.options);
   }
 
   sortOptionsByLowestPrice(options: any[]): any[] {
@@ -310,7 +318,7 @@ export class AddProductCartComponent implements OnInit {
     const multiples: number[] = [0];
     const typePrice1 = array.findIndex((e) => e.typePrice === 1);
     console.log(typePrice1);
-    
+
     array.forEach((e) => {
       if (e.multipleOptions) {
         e.multipleOptions.forEach((j: any) => {
@@ -326,13 +334,26 @@ export class AddProductCartComponent implements OnInit {
 
     if (typePrice1 !== -1) {
       const calc =
-      subtotal.reduce((act, prev) => act + prev) +
-      multiples.reduce((act, prev) => act + prev);
-      return calc;    
-    }else{
-
-      return this.product.price + subtotal.reduce((act, prev) => act + prev) + multiples.reduce((act, prev) => act + prev);
+        subtotal.reduce((act, prev) => act + prev) +
+        multiples.reduce((act, prev) => act + prev);
+      return calc;
+    } else {
+      return (
+        this.product.price +
+        subtotal.reduce((act, prev) => act + prev) +
+        multiples.reduce((act, prev) => act + prev)
+      );
     }
+  }
 
+  redirectBack(){
+    console.log(
+      window.history
+    );
+    if (window.history.state.navigationId === 1) {
+      this.route.navigate(['/'+this.routeData.getOrigin() ])
+    }else{
+      this.location.back()
+    }
   }
 }

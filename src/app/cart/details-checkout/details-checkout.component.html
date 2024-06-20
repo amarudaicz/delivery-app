@@ -1,0 +1,26 @@
+
+<div class="p-4 relative">
+    <div class="text-center">
+        <i class="pi pi-info-circle text-4xl text-primary mb-3"></i>
+        <h2 class="text-2xl mb-4">
+            Detalles del total
+        </h2>
+
+        <i [mat-dialog-close]="true" class="close-details pi pi-times text-primary font-bold font-base"></i>
+
+        <ul>
+            <li class="d-flex justify-content-between">
+                    <span class="font-bold">Subtotal:</span>
+                    <span class="font-semibold">{{data.total|currency}}</span>
+            </li>
+
+            <li class="d-flex justify-content-between">
+                <span class="font-bold">Envío:</span>
+                <span class="font-semibold">+ {{data.shipping|currency}}</span>
+        </li>
+        </ul>
+
+    </div>
+ 
+ 
+</div>

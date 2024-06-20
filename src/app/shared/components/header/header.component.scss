@@ -1,23 +1,24 @@
 @use '../../../../mixin.scss' as m;
 
-header {
+.main-header {
   top: 0;
   left: 0;
+  position: relative;
   width: 100%;
-  z-index: 99999999999;
-  display: grid;
-  place-items: center;
-
+  z-index: 999;
 }
 
 .container-header {
   padding: 15px 20px;
+
+  @include m.tablet{
+    padding: 10px 20px;
+  }
+
   transition: all .6s;
   background: white;
   width: 100%;
   box-shadow:1px -3px 10px black;
-  
-
 }
 
 .container-items {
@@ -25,15 +26,20 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .menu-icon {
   display: grid;
-  place-items: center;
-  z-index: 20;
+  place-items: start;
 
+  width: 76px;
+
+  @include m.tablet{
+    width: 140px;
+  }
+  
   .container-bars {
     width: 25px;
     display: flex;
@@ -74,19 +80,14 @@ header {
 
 
 .local-name{
-  margin-left:36px ;
+  // margin-left:36px ;
 }
 
 .container-menu {
   width: 60vw;
-
-  @include m.tablet{
-    width: 45vw;
-  }
-
-  
+  overflow-y: auto;
   height: 100vh;
-  padding: 70px 10px 0 13px;
+  padding: 15px 15px 75px 15px;
   position: absolute;
   top: 0;
   left: -100%;
@@ -94,14 +95,19 @@ header {
   background: rgb(255, 255, 255);
   transition: all .3s;
   display: flex;
-
+  flex-direction: column;
+  gap: 15px;
   
+
+
+  @include m.tablet{
+    width: 30vw;
+  }
+
   &.menu-visible {
     left: 0;
   }
 
-  justify-content: space-between;
-  flex-direction: column;
     
 }
 .container-logo{
@@ -111,10 +117,19 @@ header {
   }
 
 }
-.content-menu{
 
+.container-links{
+  padding-top: 10px;
+  max-width: 950px;
+}
 
-
+.link-header{
+  padding-bottom: 10px;
+  border-bottom:2px solid #fff;
+  transition: all .3s ease;
+  &:hover{
+    border-color: #181818;
+  }
 }
 
 
@@ -122,6 +137,7 @@ header {
   padding: 15px 0;
   display: flex;
   align-items: center;
+
   border-bottom: thin solid rgb(208, 208, 208);
   .item-icon{
     margin-right: 10px;
@@ -174,6 +190,22 @@ header {
   left: 0;
   background: rgba(0, 0, 0, 0.414);
 
+}
+
+.badge-cart{
+  position: absolute;
+  top: -14px;
+  right: -13px;
+  width: 19px;
+  height: 19px;
+  font-size: .75rem;
+  line-height: 1;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color:#fff;
 }
 
 

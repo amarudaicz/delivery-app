@@ -1,13 +1,9 @@
 .container-banner {
-
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 30px;
     padding:15px;
-
-
-
 
 }
 
@@ -18,14 +14,9 @@
     text-align: center;
     row-gap: 15px;
 
-
-  
-
-
     .text-banner {
         color: #373737;
         font-size: 0.9rem;
-        margin-top: -20px;
     }
     
     

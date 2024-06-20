@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { BehaviorSubject, ReplaySubject, interval } from 'rxjs';
 
 @Injectable({
@@ -7,9 +9,9 @@ import { BehaviorSubject, ReplaySubject, interval } from 'rxjs';
 export class CartService {
   public cartItems: any[] = [];
   public cartSubject = new BehaviorSubject<any[]>([]);
-
-
-  constructor() {
+ 
+ 
+  constructor(private toast:MatSnackBar, private route:Router) {
     this.reset()
     // interval(3000).subscribe(i=>{
     //   this.cartSubject.next(this.cartItems)
@@ -54,6 +56,10 @@ export class CartService {
 
     console.log(this.cartItems);
     this.cartSubject.next(this.cartItems)
+      
+    this.toast.open('Producto agregado al carrito', 'Ver pedido' , {duration:2000}).onAction().subscribe(goCart=>{
+      this.route.navigate(['/cart'])
+    })
   }
 
 

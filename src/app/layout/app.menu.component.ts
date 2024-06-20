@@ -15,7 +15,7 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Home',
+                label: 'Inicio',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/admin'] }
                 ]
@@ -24,10 +24,19 @@ export class AppMenuComponent implements OnInit {
                 label: 'Secciones',
                 items: [
                     { label: 'Productos', icon: 'fa-solid fa-table', routerLink: ['products'] },
-                    { label: 'Ajustes', icon: 'pi pi-sliders-v', routerLink: ['config'] },
+                    { label: 'Pedidos', icon: 'pi pi-send', routerLink: ['orders'] },
+                    { label: 'Tienda', icon: 'pi pi-sliders-v', routerLink: ['config'] },
+                    { label: 'Envíos', icon: 'pi pi-box', routerLink: ['shipping'] },
+                    { label: 'Pagos', icon: 'pi pi-money-bill', routerLink: ['pay-methods'] },
                     { label: 'Horarios', icon: 'pi pi-clock', routerLink: ['schedules'] },
                     { label: 'Redes sociales', icon: 'pi pi-share-alt', routerLink: ['links'] },
+                ]
+            },
+            {
+                label: 'Ayuda',
+                items: [
                     { label: 'Documentación', icon: 'pi pi-question', routerLink: ['docs'] },
+                    { label: 'Suscripción' ,icon: 'pi pi-credit-card', routerLink: ['payments'] },
                 ]
             }
         ];

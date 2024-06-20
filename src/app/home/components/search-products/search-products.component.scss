@@ -5,13 +5,17 @@
 
 .fixed-search{
     width: 100%;
-    height: calc(100% - 58px);
-    background: #fff;
-    z-index: 8888;
+    height: calc(100%);
+    background: rgb(249,246,244);
+    z-index: 999999;
     position: fixed;
     top:0;
     left: 0;
-    
+}
+
+.input-filters{
+    width: 54.4px;
+    height: 54.4px;
 }
 
 .input-search{
@@ -35,7 +39,7 @@
 
 .grid-tags{
     display: grid; 
-  grid-auto-flow: column; 
+  grid-auto-flow: row; 
   grid-auto-columns: 1fr 1fr; 
   grid-template-columns: 1fr; 
   grid-template-rows: 1fr 1fr; 

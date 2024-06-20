@@ -1,8 +1,8 @@
 
 export const environment = {
     production:true,
-    // host:'http://localhost:3001/', 
-    host:'https://delivery-app-backend-dev.fl0.io/',
+    host:'https://site--deli--grqgr7rz9qhl.code.run/', 
+    // host:'https://delivery-app-backend-dev-kdrs.1.us-1.fl0.io/',
     cloudinary_cloud:'diyorb8ka'
 }
 

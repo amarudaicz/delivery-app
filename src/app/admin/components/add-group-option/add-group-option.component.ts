@@ -1,13 +1,8 @@
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ErrorHandler, EventEmitter, HostListener, OnDestroy, Output, ViewChild, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatChipInputEvent, MatChipEvent, MatChipEditedEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { interval } from 'rxjs';
 import { enterRight } from 'src/app/animations/main-animations';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
-import { OptionProduct, DetailsOptions } from 'src/app/interfaces/optionProduct-interface';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 import { noScriptValidator } from 'src/app/utils/validators';
@@ -47,10 +42,7 @@ export class AddGroupOptionComponent implements OnDestroy {
       min: [0, Validators.required],
       required:[false],
       sku:['', Validators.required]
-    });
-
-    console.log(this.containerDisplay);
-    
+    }); 
 
     this.formOptions = this.formBuilder.group({
       options: this.formBuilder.array([]),
@@ -62,8 +54,13 @@ export class AddGroupOptionComponent implements OnDestroy {
       this.currentOptions = data ? data : []
     })
     
-
     this.layoutService.blockBody()
+
+    this.formVariations.get('simple')?.valueChanges.subscribe(simple=>{
+      const typePrice = this.formVariations.get('typePrice') 
+      simple && typePrice?.value === 2 ? typePrice?.setValue(3) : null
+    })
+
 
   }
 

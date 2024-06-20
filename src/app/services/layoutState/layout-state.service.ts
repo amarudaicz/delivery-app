@@ -27,13 +27,11 @@ export class LayoutStateService {
 
   blockBody(){
     document.body.style.overflow = 'hidden'
-
   }
 
   unblockBody(){
-    document.body.style.overflow = ''
-
-
+    console.log('unblock');
+    document.body.style.overflow = 'inherit'
   }
 
 

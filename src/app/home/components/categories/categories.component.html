@@ -1,0 +1,23 @@
+<section class="categories relative mt-4"> 
+
+    <div class="d-flex justify-content-between w-full mb-2">
+        <h2 class="title ">Categorías</h2>
+
+        <div class="d-flex gap-2">
+            <button mat-ripple (click)="scrollLeft()" class="flex p-2 button-slide">
+                <i class="pi pi-arrow-left text-900 text-sm"></i>
+            </button>
+            
+            <button mat-ripple (click)="scrollRight()" class="flex p-2 button-slide">
+                <i class="pi pi-arrow-right text-900 text-sm"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="scroll-cateogries" class="container-categories pt-2 pb-3" #containerCategories (scroll)="handleScroll($event)" >
+        <app-card-category id="1" class="" *ngFor="let category of categories" [category]="category"> </app-card-category>
+    </div>
+
+</section>  

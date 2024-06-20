@@ -1,0 +1,93 @@
+<div class="card">
+    <h1 class="mb-3">Cuenta</h1>
+
+    <div class="w-full card">
+
+        <h2 class="mb-4 text-xl">Datos de usuario</h2>
+        <div class="mb-3">
+            <button mat-raised-button (click)="formAccount.disabled ? formAccount.enable() : saveAccountData()"
+                color="primary" type="submit">{{formAccount.disabled ? 'Editar' : 'Guardar cambios'}}</button>
+        </div>
+
+        <form [formGroup]="formAccount">
+            <div class="w-full d-flex wrap gap-4">
+
+                <!-- Nombre de usuario -->
+                <div class="">
+                    <label class="block font-bold mb-1">Nombre de usuario</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" formControlName="username" required>
+                        <mat-error>Este campo es requerido</mat-error>
+                        <mat-hint>Usuario de inicio de sesión</mat-hint>
+                    </mat-form-field>
+                </div>
+
+
+
+                <!-- Correo electrónico -->
+                <div class="">
+                    <label class="block font-bold mb-1">Correo electrónico</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="email" formControlName="email" required email>
+                        <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="">
+                    <label class="block font-bold mb-1">Teléfono del titular</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="number" formControlName="phone">
+                        <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+
+        </form>
+    </div>
+
+
+    <div class="mt-4 card">
+        <h2 class="mb-4 text-xl">Cambiar contraseña</h2>
+       
+        <form [formGroup]="formNewPassword" (ngSubmit)="saveNewPassword()">
+            <div class="w-full d-flex wrap gap-4">
+
+                <div class="">
+                    <label class="block font-bold mb-1">Contraseña actual</label>
+
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" formControlName="currentPassword" required>
+                        <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="">
+                    <label class="block font-bold mb-1">Nueva contraseña</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" formControlName="password" required>
+                        <mat-error>La contraseña debe tener al menos 8 caracteres</mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="">
+                    <label class="block font-bold mb-1">Repetir nueva contraseña</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" formControlName="confirmPassword" required>
+                        <mat-error>La contraseña debe tener al menos 8 caracteres</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="mt-4 md:mt-2">
+                <p class="mb-2 p-2 border-round bg-red-300 w-fit fadein" *ngIf="formNewPassword.hasError('passwordsDoNotMatch') && formNewPassword.get('confirmPassword')?.value"><i class="pi pi-info-circle"></i> Las contraseñas no coinciden </p>
+                <button [disabled]="formNewPassword.invalid || disableNewPasssword" type="submit" mat-raised-button color="primary">Guardar contraseña</button>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>

@@ -22,23 +22,13 @@ export class RecentsService {
   addRecent(local: Local) {
 
     const exist = this.recents?.find(e => e === local.id)
-    console.log(exist);
-
     if (exist) {
       return
     } 
       
     this.recents.push(local.id)
     localStorage.setItem('recents', JSON.stringify(this.recents))
-    console.log(this.localsRecents, local);
-    
-    this.recents$.next([...this.localsRecents, local])
     return
-    
-
-
-    
-
   }
 
   getLsRecents() {
@@ -49,9 +39,10 @@ export class RecentsService {
   getRecents(){
 
     return this.http.post<Local[]>(environment.host + 'locals/get-recents', {recents:this.getLsRecents()}).pipe(
-      map(res=>{
-        this.localsRecents = res
-        this.recents$.next(res)
+      map(recents=>{
+        const cleanRecents = recents.filter(r=> r.id !== 10)
+        this.localsRecents = recents
+        this.recents$.next(cleanRecents)
       })
     )
 

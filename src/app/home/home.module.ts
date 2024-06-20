@@ -17,6 +17,11 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { LandingModule } from '../landing/landing.module';
 import { SearchProductsComponent } from './components/search-products/search-products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LowestPricePipe, MaxPricePipe } from '../pipes/getLowestPrice';
+import { DirectivesModule } from '../directives/directives.module';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { AlertClosedComponent } from './components/alert-closed/alert-closed.component';
+import { FeaturesLocalComponent } from './components/features-local/features-local.component';
 
 @NgModule({ 
   declarations: [
@@ -26,8 +31,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductsSetComponent,
     NewselterBoxComponent,
     PreviewCategoryComponent,
-    SearchProductsComponent
-    
+    SearchProductsComponent,
+    CategoriesComponent,
+    AlertClosedComponent,
+    FeaturesLocalComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +45,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatRippleModule,
     SkeletonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DirectivesModule
   ] ,
   exports:[
     NewselterBoxComponent,

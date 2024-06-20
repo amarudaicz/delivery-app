@@ -5,6 +5,8 @@
 /out-tsc
 /bazel-out
 /src/assets/images
+/dist
+/src/assets/logos
 
 # Node
 /node_modules

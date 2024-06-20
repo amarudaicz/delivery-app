@@ -27,44 +27,46 @@
                 <div class="" formArrayName="links">
 
                     <div *ngFor="let link of linksFormArray.controls; let i = index" [formGroupName]="i">
-                        <h2 class="text-800 font-bold mb-2">Enlace {{i + 1}}</h2>
-
-                        <div class="d-flex wrap gap-3 card mb-3">
+                        
+                        <div class=" card mb-3">
+                            <h2 class="text-800 font-bold mb-2">Enlace {{i + 1}}</h2>
                             
-                            <mat-form-field appearance="outline" >
-                                <mat-label>Red social</mat-label>
-                                
-                                <mat-select formControlName="name">
+                            <div class="d-flex wrap gap-3">
+                                <mat-form-field appearance="outline" class="w-14rem" >
+                                    <mat-label>Red social</mat-label>
                                     
-                                    <mat-select-trigger>
+                                    <mat-select formControlName="name">
                                         
-                                        <div class="d-flex ">
-                                            {{link.get('name')?.value}}
-                                            <i class="pi ml-2" [ngClass]="[getIcon(link.get('name')?.value)?.icon, getIcon(link.get('name')?.value)?.color]"></i>
-                                        </div>
-                                    
-                                    </mat-select-trigger>
-
-                                    <mat-option [disabled]="getDisabled(option.value)" *ngFor="let option of mockIcons" [value]="option.value">
-                                        {{option.value}}
-                                        <i class="pi" [ngClass]="[option.icon, option.color]"></i>
-                                    </mat-option>
-                                    
-                                </mat-select>
-
-                                <mat-error>Este campo es requerido</mat-error>
-                            </mat-form-field>
-                          
-                            <mat-form-field  appearance="outline">
-                                <mat-label>URL</mat-label>
-                                <input matInput type="text" placeholder="Pega la url de enlace" formControlName="url">
-                                <mat-error>Este campo es requerido</mat-error>
-                            </mat-form-field>
-
-
-                            <a [href]="link.get('url')?.value" target="_blank" class="mb-3 p-2 mr-2 hover:text-blue-300">
-                                <i class="pi pi-external-link"></i>
-                            </a>
+                                        <mat-select-trigger>
+                                            
+                                            <div class="d-flex ">
+                                                {{link.get('name')?.value}}
+                                                <i class="pi ml-2" [ngClass]="[getIcon(link.get('name')?.value)?.icon, getIcon(link.get('name')?.value)?.color]"></i>
+                                            </div>
+                                        
+                                        </mat-select-trigger>
+    
+                                        <mat-option [disabled]="getDisabled(option.value)" *ngFor="let option of mockIcons" [value]="option.value">
+                                            {{option.value}}
+                                            <i class="pi" [ngClass]="[option.icon, option.color]"></i>
+                                        </mat-option>
+                                        
+                                    </mat-select>
+    
+                                    <mat-error>Este campo es requerido</mat-error>
+                                </mat-form-field>
+                              
+                                <mat-form-field  appearance="outline">
+                                    <mat-label>URL</mat-label>
+                                    <input matInput type="text" placeholder="Pega la url de enlace" formControlName="url">
+                                    <mat-error>Este campo es requerido</mat-error>
+                                </mat-form-field>
+    
+    
+                                <a [href]="link.get('url')?.value" target="_blank" class="mb-3 p-2 mr-2 hover:text-blue-300">
+                                    <i class="pi pi-external-link"></i>
+                                </a>
+                            </div>
 
 
                             <button *ngIf="editing" (click)="removeLink(i)" mat-button color="warn" class="mb-3">Eliminar enlace</button>

@@ -1,22 +1,21 @@
 <section class="products-set mt-3">
 
-    <div class="container-chip mb-2">
-        <h2 class="title">
+    <div class="d-flex justify-content-between gap-3 mb-2 ">
+        <h2 class="title flex-1">
             {{title}}
         </h2>
 
-        <a [style.color]="theme.get('backgroundSec')" class="link-category py-1 px-2 border-1 border-round" *ngIf="title" [routerLink]="title.toLowerCase()">
-            <span class="d-flex gap-2">
-                Lista 
-                <i class="pi pi-arrow-right"></i>
-            </span>
+        <a mat-ripple [style.color]="theme.get('backgroundSec')" class=" text-nowrap font-bold p-1 border-round" *ngIf="title" [routerLink]="title.toLowerCase()">
+                Ver todo
         </a>
     </div>
 
-    <div class="container-products">
-        <div class="container-grid mb-3">
- 
-            <app-product-card [linkMode]="'category-name'" [style.width]="'100%'" *ngFor="let product of products" [product]="product"></app-product-card>           
+    <div class="">
+        <div class="container-grid mb-3 pb-3 ">
+            
+            <div class="card-grid w-full overflow-hidden shadow-3 border-round" *ngFor="let product of products?.slice(0, 4)" >
+                <app-product-card class="container-products" [linkMode]="'category-name'" [product]="product"></app-product-card>           
+            </div>
               
          
         </div>  

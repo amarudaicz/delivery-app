@@ -1,13 +1,13 @@
 <!-- CONFIG -->
 <app-app-config></app-app-config>
 
-<div [class.main-container]="false">
+<div [class.main-container]="false" class="h-full" [@routeAnimations]="getRouteAnimationData()">
 
-    <div class="flex flex-column h-screen">
+    <div class="flex flex-column h-full">
 
         <app-header *ngIf="themeLoad && stateLayout.state.header"></app-header>
 
-        <div class=" " [ngClass]="stateLayout.state.header && themeLoad ? ['overflow-y-auto', 'h-full'] : '' " [@routeAnimations]="getRouteAnimationData()">
+        <div class="flex-1" [ngClass]="stateLayout.state.header && themeLoad ? ['overflow-y-auto', 'h-full'] : '' " >
             <router-outlet></router-outlet>
         </div>
         

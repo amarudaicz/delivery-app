@@ -18,6 +18,9 @@ import { FaqComponent } from './faq/faq.component';
     CommonModule,
     RouterModule,
     MatRippleModule 
+  ],
+  exports:[
+    FaqComponent
   ]
 })
 export class PoliciesModule { }

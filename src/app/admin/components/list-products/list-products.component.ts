@@ -38,6 +38,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 import { DashboardListComponent } from '../dashboard-list/dashboard-list.component';
 import { CardCategoryComponent } from 'src/app/home/components/card-category/card-category.component';
+import { LoaderHttpService } from 'src/app/services/loader-http/loader-http.service';
 
 @Component({
   selector: 'app-list-products',
@@ -51,7 +52,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
   window: Window = window;
   categoryId?: number;
-  products: Product[] = [];
+  products?: Product[];
   refDialog?: DynamicDialogRef;
   selectedProducts: Product[] = [];
   loadingUpdate: boolean = false;
@@ -63,7 +64,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
   modelConfigCategory: any[] = [
     {
-      label: 'Categoria',
+      label: 'Categoría',
       items: [
         {
           label: 'Editar',
@@ -93,28 +94,24 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   currentSectionSubscription?: Subscription;
   produtsAdminSubscription?: Subscription;
   dashboard = Inject(DashboardListComponent);
+  laoderProducts = true
 
   constructor(
-    private localService: LocalDataService,
     private confirmService: ConfirmationService,
     private adminService: AdminService,
     private dinamicList: DinamicListService,
     private toast: MatSnackBar,
     private notificationsAdmin: NotificationsAdminService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public loaderHttp:LoaderHttpService
   ) {} 
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+  
     this.dinamicList.category.subscribe(
       (category) => {
-
-        if (!category){
-          this.dataCategory = undefined
-          return 
-        }
-          
         this.dataCategory = category;
-        this.dataReady = true
+        this.getProducts(category!);
 
         this.modelConfigCategory[0]['label'] = category?.category_name;
         if (window.innerWidth < 576) {
@@ -123,20 +120,31 @@ export class ListProductsComponent implements OnInit, OnDestroy {
             ? 'Desactivar'
             : 'Activar';
         }
-        this.getProducts();
+
       }
     );
+
+    this.loaderHttp.isLoading.subscribe(loader=>{
+    })
   }
 
-  getProducts() {
+  getProducts(category:Category) {
+
+    if (!category) {
+      this.laoderProducts = false
+      return
+    }
+
     this.produtsAdminSubscription = this.adminService.products$
       .pipe(
-        map((products) => products.map((e: any) => ({ editing: false, ...e })))
+        map((products) => {
+          return products.map((e: any) => ({ editing: false, ...e }))
+        })
       )
       .subscribe((products) => {
         this.products = products;
         this.productsByCategory = this.products.filter(
-          (e) => e.category_id === this.dataCategory?.id
+          (e) => e.category_id === category.id
         );
       });
   }
@@ -149,10 +157,12 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     //CONFIRMATION
 
     this.confirmService.confirm({
-      message: `Realmente quiere eliminar el producto ${this.products.find(e => e.id === id )?.name}`,
-      header: 'Confirmacion',
+      message: `Realmente quiere eliminar el producto ${this.products!.find(e => e.id === id )?.name}`,
+      header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       rejectButtonStyleClass: 'p-button-outlined',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
       accept: () => {
 
         this.adminService
@@ -171,7 +181,6 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
   setStockProduct(product: Product, stock: number) {
-    console.log(product.stock);
     product.stock = stock ? 0 : 1;
 
     this.adminService.stockProduct(product.id, stock ? 0 : 1).pipe(
@@ -206,8 +215,8 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     const category = this.dataCategory!;
 
     this.confirmService.confirm({
-      message: `Realmente quiere eliminar la categoria ${category.category_name}? si hace esto se borraran todos los productos que se encuentren en la lista ${category.category_name}`,
-      header: 'Confirmacion',
+      message: `Realmente quiere eliminar la categoría ${category.category_name}? si hace esto se borraran todos los productos que se encuentren en la lista ${category.category_name}`,
+      header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       rejectLabel: 'No',
@@ -222,7 +231,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
             this.dinamicList.categoryId = undefined
             this.adminService.getCategories().subscribe();
             this.notificationsAdmin.new(
-              `Categoria ${this.dataCategory?.category_name} eliminada con exito`,
+              `Categoría ${this.dataCategory?.category_name} eliminada con éxito`,
               'Ok',
               { push: true }
             );
@@ -248,7 +257,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
           ? 'Desactivar'
           : 'Activar';
         this.notificationsAdmin.new(
-          `Categoria ${category.category_name} actualizada a ${
+          `Categoría ${category.category_name} actualizada a ${
             state
               ? 'No disponible, no se mostrara en el inicio de su tienda'
               : 'Disponible, se mostrara en el inicio de su tienda'
@@ -258,6 +267,38 @@ export class ListProductsComponent implements OnInit, OnDestroy {
         );
       });
   }
+
+  pinUpProduct(product:Product){
+
+    const fixedProducts = this.products!.filter(p=>p.fixed)
+    const fixed = product.fixed ? 0 : 1
+    console.log(fixed, !fixed);
+    
+
+    if (fixedProducts.length >= 6 && fixed) {
+
+      let nameProductsFixed = ''
+      fixedProducts.forEach((p, i) => nameProductsFixed += p.name +`${i === fixedProducts.length ? '' : ', '} ` )
+
+      this.toast.open(`Solo puedes destacar 6 productos como máximo. Tus productos fijados son: ${nameProductsFixed}`, '', {duration:6000})
+      return
+    }
+
+    product.fixed = fixed
+    
+    this.adminService.fixedProduct(product.id, product.fixed).pipe(
+      catchError((err)=>{
+        this.toast.open('A ocurrido un error, intente nuevamente', '', {duration:5000})
+        return throwError(()=> new Error(err))
+      })
+    ).subscribe(res => {
+      this.toast.open('Producto actualizado con éxito', '', {duration:3000})
+      // this.adminService.products = undefined
+      // this.adminService.getProductsAdmin()
+    })
+  }
+
+  
 
   ngOnDestroy(): void {
     this.currentSectionSubscription?.unsubscribe();

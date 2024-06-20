@@ -1,220 +1,240 @@
-<div class="w-full h-full " >
-
+<div class="w-full h-full bg-white">
   <div class="p-4 ">
-
     <div class="flex flex-column">
-
       <div class="mb-5 text-center w-full">
-        <a routerLink="/">
+        <!-- <a routerLink="/">
           <img src="./assets/logos/logo-de.png" width="100px" alt="">
-        </a>
+        </a> -->
 
-        <h1 class="text-bold mb-3 text-3xl sm:text-6xl">{{pricing ? 'Precios' : 'Registrá tu tienda'}}</h1>
-        <p class="text-800">Tienes <span class="font-bold text-primary">30 días gratis</span> para
-          probar la plataforma y notar la diferencia de venta</p>
+        <h1 class="text-bold mb-3 text-3xl sm:text-6xl">{{pricing ? 'Precios' : 'Registra tu tienda'}}</h1>
+
+
+        <div class="d-flex gap-3 wrap justify-content-center my-3">
+          <div class="flex align-items-center w-fit p-3 border-round gap-2 bg-gray-200  ">
+            <img loading="lazy" src="./assets/icons/free-30.png" width="35" class="inline image-phone" alt="">
+            <div class="text-left">
+              <span class="text-primary font-extrabold uppercase mb-1">Te ofrecemos</span>
+              <p class=""><span class="font-bold">30 días gratis</span> para probar la plataforma</p>
+            </div>
+          </div>
+
+          <div class="flex align-items-center w-fit p-3 border-round gap-2 bg-gray-200  ">
+            <img loading="lazy" src="./assets/icons/tax.png" width="35" alt="">
+            <div class="text-left">
+              <span class="text-sec font-extrabold uppercase mb-1">delitienda</span>
+              <p class="">
+                <b>No</b> cobrará comisión por ventas
+              </p>
+            </div>
+
+          </div>
+        </div>
       </div>
 
 
-      <mat-stepper #stepper class="w-full md:w-10 lg:w-7 mx-auto border-round shadow-3 muli" [linear]="true"
-       *ngIf="!pricing else panelPricing">
-
-        <mat-step [stepControl]="formDataUser">
-          <ng-template matStepContent>
-            <div class="mt-4" >
-              <form [formGroup]="formDataUser">
-                <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Datos personales</ng-template>
+      <div class="border-1  border-500 border-round w-full md:w-10 lg:w-7 mx-auto ">
+        <h3 class="p-3">Completa el formulario</h3>
+        <mat-stepper #stepper [title]="'Completa el formulario'" class="muli w-full" [linear]="true">
+          <mat-step [stepControl]="formDataUser">
+            <ng-template matStepContent>
+              <div class="mt-4">
+                <form [formGroup]="formDataUser">
+                  <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Datos personales</ng-template>
   
-                <div class="wrap gap-0 md:flex-nowrap md:gap-4 d-flex mb-2">
+                  <div class="wrap gap-0 md:flex-nowrap md:gap-4 d-flex mb-2">
   
-                  <div class="w-full">
-                    <label class="mb-2 block font-semibold">Nombre</label>
-                    <mat-form-field class="w-full">
-                      <input matInput placeholder="Ingresa tu nombre" formControlName="name">
-                      <mat-error>{{getError('name')}}</mat-error>
+                    <div class="w-full">
+                      <label class="mb-2 block font-semibold">Nombre</label>
+                      <mat-form-field appearance="outline" class="w-full">
+                        <input matInput placeholder="Ingresa tu nombre" formControlName="name">
+                        <mat-error>{{getError('name')}}</mat-error>
+                      </mat-form-field>
+                    </div>
+  
+                    <div class="w-full">
+                      <label class="mb-2 block font-semibold">Apellido</label>
+                      <mat-form-field appearance="outline" class="w-full">
+                        <input matInput placeholder="Ingresa tu apellido" formControlName="last_name">
+                        <mat-error>{{getError('last_name')}}</mat-error>
+                      </mat-form-field>
+                    </div>
+  
+                  </div>
+  
+                  <div class="w-full mb-2">
+                    <label class="mb-2 block font-semibold">Email</label>
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput placeholder="Ingresa tu email" formControlName="email">
+                      <mat-error>{{getError('email')}}</mat-error>
                     </mat-form-field>
                   </div>
   
-                  <div class="w-full">
-                    <label class="mb-2 block font-semibold">Apellido</label>
-                    <mat-form-field class="w-full">
-                      <input matInput placeholder="Ingresa tu apellido" formControlName="last_name">
-                      <mat-error>{{getError('last_name')}}</mat-error>
+                  <div class="w-full mb-2">
+                    <label class="mb-2 block font-semibold">Celular del titular de la cuenta</label>
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input class="pl-4" matInput placeholder="Ingresa tu numero telefónico" type="number"
+                        formControlName="phone">
+                      <span matTextPrefix>+54</span>
+                      <mat-error>{{getError('phone')}}</mat-error>
                     </mat-form-field>
                   </div>
   
-                </div>
   
-                <div class="w-full mb-2">
-                  <label class="mb-2 block font-semibold">Email</label>
-                  <mat-form-field class="w-full">
-                    <input matInput placeholder="Ingresa tu email" formControlName="email">
-                    <mat-error>{{getError('email')}}</mat-error>
-                  </mat-form-field>
-                </div>
+                  <div class="mt-5 d-flex justify-content-center gap-6 flex-wrap">
   
-                <div class="w-full mb-2">
-                  <label class="mb-2 block font-semibold">Celular del titular de la cuenta</label>
-                  <mat-form-field class="w-full">
-                    <input class="pl-4" matInput placeholder="Ingresa tu numero telefonico" type="number"
-                      formControlName="phone">
-                    <span matTextPrefix>+54</span>
-                    <mat-error>{{getError('phone')}}</mat-error>
-                  </mat-form-field>
-                </div>
+                    <a matRipple
+                      class="block w-fit py-3 px-4 font-bold text-base bg-primary-reverse border-round shadow-1 hover:shadow-5 cursor-pointer"
+                      routerLink="/">Volver</a>
+  
+                    <button matRipple
+                      class="py-3 px-4 font-bold text-base bg-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
+                      (click)="nextStep()">Continuar</button>
+  
+                  </div>
+  
+                </form>
+              </div>
+            </ng-template>
+          </mat-step>
   
   
-                <div class="mt-5 d-flex justify-content-center gap-6 flex-wrap">
+          <!--FORM DE LA TIENDA *************  -->
+          <mat-step [stepControl]="formDataStore">
+            <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Tienda</ng-template>
   
-                  <button matRipple
-                    class="py-3 px-4 font-bold text-base bg-primary-reverse border-round shadow-1 hover:shadow-5 cursor-pointer"
-                    (click)="pricing = true">Ver precios</button>
+            <ng-template matStepContent>
+              <div class="mt-4">
+                <form [formGroup]="formDataStore">
   
-                  <button matRipple
-                    class="py-3 px-4 font-bold text-base bg-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
-                    (click)="nextStep()">Continuar</button>
+                  <div class="w-full mb-2">
+                    <label class="mb-2 block font-semibold">Nombre de la tienda</label>
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input (blur)="checkNameUrl()" matInput type="text" formControlName="name">
+                      <mat-error>Este campo es requerido.</mat-error>
+                    </mat-form-field>
+                  </div>
   
-                </div>
+                  <div class="w-full mb-2">
   
-              </form>
-            </div>
-          </ng-template>
-        </mat-step>
-
-
-        <!--FORM DE LA TIENDA *************  -->
-        <mat-step [stepControl]="formDataStore">
-          <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Tienda</ng-template>
-
-          <ng-template matStepContent>
-            <div class="mt-4" >
-              <form [formGroup]="formDataStore">
-    
-                <div class="w-full mb-2">
-                  <label class="mb-2 block font-semibold">Nombre de la tienda</label>
-                  <mat-form-field class="w-full">
-                    <input matInput placeholder="" type="text" formControlName="name">
-                    <mat-error>{{getError('name')}}</mat-error>
-                  </mat-form-field>
-                </div>
-    
-                <div class="w-full mb-2">
+                    <label class="mb-2 block font-semibold">Nombre identificador</label>
   
-                  <label class="mb-2 block font-semibold">Nombre identificador</label>
-  
-                  <span class="font-semibold w-fit d-flex gap-2 px-3 py-2 text-sm border-round bg-red-100 border-left-3 border-red-600 shadow-1 mb-2" *ngIf="formDataStore.get('name_url')?.hasError('isNotAvailable'); else infoPath">
-                    <i class="pi pi-info-circle"></i>
-                    El nombre identificador esta en uso
-                  </span>
-
-                  <ng-template #infoPath>
-                    <span class="font-semibold w-fit d-flex gap-2 px-3 py-2 text-sm border-round bg-blue-100 border-left-3 shadow-1 mb-2" >
+                    <span
+                      class="font-semibold w-fit d-flex gap-2 px-3 py-2 text-sm border-round bg-red-100 border-left-3 border-red-600 shadow-1 mb-2"
+                      *ngIf="formDataStore.get('name_url')?.hasError('isNotAvailable'); else infoPath">
                       <i class="pi pi-info-circle"></i>
-                      El nombre ingresado se usara para generar el link de tu tienda
+                      El nombre identificador esta en uso
                     </span>
-                  </ng-template>
-
-                  <mat-form-field class="w-full">
-                    <input (blur)="checkNameUrl()" matInput class="" placeholder="" type="text" formControlName="name_url">
-                    <span class="text-700" matTextPrefix>https://delitienda.app/</span>
-                    
-                    <span class="mt-1 d-flex text-primary-800" matTextSuffix *ngIf="checkingNamePath">
-                      Verificando
-                      <i class="pi pi-spinner pi-spin ml-2"> </i>
-                    </span>
-
-                    <mat-error>{{getError('name_url')}}</mat-error>
-                  </mat-form-field>
-                </div>
-    
-                <div class="w-full mb-2">
-                  <label class="mb-2 block font-semibold">Celular de la tienda</label>
-                  <mat-form-field class="w-full">
-                    <input class="pl-4" matInput placeholder="Ingresa tu numero telefonico" type="number"
-                      formControlName="phone">
-                    <span matTextPrefix>+54</span>
-                    <mat-hint>Numero de Whatsapp que recivirá los pedidos</mat-hint>
-                    <mat-error>Ingrese un telefono valido</mat-error>
-                  </mat-form-field>
-                </div>
-    
-    
-                <div class="mt-4 d-flex justify-content-center gap-6 flex-wrap">
-                  <button matRipple
-                    class="py-3 px-4 font-bold text-base bg-primary-reverse border-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
-                    (click)="previusStep()">Volver</button>
-                  <button matRipple
-                    class="py-3 px-4 font-bold text-base bg-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
-                    (click)="nextStep()">Continuar</button>
-                </div>
-              </form>
-            </div>
-          </ng-template>
-        </mat-step>
-
-
-
-        <mat-step>
-          <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Cuenta</ng-template>
-
-          <ng-template matStepContent>
-            <div class="mt-4" >
-              <form [formGroup]="formDataAccount">
-    
-                <div class="w-full text-900 mb-2">
-                  <label class="mb-2 block font-semibold">Usuario</label>
-                  <mat-form-field class="w-full">
-                    <input matInput type="text" formControlName="username">
-                    <mat-error>Este campo es requerido</mat-error>
-                  </mat-form-field>
-                </div>
-    
-    
-                <div class="w-full mb-2">
-                  <label class="mb-2 block font-semibold">Contraseña</label>
-                  <mat-form-field class="w-full">
-                    <input matInput class="" placeholder="" type="password" formControlName="password">
-                    <mat-error>Este campo es requerido</mat-error>
-                  </mat-form-field>
-                </div>
-    
-    
-                <div class="mt-4 d-flex justify-content-center gap-6 flex-wrap">
-                  <button matRipple
-                    class="py-3 px-4 font-bold text-base bg-primary-reverse border-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
-                    (click)="previusStep()">Volver</button>
-                  <button matRipple (click)="nextStep()"
-                    class="py-3 px-4 font-bold text-base bg-primary border-round shadow-1 hover:shadow-5 cursor-pointer">Continuar</button>
-                </div>
-    
-              </form>
-            </div>
-          </ng-template>
-
-
-
-
-        </mat-step>
-
-        <mat-step>
-
-          <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Pago</ng-template>
-          <div class="mt-4" >
-
-              <app-card-form (previusStep)="previusStep()" (payment)="startSubscription($event)" [reloadForm]="reloadFormMp" >
   
-              </app-card-form>  
-            
-          </div>
+                    <ng-template #infoPath>
+                      <span
+                        class="font-semibold w-fit d-flex gap-2 px-3 py-2 text-sm border-round bg-blue-100 border-left-3 shadow-1 mb-2">
+                        <i class="pi pi-info-circle"></i>
+                        El nombre ingresado se usara para generar el link de tu tienda
+                      </span>
+                    </ng-template>
+  
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input (blur)="checkNameUrl()" matInput class="" type="text" formControlName="name_url">
+                      <span class="text-700" matTextPrefix>https://delitienda.app/</span>
+                      <span class="mt-1 d-flex text-primary-800" matTextSuffix *ngIf="checkingNamePath">
+                        Verificando
+                        <i class="pi pi-spinner pi-spin ml-2"> </i>
+                      </span>
+  
+                      <mat-error>{{getError('name_url')}}</mat-error>
+                    </mat-form-field>
+                  </div>
+  
+                  <div class="w-full mb-2">
+                    <label class="mb-2 block font-semibold">Celular de la tienda</label>
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input class="pl-4" matInput placeholder="Ingresa tu numero telefónico" type="number"
+                        formControlName="phone">
+                      <span matTextPrefix>+54</span>
+                      <mat-hint>Numero de WhatsApp que recibirá los pedidos</mat-hint>
+                      <mat-error>Ingrese un teléfono valido</mat-error>
+                    </mat-form-field>
+                  </div>
+  
+  
+                  <div class="mt-4 d-flex justify-content-center gap-6 flex-wrap">
+                    <button matRipple
+                      class="py-3 px-4 font-bold text-base bg-primary-reverse border-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
+                      (click)="previusStep()">Volver</button>
+                    <button matRipple
+                      class="py-3 px-4 font-bold text-base bg-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
+                      (click)="nextStep()">Continuar</button>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+          </mat-step>
+  
+  
+  
+          <mat-step [stepControl]="formDataAccount">
+            <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Cuenta</ng-template>
+  
+            <ng-template matStepContent>
+              <div class="mt-4">
+                <form [formGroup]="formDataAccount">
+  
+                  <div class="w-full text-900 mb-2">
+                    <label class="mb-2 block font-semibold">Usuario</label>
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput type="text" formControlName="username">
+                      <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+                  </div>
+  
+  
+                  <div class="w-full mb-2">
+                    <label class="mb-2 block font-semibold">Contraseña</label>
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput class="" placeholder="" type="password" formControlName="password">
+                      <mat-error>Este campo es requerido</mat-error>
+                    </mat-form-field>
+                  </div>
+  
+  
+                  <div class="mt-4 d-flex justify-content-center gap-6 flex-wrap">
+                    <button matRipple
+                      class="py-3 px-4 font-bold text-base bg-primary-reverse border-primary border-round shadow-1 hover:shadow-5 cursor-pointer"
+                      (click)="previusStep()">Volver</button>
+                    <button matRipple (click)="nextStep()"
+                      class="py-3 px-4 font-bold text-base bg-primary border-round shadow-1 hover:shadow-5 cursor-pointer">Continuar</button>
+                  </div>
+  
+                </form>
+              </div>
+            </ng-template>
+  
+  
+  
+  
+          </mat-step>
+  
+          <mat-step>
+            <ng-template matStepLabel *ngIf="stepperOrientation==='horizontal'">Pago</ng-template>
+            <div class="mt-4">
+  
+              <app-card-form (previusStep)="previusStep()" (payment)="startSubscription($event)"
+                [reloadForm]="reloadFormMp">
+  
+              </app-card-form>
+  
+            </div>
+  
+          </mat-step>
+  
+  
+        </mat-stepper>
+      </div>
 
-        </mat-step>
 
-
-      </mat-stepper>
-
-
-      <ng-template #panelPricing>
+      <!-- <ng-template #panelPricing>
         <app-pricing-cards (closePricing)="pricing = false"></app-pricing-cards>
-      </ng-template>
+      </ng-template> -->
 
     </div>
 

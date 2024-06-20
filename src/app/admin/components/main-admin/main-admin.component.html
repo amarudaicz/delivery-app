@@ -4,18 +4,18 @@
 <div class="grid">
 
     <div class="col-12 xl:col-6 ">
-        <app-banner-qr></app-banner-qr>
+        <app-banner-qr id="banner-qr"></app-banner-qr>
     </div>
 
     <div class="col-12 xl:col-6 ">
-        <app-banner-link></app-banner-link>
+        <app-banner-link id="banner-link"></app-banner-link>
     </div>
     
-    <div class="col-12 xl:col-6" >
-        <app-chart  [chartUse]="'stats'"></app-chart> 
+    <div class="col-12 xl:col-6"  >
+        <app-chart id="chart-views"  [chartUse]="'stats'"></app-chart> 
     </div>
 
-    <div class="col-12 xl:col-6" >
+    <div class="col-12 xl:col-6" id="chart-sales">
         <app-chart [chartUse]="'sales'"></app-chart> 
     </div>
 </div>

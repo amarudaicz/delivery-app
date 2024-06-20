@@ -10,6 +10,7 @@ import { handleError } from 'src/app/utils/handle-error-http';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WpService } from 'src/app/services/wpService/wp.service';
+import { SubscriptionsService } from 'src/app/services/subscriptions/subscriptions.service';
 
 @Component({
   selector: 'app-subscription-state',
@@ -22,9 +23,11 @@ export class SubscriptionStateComponent implements OnInit {
   subscription?:Subscription
   hasFreeTier?:boolean
   disableButtons:boolean = false
+  plans:any
 
-  constructor(public auth:AuthService, private modal:MatDialog, private mp:MercadopagoService, private toast:MatSnackBar, private adminService:AdminService,private wpService:WpService){
+  constructor(private subscriptionsService:SubscriptionsService, public auth:AuthService, private modal:MatDialog, private mp:MercadopagoService, private toast:MatSnackBar, private adminService:AdminService,private wpService:WpService){
     
+    this.plans = this.subscriptionsService.getPlans()
     
   }
 
@@ -69,7 +72,7 @@ export class SubscriptionStateComponent implements OnInit {
     this.disableButtons = true
 
     this.mp.putSubscription(newState).pipe(catchError(err=>{
-      this.toast.open('A ocurrido un error al intentar detener su suscripcion, porfavor contacte al soporte')
+      this.toast.open('A ocurrido un error al intentar detener su suscripción, contacte al soporte', '',{duration:5000})
       this.disableButtons = false
       return throwError(()=> new Error(err))
     })).subscribe(subUpdated=>{
@@ -81,23 +84,22 @@ export class SubscriptionStateComponent implements OnInit {
 
 
   deleteAccount(){
-    const alert = this.toast.open('Realmente quiere eliminar su cuenta, se perderan todos sus datos incluida su tienda activa?', 'Si, eliminar', {duration:5000})
+    const alert = this.toast.open('Realmente quiere eliminar su cuenta, se perderán todos sus datos incluida su tienda activa?', 'Si, eliminar', {duration:5000})
 
     const supr = () =>{
-      
       this.adminService.deleteAccount().pipe(catchError(err=>{
-        this.toast.open('A ocurrido un error al intentar eliminar su cuenta, porfavor contacte al soporte', ' ', {duration:5000})
+        this.toast.open('A ocurrido un error al intentar eliminar su cuenta, contacte al soporte', ' ', {duration:5000})
         this.disableButtons = false
         return throwError(()=> new Error(err))
       })).subscribe(res=>{
-        this.toast.open('Su cuenta fue eliminada con exito')
+        this.toast.open('Su cuenta fue eliminada con éxito')
         this.auth.deleteToken()
         this.disableButtons = false
         setTimeout(() =>location.replace('/'), 500);
       })
     }
+
     this.disableButtons = true
-    
     alert.afterDismissed().subscribe(dimiss=> this.disableButtons = false)
     alert.onAction().subscribe(action => supr())
 

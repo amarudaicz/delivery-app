@@ -1,20 +1,27 @@
 <div class="card">
-    <div class="d-flex justify-content-between gap-3 flex-column md:flex-row">
+    <div class="flex justify-content-between gap-3 flex-column md:flex-row">
         <div class="flex-1">
             <h1>Grupos de opciones</h1>
-            <p>Aqui encontraras las opciones y adicionales que tus clientes podran elejir en los productos que tengan
-                asociado el grupo de opciones </p>
+          
+            
+            <!-- <p>Aqui encontraras las opciones y adicionales que tus clientes podran elejir en los productos que tengan
+                asociado el grupo de opciones </p> -->
 
-                <span *ngIf="!groupOptions.length" class="mt-2 d-flex gap-2 text-gray-700 ">
-                    <i class="pi pi-info-circle text-sm"></i> 
-                    Puedes crear un nuevo grupo haciendo click en el boton Crear grupo
-                </span>
+                <div class="" *ngIf="!groupOptions.length">
+                    <span  class="mt-2 d-flex gap-2 text-gray-800 ">
+                        <i class="pi pi-info-circle text-sm"></i> 
+                        Puedes crear un nuevo grupo haciendo click en el boton Crear grupo
+                    </span>
+    
+                    <p class="mt-2  ">¿Necesitas ayuda? <a class="text-primary" routerLink="/admin/docs" fragment="options-groups" >Ver documentación</a> </p>
+                </div>
         </div>
 
 
         <div class="button-create-group w-full md:w-fit">
             <p-button (click)="modalCreateGroup()">Crear grupo</p-button>
         </div>
+
     </div>
 
     <div class="container-dinamic relative" *ngIf="groupOptions.length">

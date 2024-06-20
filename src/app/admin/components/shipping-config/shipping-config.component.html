@@ -1,13 +1,14 @@
-<div class="aditional-info w-full card">
+<div class="aditional-info w-full card p-0">
 
     <div class="container-delivery-local container-data-local">
-        <form [formGroup]="form" action="">
 
-            <div class="mb-4">
+        <form [formGroup]="form">
 
-                <h2 class="text-xl">Métodos de entrega</h2>
+            <div class="sticky top-0 bg-white border-round-xl z-5 p-4">
+
+                
+                <h1 class="">Métodos de entrega</h1>
                 <p class="mb-3">Configura las opciones que ofreces para entregar tus productos</p>
-
                 <button [disabled]="loadForm" (click)="editing ? saveForm() : editForm() " mat-raised-button
                     color="primary">
                     <span class="d-flex gap-2">
@@ -19,89 +20,159 @@
 
                 </button>
 
+
             </div>
 
-            <div class="card">
-                <!-- <h5 class="mb-2 title">Métodos</h5> -->
-                <mat-checkbox class="" color="primary" formControlName="delivery">
-                    Delivery
-                </mat-checkbox>
-                <mat-checkbox class="" color="primary" formControlName="pick_in_local">
-                    Retiro en local
-                </mat-checkbox>
-
-                <div *ngIf="form.get('delivery')?.value" class="flex wrap gap-3 mt-2">
-
-                    <mat-form-field floatLabel="always">
-                        <mat-label>
-                            Costo delivery aproximado
-                        </mat-label>
-                        <span matTextPrefix>$&nbsp;</span>
-                        <input matInput formControlName="delivery_cost" placeholder="0" class="text-right price-deli"
-                            type="number">
-                        <span matTextSuffix>.00</span>
-
-                    </mat-form-field>
-
-                    <mat-form-field floatLabel="always">
-                        <mat-label>Tiempo delivery aproximado</mat-label>
-                        <input matInput formControlName="delivery_time" placeholder="20 - 30" class="" type="text">
-                        <span class="text-700" matTextSuffix>min</span>
-                        <mat-error>Indicar aproximado en minutos de la forma 20 - 30</mat-error>
-                    </mat-form-field>
-
-                </div>
+            <div class="p-4">
                 
-                <div class="mt-2" >
-                    <div class="mb-3" *ngIf="form.get('delivery')?.value">
-                        <h5 class="font-bold title">Costos de envío</h5>
-                        <p *ngIf="shippingCostsArray.controls.length" class="p-2 mt-2 border-round bg-primary w-fit">Si la ubicación del comprador sobrepasa el rango de entrega máximo se informará que se encuentra fuera de alcance, <b>se permitirá la compra para definir un posible costo de ser posible</b> </p>
-                        <p *ngIf="!shippingCostsArray.controls.length" class="p-2 mt-2 border-round bg-primary w-fit">Si no defines al menos 1 costo de envío, <b>no se aplicarán costos si el comprador necesita que le envíen el producto</b> </p>
-        
+                <div class="">
+                    <!-- <h5 class="mb-2 title">Métodos</h5> -->
+                    <mat-checkbox class="" color="primary" formControlName="delivery">
+                        Envío a domicilio
+                    </mat-checkbox>
+                    <mat-checkbox class="" color="primary" formControlName="pick_in_local">
+                        Retiro en local
+                    </mat-checkbox>
+    
+                    <div *ngIf="form.get('delivery')?.value" class="flex wrap gap-3 mt-2">
+    
+                        <mat-form-field floatLabel="always">
+                            <mat-label>
+                                Costo delivery aproximado
+                            </mat-label>
+                            <span matTextPrefix>$&nbsp;</span>
+                            <input matInput formControlName="delivery_cost" placeholder="0" class="text-right price-deli"
+                                type="number">
+                            <span matTextSuffix>.00</span>
+    
+                        </mat-form-field>
+    
+                        <mat-form-field floatLabel="always" class="w-15rem">
+                            <mat-label>Tiempo delivery aproximado</mat-label>
+                            <mat-select formControlName="delivery_time" >
+                                <mat-option value="10-20 Min">
+                                    10-20 Min
+                                </mat-option>
+                                 <mat-option value="20-30 Min">
+                                    20-30 Min
+                                </mat-option>
+                                <mat-option value="30-40 Min">
+                                    30-40 Min
+                                </mat-option>
+                                <mat-option value="40-50 Min">
+                                    40-50 Min
+                                </mat-option>
+                                <mat-option value="1-2 Hs">
+                                    1-2 Horas
+                                </mat-option>
+                                <mat-option value="1-7 Días">
+                                    1-7 Días
+                                </mat-option>  
+                                <mat-option value="7-15 Días">
+                                    7-15 Días
+                                </mat-option>
+                                <mat-option value="15-30 Días">
+                                    15-30 Días
+                                </mat-option>
+                                <mat-option [value]="null">
+                                    No especificar 
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+    
                     </div>
-        
-                    <form  [formGroup]="formCostShipping">
-                        <div formArrayName="shippingCosts">
-        
-                            <div class="my-2 border-bottom-1 border-500" *ngFor="let costSet of shippingCostsArray.controls; let i = index" [formGroupName]="i">
-                                <span class="block mb-2 text-gray-600">Envío {{i + 1}}</span>
-                                <div class="d-flex wrap ">
-                                 <div class="d-flex wrap gap-2">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Costo</mat-label>
-                                        <input matInput formControlName="cost" placeholder="ingresa el costo de envío" class=""
-                                            type="number">
-                                        <mat-error>Este campo es requerido</mat-error>
-                                    </mat-form-field>   
-        
-        
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Rango en kilómetros</mat-label>
-                                        <input matInput formControlName="distance" placeholder="Rango"
-                                            class="" type="number">
-                                            <span class="pr-1 text-700" matSuffix>Km</span>
-                                        <mat-error>Este campo es requerido</mat-error>
-                                    </mat-form-field>
-                                    </div>
-        
-                                    <div class="pb-4">
-                                        <button *ngIf="formCostShipping.enabled" class="ml-2" mat-button color="warn" (click)="removeRangeShipping(i)">Eliminar envío</button>
-                                    </div>
-        
-                                </div>
-        
-                            </div>
-        
-                            <button *ngIf="formCostShipping.enabled" type="button" class="" mat-button (click)="newRangeShipping()" color="primary">
-                                Nuevo rango de envío
-                            </button>
+    
+                    
+                    <div class="flex flex-column my-3 w-full" *ngIf="form.get('delivery')?.value">
+                        <h5 class="text-xl font-semibold">Ubicación</h5>
+                        <p class="mb-2">La ubicación que fijes se utilizara para calcular los costos de envío </p>
+    
+                        <span class="w-fit p-2 border-round bg-primary" *ngIf="form.get('cords')?.value">
+                            <i class="pi pi-marker-map"></i>
+                            Ubicación seleccionada
+                            <button *ngIf="editing"
+                                (click)="[form.get('cords')?.setValue(null), form.markAsDirty()]"><i
+                                    class="pi pi-times text-white ml-2"></i></button>
+                        </span>
+    
+                        <button class="w-fit" *ngIf="!form.get('cords')?.value" [disabled]="!editing"
+                            mat-raised-button color="warn" (click)="loadMap = true">Ubícate en el mapa</button>
+                        <span *ngIf="!form.get('cords')?.value && editing" class="text-sm text-red-500">Es
+                            necesario que ubiques una dirección o ciudad de referencia*</span>
+    
+                        <app-select-ubication-map (emitCords)="getCords($event)" *ngIf="loadMap"
+                            (close)="loadMap = false"></app-select-ubication-map>
+                    </div>
+    
+                    <div class="mt-2">
+                        <div class="mb-3" *ngIf="form.get('delivery')?.value">
+                            <h5 class="font-bold title">Costos de envío</h5>
+                            <p *ngIf="shippingCostsArray.controls.length" class="p-2 mt-2 border-round w-fit bg-yellow-100">Si
+                                la ubicación del comprador sobrepasa el rango de entrega máximo se informará que se
+                                encuentra fuera de alcance, <b>se permitirá la compra para definir un costo de envió personalizado</b>
+                            </p>
+                            <p *ngIf="!shippingCostsArray.controls.length" class="p-2 mt-2 border-round w-fit bg-yellow-100">Si
+                                no defines al menos 1 rango de envío, <b>no se aplicarán costos si el comprador necesita que
+                                    le envíen el producto</b> </p>
                         </div>
+    
+    
+    
+    
+    
+                        <form [formGroup]="formCostShipping" *ngIf="formCostShipping.enabled && form.get('delivery')?.value"> 
+                            <div formArrayName="shippingCosts">
+    
+                                <div class="flex wrap gap-3 mb-3">
+    
+                                    <div class="p-3 border-round-xl border-1 w-fit"
+                                        *ngFor="let costSet of shippingCostsArray.controls; let i = index" [formGroupName]="i">
+                                        <span class="block mb-2 font-bold text-base">Envío {{i + 1}}</span>
+                                        <p *ngIf="(costSet.get('distance')?.value)" class="mb-4 text-900"> {{getRangeInitial(costSet.get('distance')?.value)}}</p>
+    
+                                        
+                                        <div class="flex flex-column align-items-start wrap ">
+                                            <div class="d-flex wrap gap-2">
+                                                <mat-form-field appearance="outline" class="w-7rem">
+                                                    <mat-label>Costo</mat-label>
+                                                    <input matInput formControlName="cost" placeholder="ingresa el costo de envío"
+                                                        class="" type="number">
+                                                </mat-form-field>
         
-                    </form>
         
+                                                <mat-form-field appearance="outline" class="w-7rem">
+                                                    <mat-label>Rango</mat-label>
+                                                    <input matInput formControlName="distance" placeholder="Rango" class=""
+                                                        type="number">
+                                                    <span class="pr-1 text-700" matSuffix>Km</span>
+                                                </mat-form-field>
+                                            </div>
         
+                                            <div class="">
+                                                <button *ngIf="formCostShipping.enabled" class="ml-2" mat-button color="warn"
+                                                    (click)="removeRangeShipping(i)">Eliminar envío</button>
+                                            </div>
+        
+                                        </div>
+        
+                                    </div>
+    
+                                </div>
+    
+                                <button  type="button" class="" mat-raised-button
+                                    (click)="newRangeShipping()" color="primary">
+                                    Nuevo rango de envío
+                                </button>
+                            </div>
+    
+                        </form>
+    
+    
+                    </div>
                 </div>
+
             </div>
+
 
         </form>
 

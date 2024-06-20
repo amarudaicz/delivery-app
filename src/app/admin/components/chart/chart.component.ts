@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AdminService } from 'src/app/services/admin/admin.service';
 
 @Component({
@@ -7,13 +7,14 @@ import { AdminService } from 'src/app/services/admin/admin.service';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent {
+export class ChartComponent implements OnInit, OnDestroy {
   @Input() chartUse?: string;
 
   chartData: any;
-  chartOptions?: ChartOptions;
+  chartOptions?: any;
   innerWidth = window.innerWidth;
   totalCounter: number = 0;
+  dataSubscription!:Subscription
 
   constructor(private adminService: AdminService) {}
 
@@ -21,7 +22,7 @@ export class ChartComponent {
     console.log(this.chartUse);
 
     if (this.chartUse === 'stats') {
-      this.adminService.stats$.subscribe((stats) => {
+      this.dataSubscription = this.adminService.stats$.subscribe((stats) => {
         if (!stats) return;
         this.updateChartData(stats);
 
@@ -30,7 +31,7 @@ export class ChartComponent {
           .reduce((prev, act) => prev + act);
       });
     } else {
-      this.adminService.sales$.subscribe((sales) => {
+      this.dataSubscription = this.adminService.sales$.subscribe((sales) => {
         if (!sales) return;
         this.updateChartData(sales);
 
@@ -144,5 +145,11 @@ export class ChartComponent {
   formatDate(date: string) {
     const [year, month, day] = date.split('-');
     return [day, month].join('-');
+  }
+
+  ngOnDestroy(): void {
+    if (this.dataSubscription) {
+      this.dataSubscription.unsubscribe()
+    }
   }
 }

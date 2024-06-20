@@ -119,16 +119,7 @@
 
 }
 
-.container-input-image{
-    .load-image-text{
-        color: rgba(0, 0, 0, 0.6);
-        display: block;
-        margin-bottom: 7px;
-        font-weight: 500;
-    }
  
-}
-    
 .button-remove-image{
     margin-left: 10px;
     
@@ -342,4 +333,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.dragImage{
+    cursor:move;
 }

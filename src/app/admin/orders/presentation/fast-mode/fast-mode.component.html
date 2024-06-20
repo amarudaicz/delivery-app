@@ -1,0 +1,93 @@
+<section class="w-full">
+
+    <div class="flex pb-2">
+        <form [formGroup]="formDate" action="">
+            <input class="p-1 border-1 border-round bg-gray-100" formControlName="date" type="date">
+        </form>
+    </div>
+
+
+    <div *ngIf="!allOrder" class="w-full">
+        <app-loader-full>
+
+        </app-loader-full>
+    </div>
+
+    <div class="container-columns">
+
+        <div cdkDropListGroup class="flex gap-4 flex-column md:flex-row w-full h-full">
+
+            <div *ngFor="let data of dataSource"
+                class="flex border-bottom-1 border-300 flex-column flex-1 h-full overflow-hidden scroll-cards relative">
+
+                <div
+                    class="sticky z-4 top-0 left-0 w-full bg-white p-3 border-1 border-400 border-round-top-xl d-flex justify-content-between w-full">
+                    <h2 class="text-xl font-semibold">{{data.titleStatus}}</h2>
+                    <span class="px-3 py-2  font-medium border-round-3xl text-nowrap"
+                        [ngClass]="{'bg-green-300':data.status === 'enviado', 'bg-yellow-300':data.status === 'procesando', 'bg-gray-300':data.status === 'pendiente'}">{{data.orders.length}}
+                        Pedidos</span>
+                </div>
+
+                <div class="w-full flex-1 overflow-auto scroll-cards">
+                    <ul cdkDropList [id]="data.status" [cdkDropListData]="data.orders"
+                        class="flex flex-column list-none orders-list">
+                        <li cdkDrag (cdkDragDropped)="dropOrder($event)" *ngFor="let order of data.orders let i = index"
+                            class="orders-box border-bottom-1 border-400 p-3 d-flex justify-content-between">
+                           
+                            <div class="d-flex justify-content-between w-full">
+
+                                <div class="d-flex gap-3">
+                                    <div class="">
+                                        <p cdkDragHandle class="font-semibold"> <span class="font-semibold"> #{{i + 1}} - </span> {{
+                                            order.shipping_address || order.customer_name }}</p>
+                                        <span class="text-gray-900 text-nowrap">{{order.shipping_address ? order.customer_name :
+                                            'Retira en local'}}
+                                            <!-- <span class="text-gray-500">{{formatTimeElapsed(order.order_date)}}</span> -->
+                                        </span> 
+                                        <span class="text-gray-600 block"> {{order.cart.length}} Productos</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2">
+
+                                    <button color="warn" class="z-4" (click)="deleteOrder(order.id)" mat-icon-button>
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+
+                                    <button (click)="viewDetailsOrder(order)" mat-icon-button>
+                                        <mat-icon>visibility</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- <button class="px-3 py-2 border-round bg-primary font-medium d-flex gap-2">
+                                Procesando
+                                <i class="pi-arrow-right pi"></i>
+                            </button> -->
+                        </li>
+                        <div class="w-full pt-3" *ngIf="!data.orders.length">
+                            <p class="text-center text-xl text-gray-500">
+                                No hay pedidos
+                            </p>
+
+                        </div>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+</section>

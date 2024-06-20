@@ -1,0 +1,30 @@
+<div class="w-full z-1 h-full  fadein">
+
+    <div class="container-alert-closed h-full  w-full px-2 py-3 border-round-2xl relative overflow-hidden shadow-3 cursor-pointer d-flex"
+        [style.background]="theme.get('backgroundSec') + 'eb'" mat-ripple>
+
+        <div class="w-full d-flex justify-content-between gap-3 z-2 relative">
+            <span class="text-2xl pl-1">
+                💳
+            </span>
+
+            <p class="font-semibold flex flex-column text-white text-center">
+                Paga con tarjeta de Crédito/Débito
+                <span class="font-normal text-sm">
+                    Te enviamos el link de pago
+                </span>
+            </p>
+
+            <div class="flex">
+                <i class="pi pi-chevron-right text-white text-xl" ></i>
+            </div>
+
+        </div>
+
+        <div class="absolute decorator-circle " [style.background]="theme.get('backgroundSec')">
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,8 +1,30 @@
 <ng-template #noCategory>
+    <div class="card">
+        <div class="h-full" *ngIf="loaderHttp.isLoading | async as load; else no">
+            <div class=" h-full " *ngIf="!dataCategory && load">
+                <div class="h-full d-flex justify-content-center">
+                    <i class="pi text-5xl text-primary pi-spin pi-spinner"></i>
+                </div>
+            </div>
+        </div>
 
-    <div class="card p-3">
-        <p><b>Parece que no tienes categorías activas en tu tienda</b>, puedes crear una nueva con
-            en el boton <b> + Nueva categoria</b></p>
+        <ng-template #no>
+            <div class="h-full">
+                <h1 class="mb-2">Categorías </h1>
+
+                <div class="d-flex gap-2">
+                    <i class="pi pi-info-circle"></i> 
+
+                    <p class="text-balance text-gray-800"><b>Parece que no tienes categorías activas en tu tienda</b>, puedes crear una nueva con en el botón <b> + Nueva categoría </b> </p>
+
+                </div>
+                
+                <p class="mt-2 text-nowrap">
+                    ¿Necesitas ayuda? <a class="text-primary" routerLink="/admin/docs" fragment="categories" >Ver documentación</a>
+                </p>
+            </div>
+
+        </ng-template>  
     </div>
 
 </ng-template>
@@ -12,30 +34,38 @@
 </app-new-product>
 
 
-<div *ngIf="dataCategory && dataReady else noCategory" class="card p-0 container-table-products">
+<div *ngIf="dataCategory else noCategory" class="card p-0 container-table-products">
 
     <p-menu #menuCategory [popup]="true" [model]="modelConfigCategory"></p-menu>
-    <div class="d-flex justify-content-center sm:justify-content-between p-3 md:px-5 header-table gap-y-3 wrap state-category sticky top-0 bg-white z-4">
+    <div
+        class="d-flex justify-content-center sm:justify-content-between p-3 md:px-5 header-table gap-y-3 wrap state-category sticky top-0 bg-white z-4">
 
         <div class="d-flex flex-1 w-full sm:w-fit justify-content-between sm:justifi-content-start">
-            
-            <h1 class="mr-2 title overflow-hidden" [style.text-overflow]="'ellipsis'">{{dataCategory.category_name}}</h1>
-            <div class="d-flex flex-1 gap-2 justify-content-center sm:justify-content-start w-12rem">
-                <span class="sm:border-left-1 sm:pl-2">
-                    {{dataCategory.active ? 'Activa' : 'Desactivada'}}
-                </span>
-                
-                <i class="pi pi-circle-fill mt-1" [ngClass]="dataCategory.active ? 'text-green-500' : 'text-red-500'"></i>
+
+            <div class="d-flex wrap">
+                <h1 class="mr-2 title overflow-hidden capitalize" [style.text-overflow]="'ellipsis'">{{dataCategory.category_name }}
+                </h1>
+    
+                <div class="d-flex gap-2 justify-content-start">
+                    <span class="border-left-1 pl-2">
+                        {{dataCategory.active ? 'Activa' : 'Desactivada'}}
+                    </span>
+    
+                    <i class="pi pi-circle-fill"
+                        [ngClass]="dataCategory.active ? 'text-green-500' : 'text-red-500'"></i>
+                </div>
             </div>
 
-            
+
             <div class="toogle-category hidden sm:block  mx-3 ">
-                <mat-slide-toggle (click)="setStateCategory(dataCategory, dataCategory.active)" [checked]="dataCategory.active ? true : false" class="" color="primary" [matTooltip]="dataCategory.active ? 'Desactivar' : 'Activar'">                 
-                    
+                <mat-slide-toggle (click)="setStateCategory(dataCategory, dataCategory.active)"
+                    [checked]="dataCategory.active ? true : false" class="" color="primary"
+                    [matTooltip]="dataCategory.active ? 'Desactivar' : 'Activar'">
+
                 </mat-slide-toggle>
-            </div>    
-          
-            <button  (click)="menuCategory.toggle($event)" class="md:hidden">
+            </div>
+
+            <button (click)="menuCategory.toggle($event)" class="md:hidden">
                 <i class="pi pi-ellipsis-v button-icon"></i>
             </button>
 
@@ -45,15 +75,14 @@
 
         <div class="d-flex gap-3 ">
 
-            
             <button class="hidden md:flex" (click)="deleteCategory()">
                 <i class="pi pi-trash button-icon"></i>
             </button>
-            
+
             <button class="hidden md:flex" (click)="editCategory()">
                 <i class="fa-solid button-icon fa-pen"></i>
             </button>
-            
+
             <p-button (click)="newProduct = true" class="new" label="Agregar producto" icon="pi pi-plus"
                 styleClass="p-button-primary p-button-sm">
             </p-button>
@@ -64,8 +93,9 @@
 
 
 
-    <div class="table-products relative" *ngIf="productsByCategory.length; else noProducts">
-        <div [@fadeIn] *ngIf="!dataCategory.active" class="category-inactive d-flex z-1 justify-content-center bg-white w-full h-full absolute top-0 left-0">
+    <div class="table-products relative" *ngIf="productsByCategory.length else noProducts">
+        <div [@fadeIn] *ngIf="!dataCategory.active"
+            class="category-inactive d-flex z-1 justify-content-center bg-white w-full h-full absolute top-0 left-0">
             <div class="text-center">
                 <i class="fa-solid fa-eye-slash text-800 text-5xl mb-2"></i>
                 <h3 class="text-2xl text-800 z-2">
@@ -73,19 +103,23 @@
                 </h3>
             </div>
         </div>
-        <div >
-            <div class="container-item-table shadow-1 hover:shadow-5 border-bottom-1 border-black-alpha-50" *ngFor="let product of productsByCategory">
-    
+
+        <div>
+
+            <div class="container-item-table shadow-1 hover:shadow-5 border-bottom-1 border-black-alpha-50"
+                *ngFor="let product of productsByCategory">
+
                 <div class="item">
-    
-                    <div class="d-flex between wrap gap-2">
-    
+
+                    <div class="d-flex justify-content-between wrap gap-2">
+
                         <div class="d-flex z-2" [ngClass]="product.stock && dataCategory.active ? '' :'opacity-40'">
                             <div class="image-item mr-4">
-                                <img appImageFallback [src]="product.image" class="shadow-6 border-round-sm"
-                                    alt="{{product.name}}" width="100">
-                            </div>
-    
+                                <img appImageFallback [src]="product.image"
+                                    class="object-cover shadow-6 border-round-sm" alt="{{product.name}}" width="100"
+                                    height="70">
+                            </div>  
+
                             <div class="item-name">
                                 <p class="product-id">#{{product.id}}</p>
                                 <p>
@@ -95,58 +129,73 @@
                                         {{product.price | currency:'USD'}}
                                     </b>
                                 </p>
-    
+
                                 <div *ngIf="product.variations.length" class="d-flex mt-2 text-gray">
                                     <i class="fa-solid fa-list mr-2"></i>
                                     <p>{{product.variations.length}} Grupos de opciones </p>
                                 </div>
                             </div>
                         </div>
-    
+
                         <div class="state-product d-flex gap-2">
-                            <i class="pi pi-circle-fill" [ngClass]="product.stock ? 'text-green-500' : 'text-red-500' "></i>
+                            <i class="pi pi-circle-fill"
+                                [ngClass]="product.stock ? 'text-green-500' : 'text-red-500' "></i>
                             <span>{{product.stock ? 'Disponible' : 'No disponible'}} </span>
                         </div>
-    
-                        <div class="toogle-product d-flex gap-4">
-    
-    
-                            <button (click)="deleteProduct(product.id)">
+
+                        <div class="toogle-product w-full justify-content-around md:w-fit d-flex gap-4">
+
+                            <button matTooltip="Destacar producto" (click)="pinUpProduct(product)">
+                                <i class="btn-edit pi "
+                                    [ngClass]="product.fixed ? 'pi-heart-fill text-red-500' : 'pi-heart'"></i>
+                            </button>
+
+                            <button matTooltip="Eliminar" (click)="deleteProduct(product.id)">
                                 <i class="btn-edit pi pi-trash"></i>
                             </button>
-    
-                            <button class="mr-2" (click)="editProduct(product)">
+
+                            <button matTooltip="Editar" class="mr-2" (click)="editProduct(product)">
                                 <i class="btn-edit fa-solid fa-pen"></i>
                             </button>
-    
-                            <mat-slide-toggle (change)="setStockProduct(product, product.stock)"
+
+                            <mat-slide-toggle [matTooltip]="product.stock ? 'Desactivar' : 'Activar'"
+                                (change)="setStockProduct(product, product.stock)"
                                 [checked]="product.stock ? true : false" color="primary"></mat-slide-toggle>
                         </div>
-    
+
                     </div>
-    
-    
-    
-    
-                </div> 
-    
-    
+
+
+
+                </div>
+
+
                 <div *ngIf="product.editing">
                     <app-main-edit-product [product]="product"></app-main-edit-product>
                 </div>
             </div>
-        
+
         </div>
 
 
     </div>
 
     <ng-template #noProducts>
-        <p class="p-3">
-            <b>No tienes productos para esta categoria</b>, una categoria sin productos no se mostrara en tu tienda <br> puedes crear un nuevo producto con el boton <b> + Agregar producto</b></p>
+        <div class="w-full p-3">
+            <div class="d-flex gap-2">
+                <i class="pi pi-info-circle"></i> 
+
+                <p class="text-balance text-gray-800"><b>No tienes Productos en tu categoría</b>, puedes crear uno nuevo con
+                    en el botón <b> + Agregar Producto</b></p>
+            </div>
+            <div class="d-flex gap-2 mt-2">
+                <i class="pi pi-info-circle"></i> 
+                <p class="text-balance text-gray-800">Una categoría <b>sin productos no se mostrará</b> en tu tienda</p>
+            </div>
+
+
+        </div>
+
     </ng-template>
-
-
-   
 
     <p-confirmDialog class="alert-dele" [style]="{width: window.innerWidth > 550 ?'50vw' : '90vw'}"></p-confirmDialog>

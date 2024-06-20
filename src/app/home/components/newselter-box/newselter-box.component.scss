@@ -5,38 +5,40 @@
     // background: -webkit-linear-gradient(to bottom, #1e2f40, #1d2334);  /* Chrome 10-25, Safari 5.1-6 */
     // background: linear-gradient(to bottom, #1e2f40, #1d2334); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     position: relative;
-    padding: 16px;
-    box-shadow: 0 2px 20px -3px #4a4a4a;
+    padding: 16px; 
+    box-shadow: 0 0px 20px -4px #000000b0;
     overflow: hidden;
 
-    .circle{
+    .circle{  
       position: absolute;
       border-radius: 50%;
     }
 
     .circle-1{
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       bottom: 0;
       right: -33px;
 
     }
+
     .circle-2{
       width: 40px;
       height: 40px;
       bottom: -17px;
       left: -10px;
     }
+
     .circle-3{
-      width: 45px;
-      height: 45px;
+      width: 55px;
+      height: 55px;
       right: 3px;
       top: -15px;
     }
     
     .circle-4{
-      width: 45px;
-      height: 45px;
+      width: 55px;
+      height: 55px;
       right: 3px;
       bottom: -15px;
     } 

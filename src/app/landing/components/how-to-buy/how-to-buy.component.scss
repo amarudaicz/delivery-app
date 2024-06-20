@@ -1,0 +1,139 @@
+@use '../../../../mixin.scss' as m;
+
+.how-to-buy {
+  margin-top: -20px;
+}
+
+.container-gif {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    background: linear-gradient(to top,#480af3 20%,#f9f6f4 80%);
+    border-radius: 15px;
+  }
+}
+
+.container-image{
+    border-radius: 11px;
+    min-height: 540px;
+}
+
+.ribbon{
+  top: 0;
+  right: 0;
+  height: 90px;
+  z-index: 3;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  right: -60px;
+
+  @include m.laptop{
+    width: 180px;
+    right: 31px;
+
+  }
+
+}
+
+.video-buy{
+  width: 225px;
+  height: 495px;
+  top: 23px;
+  border-radius: 26px;
+  left: 40px;
+}
+
+.chat-buy{
+
+}
+
+.gif-left{
+  @include m.tablet{
+    min-width: 500px;
+  }
+}
+
+.box-right{
+  @include m.tablet{
+    min-width: 350px;
+  }
+}
+
+.ribbon-1{
+  top: 108px;
+}
+.ribbon-2{
+  top: 280px;
+  animation-delay: 1.5s; 
+}
+
+.chat-wp{
+  background: url('https://cloudfront-eu-central-1.images.arcpublishing.com/diarioas/7L3CG752LVMWBPX75F4W3Y7QGI.jpg') center center;
+  background-size: cover;
+  width: 225px;
+  height: 495px;
+  top: 23px;
+  border-radius: 26px;
+  left: 40px;
+  font-size: 12px;
+
+  p{
+    font-size: 12px;
+    text-align: left;
+  }
+}
+
+.bg-wp{
+  background: #0b141a;
+}
+
+.bg-wp-send{
+  background:#005c4b;
+}
+
+.bg-wp-incoming{
+  background:#202c33;
+}
+
+
+.tail{
+  top: 0;
+  width: 8px;
+  height: 13px;
+}
+
+.tail-send{
+  right: -8px;
+}
+
+.tail-in{
+  left: -8px;
+}
+
+.contact-wp{
+  background: #202c33;
+  padding: 10px 16px;
+}
+
+.profile{
+  border-radius: 50%;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+}
+
+.time-wp{
+  position: absolute;
+  bottom: 2px;
+  right: 8px;
+}
+
+.color-icons{
+  color: #aebac1;
+}
+
+.color-phone{
+  color: #e9edef;
+}

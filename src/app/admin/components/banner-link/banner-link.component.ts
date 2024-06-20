@@ -17,7 +17,7 @@ export class BannerLinkComponent {
 
   modelListFeatures= [ 
     {
-      text:'Compatible con todas las redes sociales',
+      text:'Compatible con todas las redes',
       icon:'fa-solid fa-circle-check'
     },
     {
@@ -32,7 +32,7 @@ export class BannerLinkComponent {
   constructor(private clipboard:Clipboard, private adminService:AdminService, private notificationsAdmin:NotificationsAdminService){
 
     this.adminService.local$.subscribe(local=>{
-      local ? this.copyUrl = 'https://deliapp.app/' + local.name_url : null
+      local ? this.copyUrl = 'https://delitienda.app/' + local.name_url : null
     })
   }
   

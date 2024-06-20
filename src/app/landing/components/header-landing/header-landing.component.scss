@@ -1,16 +1,28 @@
+@use '../../../../mixin.scss' as m;
+
 .header-landing{
-  padding: 15px 0px;
+  padding: 10px 0px;
   position: sticky;
   top: 0;
   left: 0;
   z-index: 1;
 
-
-
     .logo-landing{
-        width: 50px;
+        width: 120px;
     }
 
+}
+
+.content-header{
+  max-width: 1300px;
+}
+
+.menu-side{
+  z-index: 999;
+}
+
+.overlay{
+  z-index: 99;
 }
 
 .button-close{
@@ -38,7 +50,16 @@
 .menu-icon {
     display: grid;
     place-items: center;
+    width: 100px;
+    display: flex;
+    justify-content: start;
+    @include m.laptop{
+      width: 380.8px;
+    }
   
   
   }
   
+
+  .button-login{
+  }

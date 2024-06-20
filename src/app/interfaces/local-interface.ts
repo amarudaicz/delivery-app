@@ -12,7 +12,7 @@ export interface Local {
   pick_in_local: null;
   aliascbu: string;
   description: null;
-  theme: number;
+  theme: number|any;
   instagram: string;
   website: string;
   maps: string;
@@ -22,6 +22,7 @@ export interface Local {
   shipping: Shipping;
   pay_methods: PayMethods;
   cords:string;
+  fields_checkout:any;
 }
 
 export interface Schedules {
@@ -46,8 +47,8 @@ export interface Shipping {
 }
 
 export interface PayMethods {
-  cash: { description: string; method: string };
-  transfer: {
+  cash?: { description: string; method: string };
+  transfer?: {
     cbu: string;
     method: string;
     description: string;
@@ -56,6 +57,7 @@ export interface PayMethods {
     entity: string;
   };
   cbu: string;
+  card?: { description: string; method: string };
 }
 
 export interface Days {

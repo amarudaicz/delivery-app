@@ -5,8 +5,10 @@
     <h4>Tema actual</h4>
     <div class="d-flex w-full">
       <div class="d-flex ">
-        <span class="w-5rem">{{ currentTheme?.name }}</span>  
-        <mat-radio-button checked color="primary"></mat-radio-button>
+        <span class="">{{ currentTheme?.name }}</span>
+        <mat-radio-group>
+          <mat-radio-button [checked]="true" color="primary"></mat-radio-button>
+        </mat-radio-group>
       </div>
       <div class="color-theme" *ngFor="let prop of currentProp" [style.background]="currentTheme[prop]"></div>
     </div>
@@ -14,8 +16,8 @@
 
   <div class="container-all-them
   es">
-    <h4>Todos los temas</h4>
-    <mat-radio-group [disabled]="disableRadio" aria-label="Select an option">
+    <h2>Todos los temas</h2>
+
       <div class="py-2" *ngFor="let theme of allThemes">
         <div class="d-flex w-full">
           <div class="d-flex ">
@@ -26,7 +28,44 @@
 
           <div class="color-theme" *ngFor="let prop of currentProp" [style.background]="theme[prop]"></div>
         </div>
+
       </div>
-    </mat-radio-group>
+    
+    <div class="card mt-2">
+      <h2 class="mb-1">Personalizado</h2>
+      <p class="text-800 mb-1">Configura o pega el código Hexadecimal de tus colores y luego guarda los cambios</p>
+      <p class="text-800 mb-2"><i class="pi pi-info-circle"></i> Recomendamos no usar colores de tono Blancos/Claros, revise el aspecto de su tienda una vez configurado el tema</p>
+      
+      <div class="d-flex gap-2 w-full">
+
+        <div class="flex flex-column justify-content-center gap-2">
+          <span class="mt-1">Color primario</span>
+          <div class="h-4rem relative" >
+            <input required [(ngModel)]="background" class="absolute w-full h-full absolute top-0 left-0 cursor-pointer" type="color">
+          </div>
+
+          <input placeholder="ej: #4527dd" [(ngModel)]="background" type="text" class="w-full p-2 border-round border-1 border-500 font-semibold ">
+        </div>
+
+        <div class="flex flex-column justify-content-center gap-2">
+          <span class="mt-1">Color secundario</span>
+          <div class="h-4rem relative" >
+            <input required [(ngModel)]="backgroundSec" class="absolute w-full h-full absolute top-0 left-0 cursor-pointer " type="color">
+          </div>
+
+          <input placeholder="ej: #dd2727" [(ngModel)]="backgroundSec" type="text" class="w-full p-2 border-round border-1 border-500  font-semibold">
+        </div>    
+      </div>
+
+
+      <div class="d-flex gap-2">
+        <button class="mt-3" mat-raised-button color="primary" (click)="setPersonalTheme()">Guardar cambios</button>
+        <button class="mt-3" mat-button color="warn" (click)="deleteThemePersonal()">Eliminar tema</button>
+      </div>
+      
+
+    </div>
+
+
   </div>
 </div>

@@ -1,19 +1,20 @@
 .custom-tour{
 
-    background: #343c5d !important;
-
+    background: #fff !important;
+    border: 2px solid;
     .shepherd-header{
         height: 0;
     }
     
     .shepherd-text{
-        font-size: 13px;
-        color: rgb(255, 255, 255) !important;
+        font-size: 16px;
+        color: rgb(19, 19, 19) !important;
     }
 
     .shepherd-arrow {
         &::before{
-            background: black;
+            background: #fff;
+            border: 2px solid;
         }
         
   
@@ -26,17 +27,15 @@
 
         @media (min-width:480px){
             z-index: 10000;
-
-
         }
 
     }
 
+
     &.step-dashboard{
         width: 90%;
-        margin-left: 20px;
-        
     }
+
 
     &.step-list-products{
 

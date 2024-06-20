@@ -1,0 +1,167 @@
+<section class="w-full h-full">
+
+
+    <div class="flex flex-column md:flex-row gap-4 p-4">
+
+
+        <div class="">
+            <div class="mb-3">
+                <h1 class="mb-1">Formulario de compra</h1>
+                <p class="text-balance w-fit">Marca los datos extra que necesitas de tus clientes para realizar un
+                    pedido
+                </p>
+                <p>el formulario incluye campos por defecto que no puedes modificar</p>
+            </div>
+
+
+            <div class="">
+                <form [formGroup]="form">
+
+                    <div class="flex flex-column gap-3">
+                        <mat-checkbox color="primary" value="email" formControlName="email">
+                            Email
+                        </mat-checkbox>
+
+
+                        <mat-checkbox color="primary" value="postalCode" formControlName="postalCode">
+                            Código postal
+                        </mat-checkbox>
+
+
+                        <mat-checkbox color="primary" value="incomingMoney" formControlName="incomingMoney">
+                            Con cuanto pagará (solo aplica si el método de pago es "Efectivo")
+                        </mat-checkbox>
+
+                        <button class="mt-2" mat-raised-button color="primary" (click)="saveConfig()">
+                            Guardar cambios
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="p-2 border-1 border-round border-400">
+
+            <form [formGroup]="formExample">
+                <div class="w-full flex-column">
+                    <h2 class="chip text-white w-full bg-primary mb-2">Checkout
+                    </h2>
+
+                    <div class=" relative">
+                        <label class="text-base font-semibold mb-1">Nombre y apellido <span
+                                class="text-red-500">*</span></label>
+                        <mat-form-field class="mt-1 w-full" color="primary" appearance="outline">
+                            <input placeholder="Ingresa tu nombre completo" type="text" matInput
+                                formControlName="name" />
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class=" relative" *ngIf="isFieldtrue('email')">
+                        <label class="text-base font-semibold mb-1">Email<span class="text-red-500">*</span></label>
+                        <mat-form-field class="mt-1 w-full" color="primary" appearance="outline">
+                            <input placeholder="Ingresa tu email" type="text" matInput formControlName="email" />
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="">
+                        <div class="w-full relative">
+                            <label class="text-base font-semibold mb-1">Teléfono<span
+                                    class="text-red-500">*</span></label>
+                            <mat-form-field class="mt-1 w-full" color="primary" appearance="outline">
+                                <input placeholder="Ingresa tu numero" type="number" matInput formControlName="phone" />
+                                <mat-error>Ingresa un teléfono valido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="text-base font-semibold mb-1">Método de entrega <span
+                                class="text-red-500">*</span></label>
+                        <div class="d-flex wrap gap-3 mt-1" *ngIf="adminService.local$ | async as local">
+                            <div mat-ripple
+                                class="box-select p-2 border-round border-1 font-bold text-center cursor-pointer"
+                                *ngFor="let method of localService.getShippingMethods(local)">
+                                {{method}}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex gap-2 relative">
+                        <div class="block flex-1 relative">
+                            <label class="font-semibold block mb-1 text-nowrap">Dirección <span
+                                    class="text-red-500">*</span></label>
+                            <mat-form-field appearance="outline" class="w-full" color="primary">
+                                <input placeholder="Ingresa tu dirección" type="text" matInput
+                                    formControlName="direction" />
+                                <!-- <mat-error>{{setErrorsMessage('direction')}}</mat-error> -->
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="block w-3 relative">
+                            <label class="font-semibold block mb-1 text-nowrap">Numero <span
+                                    class="text-red-500">*</span></label>
+                            <mat-form-field appearance="outline" class="w-full" color="primary">
+                                <input placeholder="s/n" type="number" matInput formControlName="streetNumber" />
+                                <!-- <mat-error>{{setErrorsMessage('direction')}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <div class="block flex-1 relative" *ngIf="isFieldtrue('postalCode')">
+                        <label class="font-semibold block mb-1 text-nowrap">Código postal <span
+                                class="text-red-500">*</span></label>
+                        <mat-form-field appearance="outline" class="w-full" color="primary">
+                            <input placeholder="Ej. B1430" type="text" matInput formControlName="postalCode" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mb-3" *ngIf="adminService.local$ | async as local">
+                        <label class="text-base font-semibold mb-1">Método de pago <span
+                                class="text-red-500">*</span></label>
+                        <div class="d-flex gap-3 wrap mt-1">
+                            <div class=" " *ngFor="let method of localService.getPayMethods(local)">
+                                <div mat-ripple
+                                    class="box-select w-full p-2 border-round border-1 font-bold text-center cursor-pointer">
+                                    {{method}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="" *ngIf="isFieldtrue('incomingMoney')">
+                        <label class="text-base font-semibold mb-1">Con cuanto pagará <span
+                                class="text-red-500">*</span></label>
+                        <mat-form-field class="mt-1 w-full" color="primary">
+                            <input type="number" matInput formControlName="incomingMoney" />
+                            <span matTextPrefix>$&nbsp;</span>
+                            <span matTextSuffix>.00</span>
+                            <mat-error>El monto ingresado es menor al total</mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+
+                </div>
+            </form>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+</section>

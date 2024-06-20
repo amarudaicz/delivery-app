@@ -1,9 +1,9 @@
-<header class="header-landing bg-white mb-3 px-3 lg:px-0 shadow-4">
+<header class="header-landing w-full bg-white px-3 z-5" [class.shadow-3]="fixedHeader">
 
-    <div class="w-full lg:w-9 m-auto d-flex justify-content-between ">
-        <div class="menu-icon md:hidden">
-            <button class="cursor-pointer " (click)="menuLanding=true">
-                <div class="container-bars">
+    <div class="w-full content-header  m-auto d-flex justify-content-between ">
+        <div class="menu-icon md:w-25rem" [ngClass]="routeActive !== '/recientes' && routeActive !== '/history' ? 'lg:hidden' : ''" >
+            <button class="cursor-pointer " (click)="toogleMenuLanding()">
+                <div class="container-bars cursor-pointer">
                     <div class="bar-1 bar"></div>
                     <div class="bar-2 bar"></div>
                     <div class="bar-3 bar"></div>
@@ -12,36 +12,38 @@
     
         </div>
 
-        <nav class="hidden md:block">
-            <ul  class="d-flex gap-4 text-800 font-semibold">
+        <nav class="hidden lg:block" *ngIf="routeActive !== '/recientes' && routeActive !== '/history'">
+            <ul  class="d-flex gap-4 text-800 ">
                 <li>
-                    <a [class.text-primary]="routeActive==='/'" class="cursor-pointer hover:text-primary transition-duration-200"  routerLink="/">Inicio</a>
+                    <a [class.text-primary]="routeActive==='/'" class="text-nowrap cursor-pointer hover:text-primary transition-duration-200" routerLink="/" fragment="como-funciona">¿Como funciona?</a>
                 </li>
 
                 <li>
-                    <a class="cursor-pointer hover:text-primary transition-duration-200"  routerLink="/login/register">Precios</a>
+                    <a class="text-nowrap cursor-pointer hover:text-primary transition-duration-200"  routerLink="/" fragment="pricing">Precios</a>
                 </li>
 
+                
                 <li>
-                    <a [class.text-primary]="routeActive==='/preguntas-frecuentes'" class="cursor-pointer hover:text-primary transition-duration-200" routerLink="/preguntas-frecuentes">Preguntas frecuentes</a>
+                    <a [class.text-primary]="routeActive==='/preguntas-frecuentes'" class="text-nowrap cursor-pointer hover:text-primary transition-duration-200" routerLink="/" fragment="faq">Preguntas frecuentes</a>
+                </li>
+                
+                <li>
+                    <a class="text-nowrap cursor-pointer hover:text-primary transition-duration-200" routerLink="recientes">Mis recientes</a>
                 </li>
             </ul>
 
         </nav>
+ 
         <a routerLink="/">
-            <img class="logo-landing" src="./assets/logos/logo-de.png" width="50px" alt="">
-
+            <img loading="lazy" class="logo-landing" src="./assets/logos/logo-deli.png" alt="">
         </a>
 
-
-
-        <div class="gap-3 hidden md:flex justify-content-center">
-            <a routerLink="/login/register" class=" px-4 py-3 bg-primary border-round font-semibold text-base hover:shadow-3" mat-ripple>Quiero empezar</a>
+        <div class="gap-3 flex align-items-center justify-content-end md:w-25rem">
+            <a routerLink="/register" class="hidden md:block px-4 py-2 md:py-3 bg-primary border-round text-base hover:shadow-3 text-nowrap border-1 border-primary" mat-ripple>Comenzar ahora</a>
            
-           
-            <a routerLink="/login" class="px-4 py-3 d-flex gap-2 bg-gray-200 border-round font-semibold text-base hover:shadow-3" mat-ripple>
-                Acceso
-                <i class="pi pi-sign-in mt-1"></i>
+            <a (click)="signIn()" class="cursor-pointer px-4 py-2 md:py-3 d-flex gap-2 border-round text-base shadow-2 hover:shadow-3 border-1" mat-ripple>
+                Acceso 
+                <!-- <i class="pi pi-sign-in mt-1"></i> -->
             </a>
 
         </div>
@@ -50,13 +52,16 @@
 
 </header>
 
+<div class="h-screen w-screen fixed top-0 left-0 z-5 bg-black-alpha-20" *ngIf="loader">
+    <app-loader-full></app-loader-full>
+</div>
 
-<div *ngIf="menuLanding" [@enterRight] class="overflow-auto pt-4 z-4 w-full md:w-20rem h-full bg-white menu-landing fixed top-0 left-0">
+<div *ngIf="menuLanding" [@enterRight] class="overflow-auto pt-4 menu-side w-15rem md:w-20rem h-full bg-white menu-landing fixed top-0 left-0">
 
     <div class=" relative p-3 h-full">
 
         <div class="absolute button-close">
-            <button class="cursor-pointer font-bold hover:text-red-300" (click)="menuLanding = false"> <i
+            <button class="cursor-pointer font-bold hover:text-red-300" (click)="toogleMenuLanding()"> <i
                     class="pi pi-times text-3xl"></i></button>
         </div>
 
@@ -74,9 +79,21 @@
 
 
                 <ul class="mt-4">
-                    
+
                     <li class="p-2 text-base cursor-pointer hover:text-primary-400 transition-duration-200">
-                        <a routerLink="preguntas-frecuentes"> Preguntas frecuentes</a>
+                        <a routerLink="recientes">Mis recientes <i class="pi pi-clock"></i> </a>
+                    </li>
+                  
+                    <li class="p-2 text-base cursor-pointer hover:text-primary-400 transition-duration-200">
+                        <a routerLink="/" fragment="como-funciona"> Como funciona?</a>
+                    </li>
+
+                    <li class="p-2 text-base cursor-pointer hover:text-primary-400 transition-duration-200">
+                        <a routerLink="/" fragment="pricing"> Precios</a>
+                    </li>
+
+                    <li class="p-2 text-base cursor-pointer hover:text-primary-400 transition-duration-200">
+                        <a routerLink="/" fragment="faq"> Preguntas frecuentes</a>
                     </li>
 
                     
@@ -88,13 +105,15 @@
                     <li class="p-2 text-base cursor-pointer hover:text-primary-400 transition-duration-200">
                         <a routerLink="terminos-y-condiciones"> Términos y condiciones</a>
                     </li>
+
+                   
                 </ul>
             </div>
 
 
             <div class="banner mt-4 w-full p-3 bg-bluegray-600 border-round-xl shadow-2">
 
-                <h2 class="text-white mb-3">Quiero una tienda deli para mi comercio</h2>
+                <h2 class="text-white mb-3">Quiero una tienda para mi negocio</h2>
 
                 <div class="w-full flex justify-content-end">
                     <a routerLink="login/register" mat-ripple class="p-2 px-3 border-round bg-white hover:text-primary transition-duration-200">
@@ -120,6 +139,6 @@
     
 </div>
 
-<div [@fadeIn] *ngIf="menuLanding"  (click)="menuLanding = false"
-    class="overlay fadein fixed z-1 top-0 left-0 w-full h-full bg-black-alpha-30">
+<div [@fadeIn] *ngIf="menuLanding"  (click)="toogleMenuLanding()"
+    class="overlay fadein fixed top-0 left-0 w-full h-full bg-black-alpha-30">
 </div>

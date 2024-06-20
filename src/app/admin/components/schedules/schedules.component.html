@@ -23,7 +23,6 @@
                             
                             <div class="d-flex gap-3">
                                 <h2 class="title">{{days[i]}}</h2>
-                                
                                 <mat-slide-toggle [checked]="dayFormGroup.get('open')?.value" formControlName="open" color="primary" class="" > </mat-slide-toggle>
                             </div>
                         
@@ -40,17 +39,17 @@
                                     
                                     <div class="d-flex wrap">
                                         <div class="d-flex gap-3 wrap">
-                                            <mat-form-field>
+                                            <mat-form-field class="w-15rem">
                                                 <mat-label>Horario de apertura</mat-label>
-                                                <mat-select formControlName="start">
+                                                <mat-select [disabled]="dayFormGroup.get('open')?.value" formControlName="start">
                                                     <mat-option *ngFor="let hour of hours" [value]="hour">{{hour}}</mat-option>
                                                 </mat-select>
                                                 <mat-error>Este campo es requerido</mat-error>
                                             </mat-form-field>
             
-                                            <mat-form-field>
+                                            <mat-form-field class="w-15rem">
                                                 <mat-label>Horario de cierre</mat-label>
-                                                <mat-select formControlName="end">
+                                                <mat-select [disabled]="dayFormGroup.get('open')?.value" formControlName="end">
                                                     <mat-option *ngFor="let hour of hours" [value]="hour">{{hour}}</mat-option>
                                                 </mat-select>
                                                 <mat-error>Este campo es requerido</mat-error>

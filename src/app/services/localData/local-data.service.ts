@@ -17,6 +17,7 @@ import { RouteDataService } from '../routeData/route-data-service.service';
 import { handleError } from 'src/app/utils/handle-error-http';
 import { Router } from '@angular/router';
 import { CartService } from '../cartData/cart.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,51 +29,54 @@ export class LocalDataService {
     private recents: RecentsService,
     private routeService: RouteDataService,
     private route: Router,
+    private auth:AuthService
   ) {}
 
   public load: boolean = true;
   public local$ = new BehaviorSubject<Local|undefined>(undefined);
   private local?: Local;
   public products$ = new BehaviorSubject<Product[]>([]);
-  public categories$ = new BehaviorSubject<Category[]>([]);
+  public categories$ = new BehaviorSubject<any[]>([]);
+  public scrollPosition$ = new BehaviorSubject<number>(0);
 
-  initDataLocal(local: string | null) {
-    this.setLocal(local);
-    this.setProducts(local);
+  initDataLocal(name_url: string | null) {
+    this.setLocal(name_url);
+    // this.setProducts(local);
   }
 
   setLocal(name_url: string | null) {
+    
     if (!this.load) return;
     
     this.http
-      .get<Local[]>(environment.host + `locals/${name_url}`)
+      .get<{local:Local, products:Product[]}>(environment.host + `locals/${name_url}`)
       .pipe(
         catchError((err) => {
           this.route.navigate(['/']);
           return throwError(() => new Error(err));
         })
-      ) //puntopizza
+      )
       .subscribe((data) => {
-        console.log(data);
-        const local = data[0];
+        const local = data.local;
         this.setSessionLocal(local);
         this.theme.setTheme(local.theme);
         this.recents.addRecent(local);
         this.local$.next(local);
         this.local = local;
         this.routeService.setOrigin(local.name_url);
-        this.postView(data[0].id)
+        this.products$.next(this.cleanProducts(data.products));
+        this.categories$.next(this.cleanCategories(data.products));
+        this.postView(local.id)
+        this.load = false;
       });
 
   }
 
   setProducts(table: string | null) {
     if (!this.load) return;
-
     this.http
       .get<Product[]>(environment.host + `products/${table}`)
       .subscribe((data) => {
-        console.log(data);
         this.products$.next(this.cleanProducts(data));
         this.categories$.next(this.cleanCategories(data));
         this.load = false;
@@ -105,7 +109,6 @@ export class LocalDataService {
         };
       });
 
-    console.log(categories);
 
     return deleteRepeatElement(categories);
   }
@@ -127,6 +130,12 @@ export class LocalDataService {
   }
 
   getShippingMethods(local: any) {
+    console.log(local);
+    
+    if (!local.shipping) {
+        return []
+    }
+
     const shippingMethods: string[] = [];
     Object.keys(local.shipping).forEach((k) => {
       shippingMethods.push(local.shipping[k].description);
@@ -134,7 +143,12 @@ export class LocalDataService {
     return shippingMethods;
   }
 
-  getPayMethods(local: any) {
+  getPayMethods(local: Local|any) {
+    console.log(local);
+    
+    if (!local.pay_methods) {
+        return []
+    }
     const payMethods: string[] = [];
 
     Object.keys(local.pay_methods).forEach((k) => {
@@ -147,12 +161,11 @@ export class LocalDataService {
     const shippingCosts = this.local?.shipping.delivery.shipping_costs.sort(
       (a, b) => a.distance - b.distance
     );
-    console.log(shippingCosts);
 
     let cost = 0;
 
     if (!shippingCosts?.length) {
-      return -1;
+      return 0;
     }
 
     for (let i = 0; i < shippingCosts!.length; i++) {
@@ -169,6 +182,8 @@ export class LocalDataService {
   }
 
   islocalOpen(schedule: Schedules) {
+    console.log(schedule);
+    
     if (!schedule) return null;
 
     const currentDate = new Date();
@@ -184,12 +199,9 @@ export class LocalDataService {
       (day) => day.name === currentDay
     );
 
-    console.log(currentDay);
-    console.log(currentDaySchedule);
 
     if (currentDaySchedule && currentDaySchedule.open) {
       if (currentDaySchedule.shifts.length === 0) {
-        console.log('NO SHIFTS');
 
         return true; // El negocio está abierto todo el día en el día actual
       }
@@ -200,8 +212,6 @@ export class LocalDataService {
         }
       }
     }
-
-    console.log('FALSE');
 
     return false; // El negocio está cerrado en el horario actual
   }
@@ -251,7 +261,11 @@ export class LocalDataService {
     );
   }
 
-  postView(id:number){
+  async postView(id:number){
+    if (await this.auth.isLogged()) {
+      return
+    }
+    
     return this.http.post(`${environment.host}stats`, {id}).subscribe()
   }
 
@@ -260,7 +274,13 @@ export class LocalDataService {
   }
 
   getLinkMaps(){
-    return `https://www.google.com/maps/place/${this.local!.cords.split(',').reverse().join(',')}\n\n`
+    return this.local?.cords ? `https://www.google.com/maps/place/${this.local!.cords.split(',').reverse().join(',')}\n\n` : null
   }
+
+
+  nextScrollPosition(scroll:number){
+    this.scrollPosition$.next(scroll)
+  }
+
 
 }

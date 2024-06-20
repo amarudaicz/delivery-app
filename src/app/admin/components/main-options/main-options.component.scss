@@ -10,9 +10,12 @@
 
 .container-dinamic {
   height: auto;
-  @include m.tablet{
+
+  @include m.laptop{
     height: calc(100vh - 289px);
+    min-height: 500px;
   }
+
   margin-top: 10px;
   border: 1px solid #a4a4a4;
   overflow-y: auto;

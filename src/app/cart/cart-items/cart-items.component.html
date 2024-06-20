@@ -1,127 +1,111 @@
-<div class="cart h-full">
+<div class="cart h-full relative">
 
-    <div class="container-title px-2 py-3 d-flex gap-2">
-      <button (click)="location.back()" matRipple class="chip cursor-pointer border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
-        <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
-      </button>
-  
-      <h2 [style.color]="theme.get('colorTextSecondary')" [style.background]="theme.get('backgroundSec')" class="chip w-full">Mi carrito</h2>
-    </div>
+  <div class="container-title px-2 py-3 d-flex gap-2">
+    <button (click)="location.back()" matRipple
+      class="chip cursor-pointer border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
+      <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
+    </button>
+
+    <h2 [style.background]="theme.get('backgroundSec')" class="chip w-full text-white">Mi carrito</h2>
+  </div>
 
 
-    <div class="overflow-auto px-2" *ngIf="itemsCart.length; else cartEmpty">
-      <ul class="p-list">
-        <div *ngFor="let i of itemsCart" class="cart-item bg-white shadow-1">
-          <div class="container-image">
-            <img src="{{ i.productImage }}" alt="p Image" />
+  <div class="overflow-auto pad-cart px-2" *ngIf="itemsCart.length; else cartEmpty">
+    <ul class="p-list">
+      <div *ngFor="let i of itemsCart" class="cart-item bg-white shadow-1">
+        <div class="container-image">
+          <img src="{{ i.productImage }}" alt="p Image" />
+        </div>
+        <div class="cart-item-details">
+          <div class="d-flex justify-content-between">
+            <h3 class="title-item">{{ i.name }}</h3>
+            <button class="" (click)="removeProduct(i.idCart)">
+              <i class="pi pi-trash text-red-400 text-xl"></i>
+            </button>
           </div>
-          <div class="cart-item-details">
-            <div class="d-flex justify-content-between">
-              <h3 class="title-item">{{ i.name }}</h3>
-               <button class="" (click)="removeProduct(i.idCart)">
-                <i class="pi pi-trash text-red-400 text-xl"></i>
-              </button> 
-            </div>
-  
-            <div class="user-options">
-              <div *ngIf="i.userOptions[0] !== null" class="container-options">
-                <div *ngFor="let o of i.userOptions" class="option">
-                  
-                  <div *ngIf="o.multiple else simple">
-                    <p class="detail-item">
-                      <b>-{{o.nameVariation}}: </b> 
-                      <span style="display: inline-block; margin-right: 3px;" *ngFor="let m of o.multipleOptions; index as i; ">
-                        {{i === o.multipleOptions!.length - 1 ? m.nameOption :  m.nameOption + ',' }}
-                      </span>
-                    </p>
-                  </div>
-                  <ng-template #simple>
-                    <p class="detail-item">
-                      <b>{{o.typePrice === 1 ? '' : o.nameVariation + ': '}}</b>
-                      <span>{{o.nameOption}}</span>
-                    </p>
-                  </ng-template>
-  
+
+          <div class="user-options">
+            <div *ngIf="i.userOptions[0] !== null" class="container-options">
+              <div *ngFor="let o of i.userOptions" class="option">
+
+                <div *ngIf="o.multiple else simple">
+                  <p class="detail-item">
+                    <b>-{{o.nameVariation}}: </b>
+                    <span style="display: inline-block; margin-right: 3px;"
+                      *ngFor="let m of o.multipleOptions; index as i; ">
+                      {{i === o.multipleOptions!.length - 1 ? m.nameOption : m.nameOption + ',' }}
+                    </span>
+                  </p>
                 </div>
+                <ng-template #simple>
+                  <p class="detail-item">
+                    <b>{{o.typePrice === 1 ? '' : o.nameVariation + ': '}}</b>
+                    <span>{{o.nameOption}}</span>
+                  </p>
+                </ng-template>
+
               </div>
-              <p class="detail-item"><b>Precio:</b> {{ i.total ? (i.total * i.quantity|currency) : (i.productPrice|currency) }}</p>
-            
             </div>
-  
-            <div class="quantity">
-              <button>
-                <i
-                  (click)="setQuantity(i.idCart, -1, inputQuantity.value)"
-                  class="fa-solid fa-minus cursor-pointer  border-2 border-round p-2 font-bold"
-                  [style.borderColor]="theme.get('background')"
-                ></i>
-              </button>
-              <input
-              (change)="setQuantity(i.idCart, $event, inputQuantity.value)"
-                class=" cursor-pointer w-3rem border-2 border-round p-2 text-center font-bold"
-                [id]="i.idCart"
-                min="1"
-                #inputQuantity
-                type="number"
-                [value]="i.quantity"
-              />
-              <button>
-                <i
-                  (click)="setQuantity(i.idCart, 1, inputQuantity.value)"
-                  class="fa-solid fa-plus cursor-pointer  border-2 border-round  p-2 font-bold"
-                  [style.borderColor]="theme.get('background')"
-                ></i>
-              </button>
-            </div>
-            <span class="text-red-600 text-sm" *ngIf="parseInt(inputQuantity.value) < 1">Ingrese una cantidad valida</span>
-            
+            <p class="detail-item"><b>Precio:</b> {{ i.total ? (i.total * i.quantity|currency) :
+              (i.productPrice|currency) }}</p>
+
           </div>
+
+          <div class="quantity">
+            <button>
+              <i (click)="setQuantity(i.idCart, -1, inputQuantity.value)"
+                class="fa-solid fa-minus cursor-pointer  border-2 border-round p-2 font-bold"
+                [style.borderColor]="theme.get('background')"></i>
+            </button>
+            <input (change)="setQuantity(i.idCart, $event, inputQuantity.value)"
+              class=" cursor-pointer w-3rem border-2 border-round p-2 text-center font-bold" [id]="i.idCart" min="1"
+              #inputQuantity type="number" [value]="i.quantity" />
+            <button>
+              <i (click)="setQuantity(i.idCart, 1, inputQuantity.value)"
+                class="fa-solid fa-plus cursor-pointer  border-2 border-round  p-2 font-bold"
+                [style.borderColor]="theme.get('background')"></i>
+            </button>
+          </div>
+          <span class="text-red-600 text-sm" *ngIf="parseInt(inputQuantity.value) < 1">Ingrese una cantidad
+            valida</span>
+
+        </div>
+
+
+      </div>
+    </ul>
+  </div>
+
+  <div class="mt-3 p-2 pb-3 w-full container fixed center-controls bottom-0  bg-init ">
+    <div class="" *ngIf="itemsCart.length; else btnGoHome">
+      <div class="subtotal relative px-2 mb-2 ">
+        <span class="font-bold text-base px-2">Subtotal:</span>
+        <span class="text-2xl font-bold">{{ subtotal | currency }}</span>
+      </div>
   
-         
-        </div>
-      </ul>
-    </div>
-
-    <div *ngIf="itemsCart.length; else btnGoHome" class="mt-3 p-2 pb-3">
-
-        <div class="subtotal relative py-1 px-3 ">
-          <span class="font-bold text-base">Subtotal:</span>
-          <span class="subtotal-value text-xl font-bold">{{ subtotal | currency }}</span>
-        </div>
-  
-        <div class="buttons font-bold">
-          <button matRipple class="button-clear cursor-pointer" (click)="clearCart()">
-            Vaciar carrito
-          </button>
-          <a matRipple [routerLink]="['checkout']"       
-          [style.background]="theme.get('background')"
-          [style.color]="theme.get('colorTextSecondary')"
-          class="button-checkout cursor-pointer">
-                Checkout
-          </a>
-        </div>
-    </div>
-
-
-
-
-
-
-
-    <!-- CART EMPTYYYYYY-->
-    <ng-template #btnGoHome>
-      <div class="w-full h-full p-2 pb-3">
-        <a matRipple class="text-center py-2 w-full border-round mt-4 text-white text-base font-bold block" 
-        [routerLink]="'/'+[routeService.getOrigin()]" 
-        [style.background]="theme.get('background')" >
-              Ir al inicio
+      <div class="buttons font-bold">
+        <a matRipple [routerLink]="['checkout']" [style.background]="theme.get('background')"
+          class="button-checkout cursor-pointer text-white w-full text-center py-3">
+          Completar pedido
         </a>
       </div>
-    </ng-template>
+    </div>
+  </div>
+  
+  <!-- CART EMPTYYYYYY-->
+  <ng-template #cartEmpty>
+    <div class="empty-cart">
+      <h2 class="mb-3 text-xl">Tu carrito esta vacío</h2>
+      <i class="fa-solid fa-cart-plus"></i>
+    </div>
+  </ng-template>
 
-    <ng-template #cartEmpty>
-      <div class="empty-cart">
-        <h2 class="mb-3 text-xl">Tu carrito esta vacío</h2>
-        <i class="fa-solid fa-cart-plus"></i>
-      </div>
-    </ng-template>
+  <ng-template #btnGoHome>
+    <div class="">
+      <a matRipple class="text-center py-3 w-full border-round mt-4 text-white text-base font-bold block"
+      [routerLink]="'/'+[routeService.getOrigin()]" [style.background]="theme.get('background')">
+      Ir al inicio
+    </a>
+  </div>
+</ng-template>
+</div>

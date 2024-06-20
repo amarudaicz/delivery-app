@@ -1,16 +1,31 @@
-.products-category{
+@use "../../../../mixin.scss" as m;
 
-
+.pad-x{
+  padding: 0 10px;
 }
 
-.title-category{
- 
+.container-products-by-cat {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+
+  @include m.tablet {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.container-products{
-
+.panel-sort{
+  bottom: -80px;
+  right: 10px;
+  border-radius: 6px;
+  min-width: 120px;
 }
 
-.container-flex{
+.title-category {
+}
 
+.container-products {
+}
+
+.container-flex {
 }

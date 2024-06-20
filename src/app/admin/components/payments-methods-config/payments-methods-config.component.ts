@@ -21,6 +21,7 @@ export class PaymentsMethodsConfigComponent {
     this.form = this.formBuilder.group({
       transfer:false,
       cash:[false,],
+      card:[false],
       cbu:[null],
       alias:[null],
       nameAccount:[null],
@@ -70,7 +71,7 @@ export class PaymentsMethodsConfigComponent {
       this.loadForm = false
       this.form.disable()
       this.form.markAsPristine()
-
+      this.adminService.getLocal().subscribe()
     })
 
   } 
@@ -84,7 +85,6 @@ export class PaymentsMethodsConfigComponent {
         description:'Efectivo'
       }
     }
-
     if (this.form.value.transfer) {
       payMethods['transfer'] = {
         method:'transfer',
@@ -93,6 +93,13 @@ export class PaymentsMethodsConfigComponent {
         nameAccount:this.form.get('nameAccount')?.value,
         entity:this.form.get('entity')?.value,
         description:'Transferencia'
+      }
+    }
+
+    if (this.form.value.card) {
+      payMethods['card'] = {
+        method:'card',
+        description:'Tarjeta crédito/débito'
       }
     }
 
@@ -118,6 +125,9 @@ export class PaymentsMethodsConfigComponent {
       this.form.disable()
       return
     }
+
+    console.log(local);
+    
     
     this.form.patchValue({
       transfer:local.pay_methods.transfer ? true: null,
@@ -125,7 +135,8 @@ export class PaymentsMethodsConfigComponent {
       cbu:local.pay_methods.transfer?.cbu,
       alias:local.pay_methods.transfer?.alias,
       nameAccount:local.pay_methods.transfer?.nameAccount,
-      entity:local.pay_methods.transfer?.entity
+      entity:local.pay_methods.transfer?.entity,
+      card:local.pay_methods.card ? true : false
     })
 
     this.form.disable()

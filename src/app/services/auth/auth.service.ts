@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { catchError, map, of, throwError } from 'rxjs';
+import Cookies from 'js-cookie';
+import { catchError, firstValueFrom, map, of, throwError } from 'rxjs';
 import { environment } from 'src/app/environment';
 import { User } from 'src/app/interfaces/user-interface';
+import { handleError } from 'src/app/utils/handle-error-http';
 
 interface UserLogin{
   username:string,
@@ -24,7 +25,7 @@ interface UserRegister{
 })
 export class AuthService {
 
-  constructor(private http:HttpClient, private cookie:CookieService) { }
+  constructor(private http:HttpClient) { }
 
   private token: string|null = null;
 
@@ -34,43 +35,39 @@ export class AuthService {
   }
 
   setToken(token: string, exp:number): void {
-    this.cookie.set('jwt', token);
-    this.cookie.set('exp', String(exp))
+    localStorage.setItem('jwt', token);
+    localStorage.setItem('exp', String(exp))
     this.token = token;
   }
 
   getToken(): string|null {
     if (!this.token) {
-      this.token = this.cookie.get('jwt')
-
+      this.token = localStorage.getItem('jwt')!
     }
     return this.token;
   }
 
   deleteToken(): void {
-    this.cookie.delete('jwt');
-    this.cookie.delete('exp');
-    this.cookie.deleteAll() 
-    console.log(this.cookie.getAll());
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('exp');
     this.token = null;
   }
 
-  isLogged(){
-    const token = this.cookie.get('jwt')
-    const exp = this.cookie.get('exp');
+  async isLogged(){
+    const token = localStorage.getItem('jwt')
+    if(!token) return false;
 
-    const expDate = new Date(Number(exp) * 1000)
-    const currentDate = new Date();
+    const isLogged = await this.verifyToken(token);
+    if (!isLogged) return false;
     
-    console.log(expDate);
-    console.log(currentDate);
-    if (!token || !exp) return false
-    
-    console.log(currentDate < expDate);
-    
-    return currentDate < expDate;
-
+    return isLogged;
   }    
+  verifyToken(token:string){
+    return firstValueFrom(
+      this.http.get<any>(`${environment.host}login/verify_token?token=${token}`)
+    )
+
+  }
 
   logIn(user:UserLogin){
     return this.http.post<any>(environment.host + 'login', user)
@@ -80,9 +77,6 @@ export class AuthService {
     return this.http.post<any>(environment.host + 'admin', user)
   }
 
-  verifyToken(token:string){
-    return this.http.get<any>(`${environment.host}login/verify_token?token=${token}`)
-  }
 
   sendEmailToResetPassword(email:string){
     return this.http.post(`${environment.host}login/send_reset_password`, email)
@@ -91,4 +85,9 @@ export class AuthService {
   resetPassword({password, token}:{password:string, token:string}){
     return this.http.post(`${environment.host}login/reset_password`, {password}, {headers:{'Authorization':`Bearer ${token}`}})
   }
+
+
+  
+
+
 }

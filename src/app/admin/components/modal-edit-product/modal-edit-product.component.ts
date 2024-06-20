@@ -1,12 +1,12 @@
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, HostListener, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Inject, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent, MatChipEvent, MatChipEditedEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
-import { async } from 'rxjs';
+import { async, catchError, of, throwError } from 'rxjs';
 import { MainDetailComponent } from 'src/app/detail/components/main-detail/main-detail.component';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { OptionProduct } from 'src/app/interfaces/optionProduct-interface';
@@ -19,18 +19,23 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 import { copy } from 'src/app/utils/copyElement';
 import { MainEditProductComponent } from '../main-edit-product/main-edit-product.component';
 import { HttpInterceptorService } from 'src/app/services/iterceptor-jwt/interceptorJwt';
+import { handleError } from 'src/app/utils/handle-error-http';
+import { Local } from 'src/app/interfaces/local-interface';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-modal-edit-product',
   templateUrl: './modal-edit-product.component.html',
   styleUrls: ['./modal-edit-product.component.scss']
 })
-export class ModalEditProductComponent {
+export class ModalEditProductComponent implements OnDestroy{
 
 
 
   @Input() product?: Product; 
   @Output() stateProduct = new EventEmitter<Product>()
+  @Output() closeModal = new EventEmitter<boolean>()
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   formEditProduct: FormGroup
@@ -38,15 +43,19 @@ export class ModalEditProductComponent {
   ingredientsList: string[] = [];
   optionsGroup: OptionProduct[] = [];
   previewImageProduct: any
-  categories: Category[] = []
+  categories: any[] = []
   editing: boolean = false
   previewModal: boolean = false
-  image: any
-
+  image: any;
+  galeryFiles:any[]=[];
+  galeryUrls:string[] = [];
+  galeryPreview?:any[];
+  isMobile = window.innerWidth < 768;
+  refPreviewModal:any
 
   constructor(
     public theme: ThemesService,
-    private localService: LocalDataService,
+    public localService: LocalDataService,
     private formBuilder: FormBuilder,
     private configDialog: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
@@ -54,9 +63,10 @@ export class ModalEditProductComponent {
     private confirmService: ConfirmationService,
     private cloudinary: CloudinaryService,
     private http: HttpClient,
-    private adminService: AdminService,
+    public adminService: AdminService,
     private toast: MatSnackBar,
-    private dinamicList:DinamicListService
+    private dinamicList:DinamicListService,
+    private layout:LayoutStateService
   ) {
     this.formEditProduct = this.formBuilder.group({
       name: ['', Validators.required ],
@@ -64,15 +74,16 @@ export class ModalEditProductComponent {
       price: ['', Validators.required ],
       ingredients: [null],
       description: [null],
-      image: [null]
+      image: [null],
+      category_id:[null]
     });
 
+    this.layout.blockBody()
   }
 
 
   ngOnInit(): void {
 
-    console.log(this.product);
     this.product = copy(this.product)
     
     this.formEditProduct.addControl('id', this.formBuilder.control(null))
@@ -80,22 +91,20 @@ export class ModalEditProductComponent {
 
     this.formEditProduct.valueChanges.subscribe(change => {
       this.editing = true
-      
-    
-      
     })
-
 
     if (this.getOptionWithLowestPrice(this.optionsGroup)){
       this.formEditProduct.get('price')?.disable()
     }
 
-    
-  
+    this.adminService.categories$.subscribe(categories=>{
+      this.categories = categories
+    })
+
   }
 
 
-  saveEditProduct() {
+  async saveEditProduct() {
 
 
     if (this.formEditProduct.invalid) {
@@ -111,6 +120,19 @@ export class ModalEditProductComponent {
     }
 
 
+    this.processLoad = true
+    if(this.image) {
+      this.toast.open('Subiendo imagenes...')
+      const primaryImage = await this.uploadSingleImage(this.image)
+      this.formEditProduct.get('image')?.setValue(primaryImage)
+    }
+
+    if (this.galeryFiles.length){
+      this.toast.open('Subiendo imagenes...')
+      await this.uploadSequentiallyGalery(0)
+    }
+
+
     this.formEditProduct.removeControl('ingredients')
     this.formEditProduct.get('price')?.enable()
     this.formEditProduct.get('name')?.setValue(this.capitalize(this.formEditProduct.get('name')?.value))
@@ -118,12 +140,21 @@ export class ModalEditProductComponent {
     this.cleanVariations(this.optionsGroup)
     console.log(this.optionsGroup);
     
-    const product = {variations:JSON.stringify(this.optionsGroup), ingredients:JSON.stringify(this.ingredientsList), ...this.formEditProduct.value};
+    const product = {variations:JSON.stringify(this.optionsGroup), ingredients:JSON.stringify(this.ingredientsList), ...this.formEditProduct.value,galery:JSON.stringify(this.galeryUrls) };
+    this.product!.editing = false
 
-    this.adminService.updateProduct(product).subscribe(res => {
-      this.toast.open('Producto actualizado con exito', '', {duration:3000})
+    this.adminService.updateProduct(product).pipe(
+      catchError((err)=>{
+        this.toast.open('A ocurrido un error, intente nuevamente', '', {duration:5000})
+        this.processLoad = false
+        return throwError(()=> new Error(err))
+      })
+    ).subscribe(res => {
+      this.closeModal.emit(true)
+      this.toast.open('Producto actualizado con éxito', '', {duration:3000})
       this.adminService.products = undefined
       this.adminService.getProductsAdmin()
+      this.processLoad = false
     })
   }
 
@@ -131,6 +162,8 @@ export class ModalEditProductComponent {
     this.previewImageProduct = product.image
     this.ingredientsList = product.ingredients || [];
     this.optionsGroup = product.variations || [];
+    this.galeryPreview = product.galery?.length ? product.galery : undefined
+    this.galeryUrls = product.galery?.length ? product.galery : []
 
     this.formEditProduct.patchValue({
       name: product.name,
@@ -138,18 +171,15 @@ export class ModalEditProductComponent {
       price:this.getOptionWithLowestPrice(this.optionsGroup) || product.price,
       image: product.image || null,
       description: product.description,
+      category_id:product.category_id
     });
 
     if (this.getOptionWithLowestPrice(this.optionsGroup)){
       this.formEditProduct.get('price')?.disable()
     }
- 
-
   }
 
   getOptionsSelected(options: OptionProduct[]) {
-    
-    
     this.optionsGroup = options
     
     if (!this.getOptionWithLowestPrice(options)) {
@@ -183,11 +213,12 @@ export class ModalEditProductComponent {
     const screenWidth = window.innerWidth;
 
     this.previewModal = true
-    const refPreviewModal = this.dialogService.open(MainDetailComponent, {
+    this.refPreviewModal = this.dialogService.open(MainDetailComponent, {
       data: {
         variations: this.optionsGroup,
         ...this.formEditProduct.value,
         image: this.previewImageProduct,
+        galery:this.galeryPreview,
         ingredients: this.ingredientsList
       },
       header: 'Vista previa',
@@ -200,12 +231,24 @@ export class ModalEditProductComponent {
       styleClass: 'modal-preview',
     });
 
+    window.history.pushState({modal:true}, 'modal')
 
-    refPreviewModal.onClose.subscribe((data) => {
+    this.refPreviewModal.onClose.subscribe((data:any) => {
       this.previewModal = false
     });
   }
 
+  @HostListener('window:popstate')
+  onPopState() {
+    if (this.refPreviewModal) {
+      this.refPreviewModal.close()
+      return 
+    }
+
+    console.log('closeando');
+    this.closeModal.emit(true)
+    
+  }
 
 
 
@@ -217,22 +260,43 @@ export class ModalEditProductComponent {
 
 
   uploadImage(event: any) {
+    console.log(event);
+    
+    const file = event.target.files[0];
 
-    if (event.files.length > 0) {
-      const file = event.files[0];
+    if (file) {
       console.log(file);
-
       this.formEditProduct.get('image')?.setValue(file)
       this.image = file
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.previewImageProduct = e.target?.result;
-
       };
       reader.readAsDataURL(file);
     }
+  }
 
+  uploadGalery(event:any){
+    let files = event.target.files;
+    this.galeryPreview = files.length ? [] : undefined;
 
+    if (files.length > 4) {
+      this.toast.open('Solo puedes cargar un máximo de 4 imágenes', '' ,{duration:3000})
+      let filesArray: File[] = Array.from(files);
+      // Limitar la cantidad de archivos a 4
+      filesArray = filesArray.slice(0, 4);
+      files = filesArray
+    }
+    for (let i = 0; i < files.length; i++) {
+      this.galeryFiles.push(files[i])
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.galeryPreview!.push(e.target?.result);
+      };
+      reader.readAsDataURL(files[i]);
+    }
+
+    
   }
 
 
@@ -264,8 +328,7 @@ export class ModalEditProductComponent {
     }
 
     if (definePrice && definePrice?.options.every(o => !o.active)){
-      error.message = `Debe activar almenos una opcion de su grupo ${definePrice?.nameVariation}.`
-      return error
+      this.optionsGroup.filter(v=> v.id !== definePrice.id)
     }
 
     return {message:'', state:true}
@@ -281,6 +344,64 @@ export class ModalEditProductComponent {
 
   }
 
+  
+  handleDragDrop(event:CdkDragDrop<any[]>){
+    const {previousIndex, currentIndex} = event
+    console.log(previousIndex, currentIndex);
+    
+    moveItemInArray(this.galeryFiles, previousIndex, currentIndex);
+    moveItemInArray(this.galeryPreview!, previousIndex, currentIndex);
+    console.log(this.galeryFiles);
+    
+  }
+
+  deleteAllGaleryImages(){
+    this.galeryFiles = []
+    this.galeryPreview = undefined
+  }
+
+  deleteImageFromGalery(index:number){
+    this.galeryFiles.splice(index, 1)
+    this.galeryPreview?.splice(index, 1)
+    this.galeryPreview?.length === 0 ? 
+    this.galeryPreview = undefined : null
+    
+  }
+
+  async uploadSequentiallyGalery(index: number): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      if (index < this.galeryFiles.length) {
+        const file = this.galeryFiles[index];
+  
+        try {
+          const secure_url:any = await this.uploadSingleImage(file);
+          this.galeryUrls.push(secure_url);
+          console.log(this.galeryUrls);
+  
+          // Sube la siguiente imagen de forma recursiva
+          await this.uploadSequentiallyGalery(index + 1);
+          resolve(true);
+        } catch (error) {
+          console.error('Error al subir imagen:', error);
+          reject(false);
+        }
+      } else {
+        // Se han subido todas las imágenes
+        console.log('Todas las imágenes se han subido');
+        resolve(true);
+      }
+    });
+  }
+
+  async uploadSingleImage(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.cloudinary.upload(file).subscribe((data: any) => {
+        resolve(data.secure_url);
+      }, (error: any) => {
+        reject(error);
+      });
+    });
+  }
 
   add(event: MatChipInputEvent): void {
     const value = ((event.value || '').trim());
@@ -318,6 +439,10 @@ export class ModalEditProductComponent {
     // Edit existing fruit
   }
 
+
+  ngOnDestroy(): void {
+    this.layout.unblockBody()
+  }
 
 
 

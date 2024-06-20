@@ -5,34 +5,25 @@
   position: relative;
 }
 
-.container-chip {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.link-category{
-    font-size: 15px;
-    font-weight: bold;
-}
-
 .container-products {
-  overflow-x: scroll;
   scroll-snap-type: x proximity;
 }
 
 .container-grid {
   display: grid;
   grid-auto-columns: 100%;
-  grid-template-rows: repeat(2, max-content);
-  gap: 16px ;
-  grid-auto-flow: column;
+  gap: 10px ;
+  grid-auto-flow: row;
   place-items: center;
+  scroll-snap-type: x proximity;
 
   @include m.tablet{
-    grid-auto-columns:auto;
-
-
+    grid-template-columns: repeat(2,1fr);
   }
+
+}
+
+.card-grid{
+  scroll-snap-align: start;
 
 }

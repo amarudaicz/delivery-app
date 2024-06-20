@@ -13,8 +13,6 @@ export class LocalOperationsService {
   }
 
 
-
-
   postLocal(local:NewLocal){
     return this.http.post(`${environment.host}locals`, local)
   }

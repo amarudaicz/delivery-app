@@ -64,7 +64,7 @@ export class CardFormComponent implements OnDestroy, OnInit {
   async initBricks(bricksBuilder: any) {
     const settings = {
       initialization: {
-        amount: 3000, // monto total a pagar
+        amount: 4000, // monto total a pagar
       },
       customization: {
         visual: {
@@ -103,8 +103,9 @@ export class CardFormComponent implements OnDestroy, OnInit {
     this.payment.emit(formData)
   }
   ngOnDestroy(): void {
-    this.subscriptionReload.unsubscribe()
-    console.log('UNSUBE');
+    if (this.subscriptionReload) {
+      this.subscriptionReload.unsubscribe()
+    }
     (window as any).cardPaymentBrickController?.unmount();
   }
 }

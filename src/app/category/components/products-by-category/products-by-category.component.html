@@ -1,23 +1,51 @@
 <section class="">
 
     <div class="">
-        
-        <div class="d-flex gap-2">
 
-            <button (click)="backHome()" class="chip border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
-                    <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
+        <div class="pad-x d-flex justify-content-between gap-2 py-3 mb-3 bg-white border-bottom-1 border-300 sticky top-0 left-0 md:mt-3 md:border-round md:border-1 relative">
+
+            <div class="d-flex gap-2">
+                     <button class="flex" (click)="backHome()">
+                        <i class="pi pi-chevron-left">
+                        </i>
+                    </button> 
+
+                <h2 *ngIf="products" class="" >
+                    {{products[0].category_name}}
+                </h2>
+            </div>
+
+            <button class="open-panel-sort d-flex gap-2 flex-nowrap text-nowrap" >
+                Ordenar por
+                <i class="pi  mt-1" [ngClass]="panelSort ? 'pi-angle-up' : 'pi-angle-down' "></i>
             </button>
 
-            <h2 *ngIf="products" class="chip my-3 w-full" [ngStyle]="{'background':theme.get('background'), color:theme.get('colorTextSecondary')}">
-                {{products[0].category_name}}
-            </h2>
-        </div>
-        
-        <div class="flex justify-content-center gap-3 wrap">
-            <div class="w-full md:w-5" *ngFor="let product of products">
-                <app-product-card [linkMode]="'name'"  [product]="product"></app-product-card>
+            <div class="panel-sort flex flex-column bg-white absolute z-2 border-1 border-500 " *ngIf="panelSort">
+
+                <button (click)="setSortType(sort.sortType)" class="py-2 px-3 text-800 hover:bg-gray-200 text-left" *ngFor="let sort of sortMock" [class.bg-gray-200]="sort.sortType === sortType" [class.text-900]="sort.sortType === sortType">
+                    {{sort.label}}
+                </button>
+
             </div>
-        </div>  
+
+        </div>
+
+        <div class="pad-x breadcrum mb-3" *ngIf="breadcrum.getBreadcrumbs() | async as breadcrums">
+
+            <div class="inline" *ngFor="let bread of breadcrums; let i = index">
+                <a class="hover:text-900 text-700" [routerLink]="bread.route" >{{bread.label}} </a>
+                <span *ngIf="i < breadcrums.length - 1">/ </span> 
+            </div>
+
+            <span class="text-700 text-nowrap">({{products?.length}} productos)</span>
+        </div>
+
+        <div class="content container-products-by-cat">
+            <div class="overflow-hidden w-full shadow-2" *ngFor="let product of products">
+                <app-product-card-vertical class="" [linkMode]="'name'" [product]="product"></app-product-card-vertical>
+
+            </div>
+        </div>
 
     </div>
 

@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import Step from 'shepherd.js/src/types/step';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
-import { LocalDataService } from 'src/app/services/localData/local-data.service';
-import { shepherd } from 'src/app/utils/shepherd-tour';
+import { shepherdMain } from 'src/app/utils/shepherd-tour';
 
 @Component({
   selector: 'app-main-admin',
@@ -13,8 +10,6 @@ import { shepherd } from 'src/app/utils/shepherd-tour';
   providers: [],
 })
 export class MainAdminComponent implements OnInit, OnDestroy {
-  chartData: any;
-  chartOptions: any;
 
   constructor(
     private layoutState: LayoutStateService,
@@ -22,93 +17,107 @@ export class MainAdminComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.continueTutorial();
     this.adminService.getSales();
     this.adminService.getStats();
+    this.continueTutorial()
   }
 
   checkAdmin(): void {}
 
   continueTutorial() {
-    shepherd.addSteps([
+    shepherdMain.addSteps([
       {
-        id: 'step3',
-        classes: 'step-list-products',
-        text: 'Aquí puedes ver la lista de los productos disponibles en tu plataforma. Puedes filtrarlos por categoría o buscarlos por nombre. Si encuentras algo que quieres modificar, puedes hacer clic en el botón "Lupa" para ver más información sobre el producto y editarla.',
+        id: 'step-5',
+        classes: 'step-stats',
+        text: 'Nuestro servicio te permite generar un código QR único para tu tienda en DELI. Una vez generado, puedes imprimirlo en tus productos, folletos publicitarios o enviarlo directamente a tus clientes a través de correos electrónicos, mensajes de texto o redes sociales.',
         attachTo: {
-          element: '#listProduct',
-          on: 'top',
+          element: '#banner-qr',
+          on: 'bottom',
         },
         buttons: [
           {
             text: 'Siguiente',
-            action: shepherd.next,
+            action: shepherdMain.next,
           },
         ],
         when: {
           show: () => {
-            const element = document.querySelector(
-              '.container-table-products'
-            ) as HTMLElement;
-            element.style.zIndex = '9999';
-            element.style.position = 'relative';
+            this.layoutState.blockBody()
+     
           },
           hide: () => {
-            const element = document.querySelector(
-              '.container-table-products'
-            ) as HTMLElement;
-            element.style.zIndex = '1';
-            element.style.position = 'initial';
+            this.layoutState.unblockBody()
           },
         },
       },
       {
-        id: 'step4',
-        classes: 'step-new-product',
-        text: 'Si quieres vender un nuevo producto, puedes hacerlo a través de este formulario. Completando cada paso y luego guardandolo aparecera en la tabla de productos',
+        id: 'step-5',
+        classes: 'step-stats',
+        text: 'Copia el enlace de tu tienda en DELI, compártelo en tus redes sociales o envíalo por mensaje',
         attachTo: {
-          element: '#newProduct',
-          on: 'top',
+          element: '#banner-link',
+          on: 'bottom',
         },
         buttons: [
           {
             text: 'Siguiente',
-            action: shepherd.next,
+            action: shepherdMain.next,
           },
         ],
         when: {
           show: () => {
-            const element = document.querySelector(
-              '.new-product'
-            ) as HTMLElement;
-            element.style.zIndex = '9999';
-            element.style.position = 'relative';
+            this.layoutState.blockBody()
+     
           },
           hide: () => {
-            const element = document.querySelector(
-              '.new-product'
-            ) as HTMLElement;
-            element.style.zIndex = '1';
-            element.style.position = 'initial';
+            this.layoutState.unblockBody()
           },
         },
       },
       {
-        id: 'step5',
-        classes: 'step-initial-form',
-        text: 'Aqui estan los datos principales del producto como el Nombre, Categoria, Precio. Tambien hay un apartado para cargar la imagen principal, los datos que completes aca seran los que verá el clientes en el detalle del producto.',
+        id: 'step-5',
+        classes: 'step-stats',
+        text: 'El gráfico de visitas es una herramienta poderosa para entender el rendimiento de tu tienda. Podrás tomar decisiones en base a tus visitas para mejorar tu estrategia de marketing, aumentar el tráfico y, en última instancia, impulsar las ventas',
         attachTo: {
-          element: '#initialForm',
-          on: 'top',
+          element: '#chart-views',
+          on: 'bottom',
         },
         buttons: [
           {
             text: 'Siguiente',
-            action: shepherd.next,
+            action: shepherdMain.next,
           },
+       
         ],
         when: {
-          hide: () => {},
+          show: () => {
+            this.layoutState.blockBody()
+          },
+          hide: () => {
+            this.layoutState.unblockBody()
+          },
+        },
+      },
+      {
+        id: 'step-6',
+        classes: 'step-stats',
+        text: 'El gráfico de ventas muestra la cantidad de ingresos generados por tu tienda durante un período de tiempo específico. La línea trazada en el gráfico representa la tendencia de las ventas a lo largo del tiempo. Ten en cuenta que no todas las ventas pueden completarse con éxito por lo que el total es aproximado',
+        attachTo: {
+          element: '#chart-sales',
+          on: 'bottom',
+        },
+        buttons: [
+          {
+            text: 'Finalizar',
+            action: shepherdMain.complete,
+          }
+        ],
+        when: {
+          show: () => {
+            this.layoutState.unblockBody()
+          },
+          hide: () => {
+          },
         },
       },
     ]);

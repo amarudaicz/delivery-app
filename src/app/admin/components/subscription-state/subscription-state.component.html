@@ -16,7 +16,7 @@
 
                     <div *ngIf="hasFreeTier; else paidPlan" class="d-flex justify-content-between">
                         <div class="">
-                            <h5 class="mb-2 text-xl">Plan prueba gratiuita</h5>
+                            <h5 class="mb-2 text-xl">Plan prueba gratuita</h5>
                             <p class=" text-base">Precio: $0</p>
                             <p class="text-balance">Tu <b>prueba</b> inicio el dia <b>{{getDateFormat(subscription!.auto_recurring.start_date)}}</b> y finaliza el <b>{{getFreeTrialFinish()}}</b></p>
                             <button mat-button color="primary" class="mt-1" (click)="moreInfoPlanBasic()">Mas informacion</button>
@@ -30,7 +30,7 @@
                         <div class="d-flex justify-content-between">
                             <div class="">
                               <h5 class="mb-2 text-base">Plan Básico</h5>
-                              <p class=" text-base">Precio: $3000/mes</p>
+                              <p class=" text-base">Precio:{{plans.basic.price}}/mes</p>
                               <button mat-button color="primary" class="mt-1" (click)="moreInfoPlanBasic()">Mas informacion</button>
                             </div>
 
@@ -63,7 +63,7 @@
                     <div class="" *ngIf="subscription.status === 'authorized' else subscriptionStop">
                         <span  class="block mb-3 p-2 bg-primary border-round w-fit text-balance">
                             <i class="pi pi-info-circle text-white"></i>
-                            El cobro de tu <b>suscripcion</b> se realizo en las fechas indicadas a continuación
+                            El cobro de tu <b>suscripción</b> se realizo en las fechas indicadas a continuación
                         </span>
     
                         <div class="d-flex wrap gap-3 p-3 border-round-xl border-1 border-600">
@@ -87,7 +87,7 @@
 
                         <div class="p-3 border-round-xl border-1 border-600">
                             <div class="" *ngIf="hasFreeTier; else notFreeTier ">
-                                <p class="text-base mb-2 text-800 text-balance">No se efectuara ningun cargo a tu tarjeta, tu tienda estara disponible hasta que finalice la prueba gratuita.</p>
+                                <p class="text-base mb-2 text-800 text-balance">No se efectuara ningún cargo a tu tarjeta, tu tienda estará disponible hasta que finalice la prueba gratuita.</p>
                                 <button [disabled]="disableButtons" mat-raised-button color="primary" (click)="putStatusSubscription(subscription.status)">Reanudar suscripcion</button>
                             </div>
 
@@ -97,8 +97,8 @@
                                 <h4 class="text-xl mb-1">
                                     Tu pagos se encuentran pausados
                                 </h4>
-                                <p class="text-base mb-2 text-800 text-balance">No se efectuara ningun cargo a tu tarjeta, tu tienda estara disponible hasta que finalice el mes ya cobrado, puedes reanudar tu suscripcion cuando quieras.</p>
-                                <button [disabled]="disableButtons" mat-raised-button color="primary" (click)="putStatusSubscription(subscription.status)">Reanudar suscripcion</button>
+                                <p class="text-base mb-2 text-800 text-balance">No se efectuara ningún cargo a tu tarjeta, tu tienda estará disponible hasta que finalice el mes ya cobrado, puedes reanudar tu suscripción cuando quieras.</p>
+                                <button [disabled]="disableButtons" mat-raised-button color="primary" (click)="putStatusSubscription(subscription.status)">Reanudar suscripción</button>
                             </div>
                         </ng-template>
 
@@ -113,7 +113,7 @@
             <div class="mb-4">
                 <h3 class="text-2xl mb-2">Soporte</h3>
                 <div class=" p-3 border-round-xl border-1 border-600">
-                    <p class="text-800 mb-2 text-balance">Estamos disponibles en Whatsapp para ayudarte ante cualquier problema que puedas tener con tu tienda</p>
+                    <p class="text-800 mb-2 text-balance">Estamos disponibles en WhatsApp para ayudarte ante cualquier problema que puedas tener con tu tienda</p>
                     <div class="">
                         <a (click)="contactSupport()" matRipple class="py-2 w-fit cursor-pointer px-4 bg-green-600 border-round-sm hover:shadow-4 font-semibold shadow-2 roboto text-white d-flex gap-2">
                             <i class="pi pi-whatsapp"></i>
@@ -131,23 +131,23 @@
                 
                     <span class="block p-2 bg-red-500 border-round text-white w-fit">
                         <i class="pi pi-info-circle"></i>
-                        Las acciones que se realizen en este apartado son <b>irreversibles</b> proceda con cuidado 
+                        Las acciones que se realice en este apartado son <b>irreversibles</b> proceda con cuidado 
                     </span>  
                 </div>
 
                 <div class="p-3 mb-2 border-round-xl border-1 border-600" *ngIf="subscription.status === 'authorized'">
                     <div class="mb-2">
                         <h5 class="text-xl mb-1">Darse de baja</h5>
-                        <p class="text-700 text-balance">Tu tienda ya no estara disponible para tus clientes una vez halla finalizado el mes ya acreditado, tu cuenta y datos de la tienda estaran disponible para realizar nuevamente la suscripcion</p>
+                        <p class="text-700 text-balance">Tu tienda ya no estará disponible para tus clientes una vez halla finalizado el mes ya acreditado, tu cuenta y datos de la tienda estarán disponible para realizar nuevamente la suscripción</p>
                     </div>
                     
-                    <button [disabled]="disableButtons" mat-raised-button color="warn" (click)="putStatusSubscription(subscription.status)">Detener suscripcion</button>
+                    <button [disabled]="disableButtons" mat-raised-button color="warn" (click)="putStatusSubscription(subscription.status)">Detener suscripción</button>
                 </div>
 
                 <div class="p-3 border-round-xl border-1 border-600">
                     <div class="mb-2">
                         <h5 class="text-xl mb-1">Eliminar mi cuenta</h5>
-                        <p class="text-800 text-balance">Elimina tu tienda y suscripcion activa, se perderan todos los datos incluida tu cuenta</p>
+                        <p class="text-800 text-balance">Elimina tu tienda y suscripción activa, se perderán todos los datos incluida tu cuenta</p>
                     </div>
 
                     <button [disabled]="disableButtons" (click)="deleteAccount()" mat-raised-button color="warn">Eliminar cuenta</button>

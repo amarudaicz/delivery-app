@@ -1,0 +1,144 @@
+<section>
+
+    <div class="d-flex wrap justify-content-center md:justify-content-start mb-3 gap-3">
+        <form class="flex-1  md:max-w-18rem md:w-fit">
+            <div class="relative w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-3 w-3 text-gray-500 align-vertical-icon-search">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3">
+
+                    </path>
+                </svg>
+
+                <input  type="text"
+                    class="font-semibold p-3 min-w-4rem flex h-3rem w-full bg-white border-round border-1 border-300"
+                    placeholder="Buscar"
+                    (input)="searchQuery($event)">
+            </div>
+        </form>
+
+        
+        <mat-chip-listbox (change)="filterByStatus($event)" aria-label="Fish selection">
+            <mat-chip-option value="pendiente">Pendiente</mat-chip-option>
+            <mat-chip-option value="procesando">procesando</mat-chip-option>
+            <mat-chip-option value="enviado">Enviado</mat-chip-option>
+            <mat-chip-option color="warn" value="cancelado">Cancelado</mat-chip-option>
+        </mat-chip-listbox>
+        
+        <mat-paginator #paginator formFieldAppearance="outline" [hidePageSize]="true" [length]="filtredOrders ? filtredOrders.length : 0" 
+            [pageSize]="8" [pageSizeOptions]="[5, 10, 25]">
+        </mat-paginator>
+
+
+
+
+    </div>
+
+    <div class="w-full card container-table pt-0 p-2 overflow-y-auto overflow-x-hidden" tabindex="0" *ngIf="filtredOrders; else loaderOrders">
+        <div class="w-full h-full">
+            <table class="w-full h-full" mat-table [dataSource]="dataSource">
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef class=""> ID </th>
+                    <td mat-cell *matCellDef="let element; let i = index" class="font-bold"> #{{element.id}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="customer_name">
+                    <th mat-header-cell *matHeaderCellDef class=""> Cliente </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="flex flex-column w-fit">
+                            <span class="w-fit align-self-center px-2 border-1 border-round-2xl text-primary text-sm"
+                                *ngIf="element.watched_admin < 2">Nuevo</span>
+                            {{element.customer_name}}
+                        </div>
+
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="order_date">
+                    <th mat-header-cell *matHeaderCellDef class=" hidden md:table-cell"> Fecha </th>
+                    <td mat-cell *matCellDef="let element" class="hidden md:table-cell">
+                        {{ordersUseCase.getDate(element)}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef class="hidden md:table-cell"> Estado </th>
+                    <td mat-cell *matCellDef="let element" class="hidden md:table-cell">
+                        <div class="flex">
+                            <div class="select-container relative border-500">
+                                <select [(ngModel)]="element.status"
+                                    (change)="updateStatusOrder(element, element.status)"
+                                    class="relative cursor-pointer custom-select pr-5 border-1 border-300">
+                                    <option value="pendiente">
+                                        pendiente
+                                    </option>
+                                    <option value="procesando">
+                                        procesando
+                                    </option>
+                                    <option value="enviado">
+                                        enviado
+                                    </option>
+                                    <option value="cancelado">
+                                        cancelado
+                                    </option>
+                                </select>
+
+                                <i [ngClass]="iconClass(element.status)"
+                                    class="absolute pi icon-fill pi-circle-fill"></i>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="total_ammount">
+                    <th mat-header-cell *matHeaderCellDef class="hidden md:table-cell"> Total </th>
+                    <td mat-cell *matCellDef="let element" class="hidden md:table-cell"> {{element.total_amount|currency}} </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="shipping_address">
+                    <th mat-header-cell *matHeaderCellDef class="hidden md:table-cell"> Entrega </th>
+                    <td mat-cell *matCellDef="let element" class="hidden md:table-cell"> {{element.shipping_address ? 'Envío a domicilio' : 'Retirar en local'}} </td>
+                </ng-container> -->
+
+              
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class=""> Acciones </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="d-flex gap-2">
+                            <button color="warn" [id]="element.id" (click)="deleteOrder(element.id)" mat-icon-button>
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                            <button (click)="viewDetailsOrder(element)" [id]="element.id" mat-icon-button>
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+
+        </div>
+    </div>
+
+
+    <ng-template #loaderOrders>
+        <div class="w-full h-full d-flex justify-content-center container-table">
+
+            <i class="pi pi-spin pi-spinner text-3xl text-primary"></i>
+        </div>
+    </ng-template>
+
+
+</section>

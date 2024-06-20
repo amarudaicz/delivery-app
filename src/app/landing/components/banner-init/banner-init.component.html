@@ -1,0 +1,71 @@
+
+<div class="w-full d-flex banner-init relative bg-white  overflow-hidden  pl-3 pr-5">
+    
+    <div class="circle-left bg-gray-200 opacity-80">
+                 
+    </div>
+
+    <!-- <div class="circle-top-right bg-sec opacity-80">
+                
+    </div> -->
+
+    <section class="container-landing relative h-full w-full d-flex justify-content-center">
+            <div class="d-flex justify-content-center lg:justify-content-between h-full w-full flex-column md:flex-row wrap-image-text">
+                <div class="text-center md:text-left container-title ">
+                    <h1 class="mb-3 font-extrabold title-banner">Vendé rápido <br> sin pagar comisión </h1>
+
+                    <p class="mb-5 font-700 mb-3">
+                        Automatiza tus ventas y genera clientes con <span class="color-base font-bold">DELITIENDA!</span>
+                    </p>
+                    
+                    <div class="z-3 relative d-flex wrap justify-content-center md:justify-content-start gap-3">
+                        <a routerLink="/register" mat-ripple class=" hover:translate-y-1 px-4 py-3 md:py-3 border-round shadow-3 bg-primary font-bold ">
+                            Registrar una tienda
+                        </a>
+                        <a href="/mitienda" target="_blank" mat-ripple class="hover:border-primary border-transparent border-1 px-4 py-3 md:py-3 border-round text-primary font-bold d-flex gap-2 transition-all transition-duration-200">
+                            <span>
+                                Ver tienda demo
+                            </span>
+                            <!-- <i class="pi pi-arrow-right arrow-demo"></i> -->
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="container-img-banner w-full md:w-4 relative fadein ">
+                    <div class="w-full h-full">
+
+                        <picture class="relative block z-1 img-banner fadein w-full">
+                            <img loading="lazy" *ngFor="let image of pathArrayImages; let i = index " class=" top-0 left-0 w-full transition-duration-300 transition-all" [class.absolute]="i !== 0"  [class.opacity-0]="currentIndexImage !== i"  [src]="image" alt="">
+                        </picture>
+                        
+                        <div [@fadeIn] class="fadeout blob float-animation absolute top-0 left-0 w-full h-full">
+
+                            <svg #svgBlob class="svg-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#480AF3" d="M29.4,-43.3C38.1,-40.1,45.2,-32,44.6,-23.3C44,-14.6,35.8,-5.3,35.6,6C35.4,17.4,43.2,30.8,42.9,44.9C42.7,59.1,34.4,74,22.9,77C11.3,80,-3.5,71.1,-17.9,65C-32.4,59,-46.6,55.8,-49.1,46.2C-51.7,36.7,-42.6,20.8,-40.7,8.2C-38.9,-4.3,-44.3,-13.5,-46.7,-26.7C-49.1,-40,-48.5,-57.3,-40.2,-60.7C-32,-64,-16,-53.5,-2.8,-49.1C10.3,-44.7,20.7,-46.5,29.4,-43.3Z" transform="translate(100 100)" />
+    
+                              </svg>
+                        </div>
+                    </div>
+
+                    <div (click)="nextMock()" mat-ripple class="hidden xl:flex circle-mockup bg-sec opacity-80  justify-content-center align-items-center cursor-pointer hover:opacity-90  transtion-duration-200 transition-all">
+                        <i class="pi pi-arrow-right text-white  text-2xl font-bold"></i>
+                    </div>
+
+                    <div (click)="prevMock()" mat-ripple class="hidden xl:flex circle-mockup-left bg-primary  justify-content-center align-items-center cursor-pointer hover:opacity-90  transtion-duration-200 transition-all">
+                        <i class="pi pi-arrow-left text-white  text-2xl font-bold"></i>
+                    </div>
+
+                    <div (click)="isStopInterval ? resume() : stop()" mat-ripple class="hidden xl:flex circle-controls bg-gray-300 hover:bg-gray-400  justify-content-center align-items-center cursor-pointer transtion-duration-200 transition-all">
+                        <i [ngClass]="isStopInterval ? 'pi-play' : 'pi-pause'" class="pi  text-white text-2xl font-bold "></i>
+                    </div>
+
+
+
+                </div>
+                
+            </div>
+        
+
+    </section>
+    
+</div> 

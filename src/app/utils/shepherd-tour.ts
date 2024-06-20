@@ -1,18 +1,31 @@
 import Shepherd from "shepherd.js";
 
-export const shepherd = new Shepherd.Tour({
-
+export const shepherdMain = new Shepherd.Tour({
     useModalOverlay: true,
     
     defaultStepOptions: {
-      
       scrollTo:{behavior:'smooth', block:'center'},
       classes: 'custom-tour',
     },
+    
 })
 
-shepherd.on('complete', () => {
-  console.log('COMPLETOOOO');
-  localStorage.setItem('watched-tutorial', 'true')
+export const shepherdListProducts = new Shepherd.Tour({
+  useModalOverlay: true,
+  
+  defaultStepOptions: {
+    scrollTo:{behavior:'smooth', block:'center'},
+    classes: 'custom-tour',
+  },
+})
+
+shepherdMain.on('complete', () => {
+  localStorage.setItem('shepherd-main', 'true')
+  document.body.style.overflow = 'inherit'
+})
+
+shepherdListProducts.on('complete', () => {
+  localStorage.setItem('shepherd-list-products', 'true')
+  document.body.style.overflow = 'inherit'
   
 })

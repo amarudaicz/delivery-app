@@ -22,18 +22,14 @@ export class RecentsComponent implements OnInit  {
   
   ngOnInit(): void {
     this.recentsService.getRecents().subscribe()
-    
- 
-    
   }
 
   getRecents(){
     this.recentsService.recents$.subscribe((locals)=>{
-
       if (locals !== undefined) {
         this.recentsCharged = true
       }
-      
+      console.log(locals);
       this.locals = locals
       
     })

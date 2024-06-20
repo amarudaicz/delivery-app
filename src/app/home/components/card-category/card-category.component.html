@@ -1,25 +1,35 @@
-    <div
-    *ngIf="category; else loader"
+  <div class="px-1 h-full" style="scroll-snap-align: start;">
+    <div *ngIf="category.name; else loader"
     (click)="emitCategory(category, $event)"
-      [style.background-image]="'url(' + category.image + ')'"
-      [style.border-color]="selectedCategory(category.id) ? theme.get('background') : '#000000d1' "
-      matRipple
+      [style.outline-color]="selectedCategory(category.id) ? '#000' : 'rgb(219, 218, 222)'"
+      matRipple 
       [matRippleColor]="'#00000012'"
-      class="category-card border-round-2xl shadow-3 border-2"
-      [ngStyle]="{'background-image':category.image}">
+      class="category-card relative initial-state shadow-3 cursor-pointer h-full w-10rem border-round bg-white"
+      >
+      <div class="w-full h-full flex flex-column justify-content-start gap-2">
 
-        <h5 class="card-title w-full"
-          [style.background]="selectedCategory(category.id) ? theme.get('background') : '#000000d1'"
-          [style.color]="selectedCategory(category.id) ? theme.get('colorTextSecondary') : '' "
+        <div class="overflow-hidden h-8rem ">
+          <img loading="lazy" appImageFallback class="w-full h-full image-cat" [src]="category.image" [alt]="category.image">        
+        </div> 
+
+        <h5 class="card-title w-full text-overflow-ellipsis overflow-hidden"
           >
-        {{ category.name }}
-      </h5>
-        
-      </div>
+          {{ category.name }}
+        </h5>
+          
+        </div>
+  
+
+        <div *ngIf="selectedCategory(category.id)" class="scalein absolute border-1 text-white check-cat">
+          <i class="pi pi-check text-white "></i>
+    
+        </div>
+    </div> 
+  </div>
       
 
 <ng-template #loader>
-  <p-skeleton size="100px" borderRadius="30px"></p-skeleton>
+  <p-skeleton width="100px" height="115px" borderRadius="30px"></p-skeleton>
 </ng-template>
 
  

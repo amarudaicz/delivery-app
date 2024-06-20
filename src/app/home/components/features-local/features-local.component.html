@@ -1,0 +1,16 @@
+<div class="" *ngIf="localService.local$ | async as local">
+    <div class="flex flex-row gap-2 flex-nowrap w-full overflow-x-auto overflow-y-hidden fadein container-features pb-2 mb-2">
+        
+        <!-- Alerta cerrada -->
+        <!-- <app-alert-closed class="scroll-snap-center md:min-w-full"  [ngClass]="getAlertClosedClass(local)" *ngIf="shouldShowAlertClosed(local)"></app-alert-closed>
+         -->
+        <!-- Funcionalidad de envío -->
+        <app-feature-in-home  [feature]="feature[0]"  class="scroll-snap-center" [ngClass]="getShippingClass(local)" *ngIf="shouldShowShipping(local)"></app-feature-in-home>
+
+        <!-- Funcionalidad de tarjeta de crédito/debito -->
+        <app-feature-in-home  [feature]="feature[1]" class="scroll-snap-center" [ngClass]="getCreditDebitClass(local)" *ngIf="shouldShowCreditDebit(local)"></app-feature-in-home>
+
+        <app-feature-in-home  class="scroll-snap-center" [ngClass]="getTransferClass(local)" *ngIf="shouldShowTransfer(local)" [feature]="feature[2]"> </app-feature-in-home>
+        
+    </div>
+</div>

@@ -2,9 +2,9 @@
 
     <div class="mb-3">
         <h2 class="text-xl">
-            Metodos de pago
+            Métodos de pago
         </h2>
-        <p>Configura los metodos de pago que ofreces a tus clientes</p>
+        <p>Configura los métodos de pago que ofreces a tus clientes</p>
     </div>
 
     <form [formGroup]="form">
@@ -31,13 +31,17 @@
                 Transferencia
             </mat-checkbox>
 
+            <mat-checkbox class="" color="primary" formControlName="card">
+                Tarjeta Crédito/Débito
+            </mat-checkbox>
+
             <div *ngIf="form.get('transfer')?.value" class="flex wrap gap-3 mt-2">
 
                 <mat-form-field>
                     <mat-label>
                         CBU
                     </mat-label>
-                    <input matInput formControlName="cbu" placeholder="Ingresa tu CBU" type="number">
+                    <input matInput formControlName="cbu" placeholder="Ingresa tu CBU" type="text">
                 </mat-form-field>
 
                 <mat-form-field>

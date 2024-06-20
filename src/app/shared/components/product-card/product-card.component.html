@@ -2,33 +2,32 @@
   [routerLink]="[linkMode === 'name' ? product.name : product.category_name?.toLowerCase() + '/' + product.name]"
   [queryParams]="{ id: product.id }"
 >
-<div class="product-card border-round bg-white shadow-3" *ngIf="product.id; else loader">
+<div mat-ripple  class="product-card border-round bg-white " *ngIf="product.id; else loader">
 
-  <div class="flex flex-row gap-3">
+  <div  class="flex flex-row gap-3">
 
       <div class="product-image">
-        <img src="{{ product.image }}" class="border-round " alt="" />
+        <img appImageFallback src="{{ product.image }}" class="border-round " alt="" />
       </div>
 
-    <div class="product-info flex flex-column w-full h-full">
-      <span class="product-name mb-1 text-base">{{ product.name }}</span>
+    <div class="product-info min-w-0 flex flex-column w-full h-full">
+      <span class="product-name mb-1 text-base font-semibold">{{ product.name }}</span>
       <span *ngIf="!product.ingredients?.length" class="product-ingredients">
         {{product.description}}
       </span>
-
+      
       <span *ngIf="product.ingredients" class="product-ingredients">{{ product.ingredients.join(", ") }}</span>
  
-      <div class="mt-2 text-base product-price" *ngIf="product|lowestPrice; else singlePrice">
-        Desde
+      <div class="mt-1 text-base font-bold product-price" *ngIf="product|lowestPrice; else singlePrice">
         <span class="font-bold">
-          {{ (product|lowestPrice) | currency }}
+          Desde
+          {{ (product|lowestPrice) | currency:'$' }}
         </span>
-        <i class="pi"></i>
       </div>
 
       <ng-template #singlePrice>
-        <div class="container-price mt-2">
-          <span class="product-price font-bold text-base">{{ product.price | currency }}</span>
+        <div class="container-price mt-1">
+          <span class="product-price font-bold text-base">{{ product.price | currency:'$' }}</span>
         </div>
       </ng-template>
       

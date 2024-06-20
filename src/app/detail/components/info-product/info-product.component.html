@@ -1,46 +1,84 @@
-<div class="container-info">
+<div class="container-info relative ">
 
-    <div *ngIf="!modePreview" class="header-detail">
-
-        <a  (click)="redirectBack()" class="d-flex">
-            <i class="pi pi-chevron-left p-2 text-white border-round bg-bluegray-800 mr-3"></i>
-            <h1 class="title">{{product.category_name}}</h1>
+    <div *ngIf="!modePreview" [@fadeIn] class="w-full header-detail z-5 transition-duration-100 transition-all container"
+        [ngClass]="fixedControls ? ['bg-white shadow-3'] : ''">
+        
+        <a *ngIf="!fullGalery" (click)="redirectBack()"  class="d-flex cursor-pointer">
+            <i mat-ripple [ngClass]="[fixedControls ? 'text-base bg-gray-200' : 'text-white bg-black-alpha-90']"
+                class="pi pi-arrow-left p-2 border-round bg-blur mr-3" ></i>
+            <h1 class="title" *ngIf="fixedName">{{product.name}}</h1>
         </a>
 
-        
-
-        
     </div>
-     
-    <div class="data-product bg-white" #data [style.overflow]="modePreview ? 'unset' : 'scroll'">       
 
-        <div class="container-image">
-            <img src="{{product.image}}" alt="">
+    <div class="data-product bg-white">
+
+            <div [ngClass]="fullGalery ? 'h-full z-4 fixed top-0 left-0 bg-black-alpha-70 bg-blur' : '' " class="swiper container-image" #galery>
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide" *ngFor="let i of product.galery">
+                        <div class="swiper-zoom-container">
+                            <img appImageFallback src="{{i}}" class="h-full object-contain " alt="">
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="index-galery d-flex justify-content-center gap-1" 
+                    *ngIf="product.galery?.length">
+                    <span>
+                        {{indexGalery}}
+                    </span>
+                    /
+                    <span>
+                        {{product.galery!.length}}
+                    </span>
+                </div>
+
+                <div *ngIf="fullGalery" class="btn-close-galery ">
+                    <button (click)="closeFullGalery()" mat-ripple class="h-2rem w-2rem d-flex justify-content-center border-round bg-gray-200">
+                        <i class="pi pi-times"></i>
+                    </button>
+                </div>
+    
+                <div *ngIf="!fullGalery" class="btn-zoom-image ">
+                    <button (click)="viewFullGalery()"  mat-ripple class="h-2rem w-2rem d-flex justify-content-center border-round bg-gray-200">
+                        <i class="pi pi-search-plus"></i>
+                    </button>
+                </div>
+    
+                <div class="swiper-pagination"></div>
         </div>
-        
-        <div class="container-text">
-                <button  [class.clicked]="favClicked" class="fav-btn" (click)="toogleFav()">
-                    <i [ngClass]="favClicked?'pi-heart-fill':'pi-heart'" class="pi icon-fav"></i>
-                </button>
 
-                <h2 class="product-name">{{product.name}}</h2>
-                <h3 class="product-price">{{product.price |currency}}</h3>
+        <div class="container-text z-2" #data>
+            <div class="padding-details bg-white mb-1 shadow-1">
+                <div class="d-flex justify-content-between align-items-start">
+                    
+                    <h2 class="product-name pr-4 font-semibold text-lg">{{product.name}}</h2>
+                    
+                    <button [class.clicked]="favClicked" class="flex fav-btn" (click)="toogleFav()">
+                        <i [ngClass]="favClicked?'pi-heart-fill':'pi-heart'" class="pi icon-fav"></i>
+                    </button>
+                </div>
+                <h3 class="product-price font-semibold text-2xl">{{getRangePrice(product)}}</h3>
                 <p class="product-description">{{product.description}}</p>
-         
+
                 <div class="container-ingredients" *ngIf="product.ingredients">
                     <ul class="list-ingredients">
-                        <li class="chip ingredient" [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" *ngFor="let ingredient of product.ingredients">
+                        <li class="chip text-nowrap ingredient text-white" [style.background]="theme.get('background')"
+                            *ngFor="let ingredient of product.ingredients">
                             {{ingredient}}
                         </li>
                     </ul>
                 </div>
-        
-                <div #optionsDisplay>
-                    <app-add-product-cart  *ngIf="product" [modePreview]="modePreview" [product]="product">
-                          
-                    </app-add-product-cart>
-                </div>
-         
+            </div>
+
+            <div #optionsDisplay>
+                <app-add-product-cart *ngIf="product" [modePreview]="modePreview" [product]="product">
+
+                </app-add-product-cart>
+            </div>
+
         </div>
 
     </div>

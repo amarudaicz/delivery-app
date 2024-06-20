@@ -10,6 +10,10 @@ import { MainSchedulesComponent } from '../admin/components/main-schedules/main-
 import { LinksSocialComponent } from '../admin/components/links-social/links-social.component';
 import { SubscriptionStateComponent } from '../admin/components/subscription-state/subscription-state.component';
 import { DocumentationComponent } from '../admin/components/documentation/documentation.component';
+import { ShippingConfigComponent } from '../admin/components/shipping-config/shipping-config.component';
+import { PaymentsMethodsConfigComponent } from '../admin/components/payments-methods-config/payments-methods-config.component';
+import { AccountComponent } from '../admin/components/account/account.component';
+import { MainOrdersComponent } from '../admin/orders/presentation/main-orders/main-orders.component';
 
 const routes: Routes = [
   
@@ -28,9 +32,18 @@ const routes: Routes = [
             path:'products',
             component:MainProductsComponent
           },
+         
           {
             path:'config',
             component:MainConfigComponent
+          },
+          {
+            path:'shipping',
+            component:ShippingConfigComponent
+          },
+          {
+            path:'pay-methods',
+            component:PaymentsMethodsConfigComponent
           },
           {
             path:'schedules',
@@ -45,8 +58,16 @@ const routes: Routes = [
             component:SubscriptionStateComponent
           },
           {
+            path:'account',
+            component:AccountComponent
+          },
+          {
             path:'docs',
             component:DocumentationComponent
+          },
+          {
+            path:'orders',
+            component:MainOrdersComponent
           },
           
         ]

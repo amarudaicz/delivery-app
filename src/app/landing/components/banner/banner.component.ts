@@ -25,6 +25,7 @@ export class BannerComponent implements OnInit{
   }
   
   ngOnInit(): void{
+    document.body.style.background = '#fff'
     
 
   }
@@ -35,6 +36,7 @@ export class BannerComponent implements OnInit{
     if (this.banner.action.finish) {
       this.emitBanner.emit(0)
       localStorage.setItem('landing-banner', 'true')
+      document.body.style.background = ''
       return
     }
 

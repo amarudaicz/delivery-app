@@ -1,17 +1,62 @@
-<div class="container-banner border-round-2xl shadow-3">
+<section class="container relative" *ngIf="fixedProducts?.length">
+  <div class="d-flex justify-content-between w-full mb-2">
+    <h2 class="title mb-2">Destacados</h2>
 
-    <h5 [style.background]="theme.get('background')" [style.color]="theme.get('colorTextSecondary')" class="title-promotions chip">
-        Promociones
-    </h5>
-    
-    <a [routerLink]="['promotion']">
-        <div class="container-image d-flex">
-            <img src="https://i.pinimg.com/564x/6b/98/c3/6b98c3ece238e8a5b25cb33d38ee0001.jpg" class=" border-round-2xl" alt="promotions">
+    <div class="d-flex gap-2">
+        <button mat-ripple (click)="scrollLeft()" class="flex p-2 button-slide">
+            <i class="pi pi-arrow-left text-900 text-sm"></i>
+        </button>
+        
+        <button mat-ripple (click)="scrollRight()" class="flex p-2 button-slide">
+            <i class="pi pi-arrow-right text-900 text-sm"></i>
+        </button>
+
+    </div>
+
+</div>
+
+  <div (click)="stopInterval = true" (mouseenter)="stopInterval=true" (mouseleave)="stopInterval=false"
+    class="container-products-fixed flex flex-row gap-2 w-full pb-3 " #containerProducts>
+
+    <a [routerLink]="p.category_name.toLowerCase()  + '/' + p.name" [queryParams]="{id:p.id}"
+      class="card-product-fixed px-1 " *ngFor="let p of fixedProducts">
+      <div mat-ripple class=" border-round-xl  flex w-full h-full p-2 flex-column bg-white shadow-3">
+
+
+        <div class="w-full">
+          <img loading="lazy" appImageFallback class="w-full image-product-fixed border-round-sm bg-gray-200" [src]="p.image" [alt]="p.name">
         </div>
 
+        <h5 class="font-bold mb-1">
+          {{p.name}}
+        </h5>
+
+        
+        <span *ngIf="!p.ingredients?.length" class="product-ingredients">
+          {{p.description}}
+        </span>
+        
+        <span *ngIf="p.ingredients?.length" class="ingredients">{{p.ingredients.join(', ')}}</span>
+
+
+        <div class="my-1 text-base font-bold product-price" *ngIf="p|lowestPrice; else singlePrice">
+          Desde
+          <span class="font-bold">
+            {{ (p|lowestPrice) | currency }}
+          </span>
+        </div>
+        
+        <ng-template #singlePrice>
+          <div class="container-price my-1">
+            <span class="product-price font-bold text-base">{{ p.price | currency }}</span>
+          </div>
+        </ng-template>
+        
+      </div>
     </a>
 
 
+  </div>
 
 
-</div>
+</section>

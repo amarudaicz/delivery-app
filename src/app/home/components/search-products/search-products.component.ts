@@ -1,8 +1,10 @@
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Product } from 'src/app/interfaces/product-interface';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 import { LocalDataService } from 'src/app/services/localData/local-data.service';
 import { ThemesService } from 'src/app/services/themes/themes.service';
 
@@ -20,7 +22,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
     ])
   ])]
 })
-export class SearchProductsComponent {
+export class SearchProductsComponent implements OnDestroy {
   fixedSearch: boolean = false;
   allProducts?: Product[];
   groupedProducts?: { name: string; products: Product[] }[];
@@ -36,13 +38,15 @@ export class SearchProductsComponent {
 
   allTags:any[] = []
   visibleFilters:boolean = false
-
+  private previousUrl: string = '';
 
 
   constructor(
     private fb:FormBuilder,
     public theme: ThemesService,
-    private localService: LocalDataService
+    private localService: LocalDataService,
+    private router:Router,
+    private layout:LayoutStateService
   ) {
     this.formSearch = this.fb.group({
       query:[null],
@@ -51,8 +55,14 @@ export class SearchProductsComponent {
       pulse:[null]
     })
     this.getAll();
-    console.log(this.formSearch);
     this.subscriptionForm()
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.previousUrl = this.router.url;
+      }
+    });
+    
   }
 
   getAll() {
@@ -65,7 +75,6 @@ export class SearchProductsComponent {
         p.ingredients.forEach(i=>{
           if (this.allTags.includes(i))return 
           this.allTags.push(i)
-          console.log(this.allTags);
         })
       })
 
@@ -75,17 +84,9 @@ export class SearchProductsComponent {
   subscriptionForm(){
     this.formSearch.valueChanges.subscribe(value=>{
       let { minPrice, maxPrice, query } = value;
-      console.log(value);
-      
-      // if (!query && this.allTags.length !== 0 && query.length <= 2 && !this.fixedSearch){
-      //   this.groupedProducts = this.groupByCategories(this.allProducts!);
-      //   return;
-      // } 
 
       this.fixedSearch = true;
       this.filtredProducts = this.filterByQuery(query);
-      console.log(this.filtredProducts);
-      
       
       if (minPrice || maxPrice) {
         this.filtredProducts = this.filterByPrice(this.filtredProducts!)
@@ -95,10 +96,8 @@ export class SearchProductsComponent {
         this.filtredProducts = this.filterByTags(this.filtredProducts!)
       }
         
-      console.log(this.filtredProducts);
       
       this.groupedProducts = this.groupByCategories(this.filtredProducts!);
-      console.log(this.groupedProducts);
       
     })
   }
@@ -140,7 +139,6 @@ export class SearchProductsComponent {
 
     let { minPrice, maxPrice } = this.formSearch.value;
     
-    console.log(minPrice, maxPrice);
     if (minPrice && maxPrice) {
       return products.filter(p => p.price >= minPrice && p.price <= maxPrice);
     }
@@ -158,12 +156,22 @@ export class SearchProductsComponent {
   toogleFilters(){
 
     if (!this.fixedSearch) {
+      this.layout.blockBody()
       this.fixedSearch = true
-    }      
-
-
+      window.history.pushState({modal:true}, 'modal');
+    }
+    
     this.activeFilters = true
     this.visibleFilters = !this.visibleFilters
+    this.clearTags()
+  }
+  
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: Event) {
+    // Aquí puedes cerrar el modal cuando se detecta un cambio en el historial (retroceso)
+    this.fixedSearch = false
+    this.activeFilters = false
+    this.visibleFilters = false
   }
 
   closeSearch(){
@@ -172,6 +180,7 @@ export class SearchProductsComponent {
     this.activeFilters = false
     this.visibleFilters = false
     this.groupedProducts = undefined
+    this.layout.unblockBody()
     this.fixedSearch = false
     this.groupedProducts = this.groupByCategories(this.allProducts!)
 
@@ -208,5 +217,9 @@ export class SearchProductsComponent {
   clearTags(){
     this.filters.tags = []
     this.formSearch.get('pulse')?.reset(true)
+  }
+
+  ngOnDestroy(): void {
+    this.layout.unblockBody()
   }
 }

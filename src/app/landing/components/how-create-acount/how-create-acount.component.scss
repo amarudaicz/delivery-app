@@ -1,0 +1,42 @@
+@use '../../../../mixin.scss' as m;
+
+
+.card-step{
+    height: min-content;
+    width: 290px;
+
+    @include m.tablet{
+        height: 400px;
+    }
+
+} 
+
+.container-cards-steps{
+
+}
+
+.line-steps{
+    transform: rotate(90deg);
+
+    min-width: 577px;
+    
+    @include m.tablet{
+        transform: rotate(0deg);
+    
+    }
+}
+
+.icon-card{
+    margin-top: -50px;
+    animation: float 4s ease infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+

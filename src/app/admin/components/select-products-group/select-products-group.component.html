@@ -3,7 +3,8 @@
         <h1 class="title mb-1">Actualizar Precios del Grupo</h1>
         <p>
             Selecciona los productos en los que quieres aplicar los cambios en grupo de opciones. <br>
-            Recuerda que tambien modificaras el precio de la opcion en todos los productos selecionados, puedes editar la opcion de un producto en especifico modificando el producto indivudialmente
+            Recuerda que también modificaras el precio de la opción (si tuviese precio) <br> 
+            Puedes editar las opciones de un producto en especifico editando el producto individualmente
         </p>
 
     </div>
@@ -32,7 +33,7 @@
                             <li class="py-1 " *ngFor="let option of product.variations[0].options">
                                 <span
                                     [style]="{'text-decoration': option.active ? '' : 'line-through', color: option.active  ? 'green' : 'red' }">{{option.nameOption}}:
-                                    {{option.price | currency}}</span>
+                                    {{option.price ? (option.price | currency) : ''}}</span>
                             </li>
                         </ul>
 

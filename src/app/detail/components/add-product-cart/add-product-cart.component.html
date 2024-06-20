@@ -2,16 +2,15 @@
   <div class="container-form">
     <form [formGroup]="form" (submit)="modePreview ? null : saveOrder()">
 
-     <div class="container-data-product">
-      <div *ngIf="product.variations" class="container-options">
+     <div class="container-data-product bg-white shadow-1 ">
+      <div *ngIf="product.variations" class="flex flex-column">
         <div *ngFor="let optionGroup of product?.variations">
-
           <div
             *ngIf="!optionGroup.multiple; else checkBox"
-            class="container-radio container-input"
+            class="container-radio container-input padding-details "
           >
             <div>
-              <h4 class="text-base">{{ optionGroup.nameVariation }}</h4>
+              <h4 class="text-base mb-2">{{ optionGroup.nameVariation }}</h4>
             </div>
             <mat-radio-group [formControlName]="optionGroup.nameVariation"
             class="radio-group">
@@ -34,31 +33,30 @@
               </div>
 
               <!-- ALERTT////// -->
-              <span class="alert-form" *ngIf="this.form.get(optionGroup.nameVariation)?.invalid">Elije una opcion <i class="pi pi-info-circle"></i></span>
+              <span class="alert-form" *ngIf="this.form.get(optionGroup.nameVariation)?.invalid">Elije una opción <i class="pi pi-info-circle"></i></span>
               <span class="mt-2" (click)="clearOption(optionGroup.nameVariation)"  *ngIf="(!optionGroup.min || !optionGroup.required) && optionGroup.typePrice !== 1 && form.get(optionGroup.nameVariation)?.value">Deshacer</span>
 
             </mat-radio-group>
           </div>
 
-          <hr color="#b9b9b9" />
-
 
           <ng-template #checkBox>
-            
             <div class="container-checkbox container-input" [formArrayName]="optionGroup.nameVariation">
               <div class="title-option">
                 <div>
-                  <h4>{{ optionGroup.nameVariation }}</h4>
+                  <h4 class="b-4">{{ optionGroup.nameVariation }}</h4>
                   <h5 *ngIf="optionGroup.max && !optionGroup.min">Selecciona hasta {{optionGroup.max}} opciones.</h5>
-                  <h5 *ngIf="optionGroup.min && !optionGroup.max">Selecciona {{optionGroup.min}} como minimo.</h5>
+                  <h5 *ngIf="optionGroup.min && !optionGroup.max">Selecciona {{optionGroup.min}} como mínimo.</h5>
                   <h5 *ngIf="optionGroup.min && optionGroup.max">Selecciona al menos {{optionGroup.min}} y hasta {{optionGroup.max}} opciones.</h5>
                   
                   <h5 *ngIf="!optionGroup.min && !optionGroup.max">Selecciona las opciones que quieras.</h5>
                 </div>
 
                 <span
-                  class="chip bg-bluegray-200 type-option"
-                  >{{optionGroup.min ? 'Requerido' : 'Opcional'}}</span
+                *ngIf="optionGroup.required || optionGroup.min > 0"
+                [ngClass]="[(countOptions[optionGroup.nameVariation] ? 'bg-green-400' : 'bg-red-800'), !countOptions[optionGroup.nameVariation] ? 'text-white' : ''  ]"
+                  class="font-semibold p-1 border-round type-option uppercase"
+                  >{{!countOptions[optionGroup.nameVariation] ? (optionGroup.min ? 'Requerido' : 'Opcional') : 'Completado'}}</span
                 >
               </div>
 
@@ -68,7 +66,6 @@
               >
                 <mat-checkbox 
                 *ngIf="option.active"
-
                   (change)="saveOptions(option, optionGroup)"
                   (change)="handleCheckboxChange(optionGroup)"
                   color="primary"
@@ -81,79 +78,70 @@
                   <b>{{ option.price | currency }}</b></span
                 >
               </div>
-
-              <span class="alert-form" *ngIf="this.form.get(optionGroup.nameVariation)?.touched && !countOptions[optionGroup.nameVariation] && optionGroup.min">Debes elejir de {{optionGroup.min}} a {{optionGroup.max}} opciones <i class="pi pi-info-circle"></i></span>
-
+ 
             </div>
-
           </ng-template>
+
+          <div class="border-bottom-1 border-400 my-1 mx-2" ></div>
         </div>
       </div>
 
-      <div class="especifications">
-        <h4>Observaciones</h4>
+      <div class="especifications pb-3">
+        <h4 class="mb-2">Aclaraciones</h4>
         <div class="container-textarea">
           <textarea
             formControlName="especifications"
             id="especifications"
-            placeholder="Si tienes una aclaracion sobre tu pedido escribela aqui. Ej:Sin sal y sin mayonesa "
+            placeholder="Si quieres, ingresa una aclaración para que la tengan en cuenta en tu pedido "
           ></textarea>
-        </div>
-      </div>
+        </div>      </div>
      </div>
 
      
   <!-- BOTONES AGREGAR///////////////////////////// -->
-  <div class="quantity" [style.background]="theme.get('backgroundSec')">
-    <div class="container-buttons" >
+  <div class="quantity bg-white container" *ngIf="transitionRouteEnd" [@fadeIn]>
 
-      <div class="container-quantity">
-        <i matRipple [matRippleColor]="'#00000012'" (click)="setQuantity(-1)" class="pi pi-minus"></i>
+    <div class="d-flex mb-2 justify-content-between w-full">
+      <span class="text-xl font-bold">Tu pedido</span>
+      <span class="text-xl font-bold">{{subtotal * form.get('quantity')?.value|currency}}</span>
+    </div>
+
+
+    <div class="container-buttons gap-2" >
+
+      <div class="px-2 gap-2 container-quantity border-1 border-round">
+        <button type="button"  class="flex" [disabled]="quantity <= 1">
+          <i matRipple [matRippleColor]="'#00000012'" (click)="setQuantity(-1)" class="pi pi-minus font-semibold border-round p-2"></i>
+        </button>
 
         <input
+          class="border-none"
           formControlName="quantity"
           type="number"
           min="1"
+          readonly
           [value]="quantity"
         />
 
-        <i matRipple [matRippleColor]="'#00000012'" (click)="setQuantity(1)" class="pi pi-plus"></i>
+        <button type="button"  class="flex">
+          <i matRipple [matRippleColor]="'#00000012'" (click)="setQuantity(1)" class="pi pi-plus font-semibold  border-round p-2"></i>
+        </button>
       </div>
-
-      <div class="container-button-add">
-
+   
+      <div class="flex-1  container-quantity">
         <button
+        type="submit"
+        class="w-full h-full button-add text-white d-flex gap-2 w-full justify-content-center"
           matRipple [matRippleColor]="'#00000012'"
           [style.background]="theme.get('background')"
-          [style.color]="theme.get('colorTextSecondary')"
           [class.btn-invalid]="this.form.invalid"
-        >
-          Agregar 
-          <span *ngIf="form.valid">
-            {{subtotal ? (subtotal*form.get('quantity')?.value|currency) : ''}}
-          </span>
+        > 
+          <i class="pi pi-shopping-bag"></i>
+          Agregar al carrito
         </button>
-    
-        <div
-          [@addItemCart]
-          [style.color]="theme.currentTheme.colorTextSecondary"
-          [style.background]="theme.currentTheme.background"
-          class="anime-cart"
-          *ngIf="stateButton"
-        >
-          1
-        </div>
-        
       </div>
       
     </div>
-
-    <a *ngIf="!modePreview" [routerLink]="['/cart']">
-      <span class="cart-flotant" [@fadeIn] *ngIf="currentCart.length !== 0" [style.background]="theme.get('backgroundSec')"> 
-        <i class="pi pi-shopping-cart"></i> 
-        <div *ngIf="currentCart !== 0" [style.background]="theme.get('background')" [style.color]="theme.currentTheme.colorTextSecondary" class="cart-counter">{{ currentCart.length }}</div>
-      </span>
-    </a>
 
   </div>
 

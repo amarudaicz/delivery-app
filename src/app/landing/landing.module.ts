@@ -12,6 +12,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AlertLocalClosedComponent } from './components/alert-local-closed/alert-local-closed.component';
 import { LandingRoutingModule } from './landing-routing.module';
 import { LayoutLandingComponent } from './components/layout-landing/layout-landing.component';
+import { BannerInitComponent } from './components/banner-init/banner-init.component';
+import { MainInfoAppComponent } from './components/main-info-app/main-info-app.component';
+import { HowToBuyComponent } from './components/how-to-buy/how-to-buy.component';
+import { PricingComponent } from './components/pricing/pricing.component';
+import { SharedModule } from '../shared/shared.module';
+import { PoliciesModule } from '../policies/policies.module';
+import { FooterLandingComponent } from './components/footer-landing/footer-landing.component';
+import { HowCreateAcountComponent } from './components/how-create-acount/how-create-acount.component';
+import { HistoryModule } from '../history-orders/history.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 
@@ -23,7 +33,13 @@ import { LayoutLandingComponent } from './components/layout-landing/layout-landi
     HeaderLandingComponent,
     CardLocalComponent,
     AlertLocalClosedComponent,
-    LayoutLandingComponent
+    LayoutLandingComponent,
+    BannerInitComponent, 
+    MainInfoAppComponent,
+    HowToBuyComponent,
+    PricingComponent,
+    FooterLandingComponent,
+    HowCreateAcountComponent,
   ],
   imports: [
     RouterModule,
@@ -31,7 +47,11 @@ import { LayoutLandingComponent } from './components/layout-landing/layout-landi
     LandingRoutingModule,
     SkeletonModule,
     MatRippleModule,
-    MatDialogModule
+    MatDialogModule,
+    SharedModule,
+    PoliciesModule,
+    HistoryModule,
+    DirectivesModule
   ] 
 })
 export class LandingModule { }

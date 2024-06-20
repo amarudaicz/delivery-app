@@ -1,0 +1,167 @@
+.cart {
+    width: 100%;
+    // row-gap: 10px;
+    display: grid;
+    grid-template-rows: auto 1fr min-content;
+    min-height: 100%;
+    max-height: 100%;
+  }
+  
+  
+  .pad-cart{
+    padding-bottom: 8rem !important;
+  }
+  .cart-item {
+    position: relative;
+    display: flex;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #c9c9c9;
+  }
+  
+  .cart-item {
+  }
+  
+  .title-item {
+
+  }
+  
+  .title-cart {
+    width: 100%;
+  }
+  
+  .product-list {
+    width: 100%;
+  }
+  
+  .subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+      &::before{
+        position: absolute;
+        content: "";
+        width: 5px;
+        height: 100%;
+        background: rgb(51, 191, 51);
+        border-radius: 5px;
+        top: 0;
+        left: 0;
+      }
+  }
+  
+  
+  .remove-item {
+    border: none;
+    background: none;
+    position: absolute;
+    top: -3px;
+    right: 6px;
+    font-size: 17px;
+    padding: 3px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    
+  }
+  
+  .button-clear {
+    color: #000000;
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 10px 30px;
+    border-radius: 5px;
+  
+  }
+  
+  .button-checkout {
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+  }
+  
+  .container-image {
+    display: grid;
+    place-items: center;
+    position: sticky;
+    top: 0;
+  
+    img {
+      width: 130px;
+      height: 130px;
+      border-radius: 10px;
+    }
+  }
+  
+  .cart-item-details {
+    flex-grow: 1;
+    margin: 0 10px;
+    
+    .user-options {
+    }
+  
+    .detail-item {
+      line-height: 14px;
+    }
+  }
+  
+
+  
+  .empty-cart {
+    padding: 15px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    i {
+      font-size: 90px;
+    }
+  
+  }
+  
+  .center-controls{
+    left: 50%;
+    transform:translate(-50%) ;
+  }
+
+  
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.5rem 1rem;
+  
+  border-radius: 0.5rem 0.5rem 0 0;
+  font-size: 1rem;
+}
+
+/* Estilos para el ícono */
+.custom-select::after {
+  content: '';
+  position: absolute;
+  top: 550%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Estilos para el contenedor del select */
+.select-container {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-fill{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+
+}

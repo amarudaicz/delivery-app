@@ -2,36 +2,38 @@
   [@fadeIn]
   class="container"
 >
-  <div class="content">
+  <div class="content px-2">
     <div class="user  ">
-      <h2
-        class="chip title-user w-full"
-        [style.background]="theme.get('backgroundSec')"
-        [style.color]="theme.get('colorTextSecondary')"
-      >
-        Datos de usuario
-      </h2>
+      <div class="">
+        <h2
+          class="chip title-user w-full text-white"
+          [style.background]="theme.get('backgroundSec')"
+        >
+          Datos de usuario
+        </h2>
+
+      </div>
 
       <form [formGroup]="form" (ngSubmit)="saveData()" class="checkout-form">
-        <mat-form-field appearance="outline" class="input-group" color="primary">
+        <mat-form-field appearance="outline" class="w-full" color="primary">
           <mat-label>Nombre Completo</mat-label>
           <input formControlName="name" type="text" matInput />
           <mat-error>Este campo es requerido</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="input-group" color="primary">
+        <mat-form-field appearance="outline" class="w-full" color="primary">
           <mat-label>Telefono</mat-label>
           <input formControlName="phone" type="number" matInput />
           <mat-error>Este campo es requerido</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="input-group" color="primary">
+        <mat-form-field appearance="outline" class="w-full" color="primary">
           <mat-label>Direccion</mat-label>
           <input formControlName="direction" type="text" matInput />
           <mat-error>Este campo es requerido</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="input-group">
+        <mat-form-field appearance="outline" class="w-full">
           <mat-label>Referencia de la casa (opcional)</mat-label>
           <textarea
             formControlName="reference"
@@ -47,9 +49,8 @@
         </p>
 
         <button
-          class="button-save"
+          class="button-save text-white"
           [style.background]="theme.get('background')"
-          [style.color]="theme.get('colorTextSecondary')"
           type="submit"
         >
           Guardar

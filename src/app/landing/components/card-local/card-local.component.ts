@@ -45,7 +45,7 @@ export class CardLocalComponent implements OnInit {
       this.previewCategory.category_id = undefined
       this.previewCategory.productsByCategory.next([])
       this.router.navigate([this.local?.name_url])
-      
+      this.localData.initDataLocal(this.local.name_url)
     }, 100);
 
   }

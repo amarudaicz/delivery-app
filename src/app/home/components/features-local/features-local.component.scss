@@ -1,0 +1,20 @@
+@use '../../../../mixin.scss' as m;
+
+.container-features{
+    &::-webkit-scrollbar-thumb{
+        border-radius: 16px;
+    }
+
+    scroll-snap-type: x mandatory;
+}
+
+.feature-90{
+    min-width: 90%;
+    width: 100%;
+
+    @include m.tablet{
+        min-width: unset;
+    }
+}
+
+

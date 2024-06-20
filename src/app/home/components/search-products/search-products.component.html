@@ -1,92 +1,106 @@
-<div [ngClass]="fixedSearch ? ['fixed-search', 'overflow-auto' ] : 'pt-3' ">
+<div [ngClass]="fixedSearch ? ['fixed-search', 'overflow-auto' ] : 'mt-4' ">
+ 
+    <div class="container">
 
+        <div class="mb-2" *ngIf="!fixedSearch">
+            <h3 class="text-xl">Hola. ¿Qué quieres pedir hoy?</h3>
+        </div>
 
-    <div class="w-full input-search "
-        [ngClass]="fixedSearch ? ['fixed-input', 'p-3','relative bg-gray-400 top-0 left-0'  ] : 'sticky'">
-
-        <form [formGroup]="formSearch">
-            <div class="flex flex-column">
-                <div class="d-flex gap-2 w-full">
-                    <div class="relative flex-1 p-3 ">
-                        <i class="pi pi-search icon-search text-800 relative z-1"></i>
-
-                        <input formControlName="query" [class.bg-gray-200]="fixedSearch"
-                            class="w-full text-base absolute w-full h-full top-0 left-0 pl-6 pr-2 border-none border-round-xl font-bold"
-                            placeholder="Buscar productos" type="text">
-                    </div>
-
-                    <button type="button" mat-ripple class="border-1 border-transparent flex p-3 border-round-xl" (click)="toogleFilters()"
-                        [style.background]="theme.get('backgroundSec')">
-                        <i class="pi pi-sliders-v text-white"></i>
-                    </button>
-
-                    <button  type="button" *ngIf="fixedSearch" class="border-1 border-transparent flex p-3 border-round-xl bg-gray-200"
-                        (click)="closeSearch()">
-                        <i class="pi pi-times text-800"></i>
-                    </button>
-
-                </div>
-
-                <div class="w-full" *ngIf="visibleFilters" [@fadeIn]>
-                    <div class="pt-2">
-                        <div class="mb-2">
-                            <span class="text-base font-semibold">Precio</span>
-                            <div class="d-flex gap-2 mt-1">
-                                <input placeholder="Máximo" formControlName="maxPrice"
-                                    class="w-full text-base md:max-w-8rem border-none py-3 p-2 bg-gray-200 border-round-xl" type="number">
-                                <input placeholder="Mínimo" formControlName="minPrice"
-                                class="w-full text-sm  md:max-w-8rem  border-none py-3 p-2 bg-gray-200 border-round-xl" type="number">
-                                
-                                <button *ngIf="formSearch.get('minPrice')?.value||formSearch.get('maxPrice')?.value" (click)="clearFilterPrices()" class="w-fit text-sm font-bold text-white md:max-w-8rem border-none py-3 p-2 border-round-xl" [style.background]="theme.get('backgroundSec')">Limpiar</button>
-
-                            </div>
-                        </div>
-                    
-                        <div class="pb-3">
-                            <span class="text-base font-semibold">Filtros</span>
-                            <div class="flex wrap gap-1 overflow-auto mt-1">
-                                <button (click)="toogleTag(tag)" [class.bg-green-500]="filters.tags.includes(tag)" [class.fadeinleft]="filters.tags.includes(tag)" class="p-2 border-round text-white flex-1 text-nowrap  text-overflow-elipsis max-w-10rem" [style.background]="theme.get('background')" *ngFor="let tag of allTags ">
-                                    {{tag}}
-                                </button>
-                            </div>
-
-                            <button *ngIf="filters.tags.length" (click)="clearTags()" class="w-fit text-sm font-bold text-white md:max-w-8rem border-none  mt-2 p-2 border-round-xl" [style.background]="theme.get('backgroundSec')">Limpiar</button>
-
-                        </div>
-                    </div>
-                </div>
-                    
+            <div class="w-full input-search "
+                [ngClass]="fixedSearch ? ['fixed-input', 'p-3','relative top-0 left-0 mt-1'  ] : 'sticky'">
         
-                     
-                    
-                    
-
+                <form [formGroup]="formSearch">
+                    <div class="flex flex-column">
+                        <div class="d-flex gap-2 w-full"> 
+                            <div class="relative flex-1 p-3 ">
+                                <i class="pi pi-search icon-search text-800 relative z-1"></i>
+        
+                                <input formControlName="query" [class.bg-white]="fixedSearch"
+                                    class="w-full text-base absolute w-full h-full top-0 left-0 pl-6 pr-2 border-1 border-500 border-round-xl font-bold"
+                                    placeholder="Buscar productos" type="text">
+                            </div>
+        
+                            <button type="button" mat-ripple class="border-1 border-500 d-flex justify-content-center input-filters border-round-xl" (click)="toogleFilters()"
+                                [style.background]="theme.get('backgroundSec')"
+                                [class.bg-white]="!visibleFilters && fixedSearch"
+                                >
+                                <i class="pi pi-sliders-v " [ngClass]="!visibleFilters && fixedSearch ? 'text-800 ' : 'text-white'" ></i>
+                            </button>
+        
+                            <button type="button" *ngIf="fixedSearch" class="border-1 border-500 d-flex justify-content-center input-filters border-round-xl bg-white"
+                                (click)="closeSearch()">
+                                 <i class="pi pi-times text-800"></i>
+                            </button>
+        
+                        </div>
+        
+                        <div class="w-full" *ngIf="visibleFilters">
+                            <div class="pt-2">
+                                <div class="mb-2">
+                                    <span class="text-base font-semibold">Precio</span>
+                                    <div class="d-flex gap-2 mt-1">
+                                        <input placeholder="Máximo" formControlName="maxPrice"
+                                            class="w-full md:max-w-8rem border-1 py-3 p-2 bg-white border-500 border-round-xl" type="number">
+                                        <input placeholder="Mínimo" formControlName="minPrice"
+                                        class="w-full text-sm border-500  md:max-w-8rem  border-1 py-3 p-2 bg-white border-round-xl" type="number">
+                                        
+                                        <button *ngIf="formSearch.get('minPrice')?.value||formSearch.get('maxPrice')?.value" (click)="clearFilterPrices()" class="w-fit text-sm font-bold text-white md:max-w-8rem border-none py-3 p-2 border-round-xl" [style.background]="theme.get('backgroundSec')">Limpiar</button>
+        
+                                    </div>
+                                </div>
+                            
+                                <div class="" *ngIf="allTags.length">
+                                    <span class="text-base font-semibold">Filtros</span>
+                                    <div class="flex gap-1 overflow-auto wrap mt-1 pb-3 max-h-11rem">
+                                        <button mat-ripple (click)="toogleTag(tag)" [style.background]="filters.tags.includes(tag) ? theme.get('background'):''"
+                                        [ngClass]="filters.tags.includes(tag) ? ['text-white between'] :'justify-content-center '"
+                                        [class.fadeinleft]="filters.tags.includes(tag)" 
+                                        class="d-flex  gap-1 px-3 py-2 border-round border-1 text-nowrap overflow-hidden flex-1 min-w-max max-w-11rem text-ellipsis" 
+                                        *ngFor="let tag of allTags ">
+                                            {{tag}}
+                                            <i *ngIf="filters.tags.includes(tag)" class="pi pi-times-circle"></i>
+                                        </button>
+                                    </div>
+        
+                                    <button *ngIf="filters.tags.length" (click)="clearTags()" class="w-fit text-sm font-bold text-white md:max-w-8rem border-none  mt-2 p-2 border-round-xl" [style.background]="theme.get('backgroundSec')">Limpiar</button>
+        
+                                </div>
+                            </div>
+                        </div>
+                            
+                
+                             
+                            
+                            
+        
+                    </div>
+                </form>
+        
+        
+        
+        
             </div>
-        </form>
-
-
-
-
-    </div>
-
-
-    <div class="p-3  flex flex-column w-full gap-2" *ngIf="fixedSearch">
-
-        <div class="text-center w-full pt-4" *ngIf="!groupedProducts?.length">
-            <h4 class="text-xl">No se encontraron resultados...</h4>
-
-            <button class="text-semibold underline mt-3" (click)="closeSearch()">
-                Volver atras
-            </button>
-        </div>
-
-        <div class="" *ngFor="let category of groupedProducts">
-            <h3 class="mb-2 mt-1 text-semibold text-2xl">{{category.name}}</h3>
-
-            <div class="flex flex-column w-full gap-2">
-                <app-product-card *ngFor="let product of category.products" [product]="product"></app-product-card>
+        
+        
+            <div class="p-3 container flex flex-column w-full gap-2" *ngIf="fixedSearch">
+        
+                <div class="text-center w-full pt-4" *ngIf="!groupedProducts?.length">
+                    <h4 class="text-xl">No se encontraron resultados...</h4>
+        
+                    <button class="text-semibold underline mt-3" (click)="closeSearch()">
+                        Volver atras
+                    </button>
+                </div>
+        
+                <div class="" *ngFor="let category of groupedProducts">
+                    <h3 class="mb-2 mt-1 text-semibold text-2xl">{{category.name}}</h3>
+        
+                    <div class="flex flex-column w-full gap-2">
+                        <app-product-card *ngFor="let product of category.products" [product]="product"></app-product-card>
+                    </div>
+                </div>
+        
             </div>
-        </div>
 
     </div>
 

@@ -33,7 +33,7 @@ export class DocumentationComponent {
   mock_categories = [
     {
       name: "Pizzas",
-      image: "https://res.cloudinary.com/df9dg3owy/image/upload/v1696283730/puntopizza/Pizzas.jpg",
+      image: "https://res.cloudinary.com/df9dg3owy/image/upload/v1696283685/puntopizza/Calabressa.jpg",
   },
   {
       name: "Hamburguesas",

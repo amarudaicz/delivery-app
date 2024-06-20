@@ -44,7 +44,7 @@ import { AdminService } from '../services/admin/admin.service';
         InputSwitchModule,
         RippleModule,
         RouterModule,
-        AppConfigModule,
+        AppConfigModule, 
         RoutesAdmingModule,
         AdminModule,
         MatIconModule,

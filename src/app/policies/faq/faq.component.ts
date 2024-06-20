@@ -11,7 +11,7 @@ export class FaqComponent implements OnInit, OnDestroy {
 
   constructor(public wp:WpService){}
   ngOnInit(): void {
-    document.body.style.background = '#fff'
+    // document.body.style.background = '#fff'
 
   }
   currentFaqThemeId=1

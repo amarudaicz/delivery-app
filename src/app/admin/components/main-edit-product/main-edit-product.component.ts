@@ -48,21 +48,11 @@ export class MainEditProductComponent {
 
     window.history.pushState({modal:true}, 'modal')
     console.log(window.history);
-    
-    
-  
   }
 
   closeEditProduct(){
     this.product.editing = false
   }
-
-  @HostListener('window:popstate')
-  onPopState() {
-    // Detectar el evento de retroceso del historial
-    this.closeEditProduct()
-  }
-
 
 
 }

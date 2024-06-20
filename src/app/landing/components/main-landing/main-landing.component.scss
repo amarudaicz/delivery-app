@@ -15,14 +15,11 @@
 }
 
 .dots{
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 7px;
-
+    margin-top: 20px;
     .dot{
 
         width: 10px;

@@ -33,6 +33,7 @@ export class DashboardListComponent implements OnInit {
     this.dinamicList.section.subscribe(section => {
       if (!section) return
       section === 'products' ? this.activeIndex = 0 : this.activeIndex = 1
+      this.currentSection = section
     })
   
 
@@ -41,6 +42,7 @@ export class DashboardListComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.categories$.subscribe(categories => {
+      
       this.categories = this.dinamicList.sortCategories(categories)  
     })
 
@@ -77,7 +79,12 @@ export class DashboardListComponent implements OnInit {
   }
 
 
-  emitCategorySelected(item: Category) {
+  emitCategorySelected(item: Category|undefined) {
+    if (!item) {
+      this.dinamicList.section.next('products')
+      return
+    }
+
     this.dinamicList.categoryId = item.id
     this.dinamicList.category.next(item)
     this.dinamicList.section.next('products')

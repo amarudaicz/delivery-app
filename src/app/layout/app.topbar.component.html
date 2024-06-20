@@ -20,34 +20,45 @@
 
             <div  class="session relative z-10" (mouseenter)="panelSession = true" (mouseleave)="panelSession = false">
 
-                <button class="btn-session py-2 px-4 border-round border-1 border-800 cursor-pointer">
-                    
-                    <div class="min-w-7rem d-flex justify-content-between text-800 hover:text-900" *ngIf="adminService.local$ | async as local">
-                        <span>{{local.name_url}}</span>
+                <button class="btn-session py-2 px-5 border-round border-1 border-800 cursor-pointer">
+                    <div class="d-flex justify-content-between text-800 hover:text-900" *ngIf="adminService.local$ | async as local; else loaderLocal">
+                        <span class="font-bold" >{{local.name_url}}</span>
 
                         <i class="pi pi-chevron-down ml-2 hidden md:block"></i>
 
                         <i [ngClass]="localService.islocalOpen(local.schedules)? ['text-green-500'] : ['text-red-500']" class="pi pi-circle-fill ml-2 md:hidden"></i>
                     </div>
+
+                    <ng-template #loaderLocal>
+                        <i class="pi pi-spin pi-spinner text-bold"></i>
+                    </ng-template>
+
                 </button>
 
                 <div  [@fadeIn] *ngIf="panelSession" class="border-1 border-800 border-top-none panel-session absolute w-full text-800" >
                     <ul>
 
-                        <li class="pb-2 pt-3 px-4 d-flex justify-content-between">
-                            <button class="cursor-pointer hover:text-primary text-nowrap" (click)="watchStore()">
+                        <li class=" d-flex justify-content-between">
+                            <button class="flex pb-2 pt-3 px-4 text-sm w-full font-semibold cursor-pointer hover:text-primary text-nowrap" (click)="watchStore()">
                                 Ver Tienda
                             </button>
                         </li>
 
-                        <li class="py-2 px-4 d-flex justify-content-between cursor-pointer">
-                            <button class="cursor-pointer hover:text-primary text-nowrap" (click)="logOut()">
+                        <li class="d-flex justify-content-between cursor-pointer">
+                            <a class=" py-2 px-4  text-sm w-full  font-semibold cursor-pointer hover:text-primary text-nowrap" (click)="logOut()">
                                 Cerrar Session
-                            </button>
+                            </a>
                         </li>
 
-                        <li class="py-2 px-4  cursor-pointer">
-                            <a class="d-flex justify-content-between hover:text-primary">
+                        <li class=" cursor-pointer">
+                            <a class=" py-2 px-4 d-flex w-full  justify-content-between hover:text-primary">
+                                <span class=" text-sm font-semibold text-nowrap" [routerLink]="['account']">Cuenta</span>
+                                <i class="pi pi-user ml-2"></i>
+                            </a>
+                        </li>
+
+                        <li class=" cursor-pointer">
+                            <a class=" py-2 px-4 text-sm d-flex justify-content-between hover:text-primary">
                                 <span class="font-semibold text-nowrap" [routerLink]="['payments']">Plan</span>
                                 <i class="pi pi-credit-card ml-2"></i>
                             </a>

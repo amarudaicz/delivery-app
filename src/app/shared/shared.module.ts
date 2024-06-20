@@ -15,10 +15,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRippleModule } from '@angular/material/core';
 import { SelectUbicationMapComponent } from './components/select-ubication-map/select-ubication-map.component';
 import { PricingCardsComponent } from './components/pricing-cards/pricing-cards.component';
-import { LowestPricePipe } from '../pipes/getLowestPrice';
+import { LowestPricePipe, MaxPricePipe } from '../pipes/getLowestPrice';
 import { ModalInfoLocalComponent } from './components/modal-info-local/modal-info-local.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { ImageFallbackDirective } from '../directives/image-fallback/image-fallback.directive';
+import { DirectivesModule } from '../directives/directives.module';
+import { ProductCardVerticalComponent } from './components/product-card-vertical/product-card-vertical.component';
+import { FeatureShippingComponent } from './components/feature-shipping/feature-shipping.component';
+import { FeatureCreditDebitComponent } from './components/feature-credit-debit/feature-credit-debit.component';
+import { FeatureInHomeComponent } from './components/feature-in-home/feature-in-home.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +34,17 @@ import { MatButtonModule } from '@angular/material/button';
     LoaderFullComponent,
     FlotantCartComponent, 
     NewselterBoxComponent,
-    ButtonInstallComponent,
+    ButtonInstallComponent ,
     SelectUbicationMapComponent,
     PricingCardsComponent,
     LowestPricePipe,
-    ModalInfoLocalComponent    
+    MaxPricePipe,
+    ModalInfoLocalComponent,
+    ProductCardVerticalComponent,
+    FeatureShippingComponent,
+    FeatureCreditDebitComponent,
+    FeatureInHomeComponent
+    ,
   ],
   imports: [
     CommonModule,
@@ -43,7 +55,8 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     MatRippleModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    DirectivesModule
   ],
   exports:[
     NavigationComponent,
@@ -53,9 +66,14 @@ import { MatButtonModule } from '@angular/material/button';
     FlotantCartComponent,
     ButtonInstallComponent,
     SelectUbicationMapComponent,
-    PricingCardsComponent
-
-
+    PricingCardsComponent,
+    MaxPricePipe,
+    LowestPricePipe,
+    ProductCardVerticalComponent,
+    FeatureShippingComponent,
+    FeatureCreditDebitComponent,
+    FeatureInHomeComponent
   ]
 })
+
 export class SharedModule { }

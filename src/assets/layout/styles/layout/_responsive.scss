@@ -8,7 +8,7 @@
 
 }
 
-@media (min-width: 992px) {
+@media (min-width: 991px) {
     .layout-wrapper {
         &.layout-overlay {
             .layout-main-container {
@@ -63,7 +63,6 @@
     .layout-wrapper {
         .layout-main-container {
             margin-left: 0;
-            padding-left: 1rem;
         }
 
         .layout-sidebar {

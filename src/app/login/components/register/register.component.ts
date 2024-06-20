@@ -6,6 +6,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
 import { LocalOperationsService } from 'src/app/services/local-operations/local-operations.service';
 import { MercadopagoService } from 'src/app/services/mercadopago/mercadopago.service';
 import { RemoveNonAlphanumeric, phoneValidator } from 'src/app/utils/validators';
@@ -21,7 +22,7 @@ export class RegisterComponent implements OnInit {
   formDataAccount!: FormGroup;
   subscription:any;
   payment:any;
-  pricing: boolean = true;
+  pricing: boolean = false;
   stepperOrientation: StepperOrientation = window.innerWidth > 768 ? 'horizontal' : 'vertical';
   @ViewChild('stepper') stepper!: MatStepper;
   refAlertError:any
@@ -37,7 +38,8 @@ export class RegisterComponent implements OnInit {
     private router:Router,
     private toast:MatSnackBar,
     private mp:MercadopagoService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private layout: LayoutStateService
   ) {
     console.log(this.stepper);
     this.createForms();
@@ -45,6 +47,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void { 
     this.formatNameUrl()
+    this.layout.state.header = false
+    this.layout.state.navigation = false
+    this.layout.updateState()
   }
 
   createForms() {
@@ -67,20 +72,6 @@ export class RegisterComponent implements OnInit {
       password: [null, Validators.required],
     });
     this.formDataAccount.get('username')?.disable();
-
-
-
-    this.formDataUser.patchValue({name: 'asd',
-    last_name: 'asd',
-    email: 'asd@asd.com',
-    phone: 3543545454,
-   })
-
-   this.formDataAccount.patchValue({ username: 'asd',
-   password: '12345678'}),
-
-   this.formDataStore.patchValue({ name: 'asd', name_url: 'asd', phone: 3545454544})
-
   }
 
   nextStep() {
@@ -126,7 +117,6 @@ export class RegisterComponent implements OnInit {
 
   notificationError() {
 
-
     if (this.formDataStore.get('name_url')?.hasError('isNotAvailable') && this.stepper.selectedIndex === 1) {
       this.toast.open('El nombre identificador que elijio esta en uso','Aceptar', {duration:3500});
       return true;
@@ -170,13 +160,15 @@ export class RegisterComponent implements OnInit {
   }
 
 
-
   checkNameUrl(){
     const controlNameUrl = this.formDataStore.get('name_url')
+    
     if (controlNameUrl?.value.length < 3) return
-
+    console.log(controlNameUrl);
+    
     this.disableSubmitForm=true
     this.checkingNamePath=true
+
     this.localOperations.isAvailableName(controlNameUrl?.value).subscribe(isAvailable=>{
       this.checkingNamePath=false
 
@@ -188,9 +180,13 @@ export class RegisterComponent implements OnInit {
         this.disableSubmitForm = true
         return
       }
-
+      
       this.disableSubmitForm=false
-      controlNameUrl?.setErrors(null)
+      controlNameUrl?.setErrors({
+        isNotAvailable:false
+      })
+
+      controlNameUrl?.updateValueAndValidity({emitEvent:false})
     })
 
 
@@ -206,13 +202,13 @@ export class RegisterComponent implements OnInit {
     } else if (control?.hasError('email')) {
       return 'Ingresa un email válido.';
     } else if (control?.hasError('minlength')) {
-      return 'Minimo 3 caracteres';
+      return 'Mínimo 3 caracteres';
     } else if (control?.hasError('invalidPhone')) {
-      return 'Ingresa un telefono valido';
+      return 'Ingresa un teléfono valido';
     }else if (control?.hasError('noSymbols')) {
-      return 'No se permiten simbolos';
+      return 'No se permiten símbolos';
     }else if (control?.hasError('isNotAvailable')) {
-      return 'El nombre identficador esta en uso';
+      return 'El nombre identificador esta en uso';
     }
 
     return '';

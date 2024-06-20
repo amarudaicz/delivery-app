@@ -19,7 +19,7 @@
         </div>
 
         
-        <app-modal-edit-product [product]="product">
+        <app-modal-edit-product (closeModal)="closeEditProduct()" [product]="product">
             
         </app-modal-edit-product>
     </div>

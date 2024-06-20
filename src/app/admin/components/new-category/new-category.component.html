@@ -2,8 +2,7 @@
   
   <div class="mb-3">
     <h1>{{ editing ? 'Editando' : 'Nueva categoría'}}</h1>
-    <p *ngIf="!editing" class="" style="max-width: 700px;">Ingresa el nombre de la categoría tambien puedes agregar una descripcion
-      breve y una imagen que la represente. Asegúrate de que los datos sean precisos y correctos al momento de guardar</p>
+    <p *ngIf="!editing" class="" style="max-width: 700px;">Ingresa el nombre de la categoría y una imagen que la represente. Asegúrate de que los datos sean precisos y correctos al momento de guardar</p>
   </div>
 
 
@@ -12,20 +11,12 @@
 
       <div class="d-flex flex-column mb-3">
 
-        <div class="d-flex flex-column w-full">
-          <mat-form-field class="w-full mb-2">
-            <mat-label>Nombre de la categoría</mat-label>
+        <div class="w-full">
+          <label class="font-bold block mb-1">Nombre</label>
+          <mat-form-field class="w-full mb-2" appearance="outline">
             <input matInput formControlName="category_name" placeholder="Nombre de la categoría">
             <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">Este campo es requerido</mat-error>
           </mat-form-field>
-
-          <!-- <mat-form-field class="w-full">
-            <mat-label>Descripcion(opcional)</mat-label>
-            <textarea formControlName="category_description" maxlength="150" placeholder="Ingresa una descripcion breve"
-              matInput> </textarea>
-            <mat-hint>max 150 caracteres/{{categoryForm.get('description')?.value.length}}</mat-hint>
-          </mat-form-field> -->
-
         </div>
 
         <div class="w-full mt-3">
@@ -39,7 +30,7 @@
 
               <div [ngClass]="previewImageSrc ? 'justify-content-center' : 'justify-content-between'" class="d-flex w-full  wrap">
 
-                <div *ngIf="!previewImageSrc" class="d-flex flex-column flex-1 gap-2">
+               <div *ngIf="!previewImageSrc" class="d-flex flex-column flex-1 gap-2">
 
                   <div class="d-flex flex-column align-items-start w-full p-2 bg-indigo-100 border-round">
                     <div class="d-flex gap-2 w-full">
@@ -72,7 +63,7 @@
                     <p class="text-gray-700 text-sm">
                       Elige un fondo limpio y sin distracciones para resaltar la imagen de la categoría. Evita fondos desordenados o que puedan restar atención al objeto principal.
                   </div>
-                </div>
+                </div> 
 
                 <div [class.w-auto]="previewImageSrc" class="relative w-full xl:w-auto" >
                   <img class="w-full object-contain" [src]="previewImageSrc || './assets/images/placeholder-image.svg' " [ngStyle]="{ height:'250px'}"
@@ -92,7 +83,7 @@
         </div>
 
         <!-- <span class="d-flex gap-2">
-            <p-fileUpload chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" [chooseLabel]="previewImageCategory || 'Imagen' " mode="basic" accept="image/*" [maxFileSize]="1000000">
+            <p-fileUpload chooseIcon="pi pi-upload" (uploadHandler)="uploadImage($event)" [auto]="true" #inputImage [customUpload]="true" [chooseLabel]="previewImageCategory || 'Imagen' " mode="basic" accept="image/*" [maxFileSize]="3000000">
             </p-fileUpload>
             <p-button *ngIf="previewImageCategory" icon="pi pi-times" class="button-remove-image" (click)="image = false" ></p-button>
           </span> -->

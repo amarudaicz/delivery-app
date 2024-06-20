@@ -1,6 +1,7 @@
 @use './reset.scss';
 @use './assets/sass/index';
 @use './mixin.scss' as m;
+
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'assets/layout/styles/layout/layout.scss';
 @import '../node_modules/primeicons/primeicons.css';
@@ -8,13 +9,29 @@
 @import '../node_modules/primeflex/primeflex.css';
 @import 'ngx-toastr/toastr';
 @import '~@tomtom-international/web-sdk-maps/dist/maps.css';
+@import '../node_modules/swiper/swiper.scss';
+@import '../node_modules/swiper/swiper-bundle.min.css';
+@import '../node_modules/swiper/modules/pagination.scss';
 
+
+@keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .float{
+    animation: float 8s ease-in-out infinite;
+    
+  }
 
 @font-face {
     font-family: 'muli';
     src: url('./assets/fonts/Muli-Regular.ttf');
     font-weight: normal;
-
 }
 
 @font-face {
@@ -23,13 +40,11 @@
     font-weight: 500;
 
 }
-
 @font-face {
     font-family: 'muli';
     src: url('./assets/fonts/Muli-Bold.ttf');
     font-weight: bold;
 }
-
 @font-face {
     font-family: 'muli';
     src: url('./assets/fonts/Muli-Black.ttf');
@@ -43,17 +58,18 @@ html {
 $gutter: 1rem; //for primeflex grid system
 
 .chip {
-    background: #2d2d2d;
+    background: #E9E1FF;
     width: fit-content;
-    padding: 4px 15px;
+    color: #0f0f0f;
+    padding: 0px 12px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 20px;
     align-items: center;
     justify-content: center;
     display: flex;
-    height: 40px;
+    height: 32px;
 }
 
 .link {
@@ -94,10 +110,18 @@ $gutter: 1rem; //for primeflex grid system
 
 .container {
     height: auto;
-    max-width: 1100px;
     margin: 0 auto;
+    max-width: 800px;
+
+    @include m.laptop{
+        max-width: 900px;
+    }
+
     
 }
+
+
+
 
 .title {
     font-size: 20px !important;
@@ -105,7 +129,7 @@ $gutter: 1rem; //for primeflex grid system
 
 .content {
     margin: 0 auto;
-    padding: 0 15px 80px 15px;
+    padding: 0 10px 80px 10px;
 
     @include m.laptop {
         // max-width: 50%;
@@ -231,18 +255,25 @@ button {
     text-overflow: ellipsis;
 }
 
+.block-scroll{
+    overflow: hidden;
+}
+
 .gap-y-1{
-    row-gap:0.25rem ;
+    row-gap:0.25rem !important ;
 }
 .gap-y-2{
-    row-gap:0.5rem ;
+    row-gap:0.5rem !important;
 }
 .gap-y-3{
-    row-gap:1rem ;
+    row-gap:1rem !important;
 }
 
 .object-contain{
-    object-fit: contain;
+    object-fit: contain !important;
+}
+.object-cover{
+    object-fit: cover !important;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -312,4 +343,55 @@ form.svelte-cq90g3{
 
 .list-increment{
     counter-increment: item;
+}
+
+.bg-blur{
+    backdrop-filter: blur(3px);
+}
+
+.mat-mdc-form-field-infix{
+    width: auto !important;
+    min-width: 150px !important;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+.swiper-backface-hidden .swiper-slide{
+    transform: none !important;
+}
+
+@media screen and (min-width: 768px) {
+    .md\:table-cell{
+        display:table-cell !important ;
+    }
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    background:#cececebc ;
+  }
+
+
+//   .cdk-overlay-pane{
+    //   }
+    
+    .mdc-dialog__container{
+       height: 100% !important;
+        max-height: 90vh !important;
+
+}
+
+.mat-mdc-form-field-infix{
+    min-width: auto !important;
+}
+
+.cdk-global-scrollblock{
+    height: auto !important;
 }

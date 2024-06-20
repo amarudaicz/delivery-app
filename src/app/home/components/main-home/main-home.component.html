@@ -1,36 +1,28 @@
-
 <div *ngIf="themeLoaded else loader" class="container">
-    
+
     <div class="content">
 
-        <div class="">
-
-            <app-newselter-box *ngIf="!appInstalled"></app-newselter-box>
+        <div class="pt-3">
             
+            <app-features-local></app-features-local>
+
+            <app-newselter-box *ngIf="!appInstalled" [@fadeIn]></app-newselter-box>
+
             <app-search-products>
 
             </app-search-products>
 
+            <app-categories></app-categories>
 
-            <!-- <app-promotions-local>  </app-promotions-local> -->
-
-            
-            <section class="categories mt-3">
-    
-                <h2 class="title mb-2">Categorías</h2>
-        
-                <div class="container-categories py-2" *ngIf="categories">
-                    <app-card-category *ngFor="let category of categories || [1,2,3,4]" [category]="category"> </app-card-category>
-                  
-                </div>
-            
-            </section>  
-            
             <app-preview-category></app-preview-category>
-            
+
+            <app-promotions-local></app-promotions-local>
+
+
+
         </div>
 
-        
+
 
     </div>
 
@@ -40,6 +32,6 @@
 
 <ng-template #loader>
 
- <app-loader-full></app-loader-full>
+    <app-loader-full></app-loader-full>
 
 </ng-template>

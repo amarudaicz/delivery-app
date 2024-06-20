@@ -5,17 +5,25 @@ import { LoginComponent } from './components/login/login.component';
 import { FormLoginComponent } from './components/form-login/form-login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { RegisterComponent } from './components/register/register.component';
+import { loginGuard } from '../utils/auth-guard.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MainLoginComponent,
     children: [
-        {path: '', component: FormLoginComponent },
-        {path:'reset_password', component:ResetPasswordComponent}
-      ],
-    },
-    {path: 'register', component: RegisterComponent },
+      {
+      path: '', 
+      component: FormLoginComponent ,
+      canActivate: [loginGuard]
+      },
+      {
+        path: 'reset_password', 
+        component: ResetPasswordComponent
+      },
+    ],
+  },
+  { path: 'register', component: RegisterComponent,  },
 ];
 
 @NgModule({

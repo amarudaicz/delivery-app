@@ -5,6 +5,7 @@ import { catchError } from 'rxjs';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 import { Category } from 'src/app/interfaces/category-interfaz';
 import { AdminService } from 'src/app/services/admin/admin.service';
+import { CloudinaryService } from 'src/app/services/cloudinary/cloudinary.service';
 import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.service';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
 import { handleError } from 'src/app/utils/handle-error-http';
@@ -30,6 +31,7 @@ export class NewCategoryComponent {
     private notificationsAdmin: NotificationsAdminService,
     private dinamicList: DinamicListService,
     public dialogRef: MatDialogRef<NewCategoryComponent>,
+    private cloudinary:CloudinaryService,
     @Inject(MAT_DIALOG_DATA) public dataEditCategory: any
   ) {
     this.categoryForm = this.formBuilder.group({
@@ -67,7 +69,7 @@ export class NewCategoryComponent {
     this.dialogRef.close();
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.categoryForm.invalid) {
       this.notificationsAdmin.new('Completar los campos requeridos');
       this.categoryForm.markAllAsTouched();
@@ -75,6 +77,14 @@ export class NewCategoryComponent {
     }
 
     this.loadForm = true;
+    if (this.image) {
+        await new Promise((resolve, reject)=>{
+          this.cloudinary.upload(this.image).subscribe((data:any)=>{
+          this.image = data.secure_url
+            resolve(true)
+          })
+        }) 
+      }
 
     if (!this.dataEditCategory) {
       this.adminService
@@ -90,10 +100,14 @@ export class NewCategoryComponent {
       return;
     }
 
+
+
+
+
     this.adminService
       .editCategory({
         ...this.categoryForm.value,
-        image: this.image,
+        image: this.image || this.previewImageSrc,
         id: this.dataEditCategory.id,
       })
       .subscribe((res) => this.processForm('edit'));
@@ -122,9 +136,9 @@ export class NewCategoryComponent {
         { push: true }
       );
       
-      this.adminService.getCategories().subscribe();
     }
-
+    
+    this.adminService.getCategories().subscribe();
     this.dialogRef.close();
   }
 
@@ -134,7 +148,6 @@ export class NewCategoryComponent {
   patchForm() {
     this.categoryForm.patchValue(this.dataEditCategory);
     this.previewImageSrc = this.dataEditCategory.category_image;
-    this.image = this.dataEditCategory.category_image;
   }
 
   uploadImage(event: any) {

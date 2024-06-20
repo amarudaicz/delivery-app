@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, OnInit } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, Params } from '@angular/router';
 import { fadeIn } from './animations/main-detail-animations';
 import { routeAnimations } from './animations/transition-route';
@@ -30,23 +30,23 @@ export class AppComponent implements OnInit {
     private update:SwUpdate,
     private pwa:PwaInstallerService,
     public stateLayout:LayoutStateService,
+    private changeDetectorRef: ChangeDetectorRef
+
   ){
     this.pwa.checkForUpdates()
 
   }
 
   ngOnInit(): void {
-    
-    this.themeService.getThemeState().subscribe((state)=>{
-      this.themeLoad = state
-    })
-    this.routeService.current.subscribe(current=>{
-      this.route = current 
-    })
+    this.themeService.getThemeState().subscribe((state) => {
+      this.themeLoad = state;
+      this.changeDetectorRef.detectChanges(); // Forzar detección de cambios
+    });
 
-
-    console.log(this.routeService.getCurrent());
-    
+    this.routeService.current.subscribe((current) => {
+      this.route = current;
+      this.changeDetectorRef.detectChanges(); // Forzar detección de cambios
+    });
   }
 
   // routeClass(){

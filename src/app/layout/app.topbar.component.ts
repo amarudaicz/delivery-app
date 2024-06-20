@@ -34,7 +34,7 @@ export class AppTopBarComponent implements OnInit {
 
   @ViewChild('topbarmenu') menu!: ElementRef;
 
-  constructor(
+  constructor( 
     public layoutService: LayoutService,
     public localService: LocalDataService,
     public adminService: AdminService,
@@ -53,18 +53,21 @@ export class AppTopBarComponent implements OnInit {
 
   watchStore() {
     this.localService.resetData()
-    // this.localService.initDataLocal(this.local?.name_url!)
+    this.localService.initDataLocal(this.local?.name_url!)
     setTimeout(() => {
       this.route.navigate(['/' + this.local?.name_url]);
     }, 100);
   }
 
   logOut() {
-    this.auth.deleteToken();
-    this.notificationsAdmin.new('Cerrando session', '', {duration:2000})
+    this.notificationsAdmin.new('Realmente quiere cerrar la sesión', 'Cerrar', {duration:5000}).onAction().subscribe(ok=>{
+      this.auth.deleteToken();
+      this.route.navigate(['/'])
+      this.adminService.resetAdmin();
+      this.notificationsAdmin.new('Sesión Cerrada')
+    })
 
-    setTimeout(() => this.route.navigate(['/']), 2000);
-    
+
   }
 
 

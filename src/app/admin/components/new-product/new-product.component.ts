@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -30,7 +30,6 @@ import { Product } from 'src/app/interfaces/product-interface';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MainDetailComponent } from 'src/app/detail/components/main-detail/main-detail.component';
 import { Location } from '@angular/common';
-import { shepherd } from 'src/app/utils/shepherd-tour';
 import { CloudinaryService } from 'src/app/services/cloudinary/cloudinary.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/app/environment';
@@ -44,6 +43,9 @@ import { DinamicListService } from 'src/app/services/dinamic-list/dinamic-list.s
 import { handleError } from 'src/app/utils/handle-error-http';
 import { NotificationsAdminService } from 'src/app/services/notifications-admin/notifications-admin.service';
 import { copy } from 'src/app/utils/copyElement';
+import { LayoutStateService } from 'src/app/services/layoutState/layout-state.service';
+import { HttpInterceptorService } from 'src/app/services/iterceptor-jwt/interceptorJwt';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-new-product',
@@ -52,7 +54,7 @@ import { copy } from 'src/app/utils/copyElement';
   providers: [MatAutocomplete, ConfirmationService, History, MessageService],
   animations:[enterRight, fadeIn]
 })
-export class NewProductComponent implements OnInit {
+export class NewProductComponent implements OnInit, OnDestroy {
 
   @ViewChild(SetOptionsProductComponent) setOptions!: SetOptionsProductComponent;
 
@@ -71,6 +73,7 @@ export class NewProductComponent implements OnInit {
   previewModal: boolean = false;
   refPreviewModal?: DynamicDialogRef
   groupsAvailables?:OptionProduct[]
+  isMobile = window.innerWidth < 768;
 
   constructor(
     public theme: ThemesService,
@@ -78,27 +81,32 @@ export class NewProductComponent implements OnInit {
     private dialogService: DialogService,
     private adminService: AdminService,
     private toast: MatSnackBar,
-    private notificationsAdmin:NotificationsAdminService
+    private notificationsAdmin:NotificationsAdminService,
+    private cloudinary:CloudinaryService,
+    private layout:LayoutStateService
   ) {
     this.form = this.formBuilder.group({
-      name: ['', Validators.required, noScriptValidator()],
+      name: ['', Validators.required, ],
       price: ['', Validators.required, noScriptValidator()],
       ingredients: [null],
       description: [null],
-      image: [null]
+      image: [null],
     });
 
+    this.layout.blockBody()
   }
 
 
 
-  image: any
+  image:any;
+  galeryFiles:any[]=[];
+  galeryUrls:string[] = [];
+  galeryPreview?:any[];
 
   ngOnInit(): void {
     console.log(this.category_id);
     
     window.history.pushState({modal:true}, 'modal');
-    
 
     this.adminService.categories$.subscribe((data) => this.categories = data )
     this.adminService.optionsGroup.subscribe((groups) => this.groupsAvailables = groups)
@@ -108,7 +116,6 @@ export class NewProductComponent implements OnInit {
 
   async saveProduct() {
     console.log(this.form);
-
 
     if (this.form.invalid) {
       this.form.markAllAsTouched()
@@ -122,12 +129,22 @@ export class NewProductComponent implements OnInit {
     }
 
     this.processLoad = true
+    this.toast.open('Creando producto...')
+
+    if (this.image || this.galeryFiles.length ) {
+      this.toast.open('Subiendo imagenes...')
+      const primaryImage = await this.uploadSingleImage(this.image ?? this.galeryFiles[0])
+      this.form.get('image')?.setValue(primaryImage)
+      this.image ? null : this.galeryFiles.shift()
+      console.log(this.galeryFiles);
+      
+      await this.uploadSequentiallyGalery(0)
+    }
 
     this.form.removeControl('ingredients')
-    this.form.get('name')?.setValue(this.capitalize(this.form.get('name')?.value))
-    this.form.get('description')?.setValue(this.capitalize(this.form.get('description')?.value))
+    this.form.get('price')?.enable()
     this.cleanVariations(this.optionsGroup)
-    const product = { variations: JSON.stringify(this.optionsGroup), ingredients: JSON.stringify(this.ingredientsList), ...this.form.value, category_id:this.category_id };
+    const product = { variations: JSON.stringify(this.optionsGroup), ingredients: JSON.stringify(this.ingredientsList), ...this.form.value, category_id:this.category_id, galery:JSON.stringify(this.galeryUrls) };
 
     this.adminService.postProduct(product).pipe(
       catchError(({error}) => {
@@ -136,7 +153,7 @@ export class NewProductComponent implements OnInit {
 
       })).subscribe((res) => {
       this.resetForm()
-      this.toast.open('Producto creado con exito', '',  {duration:3000})
+      this.toast.open('Producto creado con éxito', '',  {duration:3000})
       this.adminService.getProductsAdmin()
       this.closeForm()
     })
@@ -145,10 +162,17 @@ export class NewProductComponent implements OnInit {
 
   getOptionsSelected(options: OptionProduct[]) {
     const variations: OptionProduct[] = copy(options)
-    console.log(variations);
+    this.optionsGroup = options
+    console.log(this.getOptionWithLowestPrice(options));
 
-    this.form.get('price')?.setValue(this.getOptionWithLowestPrice(variations)) 
-    this.optionsGroup = variations
+    if (!this.getOptionWithLowestPrice(options)) {
+      this.form.get('price')?.setValue(this.form.get('price')?.value)
+      this.form.get('price')?.enable()
+      return
+    }
+
+    this.form.get('price')?.setValue(this.getOptionWithLowestPrice(options)) 
+    this.form.get('price')?.disable()
   }
 
   removePreviewImage() {
@@ -157,21 +181,24 @@ export class NewProductComponent implements OnInit {
   }
 
   showPreview() {
-
+ 
     if (this.form.invalid) {
       this.form.markAllAsTouched()
       this.toast.open('Completar los campos requeridos.', 'Ok', {duration:3000})
       return
     }
-
+    
+    window.history.pushState({modal:true}, 'modal');
     const screenWidth = window.innerWidth;
     if (this.previewModal) return
+
     this.previewModal = true
     this.refPreviewModal = this.dialogService.open(MainDetailComponent, {
       data: {
         variations: this.optionsGroup,
         ...this.form.value,
         image: this.previewImageProduct,
+        galery:this.galeryPreview,
         ingredients: this.ingredientsList
       },
       header: 'Vista previa',
@@ -190,24 +217,46 @@ export class NewProductComponent implements OnInit {
     });
   }
 
+  
 
   uploadImage(event: any) {
 
-    if (event.files.length > 0) {
-      const file = event.files[0];
-      console.log(file);
+    const file = event.target.files[0];
 
+    if (file) {
       this.form.get('image')?.setValue(file)
       this.image = file
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.previewImageProduct = e.target?.result;
-
       };
+
       reader.readAsDataURL(file);
     }
+  }
 
+  uploadGalery(event:any){
+    let files:FileList|any[] = event.target.files;
+    this.galeryPreview = files.length ? [] : undefined;
+    console.log(files);
 
+    if (files.length > 4) {
+      this.toast.open('Solo puedes cargar un máximo de 4 imágenes', '' ,{duration:3000})
+      let filesArray: File[] = Array.from(files);
+      // Limitar la cantidad de archivos a 4
+      filesArray = filesArray.slice(0, 4);
+      files = filesArray
+    }
+    console.log(files);
+
+    for (let i = 0; i < files.length; i++) {
+      this.galeryFiles.push(files[i])
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.galeryPreview!.push(e.target?.result);
+      };
+      reader.readAsDataURL(files[i]);
+    }
 
     
   }
@@ -220,7 +269,9 @@ export class NewProductComponent implements OnInit {
   onPopState() {
     // Detectar el evento de retroceso del historial
     this.closeForm();
+    this.previewModal = false
   }
+
   resetForm() {
     this.setOptions?.resetOptions()
     this.form.reset()
@@ -258,7 +309,7 @@ export class NewProductComponent implements OnInit {
     }
     // Add our fruit
 
-    // Clear the input value
+    // Clear the input value 
     event.chipInput!.clear();
   }
 
@@ -321,7 +372,7 @@ export class NewProductComponent implements OnInit {
     } 
   
     console.log(lowestPrice); 
-    return lowestPrice === Infinity ? null : lowestPrice;
+    return lowestPrice === Infinity ? false : lowestPrice;
   }
 
 
@@ -333,29 +384,86 @@ export class NewProductComponent implements OnInit {
 
     const error = {message:'', state:false}
     
-    if (definePrice?.options.some(o => o.price === 0)) {
-      error.message = `algunas opciones del grupo ${definePrice.nameVariation} que define el precio final del su producto no tienen precio.`
-      return error
+    if (definePrice && (definePrice?.options.every(o => !o.active) || definePrice?.options.some(o => o.price <= 0))) {
+      this.optionsGroup.filter(v=> v.id !== definePrice.id)
     }
-
-    if (definePrice && definePrice?.options.every(o => !o.active)){
-      error.message = `Debe activar almenos una opcion de su grupo ${definePrice?.nameVariation}.`
-      return error
-    }
-
+    console.log(this.optionsGroup);
     return {message:'', state:true}
   }
 
   cleanVariations(variations:OptionProduct[]){
-
     variations.forEach((v,i,d)=>{
       if (v.options.every(o => !o.active)) {
         d.splice(i,1)
       }
     })
 
+    console.log(this.optionsGroup);
   }
 
-}
 
+  handleDragDrop(event:CdkDragDrop<any[]>){
+    const {previousIndex, currentIndex} = event
+    console.log(previousIndex, currentIndex);
+    
+    moveItemInArray(this.galeryFiles, previousIndex, currentIndex);
+    moveItemInArray(this.galeryPreview!, previousIndex, currentIndex);
+    console.log(this.galeryFiles);
+    
+  }
+
+  deleteAllGaleryImages(){
+    this.galeryFiles = []
+    this.galeryPreview = undefined
+    this.form.get('galery')?.reset()
+  }
+
+  deleteImageFromGalery(index:number){
+    this.galeryFiles.splice(index, 1)
+    this.galeryPreview?.splice(index, 1)
+    
+    this.galeryPreview?.length === 0 ? 
+    this.galeryPreview = undefined : null
+    
+  }
+
+  async uploadSequentiallyGalery(index: number): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      if (index < this.galeryFiles.length) {
+        const file = this.galeryFiles[index];
+  
+        try {
+          const secure_url:any = await this.uploadSingleImage(file);
+          this.galeryUrls.push(secure_url);
+          console.log(this.galeryUrls);
+  
+          // Sube la siguiente imagen de forma recursiva
+          await this.uploadSequentiallyGalery(index + 1);
+          resolve(true);
+        } catch (error) {
+          console.error('Error al subir imagen:', error);
+          reject(false);
+        }
+      } else {
+        // Se han subido todas las imágenes
+        console.log('Todas las imágenes se han subido');
+        resolve(true);
+      }
+    });
+  }
+
+  async uploadSingleImage(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.cloudinary.upload(file).subscribe((data: any) => {
+        resolve(data.secure_url);
+      }, (error: any) => {
+        reject(error);
+      });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.layout.unblockBody()
+  }
+}
 

@@ -18,7 +18,7 @@ import { UserService } from 'src/app/services/userData/user.service';
 export class MainUserComponent implements OnInit {
 
   form:FormGroup
-  userData:any = this.userService.getUser()//INTERFACE USER
+  userData:any = this.userService.getUserData()//INTERFACE USER
 
   constructor(
     public theme:ThemesService,

@@ -13,9 +13,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRippleModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DetailsCheckoutComponent } from './details-checkout/details-checkout.component';
+import { TomtomService } from '../services/tomtom-service/tomtom.service';
 
 @NgModule({
-  declarations: [MainCartComponent, CartItemsComponent, CheckoutComponent, ModalInfoWpComponent],
+  declarations: [MainCartComponent, CartItemsComponent, CheckoutComponent, ModalInfoWpComponent, DetailsCheckoutComponent],
   imports: [
     MatRippleModule,
     CommonModule,
@@ -27,8 +29,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDialogModule,
     MatTooltipModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
 
   ],
+  providers:[TomtomService],
+  exports:[
+    CheckoutComponent
+  ]
 })
 export class CartModule {}

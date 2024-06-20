@@ -1,0 +1,15 @@
+@use '../../../../mixin.scss' as m;
+
+.footer-landing{
+    background: #04081e;
+    padding-top: 20px;
+
+    @include m.laptop{
+        // padding-top: 180px;
+    }
+}
+
+.waves-footer{
+    top: -50px;
+    transform: rotate(180deg);
+}

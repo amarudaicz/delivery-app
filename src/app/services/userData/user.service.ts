@@ -8,13 +8,23 @@ export class UserService {
 
   constructor() { }
 
-  saveUserShipping(userData: any): void {
-    localStorage.setItem('userShipping', JSON.stringify(userData));
+  saveUserData(userData: any): void {
+    localStorage.setItem('userData', JSON.stringify(userData ));
   }
-  
-  getUser(): any {
+  saveUserShipping(shipping:any): void {
+    localStorage.setItem('userShipping', JSON.stringify(shipping));
+  }
+  getUserData(): any {
+    const savedUser = localStorage.getItem('userData');
+    return savedUser ? JSON.parse(savedUser) : null;
+  }
+  getUserShipping(): any {
     const savedUser = localStorage.getItem('userShipping');
     return savedUser ? JSON.parse(savedUser) : null;
+  }
+
+  clearUserShipping(){
+    localStorage.removeItem('userShipping')
   }
 
   getGeolocation(): Observable<any | null> {

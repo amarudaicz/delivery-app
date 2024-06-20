@@ -5,6 +5,7 @@ import { MainCategoryComponent } from './components/main-category/main-category.
 import { ProductsByCategoryComponent } from './components/products-by-category/products-by-category.component';
 import { HomeModule } from '../home/home.module';
 import { MatRippleModule } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MatRippleModule } from '@angular/material/core';
   imports: [
     CommonModule, 
     SharedModule,
-    MatRippleModule
+    MatRippleModule,
+    RouterModule
   ],
   exports: [ 
   ]  

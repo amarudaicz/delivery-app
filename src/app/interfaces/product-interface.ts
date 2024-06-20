@@ -16,6 +16,8 @@ export interface Product {
   local_id: number;
   editing?: boolean;
   selected?: boolean;
+  fixed:1|0;
+  galery?:string[];
 }
 
 export interface ProductCart{

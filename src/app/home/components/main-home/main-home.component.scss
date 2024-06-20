@@ -1,11 +1,16 @@
 .container{
     height: auto;   
-
 }
 
 .content{
     
 }
+
+.sticky-categories{
+    position: sticky;
+    top: 10px;
+}
+
 
 
 .categories{
@@ -14,11 +19,11 @@
     .container-categories{
         scroll-snap-type: x mandatory;
         display:flex;
-        overflow-x: scroll;
+        overflow-x: auto;
         column-gap: 20px;
-
+        
         &::-webkit-scrollbar {
-            display: none;
+            // display: none;
         }
     }
     

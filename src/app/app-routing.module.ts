@@ -11,7 +11,7 @@ import { MainHomeComponent } from './home/components/main-home/main-home.compone
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { MainPromotionsComponent } from './promotions/components/main-promotions/main-promotions.component';
 import { MainUserComponent } from './user/components/main-user/main-user.component';
-import { AuthGuard } from './utils/auth-guard.guard';
+import { adminGuard, loginGuard } from './utils/auth-guard.guard';
 import { MainLoginComponent } from './login/components/main-login/main-login.component';
 import { MainOptionsComponent } from './admin/components/main-options/main-options.component';
 import { MainSchedulesComponent } from './admin/components/main-schedules/main-schedules.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'admin',
     data: { page: 'admin' },
-    canActivate:[AuthGuard],
+    canActivate:[adminGuard],
     loadChildren: () =>
       import('./layout/app.layout.module').then((m) => m.AppLayoutModule),
   },
@@ -43,15 +43,9 @@ const routes: Routes = [
 
   {
     path: 'user',
+    data: { animation: 'user', page: 'user' },
     component: MainUserComponent,
   },
-  // { 
-  //   path:'preguntas-frecuentes',
-  //   component:FaqComponent
-  // },
- 
-
-  
   {
     path:'',
     loadChildren:()=> import('./landing/landing.module').then(m => m.LandingModule)
@@ -64,7 +58,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'top',     
+    anchorScrolling: 'enabled',
+  })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -1,26 +1,26 @@
-
+ 
 <!-- <p>Ingresa el nombre deli de tu local favorito</p>
 <input placeholder="Enter text here" class="input-style" type="text"> -->
 
-<div class="container-box-landing">
+<div class="container-box-landing ">
     <div class="box-landing">
 
-        <img class="logo-box-landing" src="./assets/logos/logo-de.png" alt="">
+        <img class="logo-box-landing" loading="lazy" src="./assets/logos/logo-de.png" alt="">
     
         <div class="container-text-landing mobile">
             <h4 class="text-landing mobile">
-                <span class="first-text">Ordena en segundos!</span> <br>
+                <span class="first-text">Ordena en segundos</span> <br>
                 Explora tus locales y haz tu pedido.
             </h4>
 
             <h4 class="text-landing desktop ">
-                <span class="first-text">Ordena en segundos con Deli!</span> <br>
+                <span class="first-text">Ordena en segundos con Deli</span> <br>
                 Explora tus locales favoritos y haz tu pedido de forma rápida y sencilla <br>
                 Descarga nuestra aplicación móvil o de escritorio para obtener todas nuestras funcionalidades.
             </h4>
         </div>
 
-        <div matRipple class="icon-like z-1 border-round-3xl">
+        <div class="icon-like z-1 border-round-3xl">
             <i class="pi pi-thumbs-up"></i>
         </div>
     </div>
@@ -28,28 +28,52 @@
         <div  *ngFor="let circle of [1,2]; let i" class="circle circle-{{i}}"></div>
 </div>
 
-<h1 class="mb-2">Recientes</h1>
+<section class="w-full">
+    <div class="d-flex justify-content-between mb-2">
+        <h2 class="text-xl">Recientes</h2>
 
-<div class="container-recents">
+        <a routerLink="/history" class="cursor-pointer d-flex gap-2 p-1 border-round" mat-ripple>
+            Mis compras 
+            <i class="pi pi-history"></i>
+        </a>
 
-
-    <app-card-local *ngFor="let local of locals" [local]="local"></app-card-local>
-
-    <div class="" *ngIf="recentsCharged && !locals?.length">
-        <div class="w-full h-full">
-             <div class="overflow-hidden">
-                <img src="/assets/images/no-results.svg" class="w-full max-w-27rem block object-contain m-auto" alt="">
-            </div> 
-            <h2 class="text-center text-2xl text-800" >No se encontraron tiendas</h2>
-        </div> 
     </div>
     
-    <div *ngIf="!locals && !recentsCharged" class="flex flex-column gap-2">
-        <div class="skeleton" *ngFor="let pre of [1,2,3,4]">
-            <p-skeleton width="100%" height="5rem"></p-skeleton>
+    <div class="container-recents">
+    
+    
+        <app-card-local *ngFor="let local of locals" [local]="local"></app-card-local>
+    
+        <div class="" *ngIf="recentsCharged && !locals?.length">
+            <div class="w-full ">
+                <h2 class="text-center text-2xl text-800" >No se encontraron recientes</h2>
+                 <div class="overflow-hidden">
+                    <img  loading="lazy" src="/assets/empty-state/recents.png" class="w-full max-w-27rem block object-contain m-auto" alt="">
+                </div> 
+    
+                <!-- <div class="w-full  text-center mt-3">
+                    <h1 class=" mb-2">
+                        Quieres una tienda en deli para tu negocio?
+                        </h1>
+                        <div class=" w-full d-flex justify-content-center">
+                        <a routerLink="/login/register" class="w-fit px-4  py-3  text-primary border-primary border-1 d-flex gap-2 border-round font-semibold text-base shadow-2 hover:shadow-3" mat-ripple>
+                            Comenzar ahora!
+                        </a>
+                    </div>
+    
+    
+                </div> -->
+            </div> 
         </div>
-    </div> 
+        
+        <div *ngIf="!locals && !recentsCharged" class="flex flex-column gap-2">
+            <div class="skeleton" *ngFor="let pre of [1,2,3,4]">
+                <p-skeleton width="100%" height="5rem"></p-skeleton>
+            </div>
+        </div> 
+    
+    
+    
+    </div>
 
-
-
-</div>
+</section>

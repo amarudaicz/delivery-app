@@ -1,15 +1,13 @@
 <div [style.background]="'#FF725E'"
     class="relative overflow-hidden banner-qr p-5 w-full h-24rem border-round-xl">
 
-    <div class="flex align-items-center justify-content-center w-full h-full pl-0 ">
+        <div class="w-full relative d-flex justify-content-center flex-row-reverse xl:flex-row h-full">
 
-        <div class=" relative d-flex justify-content-center flex-row-reverse xl:flex-row h-full">
+            <div class="w-full text-qr flex flex-column align-items-center sm:align-items-start">
 
-            <div class="text-qr flex flex-column align-items-center sm:align-items-start">
-
+                <h1 class="title-link mb-5 text-white text-center md:text-left text-3xl md:text-6xl font-bold">Comparte tu link</h1>
 
                 <div class="list-qr text-white">
-                    <h1 class="title-link mb-5 text-white text-3xl md:text-6xl font-bold">Comparte tu enlace</h1>
 
                     <ul>
                         <li class="d-flex gap-3 mb-2" *ngFor="let m of modelListFeatures">
@@ -42,10 +40,8 @@
             </div>
 
             <div class="image-share-link hidden h-full sm:block">
-                <img class="w-full h-full" src="./assets/images/link-pana.png" alt="Compartir link de acceso">
+                <img class="w-full h-full min-w-15rem" src="./assets/images/link-pana.png" alt="Compartir link de acceso">
             </div>
         </div>
-
-    </div>
 
 </div>

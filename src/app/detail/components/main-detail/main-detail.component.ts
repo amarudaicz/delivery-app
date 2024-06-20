@@ -44,7 +44,7 @@ export class MainDetailComponent implements OnInit, OnDestroy {
     }
     
     if (!this.modePreview){
-      this.localService.initDataLocal(this.route.snapshot.params['local'])
+      // this.localService.initDataLocal(this.route.snapshot.params['local'])
       this.layoutState.state.navigation = false
       this.layoutState.state.header = false
       this.layoutState.updateState()

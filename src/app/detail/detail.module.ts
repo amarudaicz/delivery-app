@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import {MatRippleModule} from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DetailRoutingModule } from './detail-routing.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 
@@ -20,7 +21,7 @@ import { DetailRoutingModule } from './detail-routing.module';
   declarations: [
     MainDetailComponent,
     InfoProductComponent,
-    AddProductCartComponent
+    AddProductCartComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +35,7 @@ import { DetailRoutingModule } from './detail-routing.module';
     MatRippleModule,
     MatSnackBarModule,
     RouterModule,
-
+    DirectivesModule
   ],
   providers:[
   ]

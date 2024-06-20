@@ -1,23 +1,21 @@
 @use "../../../../mixin.scss" as m;
 
 .product-card {
-  scroll-snap-align: start;
   width: 100%;
-  // min-width: 320px;
-  height: 112px;
-  max-height: 112px;
+  min-height: 112px;
   padding: 12px;
-
+  
   @include m.tablet {
+    min-width:270px;
   }
 
   .product-image {
-    max-width: 75px;
-    height: 75px;
+    max-width: 85px;
+    height: 85px;
 
     img {
-      width: 75px;
-      height: 75px;
+      width: 85px;
+      height: 85px;
       object-fit: cover;
       box-shadow: 0 4px 10px -7px rgb(0 0 0);
     }
