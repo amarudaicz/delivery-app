@@ -20,7 +20,6 @@ import {
   DetailsOptions,
   OptionProduct,
 } from 'src/app/interfaces/optionProduct-interface';
-import { ToastrService } from 'ngx-toastr';
 import {
   DialogService,
   DynamicDialogConfig,

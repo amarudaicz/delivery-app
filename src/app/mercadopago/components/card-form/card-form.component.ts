@@ -44,7 +44,8 @@ export class CardFormComponent implements OnDestroy, OnInit {
     this.mp.isMpReady().subscribe((ready) => {
       if (!ready) return;
       this.initBricks(this.mp.getMp().bricks());
-     this.subscriptionReload =  this.reloadForm.pipe(take(1)).subscribe(reload=>{
+
+     this.subscriptionReload =  this.reloadForm.pipe(take(3)).subscribe(reload=>{
         console.log(reload);
 
         if (!reload)return
@@ -102,6 +103,7 @@ export class CardFormComponent implements OnDestroy, OnInit {
   submitSubscription(formData: any) {
     this.payment.emit(formData)
   }
+
   ngOnDestroy(): void {
     if (this.subscriptionReload) {
       this.subscriptionReload.unsubscribe()

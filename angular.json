@@ -34,11 +34,8 @@
             "styles": [
               "src/styles.scss",
               "node_modules/shepherd.js/dist/css/shepherd.css"
-
             ],
             "scripts": [
-              "node_modules/js-cookie/dist/js.cookie.js",
-              "node_modules/tippy.js/dist/tippy.umd.js",
               "node_modules/shepherd.js/dist/js/shepherd.min.js"
             ],
             "serviceWorker": true,
@@ -47,7 +44,7 @@
           "configurations": {
             "production": {
               "buildOptimizer": true,
-              "optimization": false,
+              "optimization": true,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
@@ -60,7 +57,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
+                  "maximumWarning": "500kb",
                   "maximumError": "10mb"
                 }
               ],
@@ -69,10 +66,10 @@
             
             "development": {
               "buildOptimizer": true,
-              "optimization": false,
+              "optimization": true,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true
             }
           },
@@ -109,8 +106,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest",
-              "src/manifest.webmanifest",
               "src/manifest.webmanifest"
             ],
             "styles": [

@@ -5,8 +5,8 @@
 .category-card {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: end;
+  justify-content: flex-start;
+  align-items: flex-end;
   padding: 5px;
   outline-width: 1px;
   outline-style: solid;

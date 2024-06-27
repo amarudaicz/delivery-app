@@ -52,7 +52,7 @@
     place-items: center;
     width: 100px;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     @include m.laptop{
       width: 380.8px;
     }

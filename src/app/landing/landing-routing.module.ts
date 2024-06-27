@@ -13,6 +13,8 @@ const routes: Routes = [
   {
     path: '',
     component:LayoutLandingComponent,
+    
+
     children: [
       {
         path:'',
@@ -32,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'register',
-        component: RegisterComponent,
+        loadComponent: () => import('../login/components/register/register.component').then(m => m.RegisterComponent)
       },
       {
         path: 'politicas-de-privacidad',

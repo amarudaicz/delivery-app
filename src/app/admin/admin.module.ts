@@ -77,7 +77,7 @@ import { FastModeComponent } from './orders/presentation/fast-mode/fast-mode.com
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SetBuyerFieldsComponent } from './orders/presentation/set-buyer-fields/set-buyer-fields.component';
 import {NativeDateAdapter} from '@angular/material/core';
-import { TomtomService } from '../services/tomtom-service/tomtom.service';
+import {TomtomService } from '../services/tomtom-service/tomtom.service';
 
 @NgModule({
   declarations: [

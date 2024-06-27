@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import Cookies from 'js-cookie';
 import { catchError, firstValueFrom, map, of, throwError } from 'rxjs';
 import { environment } from 'src/app/environment';
 import { User } from 'src/app/interfaces/user-interface';

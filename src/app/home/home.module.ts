@@ -14,10 +14,8 @@ import { PromotionsLocalComponent } from './components/promotions-local/promotio
 import { ProductsSetComponent } from './components/products-set/products-set.component';
 import { PreviewCategoryComponent } from './components/preview-category/preview-category.component';
 import { SkeletonModule } from 'primeng/skeleton';
-import { LandingModule } from '../landing/landing.module';
 import { SearchProductsComponent } from './components/search-products/search-products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LowestPricePipe, MaxPricePipe } from '../pipes/getLowestPrice';
 import { DirectivesModule } from '../directives/directives.module';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { AlertClosedComponent } from './components/alert-closed/alert-closed.component';

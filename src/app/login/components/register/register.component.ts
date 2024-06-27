@@ -106,10 +106,11 @@ export class RegisterComponent implements OnInit {
       'Reintentar',
       {panelClass:'fixed'}
     );
+    
     this.refAlertError.onAction().subscribe(() => {
       this.reloadFormMp.next(true)
     });
-
+    
     return throwError(() => new Error('error en el pago'));
   }
 
