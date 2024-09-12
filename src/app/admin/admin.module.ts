@@ -77,7 +77,8 @@ import { FastModeComponent } from './orders/presentation/fast-mode/fast-mode.com
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SetBuyerFieldsComponent } from './orders/presentation/set-buyer-fields/set-buyer-fields.component';
 import {NativeDateAdapter} from '@angular/material/core';
-import {TomtomService } from '../services/tomtom-service/tomtom.service';
+import { TomtomService } from '../services/tomtom-service/tomtom.service';
+import { WhatsappConectionComponent } from './components/whatsapp-conection/whatsapp-conection.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import {TomtomService } from '../services/tomtom-service/tomtom.service';
     CapitalizePipe,
     FastModeComponent,
     SetBuyerFieldsComponent,
+    WhatsappConectionComponent,
   ],
   imports: [
     CommonModule,

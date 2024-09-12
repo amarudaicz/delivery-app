@@ -14,14 +14,16 @@ import { ShippingConfigComponent } from '../admin/components/shipping-config/shi
 import { PaymentsMethodsConfigComponent } from '../admin/components/payments-methods-config/payments-methods-config.component';
 import { AccountComponent } from '../admin/components/account/account.component';
 import { MainOrdersComponent } from '../admin/orders/presentation/main-orders/main-orders.component';
+import { WhatsappConectionComponent } from '../admin/components/whatsapp-conection/whatsapp-conection.component';
 
 const routes: Routes = [
   
   {
     path:'',
     children:[
+      
       {
-        path:'',
+        path:'', 
         component:AppLayoutComponent,
         children:[
           {
@@ -68,6 +70,10 @@ const routes: Routes = [
           {
             path:'orders',
             component:MainOrdersComponent
+          },
+          {
+            path:'whatsapp',
+            component:WhatsappConectionComponent
           },
           
         ]

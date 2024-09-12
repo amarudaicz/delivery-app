@@ -1,12 +1,12 @@
 <div class="cart h-full relative">
 
-  <div class="container-title px-2 py-3 d-flex gap-2">
-    <button (click)="location.back()" matRipple
-      class="chip cursor-pointer border-round bg-bluegray-800 cursor-pointer hover:bg-black-alpha-90">
-      <i class="pi pi-chevron-left text-white" style="margin-top: 2px;"></i>
-    </button>
+  <div class="px-2 py-3 d-flex gap-2">
+    <a [routerLink]="'/' + (routeService.getOrigin()!)" matRipple
+      class="p-3 cursor-pointer border-round bg-gray-300 cursor-pointer">
+      <i class="pi pi-arrow-left text-xl font-extrabold" style="margin-top: 2px;"></i>
+  </a>
 
-    <h2 [style.background]="theme.get('backgroundSec')" class="chip w-full text-white">Mi carrito</h2>
+    <h2 [style.background]="theme.get('backgroundSec')" class=" p-3 border-round-3xl w-full text-white">Mi carrito</h2>
   </div>
 
 

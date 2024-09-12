@@ -29,7 +29,8 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Envíos', icon: 'pi pi-box', routerLink: ['shipping'] },
                     { label: 'Pagos', icon: 'pi pi-money-bill', routerLink: ['pay-methods'] },
                     { label: 'Horarios', icon: 'pi pi-clock', routerLink: ['schedules'] },
-                    { label: 'Redes sociales', icon: 'pi pi-share-alt', routerLink: ['links'] },
+                    { label: 'Redes Sociales', icon: 'pi pi-share-alt', routerLink: ['links'] },
+                    { label: 'WhatsApp', icon: 'pi pi-whatsapp', routerLink: ['whatsapp'] },
                 ]
             },
             {

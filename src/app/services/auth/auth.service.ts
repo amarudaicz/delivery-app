@@ -22,6 +22,7 @@ interface UserRegister{
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   constructor(private http:HttpClient) { }

@@ -49,29 +49,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // routeClass(){
-
-  //   console.log(this.route);
-    
-  //   switch (this.route) {
-  //     case 'admin':
-  //       return false
-  //       break;
-    
-  //     case 'login':
-  //       return false
-  //     break;
-
-  //     case 'landing':
-  //       return false
-  //     break;
-
-  //     default:
-  //       return true
-  //       break;
-  //   }
-  // }
-
 
   checkUpdate() {
     this.appRef.isStable.subscribe((isStable) => {

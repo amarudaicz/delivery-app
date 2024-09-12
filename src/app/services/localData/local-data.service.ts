@@ -130,7 +130,6 @@ export class LocalDataService {
   }
 
   getShippingMethods(local: any) {
-    console.log(local);
     
     if (!local.shipping) {
         return []
@@ -144,8 +143,6 @@ export class LocalDataService {
   }
 
   getPayMethods(local: Local|any) {
-    console.log(local);
-    
     if (!local.pay_methods) {
         return []
     }
@@ -154,6 +151,7 @@ export class LocalDataService {
     Object.keys(local.pay_methods).forEach((k) => {
       payMethods.push(local.pay_methods[k].description);
     });
+
     return payMethods;
   }
 
@@ -182,7 +180,6 @@ export class LocalDataService {
   }
 
   islocalOpen(schedule: Schedules) {
-    console.log(schedule);
     
     if (!schedule) return null;
 

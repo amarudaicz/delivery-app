@@ -13,6 +13,7 @@ import { NotificationsAdminService } from '../notifications-admin/notifications-
 @Injectable({
   providedIn: 'root',
 })
+
 export class AdminService {
   constructor(
     private http: HttpClient,

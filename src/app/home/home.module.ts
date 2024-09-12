@@ -50,6 +50,7 @@ import { FeaturesLocalComponent } from './components/features-local/features-loc
     NewselterBoxComponent,
     ProductsSetComponent,
     CardCategoryComponent
-  ]
+  ],
+  entryComponents:[]  
 })
 export class HomeModule { }

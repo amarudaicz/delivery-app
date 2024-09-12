@@ -42,6 +42,8 @@ export class CartItemsComponent implements OnDestroy {
         this.subtotal = 0
         return
       }
+
+      
       
       this.subtotal = items.map(e => e.total*e.quantity).reduce((prev, act)=>prev + act)
       

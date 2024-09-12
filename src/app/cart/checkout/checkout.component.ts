@@ -125,12 +125,18 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
+
+
+
     this.redirectWhatsapp();
   }
 
   getSubtotal() {
     return this.total;
   }
+
+
+  
 
   redirectWhatsapp() {
     const orderData = {
@@ -142,6 +148,8 @@ export class CheckoutComponent implements OnInit {
     };
 
     this.orders.postOrder(orderData).subscribe();
+
+
 
     const encodedText = this.wpService.generarMensaje(
       structuredClone(this.cartItems),
