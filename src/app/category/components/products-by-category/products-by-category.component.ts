@@ -41,6 +41,13 @@ export class ProductsByCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.setBread()
+    this.route.events.subscribe((e)=>{
+      this.setBread()
+    })
+  }
+
+  setBread(){
     this.breadcrum.setBreadcrumbs([
       { route: `/${this.routeService.getOrigin()!}`, label: 'Inicio' },
       {

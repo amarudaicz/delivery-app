@@ -76,7 +76,6 @@ export class CartService {
   }
 
   getCartItems(): BehaviorSubject<any[]> {
-    console.log(this.cartSubject);
     return this.cartSubject;
   }
 

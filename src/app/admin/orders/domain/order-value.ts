@@ -1,7 +1,7 @@
 import { ItemCart } from 'src/app/interfaces/itemCart-interfaz';
 import { OrderEntity, StatusType } from './order-entity';
 
-export class OrderValue implements OrderEntity {
+export class OrderValue  {
   constructor(order: OrderEntity) {
     this.id = order.id;
     this.customer_name = order.customer_name;
@@ -15,7 +15,8 @@ export class OrderValue implements OrderEntity {
     this.order_date = order.order_date;
     this.watched_admin = order.watched_admin;
   }
-
+  
+  customer_email!: string;
   id: number;
   watched_admin: number;
   order_date: Date;

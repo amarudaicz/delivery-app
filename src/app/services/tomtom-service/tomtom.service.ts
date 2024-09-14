@@ -88,17 +88,15 @@ export class TomtomService {
       return null;
     }
 
-    console.log(userData);
-    
     let formattedAddress = '';
 
     if (suggestion.address.streetName) {
       formattedAddress += suggestion.address.streetName;
     }
 
-    if (suggestion.address.streetNumber) {
-      formattedAddress += ' ' + suggestion.address.streetNumber;
-    }
+    // if (suggestion.address.streetNumber) {
+    //   formattedAddress += ' ' + suggestion.address.streetNumber;
+    // }
 
     if (
       suggestion.address.localName &&

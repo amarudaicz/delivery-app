@@ -1,11 +1,13 @@
 <div  *ngIf="layoutState.stateSubject|async as state">
-  <div *ngIf="state.navigation" class="bottom-nav md:hidden " [style.background]="theme.get('backgroundSec')">
+  <a [routerLink]="['cart']">
+
+  <div *ngIf="countitemsCart && state.navigation" class="bottom-nav md:hidden " [style.background]="theme.get('backgroundSec')">
     
     <div class="container-nav" >
       <nav class="navigation">
-        <ul class="list-nav">
+        <ul class="px-3  d-flex justify-content-between">
   
-          <li class="item-nav">
+          <!-- <li class="item-nav">
             <a [routerLink]="[routeService.getOrigin()]">
               <div
                 class="grid-menu"
@@ -18,28 +20,42 @@
               </div>
   
             </a>
-          </li>
+          </li> -->
 
-          <li class="item-nav">
+          <!-- <li class="item-nav">
             <a [routerLink]="['user']">
               <i [class.item-active]="currentRoute === 'user'" [style.color]="currentRoute === 'user' ? theme.get('background') : '' " class="pi-user pi icon-nav"></i>
             </a>
+          </li> -->
+
+
+          <li class="d-flex gap-2 relative">
+            <a routerLink="cart" class="text-white font-medium">
+              Ver pedido
+            </a>
+
           </li>
   
   
           <li class="item-nav">
             <a [routerLink]="['cart']">
-                <span class="d-flex relative gap-2 p-2 border-1 border-round text-white" *ngIf="totalCart else cartEmpty">
+                <span class="d-flex relative gap-2 border-round text-white" *ngIf="totalCart else cartEmpty">
                   
-                  <span class="cart-counter font-bold text-white" [ngStyle]="{'background':theme.get('background')}">
+                  <!-- <span class="cart-counter font-bold text-white" [ngStyle]="{'background':theme.get('background')}">
                     {{countitemsCart}}
-                  </span> 
-
-                  <span class="font-bold text-base">
+                  </span>  -->
+                  <span class="font-bold text-lg border-right-1 roboto border-white pr-2">
                     {{totalCart|currency}}
                   </span>
-
-                  <i class="pi icon-bag pi-shopping-bag font-bold"></i>
+                  
+                  <span class="relative">
+                    <i class="pi icon-bag pi-shopping-bag font-bold text-white"></i>
+                    <span class="cart-counter font-bold text-white " [ngStyle]="{'background':theme.get('background')}">
+                      {{countitemsCart}}
+                    </span> 
+                  </span>
+ 
+                  <!-- <i class="pi icon-bag pi-shopping-bag font-bold"></i> -->
 
                 </span>
               
@@ -58,4 +74,6 @@
     </div>
 
   </div>
+</a>
+
 </div>

@@ -1,6 +1,11 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, ActivationStart, NavigationEnd, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  ActivationStart,
+  NavigationEnd,
+  Router,
+} from '@angular/router';
 import { filter } from 'rxjs';
 import { headerIn } from 'src/app/animations/haeder-animations';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
@@ -23,31 +28,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   dataMenu: any[] = [
     {
+      name: 'Inicio',
+      icon: 'fa-solid fa-home',
+      link: `/${this.routeData.getOrigin()}`,
+      command: () => (this.state.menuMobile = false),
+    },
+    {
       name: 'Mis recientes',
-      icon: 'fa-solid fa-house',
+      icon: 'fa-solid fa-history',
       link: '/recientes',
-      command:()=>{}
+      command: () => {},
     },
     {
       name: 'Informacion',
       icon: 'pi pi-info-circle',
-      command:()=>{this.openModalInfo()}
-    }
+      command: () => {
+        this.openModalInfo();
+      },
+    },
   ];
   state: any;
   fixed: boolean = false;
   scrollPos: number = 0;
-  catActive?:string;
-  
+  catActive?: string;
+
   constructor(
     public theme: ThemesService,
     public routeData: RouteDataService,
     public localService: LocalDataService,
     public layoutState: LayoutStateService,
     private router: Router,
-    private activeRoute:ActivatedRoute,
-    private dialog:MatDialog,
-    public cartService:CartService
+    private activeRoute: ActivatedRoute,
+    private dialog: MatDialog,
+    public cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -59,32 +72,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.local = local;
     });
 
-    if(this.localService.getLinkMaps()) 
-    {
+    if (this.localService.getLinkMaps()) {
       this.dataMenu.push({
         name: 'Ubicacion',
         icon: 'fa-solid fa-location-dot',
-        command:()=>{
-          window.open(
-            this.localService.getLinkMaps()!
-          )
-        }
-      })
+        command: () => {
+          window.open(this.localService.getLinkMaps()!);
+        },
+      });
     }
 
-    this.setBodyClass()
+    this.setBodyClass();
 
-    this.activeRoute.paramMap.subscribe(params=>{
+    this.activeRoute.paramMap.subscribe((params) => {
       console.log(params);
-      
-      this.catActive = params.get('category')!
+
+      this.catActive = params.get('category')!;
       console.log(this.catActive);
-      
-    })
+    });
   }
 
   toogleMenu() {
-    
     this.layoutState.state.menuMobile = !this.layoutState.state.menuMobile;
     this.layoutState.updateState();
 
@@ -95,11 +103,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  openModalInfo(){
-    this.toogleMenu()
-    this.dialog.open(ModalInfoLocalComponent)
+  openModalInfo() {
+    this.toogleMenu();
+    this.dialog.open(ModalInfoLocalComponent);
   }
-  
+
   shareLocal() {
     if (navigator.share) {
       navigator
@@ -115,30 +123,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  getIgLink(){
-    return `$`
+  getIgLink() {
+    return `$`;
   }
 
-
-  setBodyClass(){
-    if(document.documentElement.classList.contains('h-full')){
-      document.body.classList.remove('h-full')
-      document.documentElement.classList.remove('h-full')
-    }else{
-      document.body.classList.add('h-full')
-      document.documentElement.classList.add('h-full')
+  setBodyClass() {
+    if (document.documentElement.classList.contains('h-full')) {
+      document.body.classList.remove('h-full');
+      document.documentElement.classList.remove('h-full');
+    } else {
+      document.body.classList.add('h-full');
+      document.documentElement.classList.add('h-full');
     }
-
   }
-  
-  navigateCategory(cat:string){
-      this.router.navigate(['/'+this.routeData.getOrigin()+'/' + cat.toLowerCase() ])
+
+  navigateCategory(cat: string) {
+    this.router.navigate([
+      '/' + this.routeData.getOrigin() + '/' + cat.toLowerCase(),
+    ]);
   }
 
   ngOnDestroy(): void {
     document.body.style.overflow = '';
-    this.layoutState.state.menuMobile = false
-    this.layoutState.updateState()
+    this.layoutState.state.menuMobile = false;
+    this.layoutState.updateState();
   }
 }

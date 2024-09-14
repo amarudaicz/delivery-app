@@ -26,13 +26,15 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(){
     this.cartService.getCartItems().subscribe((items:ProductCart[]) =>{
+      this.countitemsCart = items.length
+
       if (!items.length) {
         this.totalCart = 0
         return
       }
 
       this.totalCart = items.map(p => p.total * p.quantity).reduce((prev, curr)=> prev+curr)
-      this.countitemsCart = items.length
+      
     })
     
     this.localData.local$.subscribe((local)=>{

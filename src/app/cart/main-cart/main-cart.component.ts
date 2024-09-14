@@ -17,7 +17,7 @@ export class MainCartComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit(): void {
-    this.layoutState.state.header=true
+    this.layoutState.state.header=false
     this.layoutState.state.navigation=false
     this.layoutState.updateState()
     
