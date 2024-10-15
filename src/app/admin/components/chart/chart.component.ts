@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChartOptions } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { AdminService } from 'src/app/services/admin/admin.service';
 
@@ -11,10 +12,10 @@ export class ChartComponent implements OnInit, OnDestroy {
   @Input() chartUse?: string;
 
   chartData: any;
-  chartOptions?: any;
+  chartOptions?: ChartOptions;
   innerWidth = window.innerWidth;
   totalCounter: number = 0;
-  dataSubscription!:Subscription
+  dataSubscription!: Subscription;
 
   constructor(private adminService: AdminService) {}
 
@@ -44,6 +45,10 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.initChart();
   }
 
+  refreshChart(){
+    this.chartUse === 'stats' ? this.adminService.getStats() : this.adminService.getSales()
+  }
+
   updateChartData(data: any[]) {
     console.log(data);
 
@@ -54,7 +59,6 @@ export class ChartComponent implements OnInit, OnDestroy {
     };
 
     if (this.chartUse === 'stats') {
-
       this.chartData.datasets.push({
         label: 'Vistas',
         data: data.map((item) => item.total_visits),
@@ -62,9 +66,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         backgroundColor: documentStyle.getPropertyValue('--primary-color'),
         borderColor: documentStyle.getPropertyValue('--primary-color'),
       });
-
     } else {
-
       this.chartData.datasets.push(
         {
           label: 'Total en pesos',
@@ -95,7 +97,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.chartOptions = {
       responsive: true,
       maintainAspectRatio: true,
-
+      
       interaction: {
         mode: 'index', // Muestra una línea vertical al pasar el mouse por encima
         intersect: false, // Muestra solo los puntos más cercanos en el eje X
@@ -149,7 +151,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.dataSubscription) {
-      this.dataSubscription.unsubscribe()
+      this.dataSubscription.unsubscribe();
     }
   }
 }

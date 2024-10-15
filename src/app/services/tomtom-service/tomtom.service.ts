@@ -4,11 +4,10 @@ import {
   LatLng,
   services,
 } from '@tomtom-international/web-sdk-services';
-import {map, Marker} from '@tomtom-international/web-sdk-maps';
+import { map, Marker } from '@tomtom-international/web-sdk-maps';
 import { Observable, from } from 'rxjs';
 import { LocalDataService } from '../localData/local-data.service';
 import { Local } from 'src/app/interfaces/local-interface';
-
 
 @Injectable()
 export class TomtomService {
@@ -84,35 +83,28 @@ export class TomtomService {
   }
 
   getFormatUbication(suggestion: FuzzySearchResult, userData?: any) {
+    console.log({ userData });
+
     if (!suggestion || !suggestion.address) {
       return null;
     }
 
     let formattedAddress = '';
 
-    if (suggestion.address.streetName) {
-      formattedAddress += suggestion.address.streetName;
-    }
+    const pre = `${suggestion.address.streetName} ${
+      userData.streetNumber ?? suggestion.address.streetNumber
+    }, ${
+      suggestion.address.localName ?? suggestion.address.countrySecondarySubdivision
+    }, ${
+      suggestion.address.countrySubdivision ?? suggestion.address.country
+    }`;
 
-    // if (suggestion.address.streetNumber) {
-    //   formattedAddress += ' ' + suggestion.address.streetNumber;
-    // }
+    console.log(pre);
 
-    if (
-      suggestion.address.localName &&
-      suggestion.address.localName !== suggestion.address.countrySubdivision
-    ) {
-      formattedAddress += ', ' + suggestion.address.localName;
-    }
-
-    if (suggestion.address.countrySubdivision) {
-      formattedAddress += ', ' + suggestion.address.countrySubdivision;
-    }
-
-    formattedAddress += ', ' + suggestion.address.country;
-
+    formattedAddress += pre
+    
     if (userData && userData.postalCode) {
-    formattedAddress += ', CP:' + userData.postalCode;
+      formattedAddress += ', CP:' + userData.postalCode;
     }
     return formattedAddress ?? null;
   }

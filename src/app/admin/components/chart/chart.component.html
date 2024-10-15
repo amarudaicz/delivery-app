@@ -1,13 +1,49 @@
 <div class="card p-0 container-chart">
   <div class="p-3">
-    <h2 class="text-2xl mb-2">{{chartUse === 'stats' ? 'Vistas' : 'Ventas'}}</h2>
-    <span >Últimos {{chartData?.labels.length}} días | <span class="font-bold" [ngClass]="chartUse === 'stats' ? 'text-primary' : '' " [ngStyle]="{color:chartUse === 'sales' ? '#ff725e' : null}">{{chartUse === 'stats' ? totalCounter : (totalCounter | currency)}} {{chartUse === 'stats' ? 'vistas en total' : 'Total aproximado'}}</span></span>
-      
+    <div class="d-flex justify-content-between">
+      <div class="">
+        <h2 class="text-2xl mb-2">
+          {{ chartUse === "stats" ? "Vistas" : "Ventas" }}
+        </h2>
+        <span
+          >Últimos {{ chartData?.labels.length }} días |
+          <span
+            class="font-bold"
+            [ngClass]="chartUse === 'stats' ? 'text-primary' : ''"
+            [ngStyle]="{ color: chartUse === 'sales' ? '#ff725e' : null }"
+            >{{
+              chartUse === "stats" ? totalCounter : (totalCounter | currency)
+            }}
+            {{
+              chartUse === "stats" ? "vistas en total" : "Total aproximado"
+            }}</span
+          ></span
+        >
+      </div>
+
+      <div class="">
+        <i class="pi pi-refresh font-semibold"> </i>
+        <button
+          class="d-flex gap-1"
+          (click)="refreshChart()"
+          [ngClass]="chartUse === 'stats' ? 'text-primary' : ''"
+          [ngStyle]="{ color: chartUse === 'sales' ? '#ff725e' : null }"
+        >
+          Actualizar
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="overflow-auto p-1">
     <div class="w-full">
-      <p-chart [responsive]="true" height="50vh" [type]="innerWidth < 600 ? 'bar' : 'line'" [data]="chartData" [options]="chartOptions"></p-chart>
+      <p-chart
+        [responsive]="true"
+        height="50vh"
+        [type]="innerWidth < 600 ? 'bar' : 'line'"
+        [data]="chartData"
+        [options]="chartOptions"
+      ></p-chart>
     </div>
   </div>
 </div>

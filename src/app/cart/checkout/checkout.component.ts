@@ -114,7 +114,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   preLeave() {
-    console.log(this.form);
+    console.log(
+      this.tomtom.getFormatUbication(this.ubicationUser!, this.form.value)
+    );
 
     if (this.isFormInvalid()) {
       this.isFormInvalid(true);
