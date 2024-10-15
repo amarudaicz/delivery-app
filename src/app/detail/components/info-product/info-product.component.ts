@@ -86,12 +86,12 @@ export class InfoProductComponent implements OnInit, AfterViewInit {
       this.fixedName = false
     }
   }
-
+  
   setGalery(){
     if (!this.product || !this.product.galery) {
       this.product = {
         ...this.product,
-        galery: [this.product?.image] || [],
+        galery: [this.product.image] ,
       };
     } else if (!this.product.galery.includes(this.product.image)) {
       this.product = {
