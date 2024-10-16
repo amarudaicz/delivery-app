@@ -6,7 +6,7 @@ import { CartService } from 'src/app/services/cartData/cart.service';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
 // import Swiper from 'swiper';
 import { Product } from 'src/app/interfaces/product-interface';
-import { Pagination } from 'swiper/modules';
+// import { Pagination } from 'swiper/modules';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
 
 @Component({
