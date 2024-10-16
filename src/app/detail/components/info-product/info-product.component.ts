@@ -4,7 +4,7 @@ import { ThemesService } from 'src/app/services/themes/themes.service';
 import { Location } from '@angular/common';
 import { CartService } from 'src/app/services/cartData/cart.service';
 import { fadeIn } from 'src/app/animations/main-detail-animations';
-import Swiper from 'swiper';
+// import Swiper from 'swiper';
 import { Product } from 'src/app/interfaces/product-interface';
 import { Pagination } from 'swiper/modules';
 import { RouteDataService } from 'src/app/services/routeData/route-data-service.service';
@@ -23,7 +23,7 @@ export class InfoProductComponent implements OnInit, AfterViewInit {
   @Input() product!:Product
   @Input() modePreview:boolean = false
   @ViewChild('data', { static: true }) elDataProduct!: ElementRef;
-  swiper?:Swiper
+  // // swiper?:Swiper
 
   cartCounter:number=0
   favClicked:boolean = false
@@ -49,9 +49,9 @@ export class InfoProductComponent implements OnInit, AfterViewInit {
   
   ngAfterViewInit(): void {
     this.setSwiper(this.galerySwiper.nativeElement)
-    this.swiper?.on('activeIndexChange' , (swiper:Swiper) => {
-      this.indexGalery = swiper.activeIndex + 1
-    })
+    // this.swiper?.on('activeIndexChange' , (swiper:Swiper) => {
+    //   this.indexGalery = swiper.activeIndex + 1
+    // })
   } 
   
 
@@ -102,14 +102,14 @@ export class InfoProductComponent implements OnInit, AfterViewInit {
   }
 
   setSwiper(swiper:any){
-    this.swiper = new Swiper(swiper, {
-      modules: [Pagination],
-      slidesPerView: 1,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
+    // this.swiper = new Swiper(swiper, {
+    //   modules: [Pagination],
+    //   slidesPerView: 1,
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //     clickable: true,
+    //   },
+    // });
   }
 
   getRangePrice(product:Product){
