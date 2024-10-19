@@ -50,8 +50,8 @@ export class BannerQrComponent  {
   generateQR() {
 
     this.loadingQR = true;
-    // const url = `/api?size=150x150&data=https://delitienda.app/${this.localUrl}`;
-    const url = `https://delitienda.app/${this.localUrl}`;
+    // const url = `/api?size=150x150&data=https://delitienda.netlify.app/${this.localUrl}`;
+    const url = `https://delitienda.netlify.app/${this.localUrl}`;
 
     const qr = toCanvas(this.canvasQR.nativeElement, url,{width:300,margin: 1}, (err)=>{
       this.loadingQR = false;
