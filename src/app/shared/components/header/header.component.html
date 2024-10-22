@@ -1,128 +1,174 @@
-<div *ngIf="state.header ">
-    
-    <header class="main-header relative">
-
-    
-        
-        <div  class="container-header" [class.fixed]="fixed" >
-
-            <div class="container-items md:gap-3">
-
-                <div class="d-flex gap-3">
-                    <div class="menu-icon cursor-pointer" (click)="toogleMenu()">
-    
-                        <div class="container-bars" >
-                            <div class="bar-1 bar"></div>
-                            <div class="bar-2 bar"></div>
-                            <div class="bar-3 bar"></div>
-                        </div>
-                    </div>
-
-                
-
-                </div>
-
-                <a class="md:hidden"  [routerLink]="'/'+[routeData.getOrigin()]" >
-                    <h1 class="local-name">{{local?.name}}</h1>
-                </a>
-
-                <div class="container-links justify-content-center hidden md:flex">
-                    <ul class="gap-3 gap-y-1 wrap justify-content-center hidden md:flex align-items-center overflow-hidden" *ngIf="localService.getCategories() | async as categories ">
-                        <li class=" ">
-                            <a class="text-nowrap link-header block" [routerLink]="'/'+ routeData.getOrigin()">
-                                Inicio
-                            </a>
-                        </li>
-    
-                        <li class=" " *ngFor="let cat of categories.slice(0, 10); let i = index">
-                            <a [class.text-primary]="catActive === cat.name.toLowerCase()" class="text-nowrap link-header block" [routerLink]="'/'+ routeData.getOrigin() + '/' + cat.name.toLowerCase()">
-                                {{cat.name}}
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-                <div class="local-image d-flex gap-3 md:hidden">
-                    <button (click)="shareLocal()" class="text-700 hover:text-900">
-                        <i class="pi pi-share-alt text-xl "></i>
-                    </button>
-                    <img [src]="local?.image" onerror="this.src='https://www.iconpacks.net/icons/2/free-store-icon-2017-thumb.png'" width="40px" height="40px" alt="logo de la tienda">
-                </div>
-
-
-                <div class="hidden md:flex align-items-center gap-5">
-
-                    <a class="mt-1" routerLink="user">
-                        <i class="pi pi-user text-lg "> </i>
-                    </a>
-
-                    <a routerLink="/cart" class="relative mt-1" *ngIf="cartService.getCartItems() | async as cart ">
-                        <i class="pi pi-shopping-bag text-lg "> </i>
-                        <span *ngIf="cart.length > 0" class="badge-cart" [style.background]="theme.get('backgroundSec')">
-                            {{cart.length}}
-                        </span>
-                    </a>
-                    
-                    <a [routerLink]="'/' + routeData.getOrigin()">
-                        <div class="local-image d-flex gap-3 sm:hidden md:flex">
-                            <img [src]="local?.image" onerror="this.src='https://www.iconpacks.net/icons/2/free-store-icon-2017-thumb.png'" width="40px" height="40px" alt="logo de la tienda">
-                        </div>
-
-                    </a>
-
-                </div>
-    
+<div *ngIf="state.header">
+  <header class="main-header relative">
+    <div class="container-header" [class.fixed]="fixed">
+      <div class="container-items md:gap-3">
+        <div class="d-flex gap-3">
+          <div class="menu-icon cursor-pointer" (click)="toogleMenu()">
+            <div class="container-bars">
+              <div class="bar-1 bar"></div>
+              <div class="bar-2 bar"></div>
+              <div class="bar-3 bar"></div>
             </div>
-
-
-
-
-
-
-
-            <div *ngIf="state.menuMobile" [@fadeIn] (click)="toogleMenu()" class="overlay-menu"></div>
-
-            <div class="container-menu shadow-6" [class.menu-visible]="state.menuMobile">
-                
-                <div class="pb-2 d-flex justify-content-between w-full">
-                    <span class="text-base text-xl text-800">Gracias por su visita</span>
-                    <i class="pi pi-times text-xl md:text-3xl font-bold cursor-pointer p-1" [style.color]="theme.get('background')" (click)="toogleMenu()"></i>
-                </div>
-                
-                <div class="content-menu mb-3">
-                    <ul>
-                        <li class="menu-item cursor-pointer hover:text-800 " *ngFor="let item of dataMenu" [style.color]="theme.get('backgroundSec')">
-                            <a [routerLink]="item.link" (click)="item.command()" >
-                                <i  class="item-icon {{item.icon}}"></i>
-                                {{item.name}}
-                            </a>
-                        </li>
-
-                        <li class="menu-item cursor-pointer hover:text-800 " *ngFor="let item of local?.links" [style.color]="theme.get('backgroundSec')">
-                            <a [href]="[item.url]"  target="_blank">
-                                <i  class="item-icon pi {{'pi-'+item.name.toLowerCase()}}"></i>
-                                {{item.name}}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-        
-                <div [style.background]="theme.get('background')"  class="w-full border-round-xl p-3">
-                    <h3 class="mb-3 text-white" >Quiero una tienda para mi negocio</h3>
-                    <div class="text-end">
-                        <a href="/skip-recents" target="_blank" [style.background]="theme.get('backgroundSec')"  class="border-round px-3 py-2 text-white hover:bg-black-alpha-80">Comenzar</a>
-                    </div>
-        
-                </div>
-            </div>
-        
+          </div>
         </div>
-    </header> 
 
+        <a class="md:hidden" [routerLink]="'/' + [routeData.getOrigin()]">
+          <h1 class="local-name text-xl font-bold">{{ local?.name }}</h1>
+        </a>
 
-   
+        <div class="container-links justify-content-center hidden md:flex">
+          <ul
+            class="gap-3 gap-y-1 wrap justify-content-center hidden md:flex align-items-center overflow-hidden"
+            *ngIf="localService.getCategories() | async as categories"
+          >
+            <li class=" ">
+              <a
+                class="text-nowrap link-header block"
+                [routerLink]="'/' + routeData.getOrigin()"
+              >
+                Inicio
+              </a>
+            </li>
 
+            <li
+              class=" "
+              *ngFor="let cat of categories.slice(0, 10); let i = index"
+            >
+              <a
+                [class.text-primary]="catActive === cat.name.toLowerCase()"
+                class="text-nowrap link-header block"
+                [routerLink]="
+                  '/' + routeData.getOrigin() + '/' + cat.name.toLowerCase()
+                "
+              >
+                {{ cat.name }}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="local-image d-flex gap-3 md:hidden">
+          <button (click)="shareLocal()" class="text-700 hover:text-900">
+            <i class="pi pi-share-alt text-xl"></i>
+          </button>
+          <img
+            [src]="local?.image"
+            onerror="this.src='https://www.iconpacks.net/icons/2/free-store-icon-2017-thumb.png'"
+            width="40px"
+            height="40px"
+            alt="logo de la tienda"
+          />
+        </div>
+
+        <div class="hidden md:flex align-items-center gap-5">
+          <a class="mt-1" routerLink="user">
+            <i class="pi pi-user text-lg"> </i>
+          </a>
+
+          <a
+            routerLink="/cart"
+            class="relative mt-1"
+            *ngIf="cartService.getCartItems() | async as cart"
+          >
+            <i class="pi pi-shopping-bag text-lg"> </i>
+            <span
+              *ngIf="cart.length > 0"
+              class="badge-cart"
+              [style.background]="theme.get('backgroundSec')"
+            >
+              {{ cart.length }}
+            </span>
+          </a>
+
+          <a [routerLink]="'/' + routeData.getOrigin()">
+            <div class="local-image d-flex gap-3 sm:hidden md:flex">
+              <img
+                [src]="local?.image"
+                onerror="this.src='https://www.iconpacks.net/icons/2/free-store-icon-2017-thumb.png'"
+                width="40px"
+                height="40px"
+                alt="logo de la tienda"
+              />
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div
+        *ngIf="state.menuMobile"
+        [@fadeIn]
+        (click)="toogleMenu()"
+        class="overlay-menu"
+      ></div>
+
+      <div
+        class="container-menu w-3/5 lg:w-2/5 shadow-6"
+        [class.menu-visible]="state.menuMobile"
+      >
+        <div class="pb-2 d-flex justify-content-between w-full">
+          <span class="text-xl text-800">{{ local?.name }}</span>
+          <i
+            class="pi pi-times text-xl md:text-3xl font-bold cursor-pointer p-1"
+            [style.color]="theme.get('background')"
+            (click)="toogleMenu()"
+          ></i>
+        </div>
+
+        <div class="content-menu mb-3">
+          <ul>
+            <li
+              class="menu-item cursor-pointer hover:text-800"
+              *ngFor="let item of dataMenu"
+              [style.color]="theme.get('backgroundSec')"
+            >
+              <a [routerLink]="item.link" (click)="item.command()">
+                <i class="item-icon {{ item.icon }}"></i>
+                {{ item.name }}
+              </a>
+            </li>
+
+            <li
+              class="menu-item cursor-pointer hover:text-800"
+              *ngFor="let item of local?.links"
+              [style.color]="theme.get('backgroundSec')"
+            >
+              <a [href]="[item.url]" target="_blank">
+                <i
+                  class="item-icon pi {{ 'pi-' + item.name.toLowerCase() }}"
+                ></i>
+                {{ item.name }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div
+          [style.background]="theme.get('background')"
+          class="w-fit rounded-[35px] p-4 relative bg-gradient-to-r from-[#5d71f7] to-[#5e71f8]"
+        >
+          <div class="d-flex">
+            <div class="">
+              <span
+                class="p-2 px-3 block w-fit text-white text-xs rounded-full bg-white-alpha-20 backdrop-blur-sm mb-2"
+              >
+                30 Días gratis
+              </span>
+
+              <h3 class="mb-2 w-3/4 text-2xl font-black text-white">
+                Comienza hoy con nuestro plan básico y empieza a vender en unos
+                días.
+              </h3>
+            </div>
+
+            <div class="">
+              <img
+                src="assets/logos/logo-de-144.png"
+                class="w-[100px]"
+                alt="logo delitienda"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 </div>
-
-
-

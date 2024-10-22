@@ -32,7 +32,7 @@ export class BannerLinkComponent {
   constructor(private clipboard:Clipboard, private adminService:AdminService, private notificationsAdmin:NotificationsAdminService){
 
     this.adminService.local$.subscribe(local=>{
-      local ? this.copyUrl = 'https://delitienda.app/' + local.name_url : null
+      local ? this.copyUrl = 'https://delitienda.netlify.app/' + local.name_url : null
     })
   }
   

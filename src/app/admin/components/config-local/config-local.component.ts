@@ -64,9 +64,7 @@ export class ConfigLocalComponent implements OnInit {
     this.processForm = true;
 
     if (this.imageUpload) {
-      const cloudinaryLocal = (await firstValueFrom(
-        this.cloudinary.upload(this.imageLocal)
-      )) as any;
+      const cloudinaryLocal = await firstValueFrom(this.cloudinary.upload(this.imageLocal)) as any;
       this.imageLocal = cloudinaryLocal.url;
       this.imageUpload = false;
     }

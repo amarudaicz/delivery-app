@@ -28,6 +28,7 @@
     "@tomtom-international/web-sdk-maps": "^6.23.0",
     "@tomtom-international/web-sdk-services": "^6.23.0",
     "@types/qrcode": "^1.5.5",
+    "@uploadcare/upload-client": "^6.14.2",
     "angular": "^1.8.3",
     "chart.js": "^4.4.3",
     "file-saver": "^2.0.5",
@@ -46,6 +47,7 @@
     "@types/file-saver": "2.0.5",
     "@types/jasmine": "~4.3.0",
     "@types/uuid": "9.0.1",
+    "autoprefixer": "^10.4.20",
     "dotenv": "16.0.3",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
@@ -53,6 +55,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
     "typescript": "~4.8.2",
     "webpack-bundle-analyzer": "^4.10.2"
   }

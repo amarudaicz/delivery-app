@@ -84,7 +84,6 @@
 }
 
 .container-menu {
-  width: 60vw;
   overflow-y: auto;
   height: 100vh;
   padding: 15px 15px 75px 15px;
@@ -98,12 +97,6 @@
   flex-direction: column;
   gap: 15px;
   
-
-
-  @include m.tablet{
-    width: 30vw;
-  }
-
   &.menu-visible {
     left: 0;
   }
