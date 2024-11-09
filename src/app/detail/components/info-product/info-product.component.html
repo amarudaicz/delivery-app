@@ -13,18 +13,15 @@
 
     <div class="data-product bg-white">
 
-            <div [ngClass]="fullGalery ? 'h-full z-4 fixed top-0 left-0 bg-black-alpha-70 bg-blur' : '' " class="swiper container-image" #galery>
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide" *ngFor="let i of product.galery">
-                        <div class="swiper-zoom-container">
-                            <img appImageFallback src="{{i}}" class="h-full object-contain " alt="">
-                        </div>
+            <div [ngClass]="fullGalery ? 'h-full z-4 fixed top-0 left-0 bg-black-alpha-70 bg-blur' : 'container' " class="swiper container-image  px-0" #galery>
+
+                <div class="swiper-wrapper d-flex flex-row w-full h-full overflow-x-auto snap-x snap-mandatory   ">
+                    <div class="swiper-slide min-w-full min-h-full md:w-full md:min-w-0 h-full snap-center"  *ngFor="let i of product.galery">
+                        <img appImageFallback src="{{i}}" class="w-full h-full object-contain " alt="">
                     </div>
                 </div>
     
-                <div class="index-galery d-flex justify-content-center gap-1" 
+                <!-- <div class="index-galery d-flex justify-content-center gap-1" 
                     *ngIf="product.galery?.length">
                     <span>
                         {{indexGalery}}
@@ -33,7 +30,7 @@
                     <span>
                         {{product.galery!.length}}
                     </span>
-                </div>
+                </div> -->
 
                 <div *ngIf="fullGalery" class="btn-close-galery ">
                     <button (click)="closeFullGalery()" mat-ripple class="h-2rem w-2rem d-flex justify-content-center border-round bg-gray-200">
@@ -50,7 +47,7 @@
                 <div class="swiper-pagination"></div>
         </div>
 
-        <div class="container-text z-2" #data>
+        <div class="container-text container pt-2 z-2" #data>
             <div class="padding-details bg-white mb-1 shadow-1">
                 <div class="d-flex justify-content-between align-items-start">
                     
@@ -73,7 +70,7 @@
                 </div>
             </div>
 
-            <div #optionsDisplay>
+            <div class="" #optionsDisplay>
                 <app-add-product-cart *ngIf="product" [modePreview]="modePreview" [product]="product">
 
                 </app-add-product-cart>

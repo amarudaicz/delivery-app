@@ -92,7 +92,7 @@ export class TomtomService {
     let formattedAddress = '';
 
     const pre = `${suggestion.address.streetName} ${
-      userData.streetNumber ?? suggestion.address.streetNumber
+      suggestion.address.streetNumber ? suggestion.address.streetNumber : ''
     }, ${
       suggestion.address.localName ?? suggestion.address.countrySecondarySubdivision
     }, ${

@@ -1,22 +1,31 @@
-<div *ngIf="themeLoaded else loader" class="container">
+<div *ngIf="themeLoaded else loader" class="">
 
-    <div class="content">
+    <div class="">
 
         <div class="pt-3">
-            
-            <app-features-local></app-features-local>
+            <div class="px-[10px] md:px-0 md:container">
+                <app-features-local></app-features-local>
+            </div>
 
-            <app-newselter-box *ngIf="!appInstalled" [@fadeIn]></app-newselter-box>
+            <div class="px-[10px] md:px-0 md:container">
+                <app-newselter-box *ngIf="!appInstalled" [@fadeIn]></app-newselter-box>
+            </div>
 
-            <app-search-products>
+            <div class="px-[10px] md:px-0 md:container">
+                <app-search-products></app-search-products>
+            </div>
 
-            </app-search-products>
+            <div class="px-[10px] md:px-0 md:container">
+                <app-categories></app-categories>
+            </div>
 
-            <app-categories></app-categories>
+            <div class="px-[10px] md:px-0 md:container">
+                <app-preview-category></app-preview-category>
+            </div>
 
-            <app-preview-category></app-preview-category>
-
-            <app-promotions-local></app-promotions-local>
+            <div class="px-[10px] md:px-0 md:container">
+                <app-promotions-local></app-promotions-local>
+            </div>
 
 
 

@@ -34,11 +34,7 @@
   display: grid;
   place-items: start;
 
-  width: 76px;
-
-  @include m.tablet{
-    width: 140px;
-  }
+ 
   
   .container-bars {
     width: 25px;

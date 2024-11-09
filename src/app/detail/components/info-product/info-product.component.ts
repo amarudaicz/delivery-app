@@ -56,9 +56,7 @@ export class InfoProductComponent implements OnInit, AfterViewInit {
   
 
   redirectBack(){
-    console.log(
-      window.history
-    );
+
     if (window.history.state.navigationId === 1) {
       this.router.navigate(['/'+this.routeData.getOrigin() ])
     }else{

@@ -398,3 +398,12 @@ form.svelte-cq90g3{
 .cdk-global-scrollblock{
     height: auto !important;
 }
+
+
+.hide-scrollbar{
+    scrollbar-width: none; /* Para Firefox */
+    &::-webkit-scrollbar{
+        width: 0;
+        
+    }
+}

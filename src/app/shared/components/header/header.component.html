@@ -2,14 +2,16 @@
   <header class="main-header relative">
     <div class="container-header" [class.fixed]="fixed">
       <div class="container-items md:gap-3">
-        <div class="d-flex gap-3">
-          <div class="menu-icon cursor-pointer" (click)="toogleMenu()">
+
+        <div class="d-flex gap-1">
+          <div class="menu-icon w-[76px] md:w-[140px] cursor-pointer" (click)="toogleMenu()">
             <div class="container-bars">
               <div class="bar-1 bar"></div>
               <div class="bar-2 bar"></div>
               <div class="bar-3 bar"></div>
             </div>
           </div>
+
         </div>
 
         <a class="md:hidden" [routerLink]="'/' + [routeData.getOrigin()]">
@@ -46,10 +48,11 @@
             </li>
           </ul>
         </div>
-        <div class="local-image d-flex gap-3 md:hidden">
-          <button (click)="shareLocal()" class="text-700 hover:text-900">
+
+        <div class="local-image w-[76px] justify-end d-flex gap-3 md:hidden">
+          <!-- <button (click)="shareLocal()" class="text-700 hover:text-900">
             <i class="pi pi-share-alt text-xl"></i>
-          </button>
+          </button> -->
           <img
             [src]="local?.image"
             onerror="this.src='https://www.iconpacks.net/icons/2/free-store-icon-2017-thumb.png'"
@@ -57,7 +60,7 @@
             height="40px"
             alt="logo de la tienda"
           />
-        </div>
+        </div> 
 
         <div class="hidden md:flex align-items-center gap-5">
           <a class="mt-1" routerLink="user">
@@ -101,7 +104,7 @@
       ></div>
 
       <div
-        class="container-menu w-3/5 lg:w-2/5 shadow-6"
+        class="container-menu w-full lg:w-2/5 max-w-[350px] shadow-6"
         [class.menu-visible]="state.menuMobile"
       >
         <div class="pb-2 d-flex justify-content-between w-full">
@@ -141,11 +144,13 @@
           </ul>
         </div>
 
-        <div
+        <a
+          href="https://delitienda.netlify.app/skip-recents"
+          target="_blank"
           [style.background]="theme.get('background')"
-          class="w-fit rounded-[35px] p-4 relative bg-gradient-to-r from-[#5d71f7] to-[#5e71f8]"
+          class="w-fit rounded-[35px] overflow-hidden group transition-all p-3 relative bg-gradient-to-r from-[#5d71f7] to-[#5e71f8]"
         >
-          <div class="d-flex">
+          <div class="d-flex ">
             <div class="">
               <span
                 class="p-2 px-3 block w-fit text-white text-xs rounded-full bg-white-alpha-20 backdrop-blur-sm mb-2"
@@ -153,21 +158,19 @@
                 30 Días gratis
               </span>
 
-              <h3 class="mb-2 w-3/4 text-2xl font-black text-white">
-                Comienza hoy con nuestro plan básico y empieza a vender en unos
-                días.
+              <h3 class="z-2 mb-2 w-3/4 text-xl font-black text-white">
+                Quiero una tienda para mi negocio!
               </h3>
             </div>
 
-            <div class="">
-              <img
-                src="assets/logos/logo-de-144.png"
-                class="w-[100px]"
-                alt="logo delitienda"
-              />
+            <div class="absolute shadow-md right-[10px] bottom-[10px]">
+              <a class="w-[50px] h-[50px] ease-in transition-all group-hover:-translate-y-2 group-hover:-translate-x-2 shadow-md rounded-full bg-white d-flex items-center justify-center">
+                <i class="pi pi-arrow-up-right text-xl"></i>
+              </a>
             </div>
+
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </header>

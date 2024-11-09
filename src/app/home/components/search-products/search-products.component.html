@@ -1,9 +1,9 @@
-<div [ngClass]="fixedSearch ? ['fixed-search', 'overflow-auto' ] : 'mt-4' ">
+<div [ngClass]="fixedSearch ? ['fixed-search', 'overflow-auto ' ] : 'mt-4' ">
  
-    <div class="container">
+    <div class="" [ngClass]="fixedSearch ? 'container' : '' ">
 
         <div class="mb-2" *ngIf="!fixedSearch">
-            <h3 class="text-xl">Hola. ¿Qué quieres pedir hoy?</h3>
+            <h3 class="text-xl font-semibold text-opacity-90">Hola. ¿Qué quieres pedir hoy?</h3>
         </div>
 
             <div class="w-full input-search "

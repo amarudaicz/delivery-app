@@ -13,7 +13,7 @@
         </div>
   
         <div class="product-info min-w-0 flex flex-column w-full h-full p-2">
-          <span class="product-name mb-2 text-base font-semibold">{{ product.name }}</span>
+          <span class="product-name mb-1 text-xl font-semibold">{{ product.name }}</span>
   
           <span *ngIf="!product.ingredients?.length" class="product-ingredients">
             {{product.description}}
@@ -21,8 +21,8 @@
   
           <span *ngIf="product.ingredients.length" class="product-ingredients">{{ product.ingredients.join(", ") }}</span>
   
-          <div class="mt-2 font-bold product-price" *ngIf="product|lowestPrice; else singlePrice">
-            <span class="font-semibold">
+          <div class="mt-1 font-bold product-price" *ngIf="product|lowestPrice; else singlePrice">
+            <span class="font-semibold text-lg">
               {{ (product|lowestPrice) | currency }}
             </span>
           </div>

@@ -4,13 +4,13 @@
 >
 <div mat-ripple  class="product-card border-round bg-white " *ngIf="product.id; else loader">
 
-  <div  class="flex flex-row gap-3">
+  <div  class="flex flex-row gap-3 h-full">
 
-      <div class="product-image">
-        <img appImageFallback src="{{ product.image }}" class="border-round " alt="" />
+      <div class="w-[150px] h-full product-image">
+        <img appImageFallback src="{{ product.image }}" class="w-full border-round h-full" alt="" />
       </div>
 
-    <div class="product-info min-w-0 flex flex-column w-full h-full">
+    <div class="product-info w-full flex flex-column h-full">
       <span class="product-name mb-1 text-base font-semibold">{{ product.name }}</span>
       <span *ngIf="!product.ingredients?.length" class="product-ingredients">
         {{product.description}}
