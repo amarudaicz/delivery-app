@@ -7,7 +7,6 @@ import { shepherdMain } from 'src/app/utils/shepherd-tour';
   selector: 'app-main-admin',
   templateUrl: './main-admin.component.html',
   styleUrls: ['./main-admin.component.scss'],
-  providers: [],
 })
 export class MainAdminComponent implements OnInit, OnDestroy {
 

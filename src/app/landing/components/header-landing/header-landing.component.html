@@ -1,7 +1,9 @@
 <header class="header-landing w-full bg-white px-3 z-5" [class.shadow-3]="fixedHeader">
 
     <div class="w-full content-header  m-auto d-flex justify-content-between ">
-        <div class="menu-icon md:w-25rem" [ngClass]="routeActive !== '/recientes' && routeActive !== '/history' ? 'lg:hidden' : ''" >
+
+
+        <div class="menu-icon flex-1 justify-start" [ngClass]="routeActive !== '/recientes' && routeActive !== '/history' ? 'lg:hidden' : ''" >
             <button class="cursor-pointer " (click)="toogleMenuLanding()">
                 <div class="container-bars cursor-pointer">
                     <div class="bar-1 bar"></div>
@@ -10,6 +12,12 @@
                 </div>
             </button>
     
+        </div>
+        
+        <div class="flex-1 ">
+            <a routerLink="/" class="flex" [ngClass]="routeActive !== '/recientes' && routeActive !== '/history' ? 'justify-start' : 'justify-center'">
+                <img loading="lazy" class="logo-landing" src="./assets/logos/logo-deli.png" alt="">
+            </a>
         </div>
 
         <nav class="hidden lg:block" *ngIf="routeActive !== '/recientes' && routeActive !== '/history'">
@@ -34,11 +42,8 @@
 
         </nav>
  
-        <a routerLink="/">
-            <img loading="lazy" class="logo-landing" src="./assets/logos/logo-deli.png" alt="">
-        </a>
 
-        <div class="gap-3 flex align-items-center justify-content-end md:w-25rem">
+        <div class="flex-1 gap-3 flex align-items-center justify-content-end">
             <a routerLink="/register" class="hidden md:block px-4 py-2 md:py-3 bg-primary border-round text-base hover:shadow-3 text-nowrap border-1 border-primary" mat-ripple>Comenzar ahora</a>
            
             <a (click)="signIn()" class="cursor-pointer px-4 py-2 md:py-3 d-flex gap-2 border-round text-base shadow-2 hover:shadow-3 border-1" mat-ripple>
@@ -66,7 +71,6 @@
         </div>
 
         <div class=" h-full flex flex-column justify-content-between">
-
 
             <div class="">
                 <header>

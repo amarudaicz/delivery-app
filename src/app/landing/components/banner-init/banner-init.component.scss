@@ -10,16 +10,13 @@
 }
 
 .title-banner{
-    font-size: 45px;
+    font-size: max(48px, min(6vw,60px));
+    line-height: normal;
+    letter-spacing: -.04em;
     background: -webkit-linear-gradient(left, #121212, #480AF3);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    @include m.tablet{
-        font-size: 60px;
-    
-    }
 }
 
 .container-img-banner{
@@ -43,7 +40,7 @@
   position: absolute;
   height: 145%;
   top: 44%;
-  left: 54%;
+  left: 52.5%;
   transform: translate(-50%, -50%);
 
   @include m.laptop{
@@ -98,31 +95,25 @@
   }
 
 
-  .circle-mockup{
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    top: 0; 
-    right: -157px;
-    border-radius: 50%;    
+  .control-right{
+    width: 80px;
+    height: 80px;
     animation: float 4s ease infinite;
-}
-
-.circle-mockup-left{
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    bottom: 0; 
-    right: 357px;
-    border-radius: 50%; 
+    border-radius: 50% 5px 50% 50%;
+  }
+  
+  .control-left{
+    width: 80px;
+    height: 80px;
     animation: float 4s ease infinite;
+    border-radius: 50% 50% 50% 5px;
 }
 
 .wrap-image-text{
   @include m.laptop{
       min-height: 654px;
-    
     }
+
     row-gap:50px;
     column-gap:30px;
 }
