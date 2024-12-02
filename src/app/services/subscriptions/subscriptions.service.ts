@@ -9,7 +9,7 @@ export class SubscriptionsService {
 
   private plans = {
     basic:{
-      price:4000,
+      price:10000,
       features:[
         'Conexión con WhatsApp',
         'Categorías y productos ilimitados',
@@ -25,7 +25,7 @@ export class SubscriptionsService {
       ]
     },
     advanced:{
-      price:5000,
+      price:15000,
       features:[
         'Todas del plan básico',
         'Recibir pagos automáticos',
