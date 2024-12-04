@@ -53,7 +53,7 @@
           <p *ngIf="!previewImageLocal" class="text-800">Carga tu imagen</p>
         </div>
 
-        <img class="w-full max-w-25rem" [src]="previewImageLocal ||'./assets/images/placeholder-logo-local.png'" alt="">
+        <img appImageFallback class="w-full max-w-25rem" [src]="previewImageLocal ||'./assets/images/placeholder-logo-local.png'" alt="">
 
         <div class="absolute top-0 left-0 h-full w-full opacity-0">
           <input [disabled]="!editing" type="file" class="h-full w-full cursor-pointer" (change)="uploadImage($event)">
