@@ -46,14 +46,14 @@
       </div>
         
         
-      <div class="w-fit mt-5 border-1 border-round border-700 p-2 relative mt-2" [ngClass]="editing ? '' : 'opacity-70'" >
+      <div class="w-fit mt-5 border-1 border-round border-700 p-2 relative" [ngClass]="editing ? '' : 'opacity-70'" >
 
         <div class="mb-2">
           <h4 class="text-xl text-900">Logo</h4>
           <p *ngIf="!previewImageLocal" class="text-800">Carga tu imagen</p>
         </div>
 
-        <img appImageFallback class="w-full max-w-25rem" [src]="previewImageLocal ||'./assets/images/placeholder-logo-local.png'" alt="">
+        <img class="w-full max-w-25rem" [src]="previewImageLocal ||'./assets/images/placeholder-logo-local.png'" alt="">
 
         <div class="absolute top-0 left-0 h-full w-full opacity-0">
           <input [disabled]="!editing" type="file" class="h-full w-full cursor-pointer" (change)="uploadImage($event)">
