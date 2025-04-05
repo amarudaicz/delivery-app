@@ -2,7 +2,7 @@
   <div class="container-form">
     <form [formGroup]="form" (submit)="modePreview ? null : saveOrder()">
 
-     <div class="container-data-product bg-white shadow-1 ">
+     <div class="container-data-product">
       <div *ngIf="product.variations" class="flex flex-column">
         <div *ngFor="let optionGroup of product?.variations">
           <div
@@ -132,7 +132,7 @@
       <div class="flex-1  container-quantity">
         <button
         type="submit"
-        class="w-full h-full button-add text-white d-flex gap-2 w-full justify-content-center"
+        class="h-full button-add text-white d-flex gap-2 w-full justify-content-center"
           matRipple [matRippleColor]="'#00000012'"
           [style.background]="theme.get('background')"
           [class.btn-invalid]="this.form.invalid"
